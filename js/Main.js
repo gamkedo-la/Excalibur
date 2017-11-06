@@ -36,18 +36,27 @@ function resetGame() {
 }
 
 function debugDraw() {
-	canvasContext.fillStyle = "cyan";
-	var lineHeight = 15;
-	var drawTextOutY = 100;
-	canvasContext.fillText("hitpoints: " + playerHP,100,drawTextOutY);
-	drawTextOutY+=lineHeight;
-	canvasContext.fillText("score: " + score,100,drawTextOutY);
-	drawTextOutY+=lineHeight;
-	canvasContext.fillText("shots: " + shotList.length,100,drawTextOutY);
-	drawTextOutY+=lineHeight;
-	canvasContext.fillText("planes: " + enemyList.length,100,drawTextOutY);
-	drawTextOutY+=lineHeight;
-	canvasContext.fillText("troops: " + trooperList.length,100,drawTextOutY);
+	
+	canvasContext.save();
+	canvasContext.font = "20px Arial"
+	canvasContext.textAlign = "right";
+	canvasContext.fillStyle = "white";
+	canvasContext.fillText("score: " + score,canvas.width-20,30);
+	canvasContext.restore();
+
+	if(debug == true){
+		canvasContext.fillStyle = "cyan";
+		var lineHeight = 15;
+		var drawTextOutY = 100;
+		canvasContext.fillText("hitpoints: " + playerHP,100,drawTextOutY);
+		drawTextOutY+=lineHeight;
+		canvasContext.fillText("shots: " + shotList.length,100,drawTextOutY);
+		drawTextOutY+=lineHeight;
+		canvasContext.fillText("planes: " + enemyList.length,100,drawTextOutY);
+		drawTextOutY+=lineHeight;
+		canvasContext.fillText("troops: " + trooperList.length,100,drawTextOutY);
+	}
+	
 }
 
 function clearScreen() {

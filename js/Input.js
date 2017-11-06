@@ -1,4 +1,5 @@
 var holdFire, holdLeft, holdRight = false;
+var debug = false;	
 
 function handleInput() {
 	if(holdFire) {
@@ -34,6 +35,9 @@ function keyPress(evt) {
 			break;
 		case 39:
 			holdRight = true;
+			break;
+		case 68:
+			debug = !debug;
 			break;
 	}
 }
