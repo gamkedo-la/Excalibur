@@ -1,9 +1,9 @@
-const dropBelowPlaneMargin = 10;
+const dropBelowShipMargin = 10;
 const alienWidth = 17, alienHeight = 25;
 const parachuteW = alienWidth+15, parachuteH = 25;
 const alienFallSpeedNoChute = 3.5;
 const alienFallSpeedWithChute = 1.5;
-const troopWalkSpeed = 2;
+const alienWalkSpeed = 2;
 const dropMarginFromCenter = playerWidth + 30;
 const dropMarginFromEdge = 50;
 const chuteThickness = 100;
@@ -11,24 +11,24 @@ const chuteMargin = 300;
 
 var alienList=[];
 
-function spawnTroop(fromPlane) {
-	alienList.push( {x:fromPlane.x, y:fromPlane.y+dropBelowPlaneMargin, removeMe:false,
+function spawnAlien(fromShip) {
+	alienList.push( {x:fromShip.x, y:fromShip.y+dropBelowShipMargin, removeMe:false,
 						isChuteDrawn:false, chuteY:Math.random()*chuteThickness+chuteMargin,
 						alreadyGotDrawn:false, isWalking:false} );
 }
 
 function handleAliens() {
-	// paraaliens
+	// aliens
 	for(var i=0;i<alienList.length;i++) {
 		canvasContext.fillStyle = "red";
 		canvasContext.fillRect(alienList[i].x-alienWidth/2,alienList[i].y-alienHeight,alienWidth,alienHeight);
 
 		if(alienList[i].isWalking) {
 			if(alienList[i].x<playerX) {
-				alienList[i].x += troopWalkSpeed;
+				alienList[i].x += alienWalkSpeed;
 			}
 			if(alienList[i].x>playerX) {
-				alienList[i].x -= troopWalkSpeed;
+				alienList[i].x -= alienWalkSpeed;
 			}
 			if( Math.abs(alienList[i].x - playerX) < (playerWidth/2-alienWidth/2) ) {
 				alienList[i].removeMe = true;

@@ -2,7 +2,7 @@ const shipSpawnBandThickness = 200;
 const shipSpawnBandMargin = 50;
 
 var shipSpeed = 4;
-const ew = 100, eh = 40;
+const shipWidth = 100, shipHeight = 40;
 
 var shipList=[];
 
@@ -12,10 +12,10 @@ function shipSpawn() {
 	newShip.removeMe = false;
 
 	if(Math.random()<0.5) {
-		newShip.x = -ew/2;
+		newShip.x = -shipWidth/2;
 		newShip.xv = 4;
 	} else {
-		newShip.x = canvas.width+ew/2;
+		newShip.x = canvas.width+shipWidth/2;
 		newShip.xv = -4;
 	}
 	newShip.y = Math.random() * shipSpawnBandThickness + shipSpawnBandMargin;
@@ -45,10 +45,10 @@ function shipSpawn() {
 }
 
 function handleShips() {
-	// planes
+	// ships
 	canvasContext.fillStyle = "orange";
 	for(var i=0;i<shipList.length;i++) {
-		canvasContext.fillRect(shipList[i].x-ew/2,shipList[i].y-eh/2,ew,eh);
+		canvasContext.fillRect(shipList[i].x-shipWidth/2,shipList[i].y-shipHeight/2,shipWidth,shipHeight);
 		shipList[i].x += shipList[i].xv;
 		shipList[i].y += shipList[i].yv;
 
@@ -58,15 +58,15 @@ function handleShips() {
 			if( (movingLeft && shipList[i].x < shipList[i].dropX) ||
 				(movingRight && shipList[i].x > shipList[i].dropX)) {
 				shipList[i].hasDroppedYet = true;
-				spawnTroop(shipList[i]);
+				spawnAlien(shipList[i]);
 			} // crossing drop line
 		} else {
-			if( (movingLeft && shipList[i].x < -ew/2) ||
-				(movingRight && shipList[i].x > canvas.width+ew/2) ) {
+			if( (movingLeft && shipList[i].x < -shipWidth/2) ||
+				(movingRight && shipList[i].x > canvas.width+shipWidth/2) ) {
 				shipList[i].removeMe = true;
 			}
 		}
-	} // for each plane
+	} // for each ship
 	for(var i=shipList.length-1;i>=0;i--) {
 		if(shipList[i].removeMe) {
 			shipList.splice(i,1);

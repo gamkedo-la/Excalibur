@@ -52,9 +52,9 @@ function debugDraw() {
 		drawTextOutY+=lineHeight;
 		canvasContext.fillText("shots: " + shotList.length,100,drawTextOutY);
 		drawTextOutY+=lineHeight;
-		canvasContext.fillText("planes: " + shipList.length,100,drawTextOutY);
+		canvasContext.fillText("ships: " + shipList.length,100,drawTextOutY);
 		drawTextOutY+=lineHeight;
-		canvasContext.fillText("troops: " + alienList.length,100,drawTextOutY);
+		canvasContext.fillText("aliens: " + alienList.length,100,drawTextOutY);
 	}
 	
 }

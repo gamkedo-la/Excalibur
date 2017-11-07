@@ -5,7 +5,7 @@ var playerHP = startHitpoints;
 
 const playerWidth=50,playerHeight=30;
 
-const scoreForPlaneShot = 100;
+const scoreForShipShot = 100;
 const scoreForAlienShot = 50;
 const scoreForParachuteShot = 75;
 

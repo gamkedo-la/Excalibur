@@ -13,10 +13,10 @@ function handleShots() {
 		}
 
 		for(var e=0;e<shipList.length;e++) {
-			if(shotList[i].y > shipList[e].y-eh/2 && shotList[i].y < shipList[e].y+eh/2 &&
-			   shotList[i].x > shipList[e].x-ew/2 && shotList[i].x < shipList[e].x+ew/2) {
+			if(shotList[i].y > shipList[e].y-shipHeight/2 && shotList[i].y < shipList[e].y+shipHeight/2 &&
+			   shotList[i].x > shipList[e].x-shipWidth/2 && shotList[i].x < shipList[e].x+shipWidth/2) {
 			   
-			   score += scoreForPlaneShot;
+			   score += scoreForShipShot;
 			   shipList[e].removeMe=true;
 			   shotList[i].removeMe = true;
 			}
