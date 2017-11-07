@@ -1,37 +1,37 @@
 const dropBelowPlaneMargin = 10;
-const tw = 17, th = 25;
-const parachuteW = tw+15, parachuteH = 25;
-const trooperFallSpeedNoChute = 3.5;
-const trooperFallSpeedWithChute = 1.5;
+const alienWidth = 17, alienHeight = 25;
+const parachuteW = alienWidth+15, parachuteH = 25;
+const alienFallSpeedNoChute = 3.5;
+const alienFallSpeedWithChute = 1.5;
 const troopWalkSpeed = 2;
-const dropMarginFromCenter = pw + 30;
+const dropMarginFromCenter = playerWidth + 30;
 const dropMarginFromEdge = 50;
 const chuteThickness = 100;
 const chuteMargin = 300;
 
-var trooperList=[];
+var alienList=[];
 
 function spawnTroop(fromPlane) {
-	trooperList.push( {x:fromPlane.x, y:fromPlane.y+dropBelowPlaneMargin, removeMe:false,
+	alienList.push( {x:fromPlane.x, y:fromPlane.y+dropBelowPlaneMargin, removeMe:false,
 						isChuteDrawn:false, chuteY:Math.random()*chuteThickness+chuteMargin,
 						alreadyGotDrawn:false, isWalking:false} );
 }
 
 function handleAliens() {
-	// paratroopers
-	for(var i=0;i<trooperList.length;i++) {
+	// paraaliens
+	for(var i=0;i<alienList.length;i++) {
 		canvasContext.fillStyle = "red";
-		canvasContext.fillRect(trooperList[i].x-tw/2,trooperList[i].y-th,tw,th);
+		canvasContext.fillRect(alienList[i].x-alienWidth/2,alienList[i].y-alienHeight,alienWidth,alienHeight);
 
-		if(trooperList[i].isWalking) {
-			if(trooperList[i].x<px) {
-				trooperList[i].x += troopWalkSpeed;
+		if(alienList[i].isWalking) {
+			if(alienList[i].x<playerX) {
+				alienList[i].x += troopWalkSpeed;
 			}
-			if(trooperList[i].x>px) {
-				trooperList[i].x -= troopWalkSpeed;
+			if(alienList[i].x>playerX) {
+				alienList[i].x -= troopWalkSpeed;
 			}
-			if( Math.abs(trooperList[i].x - px) < (pw/2-tw/2) ) {
-				trooperList[i].removeMe = true;
+			if( Math.abs(alienList[i].x - playerX) < (playerWidth/2-alienWidth/2) ) {
+				alienList[i].removeMe = true;
 				playerHP--;
 				if(playerHP<=0) {
 					resetGame();
@@ -40,34 +40,34 @@ function handleAliens() {
 			continue; // skip rest of draw and motion code which are only for air travel
 		}
 
-		if(trooperList[i].isChuteDrawn) {
+		if(alienList[i].isChuteDrawn) {
 			canvasContext.fillStyle = "gray";
-			trooperList[i].chuteX = trooperList[i].x-parachuteW/2; 
-			trooperList[i].chuteY = trooperList[i].y-th-parachuteH;
-			canvasContext.fillRect(trooperList[i].chuteX,trooperList[i].chuteY,
+			alienList[i].chuteX = alienList[i].x-parachuteW/2; 
+			alienList[i].chuteY = alienList[i].y-alienHeight-parachuteH;
+			canvasContext.fillRect(alienList[i].chuteX,alienList[i].chuteY,
 								parachuteW,parachuteH);
 		}
 
-		if(trooperList[i].alreadyGotDrawn == false &&
-			trooperList[i].y > trooperList[i].chuteY) {
+		if(alienList[i].alreadyGotDrawn == false &&
+			alienList[i].y > alienList[i].chuteY) {
 
-			trooperList[i].isChuteDrawn = true;
-			trooperList[i].alreadyGotDrawn=true;
+			alienList[i].isChuteDrawn = true;
+			alienList[i].alreadyGotDrawn=true;
 		}
-		trooperList[i].y += (trooperList[i].isChuteDrawn ? trooperFallSpeedWithChute : trooperFallSpeedNoChute);
+		alienList[i].y += (alienList[i].isChuteDrawn ? alienFallSpeedWithChute : alienFallSpeedNoChute);
 
-		if(trooperList[i].y > canvas.height) { // landing on ground
-			if(trooperList[i].isChuteDrawn) {
-				trooperList[i].y = canvas.height;
-				trooperList[i].isWalking = true;
+		if(alienList[i].y > canvas.height) { // landing on ground
+			if(alienList[i].isChuteDrawn) {
+				alienList[i].y = canvas.height;
+				alienList[i].isWalking = true;
 			} else {
-				trooperList[i].removeMe = true;
+				alienList[i].removeMe = true;
 			}
 		}
 	}
-	for(var i=trooperList.length-1;i>=0;i--) {
-		if(trooperList[i].removeMe) {
-			trooperList.splice(i,1);
+	for(var i=alienList.length-1;i>=0;i--) {
+		if(alienList[i].removeMe) {
+			alienList.splice(i,1);
 		}
 	}
 }

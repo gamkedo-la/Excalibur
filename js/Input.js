@@ -3,25 +3,25 @@ var debug = false;
 
 function handleInput() {
 	if(holdFire) {
-		if(cReloadLeft <= 0) {
-			shotList.push({x:cEndX,y:cEndY,moveAng:cang,speed:cShotSpeed,removeMe:false});
-			cReloadLeft = cReloadFrames;
+		if(cannonReloadLeft <= 0) {
+			shotList.push({x:cannonEndX,y:cannonEndY,moveAng:cannonAngle,speed:cannonShotSpeed,removeMe:false});
+			cannonReloadLeft = cannonReloadFrames;
 		}
 	}
-	if(cReloadLeft>0) {
-		cReloadLeft--;
+	if(cannonReloadLeft>0) {
+		cannonReloadLeft--;
 	}
 	if(holdLeft) {
-		cang -= cAngVel;
+		cannonAngle -= cannonAngleVelocity;
 	}
 	if(holdRight) {
-		cang += cAngVel;
+		cannonAngle += cannonAngleVelocity;
 	}
-	if(cang < defaultCannonAng-cannonAngLimit) {
-		cang = defaultCannonAng-cannonAngLimit;
+	if(cannonAngle < defaultCannonAng-cannonAngLimit) {
+		cannonAngle = defaultCannonAng-cannonAngLimit;
 	}
-	if(cang > defaultCannonAng+cannonAngLimit) {
-		cang = defaultCannonAng+cannonAngLimit;
+	if(cannonAngle > defaultCannonAng+cannonAngLimit) {
+		cannonAngle = defaultCannonAng+cannonAngLimit;
 	}
 }
 

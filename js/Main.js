@@ -5,9 +5,9 @@ window.onload = function() {
 	document.body.appendChild(canvas);
 	canvasContext = canvas.getContext("2d");
 	setInterval(update,1000/30);
-	setInterval(enemySpawn,1000*4);
-	cEndX = px = canvas.width/2;
-	cEndY = py = canvas.height-ph;
+	setInterval(shipSpawn,1000*4);
+	cannonEndX = playerX = canvas.width/2;
+	cannonEndY = playerY = canvas.height-playerHeight;
 	document.addEventListener("keydown",keyPress);
 	document.addEventListener("keyup",keyRelease);
 }
@@ -29,8 +29,8 @@ function update() {
 
 function resetGame() {
 	shotList=[];
-	enemyList=[];
-	trooperList=[];
+	shipList=[];
+	alienList=[];
 	score=0;
 	playerHP = startHitpoints;
 }
@@ -52,9 +52,9 @@ function debugDraw() {
 		drawTextOutY+=lineHeight;
 		canvasContext.fillText("shots: " + shotList.length,100,drawTextOutY);
 		drawTextOutY+=lineHeight;
-		canvasContext.fillText("planes: " + enemyList.length,100,drawTextOutY);
+		canvasContext.fillText("planes: " + shipList.length,100,drawTextOutY);
 		drawTextOutY+=lineHeight;
-		canvasContext.fillText("troops: " + trooperList.length,100,drawTextOutY);
+		canvasContext.fillText("troops: " + alienList.length,100,drawTextOutY);
 	}
 	
 }

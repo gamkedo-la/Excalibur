@@ -12,27 +12,27 @@ function handleShots() {
 			shotList[i].removeMe = true;
 		}
 
-		for(var e=0;e<enemyList.length;e++) {
-			if(shotList[i].y > enemyList[e].y-eh/2 && shotList[i].y < enemyList[e].y+eh/2 &&
-			   shotList[i].x > enemyList[e].x-ew/2 && shotList[i].x < enemyList[e].x+ew/2) {
+		for(var e=0;e<shipList.length;e++) {
+			if(shotList[i].y > shipList[e].y-eh/2 && shotList[i].y < shipList[e].y+eh/2 &&
+			   shotList[i].x > shipList[e].x-ew/2 && shotList[i].x < shipList[e].x+ew/2) {
 			   
 			   score += scoreForPlaneShot;
-			   enemyList[e].removeMe=true;
+			   shipList[e].removeMe=true;
 			   shotList[i].removeMe = true;
 			}
 		}
-		for(var t=0;t<trooperList.length;t++) {
-			if(shotList[i].y > trooperList[t].y-th && shotList[i].y < trooperList[t].y &&
-			   shotList[i].x > trooperList[t].x-tw/2 && shotList[i].x < trooperList[t].x+tw/2) {
+		for(var t=0;t<alienList.length;t++) {
+			if(shotList[i].y > alienList[t].y-alienHeight && shotList[i].y < alienList[t].y &&
+			   shotList[i].x > alienList[t].x-alienWidth/2 && shotList[i].x < alienList[t].x+alienWidth/2) {
 			   
-			   score += scoreForTrooperShot;
-			   trooperList[t].removeMe=true;
+			   score += scoreForAlienShot;
+			   alienList[t].removeMe=true;
 			   shotList[i].removeMe = true;
-			} else if(shotList[i].y > trooperList[t].chuteY && shotList[i].y < trooperList[t].chuteY+parachuteH
-				 && shotList[i].x > trooperList[t].chuteX && shotList[i].x < trooperList[t].x+parachuteW) {
+			} else if(shotList[i].y > alienList[t].chuteY && shotList[i].y < alienList[t].chuteY+parachuteH
+				 && shotList[i].x > alienList[t].chuteX && shotList[i].x < alienList[t].x+parachuteW) {
 			   	
 			   	score += scoreForParachuteShot;
-			   	trooperList[t].isChuteDrawn = false;
+			   	alienList[t].isChuteDrawn = false;
 			}
 		}
 	}
