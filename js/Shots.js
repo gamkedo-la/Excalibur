@@ -1,5 +1,13 @@
 var shotList=[];
 
+function shotClass() {
+	this.x = cannonEndX;
+	this.y = cannonEndY;
+	this.moveAng = cannonAngle;
+	this.speed = cannonShotSpeed;
+	this.removeMe = false;
+}
+
 function handleShots() {
 	canvasContext.fillStyle = "yellow";
 	for(var i=0;i<shotList.length;i++) {
@@ -7,7 +15,7 @@ function handleShots() {
 		shotList[i].x += shotList[i].speed * Math.cos(shotList[i].moveAng);
 		shotList[i].y += shotList[i].speed * Math.sin(shotList[i].moveAng);
 
-		// note: note checking screen bottom since we can't shoot down
+		// note: not checking screen bottom since we can't shoot down
 		if(shotList[i].x<0 || shotList[i].x>canvas.width || shotList[i].y<0) {
 			shotList[i].removeMe = true;
 		}

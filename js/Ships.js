@@ -1,13 +1,24 @@
 const shipSpawnBandThickness = 200;
 const shipSpawnBandMargin = 50;
-
-var shipSpeed = 4;
 const shipWidth = 100, shipHeight = 40;
 
 var shipList=[];
 
+function shipClass() {
+	this.x = -shipWidth/2;
+	this.y = Math.random() * shipSpawnBandThickness + shipSpawnBandMargin;
+	this.shipSpeed = 4;
+	this.xv = this.shipSpeed;
+	this.yv = 0;
+	this.removeMe = false;
+	this.hasDroppedYet = false;
+	var validXPixelTopDrop = 0;
+	this.dropX = validXPixelTopDrop;
+}
+
 function shipSpawn() {
-	var newShip = {};
+	var newShip = new shipClass;
+	shipList.push(newShip);
 
 	newShip.removeMe = false;
 
@@ -20,8 +31,6 @@ function shipSpawn() {
 	}
 	newShip.y = Math.random() * shipSpawnBandThickness + shipSpawnBandMargin;
 	newShip.yv = 0;
-
-	var validXPixelTopDrop = 0;
 
 	var safeToDropHere = false;
 	while(safeToDropHere == false) {
@@ -41,7 +50,7 @@ function shipSpawn() {
 
 	newShip.hasDroppedYet = false;
 
-	shipList.push(newShip);
+	
 }
 
 function handleShips() {

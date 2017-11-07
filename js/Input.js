@@ -1,10 +1,19 @@
 var holdFire, holdLeft, holdRight = false;
-var debug = false;	
+var debug = false;
+
+var defaultCannonAng = -Math.PI/2;
+var cannonAngLimit = Math.PI*0.42;
+var cannonLength=40,cannonAngle=defaultCannonAng,cannonAngleVelocity=0.1;
+var cannonEndX, cannonEndY;
+var cannonShotSpeed = 5;
+var cannonReloadFrames = 5;
+var cannonReloadLeft = 0;	
 
 function handleInput() {
 	if(holdFire) {
 		if(cannonReloadLeft <= 0) {
-			shotList.push({x:cannonEndX,y:cannonEndY,moveAng:cannonAngle,speed:cannonShotSpeed,removeMe:false});
+			var newShot = new shotClass;
+			shotList.push(newShot);
 			cannonReloadLeft = cannonReloadFrames;
 		}
 	}

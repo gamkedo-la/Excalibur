@@ -1,3 +1,9 @@
+const scoreForShipShot = 100;
+const scoreForAlienShot = 50;
+const scoreForParachuteShot = 75;
+
+var score=0;
+
 window.onload = function() {
 	canvas = document.createElement("canvas");
 	canvas.width = 800;
@@ -14,6 +20,7 @@ window.onload = function() {
 
 function update() {
 	clearScreen();
+	drawAll()
 
 	handleInput();
 
@@ -21,10 +28,15 @@ function update() {
 
 	handleShips();
 	handleAliens();
+}
 
+function drawAll() {
 	drawPlayer();
-
 	debugDraw();
+}
+
+function moveAll() {
+
 }
 
 function resetGame() {

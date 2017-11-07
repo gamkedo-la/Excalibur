@@ -11,10 +11,22 @@ const chuteMargin = 300;
 
 var alienList=[];
 
+function alienClass() {
+	this.x = 0;
+	this.y = 0;
+	this.removeMe = false;
+	this.isChuteDrawn = false;
+	this.chuteX = 0;
+	this.chuteY = Math.random()*chuteThickness+chuteMargin;
+	this.alreadyGotDrawn = false;
+	this.isWalking = false;
+}
+
 function spawnAlien(fromShip) {
-	alienList.push( {x:fromShip.x, y:fromShip.y+dropBelowShipMargin, removeMe:false,
-						isChuteDrawn:false, chuteY:Math.random()*chuteThickness+chuteMargin,
-						alreadyGotDrawn:false, isWalking:false} );
+	var newAlien = new alienClass;
+	newAlien.x = fromShip.x;
+	newAlien.y = fromShip.y;
+	alienList.push(newAlien);
 }
 
 function handleAliens() {
