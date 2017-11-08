@@ -20,6 +20,59 @@ function alienClass() {
 	this.chuteY = Math.random()*chuteThickness+chuteMargin;
 	this.alreadyGotDrawn = false;
 	this.isWalking = false;
+
+	this.draw = function() {
+		canvasContext.fillStyle = "red";
+		canvasContext.fillRect(this.x-alienWidth/2,this.y-alienHeight,alienWidth,alienHeight);
+		
+		if(this.alreadyGotDrawn == false &&
+			this.y > this.chuteY) {
+
+			this.isChuteDrawn = true;
+			this.alreadyGotDrawn = true;
+		}
+		
+		if(this.isWalking) {
+			return;
+		}
+			if(this.isChuteDrawn) {
+				canvasContext.fillStyle = "gray";
+				this.chuteX = this.x-parachuteW/2; 
+				this.chuteY = this.y-alienHeight-parachuteH;
+				canvasContext.fillRect(this.chuteX,this.chuteY,
+									parachuteW,parachuteH);
+			}
+
+	}
+
+	this.move = function() {
+		if(this.isWalking) {
+			if(this.x<playerX) {
+				this.x += alienWalkSpeed;
+			}
+			if(this.x>playerX) {
+				this.x -= alienWalkSpeed;
+			}
+			if( Math.abs(this.x - playerX) < (playerWidth/2-alienWidth/2) ) {
+				this.removeMe = true;
+				playerHP--;
+				if(playerHP<=0) {
+					resetGame();
+				}
+			}
+		}
+
+		this.y += (this.isChuteDrawn ? alienFallSpeedWithChute : alienFallSpeedNoChute);
+
+		if(this.y > canvas.height) { // landing on ground
+			if(this.isChuteDrawn) {
+				this.y = canvas.height;
+				this.isWalking = true;
+			} else {
+				this.removeMe = true;
+			}
+		}
+	}
 }
 
 function spawnAlien(fromShip) {
@@ -29,57 +82,19 @@ function spawnAlien(fromShip) {
 	alienList.push(newAlien);
 }
 
-function handleAliens() {
-	// aliens
+function drawAndRemoveAliens() {
 	for(var i=0;i<alienList.length;i++) {
-		canvasContext.fillStyle = "red";
-		canvasContext.fillRect(alienList[i].x-alienWidth/2,alienList[i].y-alienHeight,alienWidth,alienHeight);
-
-		if(alienList[i].isWalking) {
-			if(alienList[i].x<playerX) {
-				alienList[i].x += alienWalkSpeed;
-			}
-			if(alienList[i].x>playerX) {
-				alienList[i].x -= alienWalkSpeed;
-			}
-			if( Math.abs(alienList[i].x - playerX) < (playerWidth/2-alienWidth/2) ) {
-				alienList[i].removeMe = true;
-				playerHP--;
-				if(playerHP<=0) {
-					resetGame();
-				}
-			}
-			continue; // skip rest of draw and motion code which are only for air travel
-		}
-
-		if(alienList[i].isChuteDrawn) {
-			canvasContext.fillStyle = "gray";
-			alienList[i].chuteX = alienList[i].x-parachuteW/2; 
-			alienList[i].chuteY = alienList[i].y-alienHeight-parachuteH;
-			canvasContext.fillRect(alienList[i].chuteX,alienList[i].chuteY,
-								parachuteW,parachuteH);
-		}
-
-		if(alienList[i].alreadyGotDrawn == false &&
-			alienList[i].y > alienList[i].chuteY) {
-
-			alienList[i].isChuteDrawn = true;
-			alienList[i].alreadyGotDrawn=true;
-		}
-		alienList[i].y += (alienList[i].isChuteDrawn ? alienFallSpeedWithChute : alienFallSpeedNoChute);
-
-		if(alienList[i].y > canvas.height) { // landing on ground
-			if(alienList[i].isChuteDrawn) {
-				alienList[i].y = canvas.height;
-				alienList[i].isWalking = true;
-			} else {
-				alienList[i].removeMe = true;
-			}
-		}
+		alienList[i].draw();
 	}
 	for(var i=alienList.length-1;i>=0;i--) {
 		if(alienList[i].removeMe) {
 			alienList.splice(i,1);
 		}
 	}
+}
+
+function moveAliens() {
+	for(var i=0;i<alienList.length;i++) {
+		alienList[i].move();
+	}	
 }

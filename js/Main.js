@@ -20,23 +20,23 @@ window.onload = function() {
 
 function update() {
 	clearScreen();
-	drawAll()
-
 	handleInput();
-
-	handleShots();
-
-	handleShips();
-	handleAliens();
+	drawAll();
+	moveAll();
 }
 
 function drawAll() {
+	drawAndRemoveShips();
+	drawAndRemoveAliens();
+	drawAndRemoveShots();
 	drawPlayer();
 	debugDraw();
 }
 
 function moveAll() {
-
+	moveShips();
+	moveAliens();
+	moveShots();
 }
 
 function resetGame() {

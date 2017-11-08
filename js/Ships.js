@@ -14,6 +14,37 @@ function shipClass() {
 	this.hasDroppedYet = false;
 	var validXPixelTopDrop = 0;
 	this.dropX = validXPixelTopDrop;
+
+	this.draw = function() {
+		canvasContext.fillStyle = "orange";
+		canvasContext.fillRect(this.x-shipWidth/2,this.y-shipHeight/2,shipWidth,shipHeight);
+	}
+
+	this.move = function() {
+		this.x += this.xv;
+		this.y += this.yv;
+	}
+
+	this.edgeOfScreenDetection = function() {
+		var movingLeft = this.xv < 0;
+		var movingRight = this.xv > 0;
+		if( (movingLeft && this.x < -shipWidth/2) ||
+			(movingRight && this.x > canvas.width+shipWidth/2) ) {
+			this.removeMe = true;
+		}
+	}
+
+	this.spawnAliensFromShip = function() {
+		var movingLeft = this.xv < 0;
+		var movingRight = this.xv > 0;
+		if(this.hasDroppedYet == false) {
+			if( (movingLeft && this.x < this.dropX) ||
+				(movingRight && this.x > this.dropX)) {
+				this.hasDroppedYet = true;
+				spawnAlien(this);
+			} // crossing drop line
+		}
+	}
 }
 
 function shipSpawn() {
@@ -45,40 +76,26 @@ function shipSpawn() {
 			safeToDropHere = false;
 		}
 	}
-
 	newShip.dropX = validXPixelTopDrop;
 
 	newShip.hasDroppedYet = false;
-
-	
 }
 
-function handleShips() {
-	// ships
-	canvasContext.fillStyle = "orange";
+function drawAndRemoveShips() {
 	for(var i=0;i<shipList.length;i++) {
-		canvasContext.fillRect(shipList[i].x-shipWidth/2,shipList[i].y-shipHeight/2,shipWidth,shipHeight);
-		shipList[i].x += shipList[i].xv;
-		shipList[i].y += shipList[i].yv;
-
-		var movingLeft = shipList[i].xv < 0;
-		var movingRight = shipList[i].xv > 0;
-		if(shipList[i].hasDroppedYet == false) {
-			if( (movingLeft && shipList[i].x < shipList[i].dropX) ||
-				(movingRight && shipList[i].x > shipList[i].dropX)) {
-				shipList[i].hasDroppedYet = true;
-				spawnAlien(shipList[i]);
-			} // crossing drop line
-		} else {
-			if( (movingLeft && shipList[i].x < -shipWidth/2) ||
-				(movingRight && shipList[i].x > canvas.width+shipWidth/2) ) {
-				shipList[i].removeMe = true;
-			}
-		}
-	} // for each ship
+		shipList[i].draw();
+		shipList[i].spawnAliensFromShip();
+	}
 	for(var i=shipList.length-1;i>=0;i--) {
 		if(shipList[i].removeMe) {
 			shipList.splice(i,1);
 		}
+	}
+}
+
+function moveShips() {
+	for(var i=0;i<shipList.length;i++) {
+		shipList[i].move();
+		shipList[i].edgeOfScreenDetection();
 	}
 }
