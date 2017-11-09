@@ -6,7 +6,6 @@ function shotClass() {
 	this.moveAng = cannonAngle;
 	this.speed = cannonShotSpeed;
 	this.removeMe = false;
-	this.awardPoints = true;
 
 	this.draw = function() {
 		canvasContext.fillStyle = "yellow";
@@ -41,13 +40,10 @@ function shotClass() {
 			   alienList[t].removeMe=true;
 			   this.removeMe = true;
 			} else if(this.y > alienList[t].chuteY && this.y < alienList[t].chuteY+parachuteH
-				 && this.x > alienList[t].chuteX && this.x < alienList[t].x+parachuteW) {
+				 && this.x > alienList[t].chuteX && this.x < alienList[t].x+parachuteW && alienList[t].isChuteDrawn) {
 			   	
-			   	if (this.awardPoints) {
 			   	score += scoreForParachuteShot;
 			   	alienList[t].isChuteDrawn = false;
-			   	awardPoints = false;
-			   	}
 			} // end of parachute collision check
 		} // end of for alienList.length
 	} // end of shotCollisionAndBoundaryCheck function
