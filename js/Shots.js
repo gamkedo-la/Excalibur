@@ -25,8 +25,8 @@ function shotClass() {
 		}
 
 		for(var e=0;e<shipList.length;e++) {
-			if(this.y > shipList[e].y-shipHeight/2 && this.y < shipList[e].y+shipHeight/2 &&
-			   this.x > shipList[e].x-shipWidth/2 && this.x < shipList[e].x+shipWidth/2) {
+			if(this.y > shipList[e].position.y-shipHeight/2 && this.y < shipList[e].position.y+shipHeight/2 &&
+			   this.x > shipList[e].position.x-shipWidth/2 && this.x < shipList[e].position.x+shipWidth/2) {
 			   
 			   score += scoreForShipShot;
 			   shipList[e].removeMe=true;

@@ -5,11 +5,9 @@ const shipWidth = 100, shipHeight = 40;
 var shipList=[];
 
 function shipClass() {
-	this.x = -shipWidth/2;
-	this.y = Math.random() * shipSpawnBandThickness + shipSpawnBandMargin;
+    this.position = vec2.create(-shipWidth/2, Math.random() * shipSpawnBandThickness + shipSpawnBandMargin);
 	this.shipSpeed = 4;
-	this.xv = this.shipSpeed;
-	this.yv = 0;
+    this.velocity = vec2.create(this.shipSpeed, 0);
 	this.removeMe = false;
 	this.hasDroppedYet = false;
 	var validXPixelTopDrop = 0;
@@ -17,29 +15,28 @@ function shipClass() {
 
 	this.draw = function() {
 		canvasContext.fillStyle = "orange";
-		canvasContext.fillRect(this.x-shipWidth/2,this.y-shipHeight/2,shipWidth,shipHeight);
+		canvasContext.fillRect(this.position.x-shipWidth/2,this.position.y-shipHeight/2,shipWidth,shipHeight);
 	}
 
 	this.move = function() {
-		this.x += this.xv;
-		this.y += this.yv;
+        vec2.add(this.position, this.position, this.velocity);
 	}
 
 	this.edgeOfScreenDetection = function() {
-		var movingLeft = this.xv < 0;
-		var movingRight = this.xv > 0;
-		if( (movingLeft && this.x < -shipWidth/2) ||
-			(movingRight && this.x > canvas.width+shipWidth/2) ) {
+		var movingLeft = this.velocity.x < 0;
+		var movingRight = this.velocity.x > 0;
+		if( (movingLeft && this.position.x < -shipWidth/2) ||
+			(movingRight && this.position.x > canvas.width+shipWidth/2) ) {
 			this.removeMe = true;
 		}
 	}
 
 	this.spawnAliensFromShip = function() {
-		var movingLeft = this.xv < 0;
-		var movingRight = this.xv > 0;
+		var movingLeft = this.velocity.x < 0;
+		var movingRight = this.velocity.x > 0;
 		if(this.hasDroppedYet == false) {
-			if( (movingLeft && this.x < this.dropX) ||
-				(movingRight && this.x > this.dropX)) {
+			if( (movingLeft && this.position.x < this.dropX) ||
+				(movingRight && this.position.x > this.dropX)) {
 				this.hasDroppedYet = true;
 				spawnAlien(this);
 			} // crossing drop line
@@ -54,14 +51,14 @@ function shipSpawn() {
 	newShip.removeMe = false;
 
 	if(Math.random()<0.5) {
-		newShip.x = -shipWidth/2;
-		newShip.xv = 4;
+		newShip.position.x = -shipWidth/2;
+		newShip.velocity.x = 4;
 	} else {
-		newShip.x = canvas.width+shipWidth/2;
-		newShip.xv = -4;
+		newShip.position.x = canvas.width+shipWidth/2;
+		newShip.velocity.x = -4;
 	}
-	newShip.y = Math.random() * shipSpawnBandThickness + shipSpawnBandMargin;
-	newShip.yv = 0;
+	newShip.position.y = Math.random() * shipSpawnBandThickness + shipSpawnBandMargin;
+	newShip.velocity.y = 0;
 
 	var safeToDropHere = false;
 	while(safeToDropHere == false) {

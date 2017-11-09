@@ -77,8 +77,8 @@ function alienClass() {
 
 function spawnAlien(fromShip) {
 	var newAlien = new alienClass;
-	newAlien.x = fromShip.x;
-	newAlien.y = fromShip.y;
+	newAlien.x = fromShip.position.x;
+	newAlien.y = fromShip.position.y;
 	alienList.push(newAlien);
 }
 

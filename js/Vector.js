@@ -28,13 +28,13 @@ function vectorObject(xin = 0.0, yin = 0.0) {
 
 // getter/setter properties, to allow developers to work with vecObj.x and vecObj.y, instead of vecObj.v[0], and vecObj.v[1]
 Object.defineProperty(vectorObject.prototype, 'x', {
-    get: function() { return this.vals[0]; },
-    set: function(inp) { this.vals[0] = inp; }
+    get: function() { return this.v[0]; },
+    set: function(inp) { this.v[0] = inp; }
 });
 
 Object.defineProperty(vectorObject.prototype, 'y', {
-    get: function() { return this.vals[1]; },
-    set: function(inp) { this.vals[1] = inp; }
+    get: function() { return this.v[1]; },
+    set: function(inp) { this.v[1] = inp; }
 });
 
 // ------------------------------------------------------------
