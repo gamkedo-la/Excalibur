@@ -1,18 +1,18 @@
-var shotList=[];
+var sineShotList=[];
 
-function shotClass() {
-	cannonShotSpeed = 5;
-	cannonReloadFrames = 5;
+function sineShotClass() {
+	cannonShotSpeed = 3;
+	cannonReloadFrames = 15;
 	cannonReloadLeft = 0;
 	this.x = cannonEndX;
 	this.y = cannonEndY;
 	this.moveAng = cannonAngle;
-	this.speed = cannonShotSpeed;
+	this.speed = 3;
 	this.removeMe = false;
 
 	this.draw = function() {
-		canvasContext.fillStyle = "yellow";
-		canvasContext.fillRect(this.x-1,this.y-1,3,3);
+		canvasContext.fillStyle = "blue";
+		canvasContext.fillRect(this.x-1,this.y-1,6,6);
 	}
 
 	this.move = function() {
@@ -51,21 +51,3 @@ function shotClass() {
 		} // end of for alienList.length
 	} // end of shotCollisionAndBoundaryCheck function
 } // end of shotClass
-
-function drawAndRemoveShots() {
-	for(var i=0;i<shotList.length;i++) {
-		shotList[i].draw();
-	}
-	for(var i=shotList.length-1;i>=0;i--) {
-		if(shotList[i].removeMe) {
-			shotList.splice(i,1);
-		}
-	}
-}
-
-function moveShots() {
-	for(var i=0;i<shotList.length;i++) {
-		shotList[i].move();
-		shotList[i].shotCollisionAndBoundaryCheck();
-	}
-}

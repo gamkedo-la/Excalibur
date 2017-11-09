@@ -1,4 +1,5 @@
 var holdFire, holdLeft, holdRight = false;
+var secondaryFire = false;
 var debug = false;
 
 var defaultCannonAng = -Math.PI/2;
@@ -10,9 +11,15 @@ var cannonReloadFrames = 5;
 var cannonReloadLeft = 0;	
 
 function handleInput() {
-	if(holdFire) {
+	if(holdFire && !secondaryFire) {
 		if(cannonReloadLeft <= 0) {
 			var newShot = new shotClass;
+			shotList.push(newShot);
+			cannonReloadLeft = cannonReloadFrames;
+		}
+	} else if(holdFire && secondaryFire) {
+		if(cannonReloadLeft <= 0) {
+			var newShot = new sineShotClass;
 			shotList.push(newShot);
 			cannonReloadLeft = cannonReloadFrames;
 		}
@@ -35,7 +42,11 @@ function handleInput() {
 }
 
 function keyPress(evt) {
+	evt.preventDefault();
 	switch(evt.keyCode) {
+		case 9:
+			secondaryFire = !secondaryFire;
+			break;
 		case 32:
 			holdFire = true;
 			break;
