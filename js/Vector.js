@@ -52,101 +52,101 @@ var vec2 = {};
 // Create a new vectorObject and return it. The developer should never have to create a new
 // vectorObject() directly
 vec2.create = function(x = 0.0, y = 0.0) {
-    var out = new vectorObject(x, y);
-    return out;
+	var out = new vectorObject(x, y);
+	return out;
 };
 
 
 vec2.clone = function(a) {
-    var out = new vectorObject(a.v[0], a.v[1]);
-    return out;
+	var out = new vectorObject(a.v[0], a.v[1]);
+	return out;
 };
 
 
 vec2.copy = function(out, a) {
-    out.v[0] = a.v[0];
-    out.v[1] = a.v[1];
-    return out;
+	out.v[0] = a.v[0];
+	out.v[1] = a.v[1];
+	return out;
 };
 
 
 vec2.add = function(out, a, b) {
-    out.v[0] = a.v[0] + b.v[0];
-    out.v[1] = a.v[1] + b.v[1];
-    return out;
+	out.v[0] = a.v[0] + b.v[0];
+	out.v[1] = a.v[1] + b.v[1];
+	return out;
 };
 
 
 vec2.sub = function(out, a, b) {
-    out.v[0] = a.v[0] - b.v[0];
-    out.v[1] = a.v[1] - b.v[1];
-    return out;
+	out.v[0] = a.v[0] - b.v[0];
+	out.v[1] = a.v[1] - b.v[1];
+	return out;
 };
 
 
 vec2.dot = function(a, b) {
-    return (a.v[0] * b.v[0]) + (a.v[1] * b.v[1]);
+	return (a.v[0] * b.v[0]) + (a.v[1] * b.v[1]);
 };
 
 
 vec2.scale = function(out, a, k) {
-    out.v[0] = a.v[0] * k;
-    out.v[1] = a.v[1] * k;
-    return out;
+	out.v[0] = a.v[0] * k;
+	out.v[1] = a.v[1] * k;
+	return out;
 };
 
 
 // Scale b by k, and add to a
 vec2.scaleAndAdd = function (out, a, b, k) {
-    out.v[0] = a.v[0] + (b.v[0] * k);
-    out.v[1] = a.v[1] + (b.v[1] * k);
-    return out;
+	out.v[0] = a.v[0] + (b.v[0] * k);
+	out.v[1] = a.v[1] + (b.v[1] * k);
+	return out;
 };
 
 
 // The squared distance between 2 vectorObjects (because.. we can use vectorObjects as points)
 vec2.sqDist = function(a, b) {
-    var x = a.v[0] - b.v[0];
-    var y = a.v[1] - b.v[1];
-    return x*x + y*y;
+	var x = a.v[0] - b.v[0];
+	var y = a.v[1] - b.v[1];
+	return x*x + y*y;
 };
 
 
 // Length of a
 vec2.len = function(a) {
-    return Math.sqrt(a.v[0]*a.v[0] + a.v[1]*a.v[1]);
+	return Math.sqrt(a.v[0]*a.v[0] + a.v[1]*a.v[1]);
 };
 
 
 // Squared length of a
 vec2.sqLen = function(a) {
-    return a.v[0]*a.v[0] + a.v[1]*a.v[1];
+	return a.v[0]*a.v[0] + a.v[1]*a.v[1];
 };
 
 
 vec2.normalize = function(out, a) {
-    var sqLen = a.v[0]*a.v[0] + a.v[1]*a.v[1];
-    if (sqLen  > 0) {
-        sqLen = 1 / Math.sqrt(sqLen);
-        out.v[0] = out.v[0] * sqLen;
-        out.v[1] = out.v[1] * sqLen;
-    } else {
-        console.log("vec2.normalize() called on a 0-length vector");
-    }
-    return out;
+	var sqLen = a.v[0]*a.v[0] + a.v[1]*a.v[1];
+	if (sqLen  > 0) {
+		sqLen = 1 / Math.sqrt(sqLen);
+		out.v[0] = out.v[0] * sqLen;
+		out.v[1] = out.v[1] * sqLen;
+	} else {
+		console.log("vec2.normalize() called on a 0-length vector");
+	}
+	return out;
 };
 
 vec2.str = function(a) {
-    return 'vec2(' + a.v[0] + ', ' + a.v[1] + ')';
+	return 'vec2(' + a.v[0] + ', ' + a.v[1] + ')';
 };
 
 
 vec2.exactEquals = function(a, b) {
-    return a.v[0] === b.v[0] && a.v[1] === b.v[1];
+	return a.v[0] === b.v[0] && a.v[1] === b.v[1];
 };
 
 
 vec2.equals = function(a, b, epsilon = 1e-5) {
-    // TODO if we find ourselves doing float comparisons in a lot of places, we may want to put epsilon into a common math class
-    return Math.abs(a.v[0]-b.v[0]) <= epsilon && Math.abs(a.v[1] - b.v[1]) <= epsilon;
+	// TODO if we find ourselves doing float comparisons in a lot of places, we may want to put epsilon into a common math class
+	return Math.abs(a.v[0]-b.v[0]) <= epsilon && Math.abs(a.v[1] - b.v[1]) <= epsilon;
 };
