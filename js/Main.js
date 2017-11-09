@@ -10,6 +10,10 @@ window.onload = function() {
 	canvas.height = 600;
 	document.body.appendChild(canvas);
 	canvasContext = canvas.getContext("2d");
+	loadImages();
+}
+
+function loadingDoneSoStartGame (){
 	setInterval(update,1000/30);
 	setInterval(shipSpawn,1000*4);
 	cannonEndX = playerX = canvas.width/2;

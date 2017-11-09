@@ -22,9 +22,13 @@ function alienClass() {
 	this.isWalking = false;
 
 	this.draw = function() {
-		canvasContext.fillStyle = "red";
-		canvasContext.fillRect(this.x-alienWidth/2,this.y-alienHeight,alienWidth,alienHeight);
+
+		// canvasContext.fillStyle = "red";
+		// canvasContext.fillRect(this.x-alienWidth/2,this.y-alienHeight,alienWidth,alienHeight);
 		
+		//Upload alien image here
+		 canvasContext.drawImage(alienPic, this.x-alienWidth/2 , this.y-alienHeight);	
+
 		if(this.alreadyGotDrawn == false &&
 			this.y > this.chuteY) {
 
