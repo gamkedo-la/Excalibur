@@ -40,7 +40,7 @@ Object.defineProperty(vectorObject.prototype, 'y', {
 // ------------------------------------------------------------
 // A "namespace" for all vector operations
 // The idea here is: vector operations will be called like vec2.funcCall(outVec, inputA, inputB), or similar
-// This gives saves memory, as only one var has all the vector math properties defined on it; and every
+// This saves memory, as only one var has all the vector math properties defined on it; and every
 // vectorObject can contain a minimal amount of data
 //
 // Note that the following functions operate "in-place" on a vectorObject, but also return the object to 

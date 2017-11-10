@@ -36,14 +36,14 @@ function shotClass() {
 			}
 		}
 		for(var t=0;t<alienList.length;t++) {
-			if(this.y > alienList[t].y-alienHeight && this.y < alienList[t].y &&
-			   this.x > alienList[t].x-alienWidth/2 && this.x < alienList[t].x+alienWidth/2) {
+			if(this.y > alienList[t].position.y-alienHeight && this.y < alienList[t].position.y &&
+			   this.x > alienList[t].position.x-alienWidth/2 && this.x < alienList[t].position.x+alienWidth/2) {
 			   
 			   score += scoreForAlienShot;
 			   alienList[t].removeMe=true;
 			   this.removeMe = true;
 			} else if(this.y > alienList[t].chuteY && this.y < alienList[t].chuteY+parachuteH
-				 && this.x > alienList[t].chuteX && this.x < alienList[t].x+parachuteW && alienList[t].isChuteDrawn) {
+				 && this.x > alienList[t].chuteX && this.x < alienList[t].position.x+parachuteW && alienList[t].isChuteDrawn) {
 			   	
 			   	score += scoreForParachuteShot;
 			   	alienList[t].isChuteDrawn = false;

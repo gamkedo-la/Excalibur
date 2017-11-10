@@ -12,8 +12,7 @@ const chuteMargin = 300;
 var alienList=[];
 
 function alienClass() {
-	this.x = 0;
-	this.y = 0;
+    this.position = vec2.create();
 	this.removeMe = false;
 	this.isChuteDrawn = false;
 	this.chuteX = 0;
@@ -24,13 +23,13 @@ function alienClass() {
 	this.draw = function() {
 
 		// canvasContext.fillStyle = "red";
-		// canvasContext.fillRect(this.x-alienWidth/2,this.y-alienHeight,alienWidth,alienHeight);
+		// canvasContext.fillRect(this.position.x-alienWidth/2,this.position.y-alienHeight,alienWidth,alienHeight);
 		
 		//Upload alien image here
-		 canvasContext.drawImage(alienPic, this.x-alienWidth/2 , this.y-alienHeight);	
+		 canvasContext.drawImage(alienPic, this.position.x-alienWidth/2 , this.position.y-alienHeight);	
 
 		if(this.alreadyGotDrawn == false &&
-			this.y > this.chuteY) {
+			this.position.y > this.chuteY) {
 
 			this.isChuteDrawn = true;
 			this.alreadyGotDrawn = true;
@@ -41,8 +40,8 @@ function alienClass() {
 		}
 			if(this.isChuteDrawn) {
 				canvasContext.fillStyle = "gray";
-				this.chuteX = this.x-parachuteW/2; 
-				this.chuteY = this.y-alienHeight-parachuteH;
+				this.chuteX = this.position.x-parachuteW/2; 
+				this.chuteY = this.position.y-alienHeight-parachuteH;
 				canvasContext.fillRect(this.chuteX,this.chuteY,
 									parachuteW,parachuteH);
 			}
@@ -51,13 +50,13 @@ function alienClass() {
 
 	this.move = function() {
 		if(this.isWalking) {
-			if(this.x<playerX) {
-				this.x += alienWalkSpeed;
+			if(this.position.x<playerX) {
+				this.position.x += alienWalkSpeed;
 			}
-			if(this.x>playerX) {
-				this.x -= alienWalkSpeed;
+			if(this.position.x>playerX) {
+				this.position.x -= alienWalkSpeed;
 			}
-			if( Math.abs(this.x - playerX) < (playerWidth/2-alienWidth/2) ) {
+			if( Math.abs(this.position.x - playerX) < (playerWidth/2-alienWidth/2) ) {
 				this.removeMe = true;
 				playerHP--;
 				if(playerHP<=0) {
@@ -66,11 +65,11 @@ function alienClass() {
 			}
 		}
 
-		this.y += (this.isChuteDrawn ? alienFallSpeedWithChute : alienFallSpeedNoChute);
+		this.position.y += (this.isChuteDrawn ? alienFallSpeedWithChute : alienFallSpeedNoChute);
 
-		if(this.y > canvas.height) { // landing on ground
+		if(this.position.y > canvas.height) { // landing on ground
 			if(this.isChuteDrawn) {
-				this.y = canvas.height;
+				this.position.y = canvas.height;
 				this.isWalking = true;
 			} else {
 				this.removeMe = true;
@@ -81,8 +80,7 @@ function alienClass() {
 
 function spawnAlien(fromShip) {
 	var newAlien = new alienClass;
-	newAlien.x = fromShip.position.x;
-	newAlien.y = fromShip.position.y;
+    newAlien.position = vec2.clone(fromShip.position);
 	alienList.push(newAlien);
 }
 
