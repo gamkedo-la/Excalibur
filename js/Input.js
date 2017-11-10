@@ -1,3 +1,9 @@
+const KEY_TAB = 9;
+const KEY_SPACE = 32;
+const KEY_LEFT = 37;
+const KEY_RIGHT = 39;
+const KEY_D = 68;
+
 var holdFire, holdLeft, holdRight = false;
 var secondaryFire = false;
 var debug = false;
@@ -44,32 +50,32 @@ function handleInput() {
 function keyPress(evt) {
 	evt.preventDefault();
 	switch(evt.keyCode) {
-		case 9:
+		case KEY_TAB:
 			secondaryFire = !secondaryFire;
 			break;
-		case 32:
+		case KEY_SPACE:
 			holdFire = true;
 			break;
-		case 37:
+		case KEY_LEFT:
 			holdLeft = true;
 			break;
-		case 39:
+		case KEY_RIGHT:
 			holdRight = true;
 			break;
-		case 68:
+		case KEY_D:
 			debug = !debug;
 			break;
 	}
 }
 function keyRelease(evt) {
 	switch(evt.keyCode) {
-		case 32:
+		case KEY_SPACE:
 			holdFire = false;
 			break;
-		case 37:
+		case KEY_LEFT:
 			holdLeft = false;
 			break;
-		case 39:
+		case KEY_RIGHT:
 			holdRight = false;
 			break;
 	}
