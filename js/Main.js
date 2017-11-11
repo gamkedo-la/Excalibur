@@ -20,8 +20,7 @@ function loadingDoneSoStartGame (){
 	setInterval(shipSpawn,1000*2);
 	cannonEndX = playerX = canvas.width/2;
 	cannonEndY = playerY = canvas.height-playerHeight;
-	document.addEventListener("keydown",keyPress);
-	document.addEventListener("keyup",keyRelease);
+	initializeInput();
 }
 
 function update() {

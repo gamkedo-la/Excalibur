@@ -5,6 +5,8 @@ var playerHP = startHitpoints;
 
 const playerWidth=50,playerHeight=30;
 
+const playerMoveSpeed=4; // only used if in mouse control scheme
+
 function drawPlayer() {
 	// cannon
 	canvasContext.strokeStyle="lime";

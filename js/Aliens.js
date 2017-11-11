@@ -1,5 +1,3 @@
-var debugDrawParaChuteSize = false;
-
 const dropBelowShipMargin = 10;
 const alienWidth = 17, alienHeight = 25;
 const parachuteW = alienWidth+24, parachuteH = 25;
@@ -59,7 +57,7 @@ function alienClass() {
 		if(this.isChuteDrawn) {
 			this.chuteX = this.position.x-parachuteW/2; 
 			this.chuteY = this.position.y-alienHeight;
-			if(debugDrawParaChuteSize) {
+			if(debug) {
 				canvasContext.fillStyle = "gray";
 				canvasContext.fillRect(this.chuteX,this.chuteY,
 									parachuteW,parachuteH);

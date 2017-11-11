@@ -1,7 +1,7 @@
 var shotList=[];
 
 function shotClass() {
-	cannonShotSpeed = 5;
+	cannonShotSpeed = 6;
 	cannonReloadFrames = 5;
 	cannonReloadLeft = 0;
 	this.x = cannonEndX;

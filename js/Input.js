@@ -8,6 +8,11 @@ var holdFire, holdLeft, holdRight = false;
 var secondaryFire = false;
 var debug = false;
 
+const CONTROL_SCHEME_KEYS_STATIONARY = 0;
+const CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING = 1;
+
+var controlScheme = CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING;
+
 var defaultCannonAng = -Math.PI/2;
 var cannonAngLimit = Math.PI*0.42;
 var cannonLength=40,cannonAngle=defaultCannonAng,cannonAngleVelocity=0.1;
@@ -15,6 +20,23 @@ var cannonEndX, cannonEndY;
 var cannonShotSpeed = 5;
 var cannonReloadFrames = 5;
 var cannonReloadLeft = 0;	
+
+function initializeInput() {
+	document.addEventListener("keydown",keyPress);
+	document.addEventListener("keyup",keyRelease);
+
+	switch(controlScheme) {
+		case CONTROL_SCHEME_KEYS_STATIONARY:
+			console.log("Using control scheme: arrow keys only");
+			break;
+		case CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING:
+			console.log("Using control scheme: arrow keys steer, mouse aims");
+			canvas.addEventListener('mousemove', calculateMousePos);
+			canvas.addEventListener('mousedown', function() {holdFire=true;});
+			canvas.addEventListener('mouseup', function() {holdFire=false;});
+			break;
+	}
+}
 
 function handleInput() {
 	if(holdFire && !secondaryFire) {
@@ -33,11 +55,24 @@ function handleInput() {
 	if(cannonReloadLeft>0) {
 		cannonReloadLeft--;
 	}
-	if(holdLeft) {
-		cannonAngle -= cannonAngleVelocity;
-	}
-	if(holdRight) {
-		cannonAngle += cannonAngleVelocity;
+	switch(controlScheme) {
+		case CONTROL_SCHEME_KEYS_STATIONARY:
+			if(holdLeft) {
+				cannonAngle -= cannonAngleVelocity;
+			}
+			if(holdRight) {
+				cannonAngle += cannonAngleVelocity;
+			}
+			break;
+		case CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING:
+			cannonAngle = Math.atan2(mouseY-playerY,mouseX-playerX);
+			if(holdLeft) {
+				playerX -= playerMoveSpeed;
+			}
+			if(holdRight) {
+				playerX += playerMoveSpeed;
+			}
+			break;
 	}
 	if(cannonAngle < defaultCannonAng-cannonAngLimit) {
 		cannonAngle = defaultCannonAng-cannonAngLimit;
@@ -79,4 +114,11 @@ function keyRelease(evt) {
 			holdRight = false;
 			break;
 	}
+}
+
+function calculateMousePos(evt) {
+    const rect = canvas.getBoundingClientRect();
+    const root = document.documentElement;
+    mouseX = evt.clientX - rect.left - root.scrollLeft;
+    mouseY = evt.clientY - rect.top - root.scrollTop;
 }
