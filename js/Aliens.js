@@ -1,6 +1,8 @@
+var debugDrawParaChuteSize = false;
+
 const dropBelowShipMargin = 10;
 const alienWidth = 17, alienHeight = 25;
-const parachuteW = alienWidth+15, parachuteH = 25;
+const parachuteW = alienWidth+24, parachuteH = 25;
 const alienFallSpeedNoChute = 3.5;
 const alienFallSpeedWithChute = 1.5;
 const alienWalkSpeed = 2;
@@ -19,14 +21,30 @@ function alienClass() {
 	this.chuteY = Math.random()*chuteThickness+chuteMargin;
 	this.alreadyGotDrawn = false;
 	this.isWalking = false;
+	this.frameNow = 0;
 
 	this.draw = function() {
 
 		// canvasContext.fillStyle = "red";
 		// canvasContext.fillRect(this.position.x-alienWidth/2,this.position.y-alienHeight,alienWidth,alienHeight);
 		
-		//Upload alien image here
-		 canvasContext.drawImage(alienPic, this.position.x-alienWidth/2 , this.position.y-alienHeight);	
+		if(this.isChuteDrawn && this.isWalking==false) {
+			if(masterFrameDelayTick%3==1) {
+				if(this.frameNow==2) {
+					this.frameNow=1;
+				} else {
+					this.frameNow=2;
+				}
+			}
+		} else {
+			this.frameNow = 0;
+		}
+
+		canvasContext.drawImage(alienPic,
+			this.frameNow*alienPicFrameW, 0,
+			alienPicFrameW, alienPicFrameH,
+			this.position.x-alienPicFrameW/2 , this.position.y-alienPicFrameH,
+			alienPicFrameW, alienPicFrameH);
 
 		if(this.alreadyGotDrawn == false &&
 			this.position.y > this.chuteY) {
@@ -38,13 +56,15 @@ function alienClass() {
 		if(this.isWalking) {
 			return;
 		}
-			if(this.isChuteDrawn) {
+		if(this.isChuteDrawn) {
+			this.chuteX = this.position.x-parachuteW/2; 
+			this.chuteY = this.position.y-alienHeight;
+			if(debugDrawParaChuteSize) {
 				canvasContext.fillStyle = "gray";
-				this.chuteX = this.position.x-parachuteW/2; 
-				this.chuteY = this.position.y-alienHeight-parachuteH;
 				canvasContext.fillRect(this.chuteX,this.chuteY,
 									parachuteW,parachuteH);
 			}
+		}
 
 	}
 

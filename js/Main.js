@@ -4,6 +4,8 @@ const scoreForParachuteShot = 75;
 
 var score=0;
 
+var masterFrameDelayTick=0;
+
 window.onload = function() {
 	canvas = document.createElement("canvas");
 	canvas.width = 800;
@@ -15,7 +17,7 @@ window.onload = function() {
 
 function loadingDoneSoStartGame (){
 	setInterval(update,1000/30);
-	setInterval(shipSpawn,1000*4);
+	setInterval(shipSpawn,1000*2);
 	cannonEndX = playerX = canvas.width/2;
 	cannonEndY = playerY = canvas.height-playerHeight;
 	document.addEventListener("keydown",keyPress);
@@ -30,6 +32,7 @@ function update() {
 }
 
 function drawAll() {
+	masterFrameDelayTick++;
 	drawAndRemoveShips();
 	drawAndRemoveAliens();
 	drawAndRemoveShots();

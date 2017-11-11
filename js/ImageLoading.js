@@ -1,7 +1,8 @@
-let alienPic=document.createElement("img");
+var alienPic=document.createElement("img");
+var alienPicFrameW = 43;
+var alienPicFrameH = 27;
 
-
-let picsToLoad = 0;
+var picsToLoad = 0;
 
 function countLoadedImageAndLaunchIfReady() {
   picsToLoad--;
@@ -17,15 +18,13 @@ function beginLoadingImage(imgVar, fileName) {
 
 function loadImages() {
 
-  let imageList = [
-    {varName:alienPic, theFile:"alien.png"},
-   
-
+  var imageList = [
+    {varName:alienPic, theFile:"alien-anim.png"},
   ];
 
   picsToLoad = imageList.length;
 
-  for(let i=0;i<imageList.length;i++) {
+  for(var i=0;i<imageList.length;i++) {
     
       beginLoadingImage(imageList[i].varName, imageList[i].theFile);
    
