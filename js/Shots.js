@@ -42,8 +42,8 @@ function shotClass() {
 			   score += scoreForAlienShot;
 			   alienList[t].removeMe=true;
 			   this.removeMe = true;
-			} else if(this.y > alienList[t].chuteY && this.y < alienList[t].chuteY+parachuteH
-				 && this.x > alienList[t].chuteX && this.x < alienList[t].position.x+parachuteW && alienList[t].isChuteDrawn) {
+			} else if(this.y > alienList[t].chuteY && this.y < alienList[t].chuteY+parachuteH &&
+                      this.x > alienList[t].chuteX && this.x < alienList[t].position.x+parachuteW && alienList[t].isChuteDrawn) {
 			   	
 			   	score += scoreForParachuteShot;
 			   	alienList[t].isChuteDrawn = false;

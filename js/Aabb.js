@@ -19,11 +19,11 @@ function aabb(width = 0, height = 0) {
 
 // getter/setter properties, to allow developers to work with aabb.width and aabb.height, instead of aabb.extents[0], and aabb.extents[1]
 Object.defineProperty(aabb.prototype, 'width', {
-    get: function() { return this.extents[0]; },
-    set: function(inp) { this.extents[0] = inp; }
+	get: function() { return this.extents[0]; },
+	set: function(inp) { this.extents[0] = inp; }
 });
 
 Object.defineProperty(aabb.prototype, 'height', {
-    get: function() { return this.extents[1]; },
-    set: function(inp) { this.extents[1] = inp; }
+	get: function() { return this.extents[1]; },
+	set: function(inp) { this.extents[1] = inp; }
 });
