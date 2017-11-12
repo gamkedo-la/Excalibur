@@ -67,10 +67,19 @@ function handleInput() {
 		case CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING:
 			cannonAngle = Math.atan2(mouseY-playerY,mouseX-playerX);
 			if(holdLeft) {
-				playerX -= playerMoveSpeed;
+				if (playerX - playerWidth/2 > 0) {
+					playerX -= playerMoveSpeed;
+				} else {
+					playerX = playerWidth/2;
+				}
+
 			}
 			if(holdRight) {
-				playerX += playerMoveSpeed;
+				if (playerX + playerWidth/2 < canvas.width) {
+					playerX += playerMoveSpeed;
+				} else {
+					playerX = canvas.width - playerWidth/2;
+				}
 			}
 			break;
 	}
