@@ -8,6 +8,7 @@ function shipClass() {
 	this.position = vec2.create(-shipWidth/2, Math.random() * shipSpawnBandThickness + shipSpawnBandMargin);
 	this.shipSpeed = 4;
 	this.velocity = vec2.create(this.shipSpeed, 0);
+    this.aabb = new aabb(shipWidth, shipHeight);
 	this.removeMe = false;
 	this.hasDroppedYet = false;
 	var validXPixelTopDrop = 0;
@@ -20,13 +21,15 @@ function shipClass() {
 
 	this.move = function() {
         vec2.add(this.position, this.position, this.velocity);
+        vec2.copy(this.aabb.center, this.position); // Synchronize AABB position with ship position
+        this.aabb.computeBounds();
 	}
 
 	this.edgeOfScreenDetection = function() {
 		var movingLeft = this.velocity.x < 0;
 		var movingRight = this.velocity.x > 0;
-		if( (movingLeft && this.position.x < -shipWidth/2) ||
-			(movingRight && this.position.x > canvas.width+shipWidth/2) ) {
+		if( (movingLeft && this.position.x < -this.aabb.width/2) ||
+			(movingRight && this.position.x > canvas.width+this.aabb.width/2) ) {
 			this.removeMe = true;
 		}
 	}
