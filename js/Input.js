@@ -21,6 +21,9 @@ var cannonShotSpeed = 5;
 var cannonReloadFrames = 5;
 var cannonReloadLeft = 0;	
 
+var mouseY = 0;
+var mouseX = 0;
+
 function initializeInput() {
 	document.addEventListener("keydown",keyPress);
 	document.addEventListener("keyup",keyRelease);
@@ -84,7 +87,7 @@ function handleInput() {
 			break;
 	}
 	if(cannonAngle < defaultCannonAng-cannonAngLimit) {
-		cannonAngle = defaultCannonAng-cannonAngLimit;
+		cannonAngle = defaultCannonAng - cannonAngLimit;
 	}
 	if(cannonAngle > defaultCannonAng+cannonAngLimit) {
 		cannonAngle = defaultCannonAng+cannonAngLimit;
