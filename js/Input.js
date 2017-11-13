@@ -95,8 +95,12 @@ function handleInput() {
 }
 
 function keyPress(evt) {
-	evt.preventDefault();
-	switch(evt.keyCode) {
+	// TODO: test for game controls instead, for now let's just re-enable function keys
+	if (evt.key.toLowerCase().substr(0, 1) != "f") {
+		evt.preventDefault();
+	}
+	
+	switch (evt.keyCode) {
 		case KEY_TAB:
 			secondaryFire = !secondaryFire;
 			break;
