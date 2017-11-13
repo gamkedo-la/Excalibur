@@ -98,7 +98,7 @@ function alienClass() {
 
 function spawnAlien(fromShip) {
 	var newAlien = new alienClass();
-    newAlien.position = vec2.clone(fromShip.position);
+    newAlien.position = vec2.create(fromShip.position.v[0], fromShip.position.v[1] + shipHeight);
 	alienList.push(newAlien);
 }
 
