@@ -73,7 +73,9 @@ function shipSpawn() {
 		} else if(validXPixelTopDrop > canvas.width - dropMarginFromEdge) {
 			safeToDropHere = false;
 		} else if( Math.abs(canvas.width/2-validXPixelTopDrop) < dropMarginFromCenter) {
-			safeToDropHere = false;
+			if (!alienInertiaDriftEnabled) {
+				safeToDropHere = false;
+			}
 		}
 	}
 	newShip.dropX = validXPixelTopDrop;

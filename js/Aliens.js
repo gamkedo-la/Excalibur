@@ -9,18 +9,24 @@ const dropMarginFromEdge = 50;
 const chuteThickness = 100;
 const chuteMargin = 300;
 
-var alienList=[];
+var alienList = [];
+
+// TODO: make it a toggle for testing/debugging
+var alienInertiaDriftEnabled = true;
 
 function alienClass() {
 	this.fromShip;
     this.position = vec2.create();
 	this.removeMe = false;
 	this.isChuteDrawn = false;
-	this.chuteX = 0;
-	this.chuteY = Math.random()*chuteThickness+chuteMargin;
+	this.chuteX = Math.random() * chuteThickness + chuteMargin / 10;
+	this.chuteY = Math.random() * chuteThickness + chuteMargin;
 	this.alreadyGotDrawn = false;
 	this.isWalking = false;
 	this.frameNow = 0;
+	this.speedX = 0;
+	// TODO: convert to vec2 if we want to track X too
+	this.launchY = 0;
 
 	this.draw = function () {
 
@@ -45,11 +51,14 @@ function alienClass() {
 			this.position.x - alienPicFrameW / 2, this.position.y - alienPicFrameH,
 			alienPicFrameW, alienPicFrameH);
 
-		if (this.alreadyGotDrawn == false &&
-			this.position.y > this.chuteY) {
-
-			this.isChuteDrawn = true;
-			this.alreadyGotDrawn = true;
+		if (!this.alreadyGotDrawn) {
+			if (this.position.y > this.chuteY ||
+				this.fromShip.velocity.x < 0 && this.position.x < this.chuteX ||
+				this.fromShip.velocity.x > 0 && this.position.x > canvas.width - this.chuteX)
+			{
+					this.isChuteDrawn = true;
+					this.alreadyGotDrawn = true;
+			}
 		}
 		
 		if (this.isWalking) {
@@ -84,11 +93,51 @@ function alienClass() {
 			}
 		}
 
-		if (!this.isChuteDrawn) {
-			this.position.x += this.fromShip.velocity.v[0];
-		}
+		if (alienInertiaDriftEnabled) {
+			// trajectory inertia from jumping out the ship
+			this.speedX = this.fromShip.velocity.v[0];
 
-		this.position.y += (this.isChuteDrawn ? alienFallSpeedWithChute : alienFallSpeedNoChute);
+			if (!this.isChuteDrawn && !this.alreadyGotDrawn) {
+			
+				var theDiff = Math.round(this.chuteY - this.launchY);
+
+				var positionComparedToLaunchY = Math.round(this.position.y - this.launchY);
+			
+				// TODO: refactor as a more dynamic parabola equation
+				// this was written in 10 mins as proof of concept to see the little buggers have a trajectory
+				if (positionComparedToLaunchY < this.fromShip.height / 1) {
+					this.position.y += alienFallSpeedNoChute / 100;
+				}
+				else if (positionComparedToLaunchY < theDiff / 3) {
+					this.speedX = this.speedX / 1.25;
+					this.position.y += alienFallSpeedNoChute / 3;
+				}
+				else if (positionComparedToLaunchY < theDiff / 2) {
+					this.speedX = this.speedX / 1.5;
+					this.position.y += alienFallSpeedNoChute / 2;
+				}
+				else if (positionComparedToLaunchY < theDiff / 1.5) {
+					this.speedX = this.speedX / 1.75;
+					this.position.y += alienFallSpeedNoChute / 1.5;
+				}
+				else {
+					this.speedX = this.speedX / 2;
+					this.position.y += alienFallSpeedNoChute;
+				}
+
+				this.position.x += this.speedX;
+			}
+			else {
+				var randomDriftFactor = (Math.floor(Math.random() * (20 - 3 + 1)) + 3);
+				this.position.x += this.speedX / randomDriftFactor;
+				this.position.y += (this.isChuteDrawn ? alienFallSpeedWithChute : alienFallSpeedNoChute);
+			}
+		}
+		else
+		{
+			// no inertia trajectory drift (ie, aliens drop straight down)
+			this.position.y += (this.isChuteDrawn ? alienFallSpeedWithChute : alienFallSpeedNoChute);
+		}	
 
 		if (this.position.y > canvas.height) { // landing on ground
 			if (this.isChuteDrawn) {
@@ -105,6 +154,7 @@ function spawnAlien(fromShip) {
 	var newAlien = new alienClass();
 	newAlien.fromShip = fromShip;
 	newAlien.position = vec2.create(fromShip.position.v[0], fromShip.position.v[1] + shipHeight);
+	newAlien.launchY = newAlien.position.y;
 	alienList.push(newAlien);
 }
 
