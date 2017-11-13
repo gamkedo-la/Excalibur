@@ -44,13 +44,13 @@ function initializeInput() {
 function handleInput() {
 	if(holdFire && !secondaryFire) {
 		if(cannonReloadLeft <= 0) {
-			var newShot = new shotClass;
+			var newShot = new shotClass();
 			shotList.push(newShot);
 			cannonReloadLeft = cannonReloadFrames;
 		}
 	} else if(holdFire && secondaryFire) {
 		if(cannonReloadLeft <= 0) {
-			var newShot = new sineShotClass;
+			var newShot = new sineShotClass();
 			shotList.push(newShot);
 			cannonReloadLeft = cannonReloadFrames;
 		}
@@ -68,7 +68,15 @@ function handleInput() {
 			}
 			break;
 		case CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING:
-			cannonAngle = Math.atan2(mouseY-playerY,mouseX-playerX);
+			var mouseCannonY = mouseY - playerY;
+			var mouseCannonX = mouseX - playerX;
+
+			// cannon was flipping left-to-right when mouse goes below deck
+			if (mouseCannonY > 0 && mouseCannonX < 0) {
+				mouseCannonY = -mouseCannonY;
+			}
+			
+			cannonAngle = Math.atan2(mouseCannonY, mouseCannonX);
 			if(holdLeft) {
 				if (playerX - playerWidth/2 > 0) {
 					playerX -= playerMoveSpeed;
@@ -86,11 +94,11 @@ function handleInput() {
 			}
 			break;
 	}
-	if(cannonAngle < defaultCannonAng-cannonAngLimit) {
+
+	if (cannonAngle < defaultCannonAng - cannonAngLimit) {
 		cannonAngle = defaultCannonAng - cannonAngLimit;
-	}
-	if(cannonAngle > defaultCannonAng+cannonAngLimit) {
-		cannonAngle = defaultCannonAng+cannonAngLimit;
+	} else 	if (cannonAngle > defaultCannonAng + cannonAngLimit) {
+		cannonAngle = defaultCannonAng + cannonAngLimit;
 	}
 }
 
