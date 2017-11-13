@@ -21,17 +21,17 @@ function alienClass() {
 	this.isWalking = false;
 	this.frameNow = 0;
 
-	this.draw = function() {
+	this.draw = function () {
 
 		// canvasContext.fillStyle = "red";
 		// canvasContext.fillRect(this.position.x-alienWidth/2,this.position.y-alienHeight,alienWidth,alienHeight);
 		
-		if(this.isChuteDrawn && this.isWalking==false) {
-			if(masterFrameDelayTick%3==1) {
-				if(this.frameNow==2) {
-					this.frameNow=1;
+		if (this.isChuteDrawn && this.isWalking == false) {
+			if (masterFrameDelayTick % 3 == 1) {
+				if (this.frameNow == 2) {
+					this.frameNow = 1;
 				} else {
-					this.frameNow=2;
+					this.frameNow = 2;
 				}
 			}
 		} else {
@@ -39,45 +39,45 @@ function alienClass() {
 		}
 
 		canvasContext.drawImage(alienPic,
-			this.frameNow*alienPicFrameW, 0,
+			this.frameNow * alienPicFrameW, 0,
 			alienPicFrameW, alienPicFrameH,
-			this.position.x-alienPicFrameW/2 , this.position.y-alienPicFrameH,
+			this.position.x - alienPicFrameW / 2, this.position.y - alienPicFrameH,
 			alienPicFrameW, alienPicFrameH);
 
-		if(this.alreadyGotDrawn == false &&
+		if (this.alreadyGotDrawn == false &&
 			this.position.y > this.chuteY) {
 
 			this.isChuteDrawn = true;
 			this.alreadyGotDrawn = true;
 		}
 		
-		if(this.isWalking) {
+		if (this.isWalking) {
 			return;
 		}
-		if(this.isChuteDrawn) {
-			this.chuteX = this.position.x-parachuteW/2; 
-			this.chuteY = this.position.y-alienHeight;
-			if(debug) {
+		if (this.isChuteDrawn) {
+			this.chuteX = this.position.x - parachuteW / 2;
+			this.chuteY = this.position.y - alienHeight;
+			if (debug) {
 				canvasContext.fillStyle = "gray";
-				canvasContext.fillRect(this.chuteX,this.chuteY,
-									parachuteW,parachuteH);
+				canvasContext.fillRect(this.chuteX, this.chuteY,
+					parachuteW, parachuteH);
 			}
 		}
 
-	}
+	};
 
-	this.move = function() {
-		if(this.isWalking) {
-			if(this.position.x<playerX) {
+	this.move = function () {
+		if (this.isWalking) {
+			if (this.position.x < playerX) {
 				this.position.x += alienWalkSpeed;
 			}
-			if(this.position.x>playerX) {
+			if (this.position.x > playerX) {
 				this.position.x -= alienWalkSpeed;
 			}
-			if( Math.abs(this.position.x - playerX) < (playerWidth/2-alienWidth/2) ) {
+			if (Math.abs(this.position.x - playerX) < (playerWidth / 2 - alienWidth / 2)) {
 				this.removeMe = true;
 				playerHP--;
-				if(playerHP<=0) {
+				if (playerHP <= 0) {
 					resetGame();
 				}
 			}
@@ -85,19 +85,19 @@ function alienClass() {
 
 		this.position.y += (this.isChuteDrawn ? alienFallSpeedWithChute : alienFallSpeedNoChute);
 
-		if(this.position.y > canvas.height) { // landing on ground
-			if(this.isChuteDrawn) {
+		if (this.position.y > canvas.height) { // landing on ground
+			if (this.isChuteDrawn) {
 				this.position.y = canvas.height;
 				this.isWalking = true;
 			} else {
 				this.removeMe = true;
 			}
 		}
-	}
+	};
 }
 
 function spawnAlien(fromShip) {
-	var newAlien = new alienClass;
+	var newAlien = new alienClass();
     newAlien.position = vec2.clone(fromShip.position);
 	alienList.push(newAlien);
 }

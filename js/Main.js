@@ -6,14 +6,14 @@ var score=0;
 
 var masterFrameDelayTick=0;
 
-window.onload = function() {
+window.onload = function () {
 	canvas = document.createElement("canvas");
 	canvas.width = 800;
 	canvas.height = 600;
 	document.body.appendChild(canvas);
 	canvasContext = canvas.getContext("2d");
 	loadImages();
-}
+};
 
 function loadingDoneSoStartGame (){
 	setInterval(update,1000/30);
@@ -56,7 +56,7 @@ function resetGame() {
 function debugDraw() {
 	
 	canvasContext.save();
-	canvasContext.font = "20px Arial"
+	canvasContext.font = "20px Arial";
 	canvasContext.textAlign = "right";
 	canvasContext.fillStyle = "white";
 	canvasContext.fillText("score: " + score,canvas.width-20,30);

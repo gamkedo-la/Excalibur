@@ -7,14 +7,14 @@ function aabb(width = 0, height = 0) {
 	this.minPt = vec2.create();
 	this.maxPt = vec2.create();
 
-	this.computeBounds = function() {
+	this.computeBounds = function () {
 		// Compute min and max boundary points. This assumes that the AABB's center has already been set
 		this.minPt.x = this.center.x - this.width;
 		this.minPt.y = this.center.y - this.height;
 		
 		this.maxPt.x = this.center.x + this.width;
 		this.maxPt.y = this.center.y + this.height;
-	}
+	};
 }
 
 // getter/setter properties, to allow developers to work with aabb.width and aabb.height, instead of aabb.extents[0], and aabb.extents[1]

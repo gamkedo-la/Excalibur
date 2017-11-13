@@ -70,11 +70,11 @@ vec2.copy = function(out, a) {
 };
 
 
-vec2.copy = function(out, x, y) {
+vec2.copy = function (out, x, y) {
 	out.v[0] = x;
 	out.v[1] = y;
 	return out;
-}
+};
 
 
 vec2.add = function(out, a, b) {

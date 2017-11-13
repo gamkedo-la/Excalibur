@@ -14,41 +14,41 @@ function shipClass() {
 	var validXPixelTopDrop = 0;
 	this.dropX = validXPixelTopDrop;
 
-	this.draw = function() {
+	this.draw = function () {
 		canvasContext.fillStyle = "orange";
-		canvasContext.fillRect(this.position.x-shipWidth/2,this.position.y-shipHeight/2,shipWidth,shipHeight);
-	}
+		canvasContext.fillRect(this.position.x - shipWidth / 2, this.position.y - shipHeight / 2, shipWidth, shipHeight);
+	};
 
-	this.move = function() {
-        vec2.add(this.position, this.position, this.velocity);
-        vec2.copy(this.aabb.center, this.position); // Synchronize AABB position with ship position
-        this.aabb.computeBounds();
-	}
+	this.move = function () {
+		vec2.add(this.position, this.position, this.velocity);
+		vec2.copy(this.aabb.center, this.position); // Synchronize AABB position with ship position
+		this.aabb.computeBounds();
+	};
 
-	this.edgeOfScreenDetection = function() {
+	this.edgeOfScreenDetection = function () {
 		var movingLeft = this.velocity.x < 0;
 		var movingRight = this.velocity.x > 0;
-		if( (movingLeft && this.position.x < -this.aabb.width/2) ||
-			(movingRight && this.position.x > canvas.width+this.aabb.width/2) ) {
+		if ((movingLeft && this.position.x < -this.aabb.width / 2) ||
+			(movingRight && this.position.x > canvas.width + this.aabb.width / 2)) {
 			this.removeMe = true;
 		}
-	}
+	};
 
-	this.spawnAliensFromShip = function() {
+	this.spawnAliensFromShip = function () {
 		var movingLeft = this.velocity.x < 0;
 		var movingRight = this.velocity.x > 0;
-		if(this.hasDroppedYet == false) {
-			if( (movingLeft && this.position.x < this.dropX) ||
+		if (this.hasDroppedYet == false) {
+			if ((movingLeft && this.position.x < this.dropX) ||
 				(movingRight && this.position.x > this.dropX)) {
 				this.hasDroppedYet = true;
 				spawnAlien(this);
 			} // crossing drop line
 		}
-	}
+	};
 }
 
 function shipSpawn() {
-	var newShip = new shipClass;
+	var newShip = new shipClass();
 	shipList.push(newShip);
 
 	newShip.removeMe = false;
