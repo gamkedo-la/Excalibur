@@ -12,6 +12,7 @@ const chuteMargin = 300;
 var alienList=[];
 
 function alienClass() {
+	this.fromShip;
     this.position = vec2.create();
 	this.removeMe = false;
 	this.isChuteDrawn = false;
@@ -83,6 +84,10 @@ function alienClass() {
 			}
 		}
 
+		if (!this.isChuteDrawn) {
+			this.position.x += this.fromShip.velocity.v[0];
+		}
+
 		this.position.y += (this.isChuteDrawn ? alienFallSpeedWithChute : alienFallSpeedNoChute);
 
 		if (this.position.y > canvas.height) { // landing on ground
@@ -98,7 +103,8 @@ function alienClass() {
 
 function spawnAlien(fromShip) {
 	var newAlien = new alienClass();
-    newAlien.position = vec2.create(fromShip.position.v[0], fromShip.position.v[1] + shipHeight);
+	newAlien.fromShip = fromShip;
+	newAlien.position = vec2.create(fromShip.position.v[0], fromShip.position.v[1] + shipHeight);
 	alienList.push(newAlien);
 }
 
