@@ -81,4 +81,18 @@ function clearScreen() {
 	canvasContext.fillStyle="black";
 	canvasContext.fillRect(0,0,canvas.width,canvas.height);
 }
+/*
+hey chris I couldn't find the graphicsCommon.js file so i stuck this here for now
+
+*/
+//flip sprite to face mouse or player
+function drawBitmapFlipped(graphic, atX, atY, flipToFaceLeft) {
+		canvasContext.save();
+  		canvasContext.translate(atX, atY);
+		if(flipToFaceLeft) {
+			canvasContext.scale(-1.0,1.0);
+		}
+		canvasContext.drawImage(graphic,-graphic.width/2,-graphic.height/2);
+		canvasContext.restore();
+		}
 
