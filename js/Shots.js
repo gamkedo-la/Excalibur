@@ -8,6 +8,10 @@ function shotClass() {
 
 	this.moveAng = cannonAngle;
 	this.speed = cannonShotSpeed;
+
+	this.velocity = vec2.create(Math.cos(this.moveAng), Math.sin(this.moveAng));
+	vec2.scale(this.velocity, this.velocity, this.speed);
+
 	this.removeMe = false;
 
 	this.draw = function () {
@@ -16,10 +20,7 @@ function shotClass() {
 	};
 
 	this.move = function () {
-		// TODO create a velocity property of shotClass. Use that, instead of computing shotVel in move()
-		var shotVel = vec2.create(Math.cos(this.moveAng), Math.sin(this.moveAng));
-		vec2.scale(shotVel, shotVel, this.speed);
-		vec2.add(this.position, this.position, shotVel);
+		vec2.add(this.position, this.position, this.velocity);
 	};
 
 	this.shotCollisionAndBoundaryCheck = function () {
