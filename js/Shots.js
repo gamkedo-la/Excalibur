@@ -12,6 +12,8 @@ function shotClass() {
 	this.velocity = vec2.create(Math.cos(this.moveAng), Math.sin(this.moveAng));
 	vec2.scale(this.velocity, this.velocity, this.speed);
 
+	this.colliderLineSeg = new lineSegment();
+
 	this.removeMe = false;
 
 	this.draw = function () {
@@ -29,10 +31,18 @@ function shotClass() {
 			this.removeMe = true;
 		}
 
+		// Compute the shot's previous position (or.. we could store it? Implement Verlet integration?)
+		var prevPos = vec2.create();
+		vec2.sub(prevPos, this.position, this.velocity);
+
+		// Create line segment collider from current & previous positions
+		this.colliderLineSeg.setEndpoints(prevPos, this.position);
+
 		for (var e = 0; e < shipList.length; e++) {
 			// TODO replace with line segment/aabb intersection test (use shot velocity to compute previous known position; make line seg from last-known to current position)
-			if (this.position.y > shipList[e].position.y - shipHeight / 2 && this.position.y < shipList[e].position.y + shipHeight / 2 &&
-				this.position.x > shipList[e].position.x - shipWidth / 2 && this.position.x < shipList[e].position.x + shipWidth / 2) {
+			//if (this.position.y > shipList[e].position.y - shipHeight / 2 && this.position.y < shipList[e].position.y + shipHeight / 2 &&
+			//	this.position.x > shipList[e].position.x - shipWidth / 2 && this.position.x < shipList[e].position.x + shipWidth / 2) {
+			if (isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSeg)) {
 
 				score += scoreForShipShot;
 				shipList[e].removeMe = true;

@@ -12,10 +12,10 @@ function isColliding_AABB_LineSeg(box, seg) {
 	// Translate the box and the segment to the origin (i.e. move the segment midpoint by the amounts of the box center's position. This effectively treats the box center as though it's the origin, and the segment midpoint is translated relative to that origin)
 	vec2.sub(segMidPt, segMidPt, box.center);
 
-	if ( Math.abs(segMidPt[0]) > box.width + Math.abs(segHalfVec.x) )
+	if ( Math.abs(segMidPt.x) > box.width + Math.abs(segHalfVec.x) )
 		return false;
 
-	if ( Math.abs(segMidPt[1]) > box.height + Math.abs(segHalfVec.y) )
+	if ( Math.abs(segMidPt.y) > box.height + Math.abs(segHalfVec.y) )
 		return false;
 
 	// If we're here, then by process of elimination, the segment and box are intersecting
@@ -40,7 +40,7 @@ function isColliding_LineSeg_LineSeg(objA, objB) {    // Given 2 line segments, 
 	// if 0 <= t <= 1, then the segments are intersecting (and t can be used to compute the intersection)
 	var t = vec2.dot(n, v1) / vec2.dot(n, v2);
 
-	return (t >= 0 && t <= 1);  // TODO use a float eq
+	return (t >= 0 && t <= 1);
 }
 
 

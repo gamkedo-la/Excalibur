@@ -18,13 +18,13 @@ function aabb(width = 0, height = 0) {
 
 	this.setCenter = function(x, y) {
 		vec2.set(this.center, x, y);
-	}
+	};
 
 	// Set half-sizes
 	this.setHalfSizes = function(x, y) {
 		this.width = x;
 		this.height = y;
-	}
+	};
 }
 
 // getter/setter properties, to allow developers to work with aabb.width and aabb.height, instead of aabb.halfSizes[0], and aabb.halfSizes[1]
