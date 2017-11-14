@@ -1,6 +1,6 @@
 const shipSpawnBandThickness = 200;
 const shipSpawnBandMargin = 50;
-const shipWidth = 100, shipHeight = 40;
+const shipWidth = 100, shipHeight = 32;
 
 var shipList=[];
 
@@ -16,7 +16,19 @@ function shipClass() {
 
 	this.draw = function () {
 		canvasContext.fillStyle = "orange";
-		canvasContext.fillRect(this.position.x - shipWidth / 2, this.position.y - shipHeight / 2, shipWidth, shipHeight);
+		// canvasContext.fillRect(this.position.x - shipWidth / 2, this.position.y - shipHeight / 2, shipWidth, shipHeight);
+		    if(this.velocity.v[0] < 0){
+		    	canvasContext.drawImage(spaceshipLeftPic,
+				this.position.x - shipWidth / 2, this.position.y - shipHeight / 2,
+				shipWidth,shipHeight);
+		    }
+		    else if((this.velocity.v[0] >= 0)){
+		    	canvasContext.drawImage(spaceshipRightPic,
+				this.position.x - shipWidth / 2, this.position.y - shipHeight / 2,
+				shipWidth,shipHeight);		    	
+		    }
+			
+		
 	};
 
 	this.move = function () {

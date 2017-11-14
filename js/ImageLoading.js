@@ -1,4 +1,9 @@
 var alienPic=document.createElement("img");
+var spaceshipLeftPic=document.createElement("img");
+var spaceshipRightPic=document.createElement("img");
+
+
+
 var alienPicFrameW = 43;
 var alienPicFrameH = 27;
 
@@ -20,6 +25,10 @@ function loadImages() {
 
   var imageList = [
     {varName:alienPic, theFile:"alien-anim.png"},
+    {varName:spaceshipRightPic, theFile:"spaceshipRight.png"},
+    {varName:spaceshipLeftPic, theFile:"spaceshipLeft.png"},
+
+
   ];
 
   picsToLoad = imageList.length;
