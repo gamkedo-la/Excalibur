@@ -10,21 +10,20 @@ function sineShotClass() {
 	cannonShotSpeed = 3;
 	cannonReloadFrames = 45;
 	cannonReloadLeft = 0;
-	this.x = cannonEndX;
-	this.y = cannonEndY;
+	this.position = vec2.create(cannonEndX, cannonEndY);
 	this.moveAng = cannonAngle;
-	this.speed = 1;
+	this.speed = 3;
 	this.removeMe = false;
 
 	this.draw = function () {
 		canvasContext.fillStyle = "blue";
-		canvasContext.fillRect(this.x-1, this.y-1, 6, 6);
+		canvasContext.fillRect(this.position.x-1, this.position.y-1, 6, 6);
 	};
 
 	this.move = function () {
-		this.y -= this.speed;
-        this.x += 50 * Math.sin(this.y/4);
-        console.log("x: " + Math.floor(this.x) + ", y: " + Math.floor(this.y));
+		this.position.y -= this.speed;
+        this.position.x += 20 * Math.sin(this.position.y/22);
+        console.log("x: " + Math.floor(this.position.x) + ", y: " + Math.floor(this.position.y));
 		//this.x = centerX + Math.sin(angle/2) * offset;
 		//this.y = centerX + Math.sin(angle/2) * offset;
 		//centerY += this.speed * Math.sin(this.moveAng);
@@ -38,8 +37,8 @@ function sineShotClass() {
 		}
 
 		for (var e = 0; e < shipList.length; e++) {
-			if (this.y > shipList[e].position.y - shipHeight / 2 && this.y < shipList[e].position.y + shipHeight / 2 &&
-				this.x > shipList[e].position.x - shipWidth / 2 && this.x < shipList[e].position.x + shipWidth / 2) {
+			if (this.position.y > shipList[e].position.y - shipHeight / 2 && this.position.y < shipList[e].position.y + shipHeight / 2 &&
+				this.position.x > shipList[e].position.x - shipWidth / 2 && this.position.x < shipList[e].position.x + shipWidth / 2) {
 			   
 				score += scoreForShipShot;
 				shipList[e].removeMe = true;
@@ -47,17 +46,15 @@ function sineShotClass() {
 			}
 		}
 		for (var t = 0; t < alienList.length; t++) {
-			if (this.y > alienList[t].y - alienHeight && this.y < alienList[t].y &&
-				this.x > alienList[t].x - alienWidth / 2 && this.x < alienList[t].x + alienWidth / 2) {
+			if (this.position.y > alienList[t].position.y - alienHeight && this.position.y < alienList[t].position.y &&
+				this.position.x > alienList[t].position.x - alienWidth / 2 && this.position.x < alienList[t].position.x + alienWidth / 2) {
 			   
 				score += scoreForAlienShot;
 				alienList[t].removeMe = true;
 				this.removeMe = false;
-			} else if (this.y > alienList[t].chuteY &&
-				this.y < alienList[t].chuteY + parachuteH &&
-				this.x > alienList[t].chuteX &&
-				this.x < alienList[t].x + parachuteW &&
-				alienList[t].isChuteDrawn) {
+			} else if (this.position.y > alienList[t].chuteY && this.position.y < alienList[t].chuteY + parachuteH &&
+				this.position.x > alienList[t].chuteX && this.position.x < alienList[t].position.x + parachuteW && alienList[t].isChuteDrawn) {
+				// TODO replace with line segment/aabb intersection test (use shot velocity to compute previous known position; make line seg from last-known to current position)
 			   	
 				score += scoreForParachuteShot;
 				alienList[t].isChuteDrawn = false;
