@@ -131,6 +131,13 @@ function alienClass() {
 				var randomDriftFactor = (Math.floor(Math.random() * (20 - 3 + 1)) + 3);
 				this.position.x += this.speedX / randomDriftFactor;
 				this.position.y += (this.isChuteDrawn ? alienFallSpeedWithChute : alienFallSpeedNoChute);
+				if (this.position.x > canvas.width - alienWidth){
+					this.speedX = 0;
+					this.position.x = canvas.width - alienWidth;
+				} else if (this.position.x < alienWidth){
+					this.speedX = 0;
+					this.position.x = alienWidth;
+				}
 			}
 		}
 		else
