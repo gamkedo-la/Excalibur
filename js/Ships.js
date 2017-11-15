@@ -8,7 +8,7 @@ function shipClass() {
 	this.position = vec2.create(-shipWidth/2, Math.random() * shipSpawnBandThickness + shipSpawnBandMargin);
 	this.shipSpeed = 4;
 	this.velocity = vec2.create(this.shipSpeed, 0);
-    this.colliderAABB = new aabb(shipWidth, shipHeight);
+    this.colliderAABB = new aabb(shipWidth/2, shipHeight/2);
 	this.removeMe = false;
 	this.hasDroppedYet = false;
 	var validXPixelTopDrop = 0;
