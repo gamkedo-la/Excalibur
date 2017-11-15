@@ -75,24 +75,29 @@ function shipSpawn() {
 	newShip.position.y = Math.random() * shipSpawnBandThickness + shipSpawnBandMargin;
 	newShip.velocity.y = 0;
 
-	var safeToDropHere = false;
-	while(safeToDropHere == false) {
-		safeToDropHere = true;
-		
-		validXPixelTopDrop = Math.random() * canvas.width;
-		if(validXPixelTopDrop < dropMarginFromEdge) {
-			safeToDropHere = false;
-		} else if(validXPixelTopDrop > canvas.width - dropMarginFromEdge) {
-			safeToDropHere = false;
-		} else if( Math.abs(canvas.width/2-validXPixelTopDrop) < dropMarginFromCenter) {
-			if (!alienInertiaDriftEnabled) {
-				safeToDropHere = false;
-			}
-		}
-	}
-	newShip.dropX = validXPixelTopDrop;
+	newShip.dropX = getValidDropX();
 
 	newShip.hasDroppedYet = false;
+}
+
+function getValidDropX() {
+  var safeToDropHere = false;
+  while(safeToDropHere === false) {
+    safeToDropHere = true;
+
+    validXPixelTopDrop = Math.random() * canvas.width;
+    if(validXPixelTopDrop < dropMarginFromEdge) {
+      safeToDropHere = false;
+    } else if(validXPixelTopDrop > canvas.width - dropMarginFromEdge) {
+      safeToDropHere = false;
+    } else if( Math.abs(canvas.width/2-validXPixelTopDrop) < dropMarginFromCenter) {
+      if (!alienInertiaDriftEnabled) {
+        safeToDropHere = false;
+      }
+    }
+  }
+
+  return validXPixelTopDrop;
 }
 
 function drawAndRemoveShips() {

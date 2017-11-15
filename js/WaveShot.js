@@ -6,13 +6,10 @@ var offset = centerY * 5;
 var speed = 0.1;
 var angle = 0;
 
-function sineShotClass() {
-	cannonShotSpeed = 3;
-	cannonReloadFrames = 45;
-	cannonReloadLeft = 0;
-	this.position = vec2.create(cannonEndX, cannonEndY);
-	this.moveAng = cannonAngle;
-	this.speed = 3;
+function sineShotClass(x, y, angle, speed) {
+	this.position = vec2.create(x, y);
+	this.moveAng = angle;
+	this.speed = speed;
 	this.removeMe = false;
 
 	this.draw = function () {

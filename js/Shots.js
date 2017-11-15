@@ -1,13 +1,10 @@
 var shotList=[];
 
-function shotClass() {
-	cannonShotSpeed = 6;
-	cannonReloadFrames = 5;
-	cannonReloadLeft = 0;
-	this.position = vec2.create(cannonEndX, cannonEndY);
+function shotClass(x, y, angle, speed) {
+	this.position = vec2.create(x, y);
 
-	this.moveAng = cannonAngle;
-	this.speed = cannonShotSpeed;
+	this.moveAng = angle;
+	this.speed = speed;
 
 	this.velocity = vec2.create(Math.cos(this.moveAng), Math.sin(this.moveAng));
 	vec2.scale(this.velocity, this.velocity, this.speed);

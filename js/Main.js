@@ -5,6 +5,7 @@ const scoreForParachuteShot = 75;
 var score=0;
 
 var masterFrameDelayTick=0;
+var canvas, canvasContext;
 
 window.onload = function () {
 	canvas = document.createElement("canvas");
@@ -18,6 +19,7 @@ window.onload = function () {
 function loadingDoneSoStartGame (){
 	setInterval(update,1000/30);
 	setInterval(shipSpawn,1000*2);
+	setInterval(gunnerSpawn,3000*2);
 	cannonEndX = playerX = canvas.width/2;
 	cannonEndY = playerY = canvas.height-playerHeight;
 	initializeInput();
@@ -36,7 +38,7 @@ function drawAll() {
 	drawAndRemoveAliens();
 	drawAndRemoveShots();
 	drawPlayer();
-	debugDraw();
+	drawScore();
 }
 
 function moveAll() {
@@ -53,8 +55,7 @@ function resetGame() {
 	playerHP = startHitpoints;
 }
 
-function debugDraw() {
-	
+function drawScore() {
 	canvasContext.save();
 	canvasContext.font = "20px Arial";
 	canvasContext.textAlign = "right";
@@ -62,7 +63,7 @@ function debugDraw() {
 	canvasContext.fillText("score: " + score,canvas.width-20,30);
 	canvasContext.restore();
 
-	if(debug == true){
+	if (debug) {
 		canvasContext.fillStyle = "cyan";
 		var lineHeight = 15;
 		var drawTextOutY = 100;
@@ -94,5 +95,5 @@ function drawBitmapFlipped(graphic, atX, atY, flipToFaceLeft) {
 		}
 		canvasContext.drawImage(graphic,-graphic.width/2,-graphic.height/2);
 		canvasContext.restore();
-		}
+}
 
