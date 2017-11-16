@@ -17,7 +17,7 @@ var defaultCannonAng = -Math.PI/2;
 var cannonAngLimit = Math.PI*0.42;
 var cannonLength=40,cannonAngle=defaultCannonAng,cannonAngleVelocity=0.1;
 var cannonEndX, cannonEndY;
-var cannonWaveShotSpeed = 3;
+var cannonWaveShotSpeed = 100;
 var cannonShotSpeed = 5;
 var cannonReloadFrames = 5;
 var cannonWaveReloadFrames = 45;
@@ -50,9 +50,9 @@ function handleInput() {
 			shotList.push(newShot);
 			cannonReloadLeft = cannonReloadFrames;
 		}
-	} else if(holdFire && secondaryFire) {
+	}else if(holdFire && secondaryFire) {
 		if(cannonReloadLeft <= 0) {
-			var newShot = new sineShotClass(cannonEndX, cannonEndY, cannonAngle, cannonWaveShotSpeed);
+			var newShot = new waveShotClass(cannonEndX, cannonEndY, cannonAngle, cannonWaveShotSpeed);
 			shotList.push(newShot);
 			cannonReloadLeft = cannonWaveReloadFrames;
 		}

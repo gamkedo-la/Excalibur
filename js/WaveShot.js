@@ -1,31 +1,43 @@
 var sineShotList=[];
 
-var centerY = cannonEndY;
-var centerX = cannonEndX;
-var offset = centerY * 5;
-var speed = 0.1;
-var angle = 0;
-
-function sineShotClass(x, y, angle, speed) {
+function waveShotClass(x, y, angle, speed) {
 	this.position = vec2.create(x, y);
 	this.moveAng = angle;
 	this.speed = speed;
 	this.removeMe = false;
+	startX = cannonEndX;
+	startY = cannonEndY;
+	endX = cannonEndX;
+	endY = cannonEndY;
+	
 
 	this.draw = function () {
-		canvasContext.fillStyle = "blue";
-		canvasContext.fillRect(this.position.x-1, this.position.y-1, 6, 6);
+		canvasContext.strokeStyle = "blue";
+		canvasContext.beginPath();
+		canvasContext.moveTo(startX,startY);
+		canvasContext.lineTo(endX,endY);
+		canvasContext.lineWidth = 2;
+		canvasContext.stroke();
+		if (cannonReloadLeft == 1) {
+			this.removeMe = true;
+		}
 	};
 
 	this.move = function () {
-		this.position.y -= this.speed;
-        this.position.x += 20 * Math.sin(this.position.y/22);
-        console.log("x: " + Math.floor(this.position.x) + ", y: " + Math.floor(this.position.y));
+		this.position.x += this.speed * Math.cos(this.moveAng);
+		this.position.y += this.speed * Math.sin(this.moveAng);
+			if (this.position.x > canvas.width || this.position.x < 0 || this.position.y < 0){
+				endX = this.position.x;
+				endY = this.position.y;
+		}
+	};
+		//this.position.y -= this.speed;
+       // this.position.x += 20 * Math.sin(this.position.y/22);
+        //console.log("x: " + Math.floor(this.position.x) + ", y: " + Math.floor(this.position.y));
 		//this.x = centerX + Math.sin(angle/2) * offset;
 		//this.y = centerX + Math.sin(angle/2) * offset;
 		//centerY += this.speed * Math.sin(this.moveAng);
 		//centerX += this.speed * Math.cos(this.moveAng);
-	};
 
 	this.shotCollisionAndBoundaryCheck = function () {
 		// note: not checking screen bottom since we can't shoot down
@@ -58,4 +70,4 @@ function sineShotClass(x, y, angle, speed) {
 			} // end of parachute collision check
 		} // end of for alienList.length
 	}; // end of shotCollisionAndBoundaryCheck function
-} // end of shotClass
+} // end of waveShotClass
