@@ -85,6 +85,11 @@ function EnemyShotClass(x, y, angle, speed) {
 	};
 
 	this.shotCollisionAndBoundaryCheck = function () {
+    // note: not checking screen top since we can't shoot up
+    if (this.position.x < 0 || this.position.x > canvas.width || this.position.y > canvas.height) {
+      this.removeMe = true;
+    }
+
     // Compute the shot's previous position
     var prevPos = vec2.create();
     vec2.sub(prevPos, this.position, this.velocity);
