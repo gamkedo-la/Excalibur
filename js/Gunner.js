@@ -1,15 +1,17 @@
 function GunnerClass() {
-	this.position = vec2.create(-shipWidth/2, Math.random() * shipSpawnBandThickness + shipSpawnBandMargin);
+  var gunnerWidth = 75;
+  var gunnerHeight = 25;
+  var gunnerCannonOffsetX = -5.5;
+  var gunnerCannonOffsetY = gunnerHeight / 2;
+
+	this.position = vec2.create(-gunnerWidth/2, Math.random() * shipSpawnBandThickness + shipSpawnBandMargin);
 	this.shipSpeed = 4;
 	this.velocity = vec2.create(this.shipSpeed, 0);
-    this.colliderAABB = new aabb(shipWidth/2, shipHeight/2);
+    this.colliderAABB = new aabb(gunnerWidth/2, gunnerHeight/2);
 	this.removeMe = false;
 	this.hasDroppedYet = false;
 	this.isShooting = false;
-	this.dropX = getValidDropX();
-
-	var gunnerWidth = 75;
-	var gunnerHeight = 25;
+	this.dropX = getValidDropX(canvas.width/2);
 
 	var frameNow = 0;
 	var numFrames = 3;
@@ -22,6 +24,7 @@ function GunnerClass() {
   } else {
     this.position.x = canvas.width+shipWidth/2;
     this.velocity.x = -4;
+    this.dropX += canvas.width/2;
   }
   this.position.y = Math.random() * shipSpawnBandThickness + shipSpawnBandMargin;
   this.velocity.y = 0;
@@ -53,9 +56,11 @@ function GunnerClass() {
           this.velocity.x = velocityX;
           frameNow--;
           // shoot bullet back
-					console.log('shoot bullet!');
-//          var newShot = new shotClass();
-//          shotList.push(newShot);
+					var shotX = this.position.x + gunnerCannonOffsetX;
+					var shotY = this.position.y + gunnerCannonOffsetY;
+					var angle = Math.atan2(playerY - shotY, playerX - shotX);
+          var newShot = new EnemyShotClass(shotX, shotY, angle, gunnerShotSpeed);
+          shotList.push(newShot);
         }
       }
 		}

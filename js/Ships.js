@@ -75,17 +75,17 @@ function shipSpawn() {
 	newShip.position.y = Math.random() * shipSpawnBandThickness + shipSpawnBandMargin;
 	newShip.velocity.y = 0;
 
-	newShip.dropX = getValidDropX();
+	newShip.dropX = getValidDropX(canvas.width);
 
 	newShip.hasDroppedYet = false;
 }
 
-function getValidDropX() {
+function getValidDropX(maxWidth) {
   var safeToDropHere = false;
   while(safeToDropHere === false) {
     safeToDropHere = true;
 
-    validXPixelTopDrop = Math.random() * canvas.width;
+    validXPixelTopDrop = Math.random() * maxWidth;
     if(validXPixelTopDrop < dropMarginFromEdge) {
       safeToDropHere = false;
     } else if(validXPixelTopDrop > canvas.width - dropMarginFromEdge) {

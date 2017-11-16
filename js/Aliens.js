@@ -86,10 +86,7 @@ function alienClass() {
 			}
 			if (Math.abs(this.position.x - playerX) < (playerWidth / 2 - alienWidth / 2)) {
 				this.removeMe = true;
-				playerHP--;
-				if (playerHP <= 0) {
-					resetGame();
-				}
+				hitPlayer();
 			}
 		}
 

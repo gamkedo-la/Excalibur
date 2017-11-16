@@ -18,6 +18,7 @@ var cannonAngLimit = Math.PI*0.42;
 var cannonLength=40,cannonAngle=defaultCannonAng,cannonAngleVelocity=0.1;
 var cannonEndX, cannonEndY;
 var cannonWaveShotSpeed = 100;
+var gunnerShotSpeed = 5;
 var cannonShotSpeed = 5;
 var cannonReloadFrames = 5;
 var cannonWaveReloadFrames = 45;
@@ -77,23 +78,10 @@ function handleInput() {
 			if (mouseCannonY > 0 && mouseCannonX < 0) {
 				mouseCannonY = -mouseCannonY;
 			}
-			
-			cannonAngle = Math.atan2(mouseCannonY, mouseCannonX);
-			if(holdLeft) {
-				if (playerX - playerWidth/2 > 0) {
-					playerX -= playerMoveSpeed;
-				} else {
-					playerX = playerWidth/2;
-				}
 
-			}
-			if(holdRight) {
-				if (playerX + playerWidth/2 < canvas.width) {
-					playerX += playerMoveSpeed;
-				} else {
-					playerX = canvas.width - playerWidth/2;
-				}
-			}
+      cannonAngle = Math.atan2(mouseCannonY, mouseCannonX);
+
+			movePlayer();
 			break;
 	}
 

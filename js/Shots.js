@@ -62,11 +62,50 @@ function shotClass(x, y, angle, speed) {
 	}; // end of shotCollisionAndBoundaryCheck function
 } // end of shotClass
 
+function EnemyShotClass(x, y, angle, speed) {
+	this.position = vec2.create(x, y);
+
+	this.moveAng = angle;
+	this.speed = speed;
+
+	this.velocity = vec2.create(Math.cos(this.moveAng), Math.sin(this.moveAng));
+	vec2.scale(this.velocity, this.velocity, this.speed);
+
+	this.colliderLineSeg = new lineSegment();
+
+	this.removeMe = false;
+
+	this.draw = function () {
+		canvasContext.fillStyle = "red";
+		canvasContext.fillRect(this.position.x - 1, this.position.y - 1, 3, 3);
+	};
+
+	this.move = function () {
+		vec2.add(this.position, this.position, this.velocity);
+	};
+
+	this.shotCollisionAndBoundaryCheck = function () {
+    // Compute the shot's previous position
+    var prevPos = vec2.create();
+    vec2.sub(prevPos, this.position, this.velocity);
+
+    // Create line segment collider from current & previous positions
+    this.colliderLineSeg.setEndpoints(prevPos, this.position);
+
+		if (isColliding_AABB_LineSeg(playerColliderAABB, this.colliderLineSeg)) {
+      this.removeMe = true;
+      hitPlayer();
+    }
+	};
+
+} // end of EnemyShotClass
+
 function drawAndRemoveShots() {
-	for(var i=0;i<shotList.length;i++) {
+	var i;
+	for(i=0;i<shotList.length;i++) {
 		shotList[i].draw();
 	}
-	for(var i=shotList.length-1;i>=0;i--) {
+	for(i=shotList.length-1;i>=0;i--) {
 		if(shotList[i].removeMe) {
 			shotList.splice(i,1);
 		}
