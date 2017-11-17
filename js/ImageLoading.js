@@ -3,7 +3,7 @@ var spaceshipLeftPic=document.createElement("img");
 var spaceshipRightPic=document.createElement("img");
 var gunnerShipRightPic=document.createElement("img");
 var gunnerShipLeftPic=document.createElement("img");
-
+var backgroundPic=document.createElement("img");
 
 
 var alienPicFrameW = 43;
@@ -31,6 +31,7 @@ function loadImages() {
     {varName:spaceshipLeftPic, theFile:"spaceshipLeft.png"},
     {varName:gunnerShipRightPic, theFile:"gunner-ship-right.png"},
     {varName:gunnerShipLeftPic, theFile:"gunner-ship-left.png"},
+	{varName:backgroundPic, theFile:"backgroundPic.png"},
 
   ];
 

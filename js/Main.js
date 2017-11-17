@@ -79,8 +79,8 @@ function drawScore() {
 }
 
 function clearScreen() {
-	canvasContext.fillStyle="black";
-	canvasContext.fillRect(0,0,canvas.width,canvas.height);
+	
+	canvasContext.drawImage(backgroundPic, 0,0,);
 }
 /*
 hey chris I couldn't find the graphicsCommon.js file so i stuck this here for now
