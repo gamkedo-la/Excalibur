@@ -19,8 +19,11 @@ function waveShotClass(x, y, angle, speed) {
 	this.centerLineY = cannonEndY;
 	this.centerLineSpeed = 600;
 	this.firstTimeSettingPerpLineEnd = true;
-	var sineWaveControl = 1;
-	const SET_PERP_LENGTH = 100;
+	this.sineWaveControl = 0;
+	this.counter = 0;
+	this.perpendicularVectorEndX = null;
+	this.perpendicularVectorEndY = null;
+	const SET_PERP_LENGTH = 50;
 
 	this.draw = function () {
 		if (this.centerLineX > canvas.width || this.centerLineX < 0 || this.centerLineY < 0){	
@@ -34,16 +37,18 @@ function waveShotClass(x, y, angle, speed) {
 				perpendicularVectorX = -(this.startY - this.endY);
 				perpendicularVectorY = this.startX - this.endX;
 				var perpendicularLength = SET_PERP_LENGTH / Math.hypot(perpendicularVectorX, perpendicularVectorY);
-				perpendicularVectorX *= perpendicularLength * sineWaveControl;
-				perpendicularVectorY *= perpendicularLength * sineWaveControl; 
+				perpendicularVectorX *= perpendicularLength * this.sineWaveControl;
+				perpendicularVectorY *= perpendicularLength * this.sineWaveControl; 
+				this.sineWaveControl += Math.sin(this.counter)/2;
+				this.counter += 1;
+				//console.log(Math.sin(this.counter));
 				firstTimeSettingPerpLineEnd = false;
-				//console.log(Math.floor(this.perpendicularLineEndX) + "   " + Math.floor(this.perpendicularLineEndY));
 				canvasContext.beginPath();
 				canvasContext.moveTo(this.perpendicularLineStartX,this.perpendicularLineStartY);
-				perpendicularVectorEndX = this.perpendicularLineStartX + perpendicularVectorX;
-				perpendicularVectorEndY = this.perpendicularLineStartY + perpendicularVectorY;
-				canvasContext.lineTo(perpendicularVectorEndX,perpendicularVectorEndY);
-				console.log(Math.floor(this.perpendicularLineStartX + perpendicularVectorX) + "   " + Math.floor(this.perpendicularLineStartY + perpendicularVectorY));
+				this.perpendicularVectorEndX = this.perpendicularLineStartX + perpendicularVectorX;
+				this.perpendicularVectorEndY = this.perpendicularLineStartY + perpendicularVectorY;
+				canvasContext.lineTo(this.perpendicularVectorEndX,this.perpendicularVectorEndY);
+				console.log(Math.floor(this.perpendicularVectorEndX) + "   " + Math.floor(this.perpendicularVectorEndY));
 				canvasContext.strokeStyle = "orange";
 				canvasContext.stroke();
 			}
@@ -51,8 +56,6 @@ function waveShotClass(x, y, angle, speed) {
 	};
 
 	this.move = function () {
-		this.position.x += this.speed * Math.cos(this.moveAng);
-		this.position.y += this.speed * Math.sin(this.moveAng);
 		this.centerLineX += this.centerLineSpeed * Math.cos(this.moveAng);
 		this.centerLineY += this.centerLineSpeed * Math.sin(this.moveAng);
 		if (this.centerLineX > canvas.width || this.centerLineX < 0 || this.centerLineY < 0){
@@ -64,9 +67,9 @@ function waveShotClass(x, y, angle, speed) {
 			this.perpendicularLineEndX += this.speed * Math.cos(this.moveAng);
 			this.perpendicularLineEndY += this.speed * Math.sin(this.moveAng);	
 		}
+		this.position.x = this.perpendicularVectorEndX;
+		this.position.y = this.perpendicularVectorEndY;
 	};
-		//this.position.y -= this.speed;
-       // this.position.x += 20 * Math.sin(this.position.y/22);
         //console.log("x: " + Math.floor(this.position.x) + ", y: " + Math.floor(this.position.y));
 		//this.x = centerX + Math.sin(angle/2) * offset;
 		//this.y = centerX + Math.sin(angle/2) * offset;
