@@ -23,7 +23,7 @@ function waveShotClass(x, y, angle, speed) {
 	this.counter = 0;
 	this.perpendicularVectorEndX = null;
 	this.perpendicularVectorEndY = null;
-	const SET_PERP_LENGTH = 50;
+	const SET_PERP_LENGTH = 25;
 
 	this.draw = function () {
 		if (this.centerLineX > canvas.width || this.centerLineX < 0 || this.centerLineY < 0){	
@@ -37,12 +37,11 @@ function waveShotClass(x, y, angle, speed) {
 				perpendicularVectorX = -(this.startY - this.endY);
 				perpendicularVectorY = this.startX - this.endX;
 				var perpendicularLength = SET_PERP_LENGTH / Math.hypot(perpendicularVectorX, perpendicularVectorY);
-				perpendicularVectorX *= perpendicularLength * this.sineWaveControl;
-				perpendicularVectorY *= perpendicularLength * this.sineWaveControl; 
-				this.sineWaveControl += Math.sin(this.counter)/2;
+				this.sineWaveControl += Math.cos(this.counter);
 				this.counter += 1;
-				//console.log(Math.sin(this.counter));
-				firstTimeSettingPerpLineEnd = false;
+				perpendicularLength *= this.sineWaveControl
+				perpendicularVectorX *= perpendicularLength;
+				perpendicularVectorY *= perpendicularLength; 
 				canvasContext.beginPath();
 				canvasContext.moveTo(this.perpendicularLineStartX,this.perpendicularLineStartY);
 				this.perpendicularVectorEndX = this.perpendicularLineStartX + perpendicularVectorX;
@@ -51,6 +50,8 @@ function waveShotClass(x, y, angle, speed) {
 				console.log(Math.floor(this.perpendicularVectorEndX) + "   " + Math.floor(this.perpendicularVectorEndY));
 				canvasContext.strokeStyle = "orange";
 				canvasContext.stroke();
+				canvasContext.fillStyle = "blue";
+				canvasContext.fillRect(this.position.x - 5, this.position.y - 5, 8, 8);
 			}
 		}
 	};
@@ -63,9 +64,7 @@ function waveShotClass(x, y, angle, speed) {
 			this.endY = this.centerLineY;
 			this.centerLineSpeed = 0;
 			this.perpendicularLineStartX += this.speed * Math.cos(this.moveAng);
-			this.perpendicularLineStartY += this.speed * Math.sin(this.moveAng);
-			this.perpendicularLineEndX += this.speed * Math.cos(this.moveAng);
-			this.perpendicularLineEndY += this.speed * Math.sin(this.moveAng);	
+			this.perpendicularLineStartY += this.speed * Math.sin(this.moveAng);	
 		}
 		this.position.x = this.perpendicularVectorEndX;
 		this.position.y = this.perpendicularVectorEndY;
