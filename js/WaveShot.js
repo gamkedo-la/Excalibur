@@ -23,35 +23,35 @@ function waveShotClass(x, y, angle, speed) {
 	this.counter = 0;
 	this.perpendicularVectorEndX = null;
 	this.perpendicularVectorEndY = null;
-	const SET_PERP_LENGTH = 25;
+	const SET_PERP_LENGTH = 100;
 
 	this.draw = function () {
 		if (this.centerLineX > canvas.width || this.centerLineX < 0 || this.centerLineY < 0){	
 			canvasContext.lineWidth = 2;
-			canvasContext.beginPath();
+			//canvasContext.beginPath();
 			canvasContext.moveTo(this.startX,this.startY);
 			if (this.endX != null && this.endY != null) {
 				canvasContext.lineTo(this.endX,this.endY);
-				canvasContext.strokeStyle = "blue";
-				canvasContext.stroke();
+				canvasContext.strokeStyle = "steelblue";
+				//canvasContext.stroke();
 				perpendicularVectorX = -(this.startY - this.endY);
 				perpendicularVectorY = this.startX - this.endX;
 				var perpendicularLength = SET_PERP_LENGTH / Math.hypot(perpendicularVectorX, perpendicularVectorY);
-				this.sineWaveControl += Math.cos(this.counter);
-				this.counter += 1;
+				this.sineWaveControl = Math.sin(this.counter);
+				this.counter += 0.21;
 				perpendicularLength *= this.sineWaveControl
 				perpendicularVectorX *= perpendicularLength;
 				perpendicularVectorY *= perpendicularLength; 
-				canvasContext.beginPath();
+				//canvasContext.beginPath();
 				canvasContext.moveTo(this.perpendicularLineStartX,this.perpendicularLineStartY);
 				this.perpendicularVectorEndX = this.perpendicularLineStartX + perpendicularVectorX;
 				this.perpendicularVectorEndY = this.perpendicularLineStartY + perpendicularVectorY;
 				canvasContext.lineTo(this.perpendicularVectorEndX,this.perpendicularVectorEndY);
 				console.log(Math.floor(this.perpendicularVectorEndX) + "   " + Math.floor(this.perpendicularVectorEndY));
 				canvasContext.strokeStyle = "orange";
-				canvasContext.stroke();
-				canvasContext.fillStyle = "blue";
-				canvasContext.fillRect(this.position.x - 5, this.position.y - 5, 8, 8);
+				//canvasContext.stroke();
+				canvasContext.fillStyle = "steelblue";
+				canvasContext.fillRect(this.position.x - 5, this.position.y - 5, 12, 12);
 			}
 		}
 	};
@@ -64,7 +64,9 @@ function waveShotClass(x, y, angle, speed) {
 			this.endY = this.centerLineY;
 			this.centerLineSpeed = 0;
 			this.perpendicularLineStartX += this.speed * Math.cos(this.moveAng);
-			this.perpendicularLineStartY += this.speed * Math.sin(this.moveAng);	
+			this.perpendicularLineStartY += this.speed * Math.sin(this.moveAng);
+			this.perpendicularLineEndX += this.speed * Math.cos(this.moveAng);
+			this.perpendicularLineEndY += this.speed * Math.sin(this.moveAng);	
 		}
 		this.position.x = this.perpendicularVectorEndX;
 		this.position.y = this.perpendicularVectorEndY;
