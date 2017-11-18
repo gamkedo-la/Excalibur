@@ -85,10 +85,13 @@ function wrappedDraw(whichImg,pixelOffset) {
 							whichImg.width-wrappedOffset,whichImg.height,
 							wrappedOffset,0,
 							whichImg.width-wrappedOffset,whichImg.height);
-	canvasContext.drawImage(whichImg, whichImg.width-wrappedOffset,0, 
-							wrappedOffset,whichImg.height,
-							0,0,
-							wrappedOffset,whichImg.height);
+	var drawSize = (whichImg.width-wrappedOffset);
+	if(drawSize<whichImg.width) { // avoids Firefox issue on 0 image dim
+		canvasContext.drawImage(whichImg, drawSize,0, 
+			wrappedOffset,whichImg.height,
+			0,0,
+			wrappedOffset,whichImg.height);
+	}
 }
 
 function clearScreen() {
