@@ -17,11 +17,11 @@ var defaultCannonAng = -Math.PI/2;
 var cannonAngLimit = Math.PI*0.42;
 var cannonLength=40,cannonAngle=defaultCannonAng,cannonAngleVelocity=0.1;
 var cannonEndX, cannonEndY;
-var cannonWaveShotSpeed = 5;
+var cannonWaveShotSpeed = 3;
 var gunnerShotSpeed = 5;
 var cannonShotSpeed = 5;
 var cannonReloadFrames = 5;
-var cannonWaveReloadFrames = 90;
+var cannonWaveReloadFrames = 30;
 var cannonReloadLeft = 0;
 
 var mouseY = 0;
