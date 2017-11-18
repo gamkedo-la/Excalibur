@@ -78,9 +78,25 @@ function drawScore() {
 	
 }
 
+// optimization todo: support wider background wrap but draw only on-screen portion
+function wrappedDraw(whichImg,pixelOffset) {
+	var wrappedOffset = pixelOffset % whichImg.width;
+	canvasContext.drawImage(whichImg, 0,0, 
+							whichImg.width-wrappedOffset,whichImg.height,
+							wrappedOffset,0,
+							whichImg.width-wrappedOffset,whichImg.height);
+	canvasContext.drawImage(whichImg, whichImg.width-wrappedOffset,0, 
+							wrappedOffset,whichImg.height,
+							0,0,
+							wrappedOffset,whichImg.height);
+}
+
 function clearScreen() {
-	
-	canvasContext.drawImage(backgroundPic, 0,0,);
+	wrappedDraw(backgroundFarPic, masterFrameDelayTick * 0.15);
+
+	wrappedDraw(backgroundMedPic, masterFrameDelayTick * 0.6);
+
+	wrappedDraw(backgroundNearPic, masterFrameDelayTick * 4.6);
 }
 /*
 hey chris I couldn't find the graphicsCommon.js file so i stuck this here for now
