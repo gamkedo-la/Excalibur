@@ -12,6 +12,9 @@ var backgroundNearPic=document.createElement("img");
 var alienPicFrameW = 43;
 var alienPicFrameH = 27;
 
+var spaceshipPicFrameW = 100;
+var spaceshipPicFrameH = 32;
+
 var picsToLoad = 0;
 
 function countLoadedImageAndLaunchIfReady() {
@@ -30,8 +33,8 @@ function loadImages() {
 
   var imageList = [
     {varName:alienPic, theFile:"alien-anim.png"},
-    {varName:spaceshipRightPic, theFile:"spaceshipRight.png"},
-    {varName:spaceshipLeftPic, theFile:"spaceshipLeft.png"},
+    {varName:spaceshipRightPic, theFile:"spaceshipRight-anim.png"},
+    {varName:spaceshipLeftPic, theFile:"spaceshipLeft-anim.png"},
     {varName:gunnerShipRightPic, theFile:"gunner-ship-right.png"},
     {varName:gunnerShipLeftPic, theFile:"gunner-ship-left.png"},
 	  {varName:backgroundFarPic, theFile:"backgroundFar.png"},

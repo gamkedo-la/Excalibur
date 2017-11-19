@@ -13,22 +13,25 @@ function shipClass() {
 	this.hasDroppedYet = false;
 	var validXPixelTopDrop = 0;
 	this.dropX = validXPixelTopDrop;
+	var frameBool = false; //means 0.Will toggle between 0 and 1 till ship dies.
+	this.frameNow = 0;
+	var frameCounter = 0;
 
 	this.draw = function () {
 		canvasContext.fillStyle = "orange";
-		// canvasContext.fillRect(this.position.x - shipWidth / 2, this.position.y - shipHeight / 2, shipWidth, shipHeight);
-		    if(this.velocity.v[0] < 0){
-		    	canvasContext.drawImage(spaceshipLeftPic,
-				this.position.x - shipWidth / 2, this.position.y - shipHeight / 2,
-				shipWidth,shipHeight);
-		    }
-		    else if((this.velocity.v[0] >= 0)){
-		    	canvasContext.drawImage(spaceshipRightPic,
-				this.position.x - shipWidth / 2, this.position.y - shipHeight / 2,
-				shipWidth,shipHeight);		    	
-		    }
-			
 		
+			frameCounter++;
+			if(frameCounter%40 == 0){
+			   frameBool = !frameBool;
+			}
+			
+			this.frameNow = frameBool ? 1 : 0;
+			this.pic = this.velocity.v[0] < 0 ? spaceshipLeftPic : spaceshipRightPic
+			canvasContext.drawImage(this.pic,
+				this.frameNow * spaceshipPicFrameW, 0,
+				spaceshipPicFrameW, spaceshipPicFrameH,
+				this.position.x - spaceshipPicFrameW / 2, this.position.y - shipHeight / 2,
+				spaceshipPicFrameW, spaceshipPicFrameH);
 	};
 
 	this.move = function () {
