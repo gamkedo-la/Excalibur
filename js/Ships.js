@@ -19,54 +19,40 @@ function shipClass() {
 	var frameBool = false; //means 0.Will toggle between 0 and 1 till ship dies.
 	this.frameNow = 0;
 	var frameCounter = 0;
-	
-
-
-
 
 	this.draw = function () {
+	    var signOfVelocity = this.velocity.x/Math.abs(this.velocity.x);
+		frameCounter++;
+		if(frameCounter%40 == 0){
+		   frameBool = !frameBool;
+		}
+		
+		this.frameNow = frameBool ? 1 : 0;
+		this.pic = this.velocity.x < 0 ? spaceshipLeftPic : spaceshipRightPic;
+		
+		if(this.isDamaged){ 
+			this.frameNow = 2;
+			canvasContext.save();
+			canvasContext.translate(this.position.x  , this.position.y);
+			canvasContext.rotate(this.ang);
+			canvasContext.drawImage(this.pic,
+				this.frameNow * spaceshipPicFrameW, 0,
+				spaceshipPicFrameW, spaceshipPicFrameH,
+				-spaceshipPicFrameW / 2,  -spaceshipPicFrameH / 2,
+				spaceshipPicFrameW, spaceshipPicFrameH);				
+			canvasContext.restore();
+			this.ang +=  signOfVelocity*0.02;
+			this.velocity.x = signOfVelocity*2.6;
+			vec2.add(this.velocity, this.velocity, gravity);
+			vec2.add(this.position, this.position, this.velocity);
+		} else {
+			canvasContext.drawImage(this.pic,
+				this.frameNow * spaceshipPicFrameW, 0,
+				spaceshipPicFrameW, spaceshipPicFrameH,
+				this.position.x - spaceshipPicFrameW / 2, this.position.y - spaceshipPicFrameH / 2,
+				spaceshipPicFrameW, spaceshipPicFrameH);
 
-		    var signOfVelocity = this.velocity.x/Math.abs(this.velocity.x);
-			frameCounter++;
-			if(frameCounter%40 == 0){
-			   frameBool = !frameBool;
-			}
-			
-			this.frameNow = frameBool ? 1 : 0;
-			this.pic = this.velocity.x < 0 ? spaceshipLeftPic : spaceshipRightPic;
-			
-
-
-			if(this.isDamaged){ 
-				this.frameNow = 2;
-				canvasContext.save();
-				canvasContext.translate(this.position.x  , this.position.y);
-				canvasContext.rotate(this.ang);
-				canvasContext.drawImage(this.pic,
-					this.frameNow * spaceshipPicFrameW, 0,
-					spaceshipPicFrameW, spaceshipPicFrameH,
-					-spaceshipPicFrameW / 2,  -spaceshipPicFrameH / 2,
-					spaceshipPicFrameW, spaceshipPicFrameH);				
-				canvasContext.restore();
-				this.ang +=  signOfVelocity*0.02;
-				this.velocity.x = signOfVelocity*2.6;
-				vec2.add(this.velocity, this.velocity, gravity);
-				vec2.add(this.position, this.position, this.velocity);
-
-				
-			}
-			else{
-				canvasContext.drawImage(this.pic,
-					this.frameNow * spaceshipPicFrameW, 0,
-					spaceshipPicFrameW, spaceshipPicFrameH,
-					this.position.x - spaceshipPicFrameW / 2, this.position.y - spaceshipPicFrameH / 2,
-					spaceshipPicFrameW, spaceshipPicFrameH);
-
-			}
-
-	
-			
-
+		}
 	};
 
 	this.move = function () {
@@ -88,17 +74,19 @@ function shipClass() {
 	};
 
 	this.spawnAliensFromShip = function () {
-		var movingLeft = this.velocity.x < 0;
-		var movingRight = this.velocity.x > 0;
-		if (this.hasDroppedYet == false) {
-			if ((movingLeft && this.position.x < this.dropX) ||
-				(movingRight && this.position.x > this.dropX)) {
-				this.hasDroppedYet = true;
-				spawnAlien(this);
-			} // crossing drop line
-		}
-	};
-}
+		if (!this.isDamaged) {
+			var movingLeft = this.velocity.x < 0;
+			var movingRight = this.velocity.x > 0;
+			if (this.hasDroppedYet == false) {
+				if ((movingLeft && this.position.x < this.dropX) ||
+					(movingRight && this.position.x > this.dropX)) {
+					this.hasDroppedYet = true;
+					spawnAlien(this);
+				} // crossing drop line
+			} // end of hasDroppedYet
+		} // end of if(!this.isDamaged)
+	}; // end of spawnAliensFromShip
+} // end of ShipClass
 
 function shipSpawn() {
 	var newShip = new shipClass();

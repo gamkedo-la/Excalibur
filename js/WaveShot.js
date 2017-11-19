@@ -27,12 +27,12 @@ function waveShotClass(x, y, angle, speed) {
 
 	this.draw = function () {
 		if (this.centerLineX > canvas.width || this.centerLineX < 0 || this.centerLineY < 0){	
-			canvasContext.lineWidth = 2;
+			//canvasContext.lineWidth = 2;
 			//canvasContext.beginPath();
 			canvasContext.moveTo(this.startX,this.startY);
 			if (this.endX != null && this.endY != null) {
-				canvasContext.lineTo(this.endX,this.endY);
-				canvasContext.strokeStyle = "steelblue";
+				//canvasContext.lineTo(this.endX,this.endY);
+				//canvasContext.strokeStyle = "steelblue";
 				//canvasContext.stroke();
 				perpendicularVectorX = -(this.startY - this.endY);
 				perpendicularVectorY = this.startX - this.endX;
@@ -43,12 +43,12 @@ function waveShotClass(x, y, angle, speed) {
 				perpendicularVectorX *= perpendicularLength;
 				perpendicularVectorY *= perpendicularLength; 
 				//canvasContext.beginPath();
-				canvasContext.moveTo(this.perpendicularLineStartX,this.perpendicularLineStartY);
+				//canvasContext.moveTo(this.perpendicularLineStartX,this.perpendicularLineStartY);
 				this.perpendicularVectorEndX = this.perpendicularLineStartX + perpendicularVectorX;
 				this.perpendicularVectorEndY = this.perpendicularLineStartY + perpendicularVectorY;
-				canvasContext.lineTo(this.perpendicularVectorEndX,this.perpendicularVectorEndY);
-				console.log(Math.floor(this.perpendicularVectorEndX) + "   " + Math.floor(this.perpendicularVectorEndY));
-				canvasContext.strokeStyle = "orange";
+				//canvasContext.lineTo(this.perpendicularVectorEndX,this.perpendicularVectorEndY);
+				//console.log(Math.floor(this.perpendicularVectorEndX) + "   " + Math.floor(this.perpendicularVectorEndY));
+				//canvasContext.strokeStyle = "orange";
 				//canvasContext.stroke();
 				canvasContext.fillStyle = "steelblue";
 				canvasContext.fillRect(this.position.x - 5, this.position.y - 5, 12, 12);
@@ -71,11 +71,6 @@ function waveShotClass(x, y, angle, speed) {
 		this.position.x = this.perpendicularVectorEndX;
 		this.position.y = this.perpendicularVectorEndY;
 	};
-        //console.log("x: " + Math.floor(this.position.x) + ", y: " + Math.floor(this.position.y));
-		//this.x = centerX + Math.sin(angle/2) * offset;
-		//this.y = centerX + Math.sin(angle/2) * offset;
-		//centerY += this.speed * Math.sin(this.moveAng);
-		//centerX += this.speed * Math.cos(this.moveAng);
 
 	this.shotCollisionAndBoundaryCheck = function () {
 		// note: not checking screen bottom since we can't shoot down
@@ -85,10 +80,11 @@ function waveShotClass(x, y, angle, speed) {
 
 		for (var e = 0; e < shipList.length; e++) {
 			if (this.position.y > shipList[e].position.y - shipHeight / 2 && this.position.y < shipList[e].position.y + shipHeight / 2 &&
-				this.position.x > shipList[e].position.x - shipWidth / 2 && this.position.x < shipList[e].position.x + shipWidth / 2) {
+				this.position.x > shipList[e].position.x - shipWidth / 2 && this.position.x < shipList[e].position.x + shipWidth / 2 &&
+				!shipList[e].isDamaged) {
 			   
 				score += scoreForShipShot;
-				shipList[e].removeMe = true;
+				shipList[e].isDamaged = true;
 				this.removeMe = false;
 			}
 		}
