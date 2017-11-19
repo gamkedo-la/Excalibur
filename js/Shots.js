@@ -39,7 +39,8 @@ function shotClass(x, y, angle, speed) {
 			if (isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSeg)) {
 
 				score += scoreForShipShot;
-				shipList[e].removeMe = true;
+				// shipList[e].removeMe = true;
+				shipList[e].isDamaged = true;
 				this.removeMe = true;
 			}
 		}
