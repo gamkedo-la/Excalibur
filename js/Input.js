@@ -3,6 +3,8 @@ const KEY_SPACE = 32;
 const KEY_LEFT = 37;
 const KEY_RIGHT = 39;
 const KEY_D = 68;
+const KEY_A = 65;
+const KEY_C = 67;
 
 var holdFire, holdLeft, holdRight = false;
 var secondaryFire = false;
@@ -106,12 +108,14 @@ function keyPress(evt) {
 			holdFire = true;
 			break;
 		case KEY_LEFT:
+		case KEY_A:
 			holdLeft = true;
 			break;
 		case KEY_RIGHT:
+		case KEY_D:
 			holdRight = true;
 			break;
-		case KEY_D:
+		case KEY_C:
 			debug = !debug;
 			break;
 	}
@@ -122,9 +126,11 @@ function keyRelease(evt) {
 			holdFire = false;
 			break;
 		case KEY_LEFT:
+		case KEY_A:
 			holdLeft = false;
 			break;
 		case KEY_RIGHT:
+		case KEY_D:
 			holdRight = false;
 			break;
 	}
