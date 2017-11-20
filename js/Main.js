@@ -38,6 +38,7 @@ function drawAll() {
 	drawAndRemoveAliens();
 	drawAndRemoveShots();
 	drawPlayer();
+	drawAndRemovePowerUps();
 	drawScore();
 }
 
@@ -45,12 +46,14 @@ function moveAll() {
 	moveShips();
 	moveAliens();
 	moveShots();
+	movePowerUps();
 }
 
 function resetGame() {
 	shotList=[];
 	shipList=[];
 	alienList=[];
+	resetPowerUps();
 	score=0;
 	playerHP = startHitpoints;
 }
