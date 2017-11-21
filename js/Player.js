@@ -1,6 +1,6 @@
 var playerX,playerY;
 
-const startHitpoints = 30;
+const startHitpoints = 3;
 var playerHP = startHitpoints;
 
 const playerWidth=50,playerHeight=30;
