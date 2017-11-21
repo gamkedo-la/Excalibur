@@ -32,6 +32,8 @@ var mouseX = 0;
 function initializeInput() {
 	document.addEventListener("keydown",keyPress);
 	document.addEventListener("keyup",keyRelease);
+	window.addEventListener("focus", windowOnFocus);
+ 	window.addEventListener("blur", windowOnBlur);
 
 	switch(controlScheme) {
 		case CONTROL_SCHEME_KEYS_STATIONARY:
@@ -45,6 +47,19 @@ function initializeInput() {
 			break;
 	}
 }
+
+function windowOnFocus() {
+	if(!gameRunning) {
+		gameRunning = true;
+	}
+};
+
+function windowOnBlur() {
+	gameRunning = false;
+	clearInterval(update);
+	clearInterval(shipSpawn);
+	clearInterval(gunnerSpawn);
+};
 
 function handleInput() {
 	if(holdFire && !secondaryFire) {
