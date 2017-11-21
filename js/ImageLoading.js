@@ -3,11 +3,14 @@ var spaceshipLeftPic = document.createElement("img");
 var spaceshipRightPic = document.createElement("img");
 var gunnerShipRightPic = document.createElement("img");
 var gunnerShipLeftPic = document.createElement("img");
-var shieldPowerUpPic = document.createElement("img");
 
 var backgroundFarPic = document.createElement("img");
 var backgroundMedPic = document.createElement("img");
 var backgroundNearPic = document.createElement("img");
+
+var shieldPowerUpPic = document.createElement("img");
+var healthPowerUpPic = document.createElement("img");
+var maxHealthPowerUpPic = document.createElement("img");
 
 
 var alienPicFrameW = 43;
@@ -41,6 +44,8 @@ function loadImages() {
         { varName: backgroundMedPic, theFile: "backgroundMed.png" },
         { varName: backgroundNearPic, theFile: "backgroundNear.png" },
         { varName: shieldPowerUpPic, theFile: "shieldPowerUp.png" },
+        { varName: healthPowerUpPic, theFile: "healthPowerUp.png" },
+        { varName: maxHealthPowerUpPic, theFile: "maxHealthPowerUp.png" },
     ];
 
     picsToLoad = imageList.length;

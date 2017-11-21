@@ -13,6 +13,16 @@ const powerUps = {
         'description': 'Temporarily forms a protective shield around the player.',
         'updateFunction': updateShield,
         'radius': 60
+    },
+    'health': {
+    	'image': healthPowerUpPic,
+        'description': 'Restores one point of health to the player.',
+        'updateFunction': restoreHealth
+    },
+    'maxHealth': {
+    	'image': maxHealthPowerUpPic,
+        'description': 'Restores all health to the player.',
+        'updateFunction': restoreMaxHealth
     }
 };
 const powerUpTypes = Object.keys(powerUps);
@@ -65,18 +75,19 @@ function powerUp(fromShip) {
         if (this.isActive) return;
         this.isActive = true;
         activePowerUps.push(this);
-        this.activeDuration = this.properties.duration;
-        if (canUseMaxDuration) {
-            this.activeDuration = this.properties.maxDuration;
+
+        if (this.properties.hasOwnProperty('duration')) {
+            this.activeDuration = this.properties.duration;
+            if (canUseMaxDuration && this.properties.hasOwnProperty('maxDuration')) {
+                this.activeDuration = this.properties.maxDuration;
+            }
+            this.activeDuration *= millisecond;
+            var self = this;
+            setTimeout(function() {
+                self.isActive = false;
+                self.canDestroy = true;
+            }, this.activeDuration)
         }
-
-        this.activeDuration *= millisecond;
-
-        var self = this;
-        setTimeout(function() {
-            self.isActive = false;
-            self.canDestroy = true;
-        }, this.activeDuration)
     }
 
     this.checkForCollisionWithPlayer = function() {
@@ -116,10 +127,22 @@ function spawnPowerUp(fromShip) {
 }
 
 function getRandomPowerUpType() {
+    this.powerUpTypes = powerUpTypes.slice();
+
+    // filter out health power ups if the player has full health
+    if (playerHP === startHitpoints) {
+        this.powerUpTypes = [];
+        for (var i = 0; i < powerUpTypes.length; i++) {
+            if (powerUpTypes[i].toLowerCase().indexOf('health') < 0) {
+                this.powerUpTypes.push(powerUpTypes[i]);
+            }
+        }
+    }
+
     var min = 0;
-    var max = powerUpTypes.length - 1;
+    var max = this.powerUpTypes.length - 1;
     var randomIndex = Math.floor(Math.random() * (max - min + 1) + min);
-    return powerUpTypes[randomIndex];
+    return this.powerUpTypes[randomIndex];
 }
 
 function drawAndRemovePowerUps() {
@@ -154,14 +177,14 @@ function movePowerUps() {
 function updateShield(shield) {
     var enemyEntities = {
         shots: {
-        	list: shotList,
-        	width: shotWidth,
-        	height: shotHeight
+            list: shotList,
+            width: shotWidth,
+            height: shotHeight
         },
         aliens: {
-        	list: alienList,
-        	width: alienWidth,
-        	height: alienHeight
+            list: alienList,
+            width: alienWidth,
+            height: alienHeight
         }
     };
 
@@ -183,9 +206,9 @@ function updateShield(shield) {
             var currentEnemyHeight = enemyEntities[enemyEntity].height;
 
             for (var i = 0; i < currentList.length; i++) {
-            	var currentEnemy = currentList[i];
+                var currentEnemy = currentList[i];
 
-            	// ignore collisions with shots if they aren't from the enemy
+                // ignore collisions with shots if they aren't from the enemy
                 if (enemyEntity == 'shots' && !currentList[i].fromEnemy) continue;
 
                 var distanceX = Math.abs(playerX - (currentEnemy.position.x - (currentEnemyWidth / 2)));
@@ -205,4 +228,18 @@ function updateShield(shield) {
             }
         });
     }
+}
+
+function restoreHealth(powerUp) {
+	if(playerHP === startHitpoints) return;
+	playerHP++;
+	powerUp.isActive = false;
+	powerUp.canDestroy = true;
+}
+
+function restoreMaxHealth(powerUp) {
+	if(playerHP === startHitpoints) return;
+	playerHP = startHitpoints;
+	powerUp.isActive = false;
+	powerUp.canDestroy = true;
 }
