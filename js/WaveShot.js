@@ -2,8 +2,6 @@ var sineShotList=[];
 
 function waveShotClass(x, y, angle, speed) {
 	this.position = vec2.create(x, y);
-	this.position.x = cannonEndX;
-	this.position.y = cannonEndY;
 	this.moveAng = angle;
 	this.speed = speed;
 	this.removeMe = false;
@@ -18,7 +16,6 @@ function waveShotClass(x, y, angle, speed) {
 	this.centerLineX = cannonEndX;
 	this.centerLineY = cannonEndY;
 	this.centerLineSpeed = 600;
-	this.firstTimeSettingPerpLineEnd = true;
 	this.sineWaveControl = 0;
 	this.counter = 0;
 	this.perpendicularVectorEndX = null;
@@ -29,7 +26,7 @@ function waveShotClass(x, y, angle, speed) {
 		if (this.centerLineX > canvas.width || this.centerLineX < 0 || this.centerLineY < 0){	
 			//canvasContext.lineWidth = 2;
 			//canvasContext.beginPath();
-			canvasContext.moveTo(this.startX,this.startY);
+			//canvasContext.moveTo(this.startX,this.startY);
 			if (this.endX != null && this.endY != null) {
 				//canvasContext.lineTo(this.endX,this.endY);
 				//canvasContext.strokeStyle = "steelblue";
@@ -50,8 +47,20 @@ function waveShotClass(x, y, angle, speed) {
 				//console.log(Math.floor(this.perpendicularVectorEndX) + "   " + Math.floor(this.perpendicularVectorEndY));
 				//canvasContext.strokeStyle = "orange";
 				//canvasContext.stroke();
-				canvasContext.fillStyle = "steelblue";
-				canvasContext.fillRect(this.position.x - 5, this.position.y - 5, 12, 12);
+				if (masterFrameDelayTick % 4 == 0) {
+					this.frameNow = 0;
+				} else if (masterFrameDelayTick % 4 == 1) {
+						this.frameNow = 1;
+				} else  if (masterFrameDelayTick % 4 == 2){
+						this.frameNow = 2;
+				} else if (masterFrameDelayTick % 4 == 3) {
+						this.frameNow = 3;
+				}
+			canvasContext.drawImage(waveShotPic,
+			this.frameNow * waveShotPicFrameW, 0,
+			waveShotPicFrameW, waveShotPicFrameH,
+			this.position.x - waveShotPicFrameW / 2, this.position.y - waveShotPicFrameH,
+			waveShotPicFrameW, waveShotPicFrameH);
 			}
 		}
 	};
@@ -82,9 +91,14 @@ function waveShotClass(x, y, angle, speed) {
 			if (this.position.y > shipList[e].position.y - shipHeight / 2 && this.position.y < shipList[e].position.y + shipHeight / 2 &&
 				this.position.x > shipList[e].position.x - shipWidth / 2 && this.position.x < shipList[e].position.x + shipWidth / 2 &&
 				!shipList[e].isDamaged) {
-			   
+			   	
+			   	shipList[e].isDamaged = true;
 				score += scoreForShipShot;
-				shipList[e].isDamaged = true;
+				
+				if (canSpawnPowerUp()) {
+                   	spawnPowerUp(shipList[e]);
+                }
+
 				this.removeMe = false;
 			}
 		}
@@ -102,6 +116,17 @@ function waveShotClass(x, y, angle, speed) {
 				score += scoreForParachuteShot;
 				alienList[t].isChuteDrawn = false;
 			} // end of parachute collision check
-		} // end of for alienList.length
+		}
+
+		/*for (var p = 0; p < powerUpBoxList.length; p++) {
+			if (this.position.y > powerUpBoxList[e].position.y - powerUpHeight / 2 && this.position.y < powerUpBoxList[e].position.y + powerUpHeight / 2 &&
+				this.position.x > powerUpBoxList[e].position.x - powerUpWidth / 2 && this.position.x < powerUpBoxList[e].position.x + powerUpWidth / 2) {
+			   	
+                var useMaxDuration = true;
+                score += scoreForPowerUpShot;
+                powerUpBox.setActive(useMaxDuration);
+                this.removeMe = true;
+            } // end of powerUp collision check
+		} // end of for powerUp.length */
 	}; // end of shotCollisionAndBoundaryCheck function
 } // end of waveShotClass
