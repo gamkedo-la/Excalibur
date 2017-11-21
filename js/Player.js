@@ -9,9 +9,6 @@ var playerColliderAABB = new aabb(playerWidth/2, playerHeight/2);
 
 const playerMoveSpeed=4; // only used if in mouse control scheme
 
-// var playerHasShield = false;
-// var shieldStrength = 7;
-
 function drawPlayer() {
 	// cannon
 	canvasContext.strokeStyle="lime";
@@ -26,14 +23,6 @@ function drawPlayer() {
 	// base
 	canvasContext.fillStyle="white";
 	canvasContext.fillRect(playerX-playerWidth/2,playerY,playerWidth,playerHeight);
-
-  // //shield
-  // if(playerHasShield) {
-  //   canvasContext.fillStyle = 'rgba(52, 166, 253, 0.' + shieldStrength + ')';
-  //   canvasContext.beginPath();
-  //   canvasContext.arc(playerX, playerY, playerWidth + 2, 0, Math.PI * 2, true);
-  //   canvasContext.fill();
-  // }
 }
 
 function movePlayer() {

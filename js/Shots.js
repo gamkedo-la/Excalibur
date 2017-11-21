@@ -1,3 +1,5 @@
+const shotWidth = 3;
+const shotHeight = 3;
 var shotList = [];
 
 function shotClass(x, y, angle, speed) {
@@ -15,7 +17,7 @@ function shotClass(x, y, angle, speed) {
 
     this.draw = function() {
         canvasContext.fillStyle = "yellow";
-        canvasContext.fillRect(this.position.x - 1, this.position.y - 1, 3, 3);
+        canvasContext.fillRect(this.position.x - 1, this.position.y - 1, shotWidth, shotHeight);
     };
 
     this.move = function() {
@@ -37,8 +39,9 @@ function shotClass(x, y, angle, speed) {
 
         powerUpBoxList.forEach(function(powerUpBox) {
             if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSeg)) {
+                var useMaxDuration = true;
                 score += scoreForPowerUpShot;
-                powerUpBox.setActive();
+                powerUpBox.setActive(useMaxDuration);
                 this.removeMe = true;
             }
         }, this);
@@ -81,6 +84,7 @@ function EnemyShotClass(x, y, angle, speed) {
 
     this.moveAng = angle;
     this.speed = speed;
+    this.fromEnemy = true;
 
     this.velocity = vec2.create(Math.cos(this.moveAng), Math.sin(this.moveAng));
     vec2.scale(this.velocity, this.velocity, this.speed);
@@ -91,7 +95,7 @@ function EnemyShotClass(x, y, angle, speed) {
 
     this.draw = function() {
         canvasContext.fillStyle = "red";
-        canvasContext.fillRect(this.position.x - 1, this.position.y - 1, 3, 3);
+        canvasContext.fillRect(this.position.x - 1, this.position.y - 1, shotWidth, shotHeight);
     };
 
     this.move = function() {

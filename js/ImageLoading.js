@@ -33,8 +33,8 @@ function beginLoadingImage(imgVar, fileName) {
 function loadImages() {
     var imageList = [
         { varName: alienPic, theFile: "alien-anim.png" },
-        { varName: spaceshipRightPic, theFile: "spaceshipRight.png" },
-        { varName: spaceshipLeftPic, theFile: "spaceshipLeft.png" },
+        { varName: spaceshipRightPic, theFile: "spaceshipRight-anim.png" },
+        { varName: spaceshipLeftPic, theFile: "spaceshipLeft-anim.png" },
         { varName: gunnerShipRightPic, theFile: "gunner-ship-right.png" },
         { varName: gunnerShipLeftPic, theFile: "gunner-ship-left.png" },
         { varName: backgroundFarPic, theFile: "backgroundFar.png" },

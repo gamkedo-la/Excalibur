@@ -11,7 +11,8 @@ const powerUps = {
         'maxDuration': 8,
         'image': shieldPowerUpPic,
         'description': 'Temporarily forms a protective shield around the player.',
-        'drawFunction': drawShield
+        'updateFunction': updateShield,
+        'radius': 60
     }
 };
 const powerUpTypes = Object.keys(powerUps);
@@ -43,16 +44,17 @@ function powerUp(fromShip) {
         }
 
         // The power up has been picked up, so draw any affects if it has any
-        if (this.isActive && this.properties.drawFunction) {
-            this.properties['drawFunction']();
+        if (this.isActive && this.properties.hasOwnProperty('updateFunction')) {
+            this.properties['updateFunction'](this);
         }
     }
 
     this.move = function() {
         this.position.y += dropSpeed;
 
-	    this.colliderAABB.setCenter(this.position.x, this.position.y);
-	    this.colliderAABB.computeBounds();
+        this.colliderAABB.setCenter(this.position.x, this.position.y);
+        this.colliderAABB.computeBounds();
+        this.checkForCollisionWithPlayer();
 
         if (this.position.y >= canvas.height && !this.isActive) {
             this.canDestroy = true;
@@ -70,13 +72,22 @@ function powerUp(fromShip) {
 
         this.activeDuration *= millisecond;
 
-        console.log('activeDuration', this.activeDuration);
-
         var self = this;
         setTimeout(function() {
             self.isActive = false;
             self.canDestroy = true;
         }, this.activeDuration)
+    }
+
+    this.checkForCollisionWithPlayer = function() {
+        var isCollidingWithPlayer = this.position.x > (playerX - playerWidth) &&
+            this.position.y > playerY &&
+            this.position.x < (playerX + playerWidth) &&
+            this.position.y < (playerY + playerHeight);
+
+        if (isCollidingWithPlayer) {
+            this.setActive();
+        }
     }
 }
 
@@ -90,7 +101,7 @@ function canSpawnPowerUp() {
     var now = new Date().getTime();
     var timeDifference = now - lastPowerUpDroppedAt;
     var spawnChance = Math.round(Math.random());
-    if (spawnChance > 0 && timeDifference >= secondsBetweenDrops) {
+    if (spawnChance > 0 && timeDifference > secondsBetweenDrops) {
         lastPowerUpDroppedAt = now;
         return true;
     }
@@ -140,9 +151,58 @@ function movePowerUps() {
     }
 }
 
-function drawShield() {
-    canvasContext.fillStyle = 'rgba(52, 166, 253, 0.6)';
-    canvasContext.beginPath();
-    canvasContext.arc(playerX, playerY, playerWidth + 2, 0, Math.PI * 2, true);
-    canvasContext.fill();
+function updateShield(shield) {
+    var enemyEntities = {
+        shots: {
+        	list: shotList,
+        	width: shotWidth,
+        	height: shotHeight
+        },
+        aliens: {
+        	list: alienList,
+        	width: alienWidth,
+        	height: alienHeight
+        }
+    };
+
+    drawShield();
+    checkShieldCollisions();
+
+    function drawShield() {
+        canvasContext.fillStyle = 'rgba(52, 166, 253, 0.6)';
+        canvasContext.beginPath();
+        canvasContext.arc(playerX, playerY, shield.properties.radius, 0, Math.PI * 2, true);
+        canvasContext.fill();
+    }
+
+    function checkShieldCollisions() {
+
+        Object.keys(enemyEntities).forEach(function(enemyEntity) {
+            var currentList = enemyEntities[enemyEntity].list;
+            var currentEnemyWidth = enemyEntities[enemyEntity].width;
+            var currentEnemyHeight = enemyEntities[enemyEntity].height;
+
+            for (var i = 0; i < currentList.length; i++) {
+            	var currentEnemy = currentList[i];
+
+            	// ignore collisions with shots if they aren't from the enemy
+                if (enemyEntity == 'shots' && !currentList[i].fromEnemy) continue;
+
+                var distanceX = Math.abs(playerX - (currentEnemy.position.x - (currentEnemyWidth / 2)));
+                var distanceY = Math.abs(playerY - (currentEnemy.position.y - (currentEnemyHeight / 2)));
+
+                if (distanceX <= (currentEnemyWidth / 2) || distanceY <= (currentEnemyHeight / 2)) {
+                    currentEnemy.removeMe = true;
+                }
+
+                // test for corner collisions
+                distanceX -= currentEnemyWidth / 2;
+                distanceY -= currentEnemyHeight / 2;
+                var radiusSquared = shield.properties.radius * shield.properties.radius;
+                if (distanceX * distanceX + distanceY * distanceY <= radiusSquared) {
+                    currentEnemy.removeMe = true;
+                }
+            }
+        });
+    }
 }
