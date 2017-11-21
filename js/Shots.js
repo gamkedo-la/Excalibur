@@ -44,10 +44,11 @@ function shotClass(x, y, angle, speed) {
         }, this);
 
         for (var e = 0; e < shipList.length; e++) {
-            if (isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSeg)) {
+            if (isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSeg) && !shipList[e].isDamaged) {
 
                 score += scoreForShipShot;
-                shipList[e].removeMe = true;
+                // shipList[e].removeMe = true;
+                shipList[e].isDamaged = true;
 
                 if (canSpawnPowerUp()) {
                     spawnPowerUp(shipList[e]);

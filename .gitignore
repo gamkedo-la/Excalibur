@@ -1,4 +1,4 @@
-# Ignore Temp Linux/Mac Files       
+# Ignore Temp Files       
 *.*~
 .DS_Store
 *.swp

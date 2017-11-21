@@ -4,7 +4,7 @@ const KEY_LEFT = 37;
 const KEY_RIGHT = 39;
 const KEY_D = 68;
 const KEY_A = 65;
-const KEY_C = 67;
+const DIGIT_0 = 48; //only for debug
 
 var holdFire, holdLeft, holdRight = false;
 var secondaryFire = false;
@@ -99,8 +99,9 @@ function keyPress(evt) {
 	if (evt.key.toLowerCase().substr(0, 1) != "f") {
 		evt.preventDefault();
 	}
-	
+
 	switch (evt.keyCode) {
+
 		case KEY_TAB:
 			secondaryFire = !secondaryFire;
 			break;
@@ -115,7 +116,7 @@ function keyPress(evt) {
 		case KEY_D:
 			holdRight = true;
 			break;
-		case KEY_C:
+		case DIGIT_0:
 			debug = !debug;
 			break;
 	}

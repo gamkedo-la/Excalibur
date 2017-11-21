@@ -13,6 +13,9 @@ var backgroundNearPic = document.createElement("img");
 var alienPicFrameW = 43;
 var alienPicFrameH = 27;
 
+var spaceshipPicFrameW = 100;
+var spaceshipPicFrameH = 32;
+
 var picsToLoad = 0;
 
 function countLoadedImageAndLaunchIfReady() {
@@ -28,7 +31,6 @@ function beginLoadingImage(imgVar, fileName) {
 }
 
 function loadImages() {
-
     var imageList = [
         { varName: alienPic, theFile: "alien-anim.png" },
         { varName: spaceshipRightPic, theFile: "spaceshipRight.png" },
