@@ -1,5 +1,5 @@
-const powerUpWidth = 30;
-const powerUpHeight = 30;
+const powerUpWidth = 12;
+const powerUpHeight = 12;
 const dropSpeed = 3;
 const millisecond = 1000;
 const secondsBetweenDrops = 4 * millisecond;
