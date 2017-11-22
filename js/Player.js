@@ -10,7 +10,7 @@ var playerColliderAABB = new aabb(playerWidth/2, playerHeight/2);
 const playerMoveSpeed=4; // only used if in mouse control scheme
 
 var defaultCannonAng = -Math.PI/2;
-var cannonAngLimit = Math.PI/2;
+var cannonAngLimit = Math.PI * 0.47;
 var cannonLength=40,cannonAngle=defaultCannonAng,cannonAngleVelocity=0.1;
 var cannonEndX, cannonEndY;
 var cannonWaveShotSpeed = 3.4;
@@ -19,6 +19,8 @@ var cannonShotSpeed = 5;
 var cannonReloadFrames = 5;
 var cannonWaveReloadFrames = 37;
 var cannonReloadLeft = 0;
+var cannonWidth = 18
+
 
 function drawPlayer() {
 	// base
@@ -36,7 +38,7 @@ function drawPlayer() {
   // canvasContext.lineTo(cannonEndX,cannonEndY);
   // canvasContext.stroke();
 
-   cannonEndX = playerX  + cannonLength*Math.cos(cannonAngle);
+   cannonEndX = playerX - cannonWidth/4 + cannonLength*Math.cos(cannonAngle);
    cannonEndY = playerY + playerHeight/2 + cannonLength*Math.sin(cannonAngle);
 
   
