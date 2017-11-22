@@ -41,8 +41,6 @@ function drawPlayer() {
    cannonEndX = playerX - cannonWidth/4 + cannonLength*Math.cos(cannonAngle);
    cannonEndY = playerY + playerHeight/2 + cannonLength*Math.sin(cannonAngle);
 
-  
-   console.log(cannonAngle);
    canvasContext.save();
    canvasContext.translate(playerX ,playerY + playerHeight/2)
    canvasContext.rotate(cannonAngle + cannonAngLimit );
