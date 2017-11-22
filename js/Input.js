@@ -40,14 +40,17 @@ function initializeInput() {
 function windowOnFocus() {
 	if(!gameRunning) {
 		gameRunning = true;
+		gameUpdate = setInterval(update, 1000/30);
+		gameShipSpawn = setInterval(shipSpawn, 1000*2);
+		gameGunnerSpawn = setInterval(gunnerSpawn, 3000*2);
 	}
 };
 
 function windowOnBlur() {
+	clearInterval(gameShipSpawn);
+	clearInterval(gameGunnerSpawn);
 	gameRunning = false;
-	clearInterval(update);
-	clearInterval(shipSpawn);
-	clearInterval(gunnerSpawn);
+	clearInterval(gameUpdate);
 };
 
 function handleInput() {

@@ -35,7 +35,7 @@ function waveShotClass(x, y, angle, speed) {
 				perpendicularVectorY = this.startX - this.endX;
 				var perpendicularLength = SET_PERP_LENGTH / Math.hypot(perpendicularVectorX, perpendicularVectorY);
 				this.sineWaveControl = Math.sin(this.counter);
-				this.counter += 0.21;
+				this.counter += 0.1;
 				perpendicularLength *= this.sineWaveControl
 				perpendicularVectorX *= perpendicularLength;
 				perpendicularVectorY *= perpendicularLength; 
@@ -47,13 +47,13 @@ function waveShotClass(x, y, angle, speed) {
 				//console.log(Math.floor(this.perpendicularVectorEndX) + "   " + Math.floor(this.perpendicularVectorEndY));
 				//canvasContext.strokeStyle = "orange";
 				//canvasContext.stroke();
-				if (masterFrameDelayTick % 4 == 0) {
+				if (masterFrameDelayTick % 16 == 0) {
 					this.frameNow = 0;
-				} else if (masterFrameDelayTick % 4 == 1) {
+				} else if (masterFrameDelayTick % 16 == 2) {
 						this.frameNow = 1;
-				} else  if (masterFrameDelayTick % 4 == 2){
+				} else  if (masterFrameDelayTick % 16 == 4){
 						this.frameNow = 2;
-				} else if (masterFrameDelayTick % 4 == 3) {
+				} else if (masterFrameDelayTick % 16 == 6) {
 						this.frameNow = 3;
 				}
 			canvasContext.drawImage(waveShotPic,
@@ -83,7 +83,7 @@ function waveShotClass(x, y, angle, speed) {
 
 	this.shotCollisionAndBoundaryCheck = function () {
 		// note: not checking screen bottom since we can't shoot down
-		if (this.position.x < 0 || this.position.x > canvas.width || this.position.y < 0) {
+		if (this.position.x < -SET_PERP_LENGTH || this.position.x > canvas.width + SET_PERP_LENGTH || this.position.y < 0) {
 			this.removeMe = true;
 		}
 

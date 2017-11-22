@@ -3,7 +3,11 @@ const scoreForAlienShot = 50;
 const scoreForParachuteShot = 75;
 
 var score=0;
+
 var gameRunning = true;
+var gameUpdate
+var gameShipSpawn
+var gameGunnerSpawn
 
 var masterFrameDelayTick=0;
 var canvas, canvasContext;
@@ -18,14 +22,12 @@ window.onload = function () {
 };
 
 function loadingDoneSoStartGame (){
-	if (gameRunning){
-	setInterval(update,1000/30);
-	setInterval(shipSpawn,1000*2);
-	setInterval(gunnerSpawn,3000*2);
+	gameUpdate = setInterval(update, 1000/30);
+	gameShipSpawn = setInterval(shipSpawn, 1000*2);
+	gameGunnerSpawn = setInterval(gunnerSpawn, 3000*2);
 	cannonEndX = playerX = canvas.width/2;
 	cannonEndY = playerY = canvas.height-playerHeight;
 	initializeInput();
-	}
 }
 
 function update() {
