@@ -4,7 +4,6 @@ var shotList = [];
 
 function shotClass(x, y, angle, speed) {
     this.position = vec2.create(x, y);
-
     this.moveAng = angle;
     this.speed = speed;
 

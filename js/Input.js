@@ -15,9 +15,13 @@ const CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING = 1;
 
 var controlScheme = CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING;
 
+var mouseY = 0;
+var mouseX = 0;
+
 var defaultCannonAng = -Math.PI/2;
 var cannonAngLimit = Math.PI*0.42;
 var cannonLength=40,cannonAngle=defaultCannonAng,cannonAngleVelocity=0.1;
+var cannonWidth = 18
 var cannonEndX, cannonEndY;
 var cannonWaveShotSpeed = 3.4;
 var gunnerShotSpeed = 5;
@@ -26,8 +30,6 @@ var cannonReloadFrames = 5;
 var cannonWaveReloadFrames = 37;
 var cannonReloadLeft = 0;
 
-var mouseY = 0;
-var mouseX = 0;
 
 function initializeInput() {
 	document.addEventListener("keydown",keyPress);
@@ -96,7 +98,7 @@ function handleInput() {
 				mouseCannonY = -mouseCannonY;
 			}
 
-      cannonAngle = Math.atan2(mouseCannonY, mouseCannonX);
+      	cannonAngle = Math.atan2(mouseCannonY, mouseCannonX);
 
 			movePlayer();
 			break;

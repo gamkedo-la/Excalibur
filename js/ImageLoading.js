@@ -13,6 +13,11 @@ var shieldPowerUpPic = document.createElement("img");
 var healthPowerUpPic = document.createElement("img");
 var maxHealthPowerUpPic = document.createElement("img");
 
+var tankBodyPic = document.createElement("img");
+var tankCannonPic = document.createElement("img");
+
+
+
 
 var alienPicFrameW = 43;
 var alienPicFrameH = 27;
@@ -49,6 +54,10 @@ function loadImages() {
         { varName: healthPowerUpPic, theFile: "healthPowerUp.png" },
         { varName: maxHealthPowerUpPic, theFile: "maxHealthPowerUp.png" },
         { varName: waveShotPic, theFile: "waveShot.png" },
+        { varName: tankBodyPic, theFile: "tank-body.png" },
+        { varName: tankCannonPic, theFile: "tank-cannon.png" },
+
+
     ];
 
     picsToLoad = imageList.length;

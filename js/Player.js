@@ -3,26 +3,49 @@ var playerX,playerY;
 const startHitpoints = 3;
 var playerHP = startHitpoints;
 
-const playerWidth=50,playerHeight=30;
+const playerWidth=40,playerHeight=40;
 
 var playerColliderAABB = new aabb(playerWidth/2, playerHeight/2);
 
 const playerMoveSpeed=4; // only used if in mouse control scheme
 
-function drawPlayer() {
-	// cannon
-	canvasContext.strokeStyle="lime";
-	canvasContext.lineWidth=6;
-	canvasContext.beginPath();
-	canvasContext.moveTo(playerX,playerY);
-	cannonEndX = playerX+cannonLength*Math.cos(cannonAngle);
-	cannonEndY = playerY+cannonLength*Math.sin(cannonAngle);
-	canvasContext.lineTo(cannonEndX,cannonEndY);
-	canvasContext.stroke();
+var defaultCannonAng = -Math.PI/2;
+var cannonAngLimit = Math.PI/2;
+var cannonLength=40,cannonAngle=defaultCannonAng,cannonAngleVelocity=0.1;
+var cannonEndX, cannonEndY;
+var cannonWaveShotSpeed = 3.4;
+var gunnerShotSpeed = 5;
+var cannonShotSpeed = 5;
+var cannonReloadFrames = 5;
+var cannonWaveReloadFrames = 37;
+var cannonReloadLeft = 0;
 
+function drawPlayer() {
 	// base
 	canvasContext.fillStyle="white";
-	canvasContext.fillRect(playerX-playerWidth/2,playerY,playerWidth,playerHeight);
+	// canvasContext.fillRect(playerX-playerWidth/2,playerY,playerWidth,playerHeight);
+  canvasContext.drawImage(tankBodyPic,playerX - playerWidth/2,playerY);
+
+  // cannon
+  // canvasContext.strokeStyle="lime";
+  // canvasContext.lineWidth=6;
+  // canvasContext.beginPath();
+  // canvasContext.moveTo(playerX,playerY);
+  // cannonEndX = playerX+cannonLength*Math.cos(cannonAngle);
+  // cannonEndY = playerY+cannonLength*Math.sin(cannonAngle);
+  // canvasContext.lineTo(cannonEndX,cannonEndY);
+  // canvasContext.stroke();
+
+   cannonEndX = playerX  + cannonLength*Math.cos(cannonAngle);
+   cannonEndY = playerY + playerHeight/2 + cannonLength*Math.sin(cannonAngle);
+
+  
+   console.log(cannonAngle);
+   canvasContext.save();
+   canvasContext.translate(playerX ,playerY + playerHeight/2)
+   canvasContext.rotate(cannonAngle + cannonAngLimit );
+   canvasContext.drawImage(tankCannonPic, - cannonWidth/2, -cannonLength + cannonLength/4 );
+   canvasContext.restore();
 }
 
 function movePlayer() {
