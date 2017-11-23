@@ -3,10 +3,8 @@ const scoreForAlienShot = 50;
 const scoreForParachuteShot = 75;
 var score=0;
 
-// var gameRunning = true;
-
 var windowState = {
-	inFocus : true, //@loim988 this is gameRunning bool.//Remove this after you have read this.
+	inFocus : true, 
 	help : false,
 	firstLoad : true, 
 	help: false

@@ -72,6 +72,7 @@ function handleInput() {
 		if(cannonReloadLeft <= 0) {
 			var newShot = new waveShotClass(cannonEndX, cannonEndY, cannonAngle, cannonWaveShotSpeed);
 			shotList.push(newShot);
+			waveShotSound.play();
 			cannonReloadLeft = cannonWaveReloadFrames;
 		}
 	}

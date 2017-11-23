@@ -19,7 +19,7 @@ var cannonShotSpeed = 5;
 var cannonReloadFrames = 5;
 var cannonWaveReloadFrames = 37;
 var cannonReloadLeft = 0;
-var cannonWidth = 18
+var cannonWidth = 18;
 
 
 function drawPlayer() {
@@ -43,7 +43,7 @@ function drawPlayer() {
 
    canvasContext.save();
    canvasContext.translate(playerX ,playerY + playerHeight/2)
-   canvasContext.rotate(cannonAngle + cannonAngLimit );
+   canvasContext.rotate(cannonAngle + cannonAngLimit);
    canvasContext.drawImage(tankCannonPic, - cannonWidth/2, -cannonLength + cannonLength/4 );
    canvasContext.restore();
 }

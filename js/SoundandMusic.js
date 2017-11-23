@@ -1,6 +1,7 @@
 var audioFormat;
 
 var regularShotSound = new SoundOverlapsClass("./audio/RegularShot");
+var waveShotSound = new SoundOverlapsClass("./audio/WaveShot");
 var backgroundSound = new backgroundMusicClass("./audio/beeblebrox");
 backgroundSound.loopSong();
 

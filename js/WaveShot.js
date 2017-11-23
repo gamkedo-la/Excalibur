@@ -36,7 +36,7 @@ function waveShotClass(x, y, angle, speed) {
 				var perpendicularLength = SET_PERP_LENGTH / Math.hypot(perpendicularVectorX, perpendicularVectorY);
 				this.sineWaveControl = Math.sin(this.counter);
 				this.counter += 0.1;
-				perpendicularLength *= this.sineWaveControl
+				perpendicularLength *= this.sineWaveControl;
 				perpendicularVectorX *= perpendicularLength;
 				perpendicularVectorY *= perpendicularLength; 
 				//canvasContext.beginPath();
