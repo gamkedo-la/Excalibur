@@ -6,6 +6,8 @@ const KEY_D = 68;
 const KEY_A = 65;
 const DIGIT_0 = 48; //only for debug
 
+const pauseOnLoseFocus = true;
+
 var holdFire, holdLeft, holdRight = false;
 var secondaryFire = false;
 var debug = false;
@@ -47,10 +49,12 @@ function windowOnFocus() {
 };
 
 function windowOnBlur() {
-	clearInterval(gameShipSpawn);
-	clearInterval(gameGunnerSpawn);
-	gameRunning = false;
-	clearInterval(gameUpdate);
+	if (pauseOnLoseFocus) {
+		clearInterval(gameShipSpawn);
+		clearInterval(gameGunnerSpawn);
+		gameRunning = false;
+		clearInterval(gameUpdate);
+	}
 };
 
 function handleInput() {
