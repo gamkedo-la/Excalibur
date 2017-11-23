@@ -1,6 +1,8 @@
 var audioFormat;
 
 var regularShotSound = new SoundOverlapsClass("./audio/RegularShot");
+var backgroundSound = new backgroundMusicClass("./audio/beeblebrox");
+backgroundSound.loopSong();
 
 
 function setFormat() {
@@ -10,6 +12,31 @@ function setFormat() {
 	} else {
 		audioFormat = ".ogg";
 	}
+}
+
+function backgroundMusicClass(filenameWithPath){
+
+  let musicSound = null;
+    
+  this.loopSong = function() {
+    setFormat(); // calling this to ensure that audioFormat is set before needed
+    
+    if(musicSound != null) {
+      musicSound.pause();
+      musicSound = null;
+    }
+    musicSound = new Audio(filenameWithPath+audioFormat);
+    musicSound.loop = true;
+    musicSound.play();
+  }
+  
+  this.startOrStopMusic = function() {
+    if(musicSound.paused) {
+      musicSound.play();
+    } else {
+      musicSound.pause();
+    }
+  }
 }
 
 function SoundOverlapsClass(filenameWithPath) {
