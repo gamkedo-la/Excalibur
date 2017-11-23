@@ -1,10 +1,19 @@
 const scoreForShipShot = 100;
 const scoreForAlienShot = 50;
 const scoreForParachuteShot = 75;
-
 var score=0;
 
-var gameRunning = true;
+// var gameRunning = true;
+
+var windowState = {
+	inFocus : true, //@loim988 this is gameRunning bool.//Remove this after you have read this.
+	help : false,
+	firstLoad : true, 
+	help: false
+}
+
+var TitleTextX, subTitleTextX,opacity;
+
 var gameUpdate
 var gameShipSpawn
 var gameGunnerSpawn
@@ -16,26 +25,86 @@ window.onload = function () {
 	canvas = document.createElement("canvas");
 	canvas.width = 800;
 	canvas.height = 600;
+	TitleTextX = canvas.width;
+	subTitleTextX = 0;
+	opacity = 0;
 	document.body.appendChild(canvas);
 	canvasContext = canvas.getContext("2d");
+	cannonEndX = playerX = canvas.width/2;
+	cannonEndY = playerY = canvas.height-playerHeight;
+	initializeInput();
 	loadImages();
 };
 
 function loadingDoneSoStartGame (){
 	gameUpdate = setInterval(update, 1000/30);
 	gameShipSpawn = setInterval(shipSpawn, 1000*2);
-	gameGunnerSpawn = setInterval(gunnerSpawn, 3000*2);
-	cannonEndX = playerX = canvas.width/2;
-	cannonEndY = playerY = canvas.height-playerHeight;
-	initializeInput();
+	gameGunnerSpawn = setInterval(gunnerSpawn, 3000*2);	
 }
 
 function update() {
-	if (gameRunning){
-		clearScreen();
-		handleInput();
-		drawAll();
-		moveAll();
+	if (windowState.inFocus){
+		if(windowState.firstLoad){
+			 
+
+			 canvasContext.drawImage(backgroundFarPic,0,0);
+			 canvasContext.drawImage(backgroundMedPic,0,0);
+			 canvasContext.save();
+			 canvasContext.font = "40px Tahoma";
+			 canvasContext.textAlign = "center";
+			 canvasContext.fillStyle = "white";
+			 canvasContext.fillText('Excalibur',TitleTextX,canvas.height/2 -40);
+			 canvasContext.font = "25px Tahoma";
+			 canvasContext.fillText('Space Defence System',subTitleTextX ,canvas.height/2);
+			 canvasContext.font = "15px Tahoma";
+			 canvasContext.globalAlpha = opacity;
+			 canvasContext.fillText("Press (Enter) to Play and  (H) for Help",canvas.width/2  - 5,canvas.height/2  + 80);
+			 canvasContext.restore();
+
+			 if(subTitleTextX <= canvas.width/2 - 12 ){
+			 	subTitleTextX+=15;
+
+			 }
+			 if(TitleTextX >= canvas.width/2 + 10){
+			 	TitleTextX-=15
+			 }
+			 else{
+				opacity = opacity + 0.009
+			 }
+		}
+		if(windowState.help){
+			 canvasContext.drawImage(backgroundFarPic,0,0);
+			 canvasContext.save();
+			 canvasContext.globalAlpha = opacity;
+			 canvasContext.font = "30px Tahoma";
+			 canvasContext.textAlign = "center";
+			 canvasContext.fillStyle = "white";
+			 canvasContext.fillText('How To Play',canvas.width/2 ,130);
+			 
+			 canvasContext.textAlign = "left";
+			 canvasContext.font = "15px Tahoma";
+			 canvasContext.fillText("1) WASD or Arrow Keys for Movements",250 ,250  );
+			 canvasContext.fillText("2) Primary Mouse button for Shooting",250,280);
+			 canvasContext.fillText("3) Tab to use secondary weapon",250,310);
+
+			 canvasContext.textAlign = "center"; 
+			 canvasContext.font = "20px Tahoma";
+			 canvasContext.fillText('Press (Enter) to Start game',canvas.width/2 ,canvas.height/2 + 120);
+
+			 canvasContext.restore();
+			 opacity = opacity + 0.002
+
+
+
+		}
+
+		else if(!windowState.help && !windowState.firstLoad){
+			renderScreen();
+			handleInput();
+			drawAll();
+			moveAll();
+		}
+		
 	}
 }
 
@@ -104,7 +173,7 @@ function wrappedDraw(whichImg,pixelOffset) {
 	}
 }
 
-function clearScreen() {
+function renderScreen() {
 	wrappedDraw(backgroundFarPic, masterFrameDelayTick * 0.15);
 
 	wrappedDraw(backgroundMedPic, masterFrameDelayTick * 0.6);

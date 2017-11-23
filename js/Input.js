@@ -4,7 +4,9 @@ const KEY_LEFT = 37;
 const KEY_RIGHT = 39;
 const KEY_D = 68;
 const KEY_A = 65;
+const KEY_H = 72;
 const DIGIT_0 = 48; //only for debug
+const KEY_ENTER = 13;
 
 const pauseOnLoseFocus = true;
 
@@ -40,8 +42,8 @@ function initializeInput() {
 }
 
 function windowOnFocus() {
-	if(!gameRunning) {
-		gameRunning = true;
+	if(!windowState.inFocus) {
+		windowState.inFocus = true;
 		gameUpdate = setInterval(update, 1000/30);
 		gameShipSpawn = setInterval(shipSpawn, 1000*2);
 		gameGunnerSpawn = setInterval(gunnerSpawn, 3000*2);
@@ -52,7 +54,7 @@ function windowOnBlur() {
 	if (pauseOnLoseFocus) {
 		clearInterval(gameShipSpawn);
 		clearInterval(gameGunnerSpawn);
-		gameRunning = false;
+		windowState.inFocus = false;
 		clearInterval(gameUpdate);
 	}
 };
@@ -114,7 +116,17 @@ function keyPress(evt) {
 	}
 
 	switch (evt.keyCode) {
-
+		case KEY_ENTER:
+			if(windowState.firstLoad){
+				windowState.firstLoad = false;
+			}
+			if(windowState.help){
+				windowState.help = false;
+			}
+			break;
+		case KEY_H:
+			windowState.help = true;
+			break;
 		case KEY_TAB:
 			secondaryFire = !secondaryFire;
 			break;
