@@ -1,10 +1,7 @@
 var audioFormat;
 
-var regularShotSound = new SoundOverlapsClass("/Users/levi-annminer/Desktop/TW Stuff/Games in Development/Excalibur/audio/RegularShot");
+var regularShotSound = new SoundOverlapsClass("./audio/RegularShot");
 
-function playRegularShotSound() {
-	regularShotSound.play();
-}
 
 function setFormat() {
 	var audio = new Audio();

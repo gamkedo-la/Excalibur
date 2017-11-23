@@ -62,7 +62,8 @@ function handleInput() {
 		if(cannonReloadLeft <= 0) {
 			var newShot = new shotClass(cannonEndX, cannonEndY, cannonAngle, cannonShotSpeed);
 			shotList.push(newShot);
-			playRegularShotSound();
+			regularShotSound.play();
+
 			cannonReloadLeft = cannonReloadFrames;
 		}
 	}else if(holdFire && secondaryFire) {
