@@ -1,5 +1,5 @@
-const shotWidth = 3;
-const shotHeight = 3;
+const shotWidth = 4;
+const shotHeight = 4;
 var shotList = [];
 
 function shotClass(x, y, angle, speed) {
@@ -15,8 +15,7 @@ function shotClass(x, y, angle, speed) {
     this.removeMe = false;
 
     this.draw = function() {
-        canvasContext.fillStyle = "yellow";
-        canvasContext.fillRect(this.position.x - 1, this.position.y - 1, shotWidth, shotHeight);
+        drawBitmapCenteredAtLocationWithRotation(shotPic, this.position.x, this.position.y, Math.cos(this.moveAng));
     };
 
     this.move = function() {

@@ -20,6 +20,7 @@ function waveShotClass(x, y, angle, speed) {
 	this.counter = 0;
 	this.perpendicularVectorEndX = null;
 	this.perpendicularVectorEndY = null;
+	this.perpendicularLength = null;
 	const SET_PERP_LENGTH = 100;
 
 	this.draw = function () {
@@ -33,12 +34,12 @@ function waveShotClass(x, y, angle, speed) {
 				//canvasContext.stroke();
 				perpendicularVectorX = -(this.startY - this.endY);
 				perpendicularVectorY = this.startX - this.endX;
-				var perpendicularLength = SET_PERP_LENGTH / Math.hypot(perpendicularVectorX, perpendicularVectorY);
+				this.perpendicularLength = SET_PERP_LENGTH / Math.hypot(perpendicularVectorX, perpendicularVectorY);
 				this.sineWaveControl = Math.sin(this.counter);
 				this.counter += 0.1;
-				perpendicularLength *= this.sineWaveControl;
-				perpendicularVectorX *= perpendicularLength;
-				perpendicularVectorY *= perpendicularLength; 
+				this.perpendicularLength *= this.sineWaveControl;
+				perpendicularVectorX *= this.perpendicularLength;
+				perpendicularVectorY *= this.perpendicularLength; 
 				//canvasContext.beginPath();
 				//canvasContext.moveTo(this.perpendicularLineStartX,this.perpendicularLineStartY);
 				this.perpendicularVectorEndX = this.perpendicularLineStartX + perpendicularVectorX;
@@ -59,7 +60,7 @@ function waveShotClass(x, y, angle, speed) {
 			canvasContext.drawImage(waveShotPic,
 			this.frameNow * waveShotPicFrameW, 0,
 			waveShotPicFrameW, waveShotPicFrameH,
-			this.position.x - waveShotPicFrameW / 2, this.position.y - waveShotPicFrameH,
+			this.position.x - waveShotPicFrameW / 2, this.position.y - waveShotPicFrameH /2,
 			waveShotPicFrameW, waveShotPicFrameH);
 			}
 		}

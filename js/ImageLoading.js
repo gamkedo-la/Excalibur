@@ -3,7 +3,9 @@ var spaceshipLeftPic = document.createElement("img");
 var spaceshipRightPic = document.createElement("img");
 var gunnerShipRightPic = document.createElement("img");
 var gunnerShipLeftPic = document.createElement("img");
+
 var waveShotPic = document.createElement("img");
+var shotPic = document.createElement("img");
 
 var backgroundFarPic = document.createElement("img");
 var backgroundMedPic = document.createElement("img");
@@ -54,6 +56,7 @@ function loadImages() {
         { varName: healthPowerUpPic, theFile: "healthPowerUp.png" },
         { varName: maxHealthPowerUpPic, theFile: "maxHealthPowerUp.png" },
         { varName: waveShotPic, theFile: "waveShot.png" },
+        { varName: shotPic, theFile: "shotVisual.png" },
         { varName: tankBodyPic, theFile: "tank-body.png" },
         { varName: tankCannonPic, theFile: "tank-cannon.png" },
 

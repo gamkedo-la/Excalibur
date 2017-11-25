@@ -43,7 +43,6 @@ function loadingDoneSoStartGame (){
 function update() {
 	if (windowState.inFocus){
 		if(windowState.firstLoad){
-			 
 
 			 canvasContext.drawImage(backgroundFarPic,0,0);
 			 canvasContext.drawImage(backgroundMedPic,0,0);
