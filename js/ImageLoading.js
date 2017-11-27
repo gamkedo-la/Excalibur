@@ -56,7 +56,7 @@ function loadImages() {
         { varName: healthPowerUpPic, theFile: "healthPowerUp.png" },
         { varName: maxHealthPowerUpPic, theFile: "maxHealthPowerUp.png" },
         { varName: waveShotPic, theFile: "waveShot.png" },
-        { varName: shotPic, theFile: "shotVisual.png" },
+        { varName: shotPic, theFile: "ShotVisual.png" },
         { varName: tankBodyPic, theFile: "tank-body.png" },
         { varName: tankCannonPic, theFile: "tank-cannon.png" },
 
