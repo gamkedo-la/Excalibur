@@ -72,7 +72,7 @@ function movePlayer() {
 function hitPlayer() {
   playerHP--;
   if (playerHP <= 0) {
-    //resetGame();
-      doingGameOver = true;
+    resetGame();
+    //doingGameOver = true;
   }
 }
