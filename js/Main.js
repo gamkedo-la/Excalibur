@@ -15,6 +15,7 @@ var TitleTextX, subTitleTextX,opacity;
 var gameUpdate
 var gameShipSpawn
 var gameGunnerSpawn
+var doingGameOver = false;
 
 var masterFrameDelayTick=0;
 var canvas, canvasContext;
@@ -106,6 +107,10 @@ function update() {
 }
 
 function drawAll() {
+	if(doingGameOver){
+		gameOver();
+		return;
+	}
 	masterFrameDelayTick++;
 	drawAndRemoveShips();
 	drawAndRemoveAliens();
