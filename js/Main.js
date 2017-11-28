@@ -101,6 +101,8 @@ function update() {
 			handleInput();
 			drawAll();
 			moveAll();
+			//spawnFrameCounter();
+			//spawnWave(waveNumber1);
 		}
 		
 	}
