@@ -37,8 +37,8 @@ window.onload = function () {
 
 function loadingDoneSoStartGame (){
 	gameUpdate = setInterval(update, 1000/30);
-	gameShipSpawn = setInterval(shipSpawn, 1000*2);
-	gameGunnerSpawn = setInterval(gunnerSpawn, 3000*2);	
+	// gameShipSpawn = setInterval(shipSpawn, 1000*2);
+	// gameGunnerSpawn = setInterval(gunnerSpawn, 3000*2);	
 }
 
 function update() {
@@ -101,8 +101,9 @@ function update() {
 			handleInput();
 			drawAll();
 			moveAll();
-			//spawnFrameCounter();
-			//spawnWave(waveNumber1);
+			spawnWave();
+			checkFrameCount();
+
 		}
 		
 	}
