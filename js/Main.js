@@ -37,8 +37,10 @@ window.onload = function () {
 
 function loadingDoneSoStartGame (){
 	gameUpdate = setInterval(update, 1000/30);
-	// gameShipSpawn = setInterval(shipSpawn, 1000*2);
-	// gameGunnerSpawn = setInterval(gunnerSpawn, 3000*2);	
+	if (assaultMode) {
+	gameShipSpawn = setInterval(shipSpawn, 1000*2);
+	gameGunnerSpawn = setInterval(gunnerSpawn, 3000*2);
+	}
 }
 
 function update() {
@@ -101,9 +103,7 @@ function update() {
 			handleInput();
 			drawAll();
 			moveAll();
-			spawnWave();
 			checkFrameCount();
-
 		}
 		
 	}
@@ -131,6 +131,19 @@ function moveAll() {
 }
 
 function resetGame() {
+	windowState.firstLoad = true;
+	isSpawningWave = false;
+	waveCompleted = false;
+	waveEndExcuted = false;
+	waveStarted = false;
+	enableIntermission = false;
+	assaultMode = false;
+	currentSpawnType = 0;
+	spawnFrameCount = 0;
+	currentEnemyIndex = 0;
+	currentWaveIndex = 0;
+	currentWave = currentWaveIndex + 1; 
+	wave = [];
 	shotList=[];
 	shipList=[];
 	alienList=[];
@@ -185,18 +198,3 @@ function renderScreen() {
 
 	wrappedDraw(backgroundNearPic, masterFrameDelayTick * 4.6);
 }
-/*
-hey chris I couldn't find the graphicsCommon.js file so i stuck this here for now
-
-*/
-//flip sprite to face mouse or player
-function drawBitmapFlipped(graphic, atX, atY, flipToFaceLeft) {
-		canvasContext.save();
-  		canvasContext.translate(atX, atY);
-		if(flipToFaceLeft) {
-			canvasContext.scale(-1.0,1.0);
-		}
-		canvasContext.drawImage(graphic,-graphic.width/2,-graphic.height/2);
-		canvasContext.restore();
-}
-

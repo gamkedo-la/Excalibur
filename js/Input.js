@@ -45,8 +45,10 @@ function windowOnFocus() {
 	if(!windowState.inFocus) {
 		windowState.inFocus = true;
 		gameUpdate = setInterval(update, 1000/30);
-		gameShipSpawn = setInterval(shipSpawn, 1000*2);
-		gameGunnerSpawn = setInterval(gunnerSpawn, 3000*2);
+		if (assaultMode){
+			gameShipSpawn = setInterval(shipSpawn, 1000*2);
+			gameGunnerSpawn = setInterval(gunnerSpawn, 3000*2);
+		}
 	}
 };
 
