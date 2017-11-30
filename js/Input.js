@@ -69,7 +69,7 @@ function handleInput() {
 			var newShot = new shotClass(cannonEndX, cannonEndY, cannonAngle, cannonShotSpeed);
 			shotList.push(newShot);
 			regularShotSound.play();
-
+			explode(playerX,playerY,EXPLOSION_BOOM,null,null,null,1,1);
 			cannonReloadLeft = cannonReloadFrames;
 		}
 	}else if(holdFire && secondaryFire) {
@@ -77,6 +77,7 @@ function handleInput() {
 			var newShot = new waveShotClass(cannonEndX, cannonEndY, cannonAngle, cannonWaveShotSpeed);
 			shotList.push(newShot);
 			waveShotSound.play();
+			explode(playerX,playerY,EXPLOSION_BOOM,null,null,null,1,1);
 			cannonReloadLeft = cannonWaveReloadFrames;
 		}
 	}
