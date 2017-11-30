@@ -52,7 +52,7 @@ function windowOnFocus() {
 	}
 };
 
-function windowOnBlur() {
+function windowOnBlur() { 
 	if (pauseOnLoseFocus) {
 		clearInterval(gameShipSpawn);
 		clearInterval(gameGunnerSpawn);

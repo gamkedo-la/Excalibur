@@ -35,12 +35,8 @@ window.onload = function () {
 	loadImages();
 };
 
-function loadingDoneSoStartGame (){
+function loadingDoneSoStartGame () {
 	gameUpdate = setInterval(update, 1000/30);
-	if (assaultMode) {
-	gameShipSpawn = setInterval(shipSpawn, 1000*2);
-	gameGunnerSpawn = setInterval(gunnerSpawn, 3000*2);
-	}
 }
 
 function update() {
@@ -131,22 +127,24 @@ function moveAll() {
 }
 
 function resetGame() {
+	clearInterval(gameShipSpawn);
+	clearInterval(gameGunnerSpawn);
 	windowState.firstLoad = true;
+	assaultMode = false;
 	isSpawningWave = false;
 	waveCompleted = false;
 	waveEndExcuted = false;
 	waveStarted = false;
 	enableIntermission = false;
-	assaultMode = false;
 	currentSpawnType = 0;
 	spawnFrameCount = 0;
 	currentEnemyIndex = 0;
 	currentWaveIndex = 0;
 	currentWave = currentWaveIndex + 1; 
 	wave = [];
-	shotList=[];
-	shipList=[];
-	alienList=[];
+	shotList = [];
+	shipList = [];
+	alienList = [];
 	resetPowerUps();
 	score=0;
 	playerHP = startHitpoints;

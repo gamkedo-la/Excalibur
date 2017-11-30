@@ -47,9 +47,9 @@ function checkFrameCount() {
     	if (!isSpawningWave) {
             waveStart();
         } else if (waveCompleted) {
-        	//handleCutscenesAndStuff();
         	waveEnd();
     	} else if (enableIntermission) {
+    		//handleCutscenesAndStuff();
     		intermission();
     	}
     }
@@ -90,7 +90,6 @@ function waveStart() {
 		    isSpawningWave = true;
 		}
 	} else if (assaultMode) {
-		spawnFrameCount = 0;
 		if (spawnFrameCount < timeForText) {
 			canvasContext.save();
 			canvasContext.font = "40px Tahoma";
@@ -101,8 +100,8 @@ function waveStart() {
 			canvasContext.fillText('All Out Assault!',canvas.width/2 ,canvas.height/2);
 			canvasContext.restore();
 		} else if (spawnFrameCount > timeForText) {
-		    gameShipSpawn = setInterval(shipSpawn, 1000*2);
-			gameGunnerSpawn = setInterval(gunnerSpawn, 3000*2);
+		    gameShipSpawn = setInterval(shipSpawn, 1000);
+			gameGunnerSpawn = setInterval(gunnerSpawn, 3000);
 			isSpawningWave = true;
 		}
 	} // end of else
