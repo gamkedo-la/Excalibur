@@ -1,12 +1,14 @@
 const KEY_TAB = 9;
+const KEY_ENTER = 13;
 const KEY_SPACE = 32;
 const KEY_LEFT = 37;
 const KEY_RIGHT = 39;
-const KEY_D = 68;
-const KEY_A = 65;
-const KEY_H = 72;
 const DIGIT_0 = 48; //only for debug
-const KEY_ENTER = 13;
+const DIGIT_1 = 49;
+const KEY_A = 65;
+const KEY_D = 68;
+const KEY_H = 72;
+const KEY_O = 79;
 
 const pauseOnLoseFocus = true;
 
@@ -126,6 +128,12 @@ function keyPress(evt) {
 			if(windowState.help){
 				windowState.help = false;
 			}
+			break;
+		case KEY_O:
+			if(windowState.firstLoad){
+				windowState.firstLoad = false;
+			}
+			orchestratorMode = true;
 			break;
 		case KEY_H:
 			windowState.help = true;

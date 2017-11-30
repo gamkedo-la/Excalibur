@@ -54,7 +54,9 @@ function update() {
 			 canvasContext.fillText('Space Defence System',subTitleTextX ,canvas.height/2);
 			 canvasContext.font = "15px Tahoma";
 			 canvasContext.globalAlpha = opacity;
-			 canvasContext.fillText("Press (Enter) to Play and  (H) for Help",canvas.width/2  - 5,canvas.height/2  + 80);
+			 canvasContext.fillText("[H] for Help",canvas.width/2  - 5,canvas.height/2  + 80);
+			 canvasContext.fillText("[Enter] to Play",canvas.width/2  - 5,canvas.height/2  + 100);
+			 canvasContext.fillText("[O] for Orchestrator Mode",canvas.width/2  - 5,canvas.height/2  + 120);
 			 canvasContext.restore();
 
 			 if(subTitleTextX <= canvas.width/2 - 12 ){
@@ -89,19 +91,19 @@ function update() {
 
 			 canvasContext.restore();
 			 opacity = opacity + 0.002
-
-
-
 		}
 
 		else if(!windowState.help && !windowState.firstLoad){
-			renderScreen();
-			handleInput();
-			drawAll();
-			moveAll();
-			checkFrameCount();
-		}
-		
+				renderScreen();
+				handleInput();
+				drawAll();
+				moveAll();
+			if (!orchestratorMode) {
+				checkFrameCount();
+			} else {
+				orchestratorFrameCount();
+			}
+		}		
 	}
 }
 

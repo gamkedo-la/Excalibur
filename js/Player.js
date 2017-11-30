@@ -70,7 +70,11 @@ function movePlayer() {
 }
 
 function hitPlayer() {
-  playerHP--;
+  if(!orchestratorMode){
+    playerHP--;
+  } else {
+    playerHP = playerHP;
+  }
   if (playerHP <= 0) {
     resetGame();
     //doingGameOver = true;
