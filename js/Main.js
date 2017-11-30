@@ -153,15 +153,25 @@ function resetGame() {
 }
 
 function drawScore() {
-	canvasContext.save();
-	canvasContext.font = "20px Arial";
-	canvasContext.textAlign = "right";
-	canvasContext.fillStyle = "white";
-	canvasContext.fillText("score: " + score,canvas.width-20,30);
-	canvasContext.restore();
+	if (!orchestratorMode) {
+		canvasContext.save();
+		canvasContext.font = "20px Arial";
+		canvasContext.textAlign = "right";
+		canvasContext.fillStyle = "white";
+		canvasContext.fillText("score: " + score,canvas.width-20,30);
+		canvasContext.restore();
+	} else {
+		canvasContext.save();
+		canvasContext.font = "20px Arial";
+		canvasContext.textAlign = "right";
+		canvasContext.fillStyle = "white";
+		canvasContext.fillText("spawnFrameCount: " + orchestratorSpawnFrameCount,canvas.width-10,30);
+		canvasContext.restore();
+	}
 
 	if (debug) {
 		canvasContext.fillStyle = "cyan";
+		canvasContext.font = "15px Arial";
 		var lineHeight = 15;
 		var drawTextOutY = 100;
 		canvasContext.fillText("hitpoints: " + playerHP,100,drawTextOutY);
@@ -172,7 +182,6 @@ function drawScore() {
 		drawTextOutY+=lineHeight;
 		canvasContext.fillText("aliens: " + alienList.length,100,drawTextOutY);
 	}
-	
 }
 
 // optimization todo: support wider background wrap but draw only on-screen portion

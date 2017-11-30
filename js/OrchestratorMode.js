@@ -17,7 +17,7 @@ var enemyData = {
 function orchestratorFrameCount() {
 	orchestratorSpawnFrameCount++;
 	if (orchestratorSpawnFrameCount % 5 == 0) {
-		console.log("spawnFrameCount: " + spawnFrameCount);
+		console.log("spawnFrameCount: " + orchestratorSpawnFrameCount);
 	}
 }
 
