@@ -37,6 +37,7 @@ function shotClass(x, y, angle, speed) {
 
         powerUpBoxList.forEach(function(powerUpBox) {
             if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSeg)) {
+                explode(this.position.x,this.position.y,EXPLOSION_RING,null,null,null,0,3);
                 var useMaxDuration = true;
                 score += scoreForPowerUpShot;
                 powerUpBox.setActive(useMaxDuration);
@@ -47,6 +48,9 @@ function shotClass(x, y, angle, speed) {
         for (var e = 0; e < shipList.length; e++) {
             if (isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSeg) && !shipList[e].isDamaged) {
 
+                explode(this.position.x,this.position.y,EXPLOSION_BOOM,null,null,null,1,1);
+                explode(this.position.x,this.position.y,EXPLOSION_RING,null,null,null,0,1);
+                
                 score += scoreForShipShot;
                 // shipList[e].removeMe = true;
                 shipList[e].isDamaged = true;
@@ -62,6 +66,9 @@ function shotClass(x, y, angle, speed) {
             // TODO replace with line segment/aabb intersection test (use shot velocity to compute previous known position; make line seg from last-known to current position)
             if (this.position.y > alienList[t].position.y - alienHeight && this.position.y < alienList[t].position.y &&
                 this.position.x > alienList[t].position.x - alienWidth / 2 && this.position.x < alienList[t].position.x + alienWidth / 2) {
+
+                explode(this.position.x,this.position.y,EXPLOSION_BOOM,null,null,null,1,1);
+                //explode(this.position.x,this.position.y,EXPLOSION_RING,null,null,null,0,1);
 
                 score += scoreForAlienShot;
                 alienList[t].removeMe = true;

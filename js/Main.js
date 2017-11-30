@@ -33,6 +33,7 @@ window.onload = function () {
 	cannonEndY = playerY = canvas.height-playerHeight;
 	initializeInput();
 	loadImages();
+	initExplosions();
 };
 
 function loadingDoneSoStartGame () {
@@ -119,6 +120,7 @@ function drawAll() {
 	drawPlayer();
 	drawAndRemovePowerUps();
 	drawScore();
+	drawExplosions();
 }
 
 function moveAll() {
@@ -126,6 +128,7 @@ function moveAll() {
 	moveAliens();
 	moveShots();
 	movePowerUps();
+	updateExplosions();
 }
 
 function resetGame() {
