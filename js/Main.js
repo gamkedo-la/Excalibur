@@ -147,6 +147,7 @@ function resetGame() {
 	currentWaveIndex = 0;
 	currentWave = currentWaveIndex + 1; 
 	wave = [];
+	createNewWave = [];
 	shotList = [];
 	shipList = [];
 	alienList = [];
@@ -169,6 +170,9 @@ function drawScore() {
 		canvasContext.textAlign = "right";
 		canvasContext.fillStyle = "white";
 		canvasContext.fillText("spawnFrameCount: " + orchestratorSpawnFrameCount,canvas.width-10,30);
+		canvasContext.font = "15px Arial";
+		canvasContext.fillText("[1] for Paradropper",130,20);
+		canvasContext.fillText("[2] for Gunner",97,40);
 		canvasContext.restore();
 	}
 

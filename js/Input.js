@@ -1,10 +1,12 @@
 const KEY_TAB = 9;
 const KEY_ENTER = 13;
+const KEY_ESCAPE = 27;
 const KEY_SPACE = 32;
 const KEY_LEFT = 37;
 const KEY_RIGHT = 39;
 const DIGIT_0 = 48; //only for debug
 const DIGIT_1 = 49;
+const DIGIT_2 = 50;
 const KEY_A = 65;
 const KEY_D = 68;
 const KEY_H = 72;
@@ -136,8 +138,37 @@ function keyPress(evt) {
 			}
 			orchestratorMode = true;
 			break;
+		case DIGIT_1:
+			if(orchestratorMode) {
+				orchestratorCurrentSpawnType = PLANE_PARADROPPER;
+				enemyData.spawnType = orchestratorCurrentSpawnType;
+				enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
+				createNewWave.push(enemyData);
+				enemyData = { 
+					spawnType: null, 
+					framesUntilSpawn: null 
+				}
+				orchestratorSpawnEnemy();
+			}
+			break;
+		case DIGIT_2:
+			if(orchestratorMode) {
+				orchestratorCurrentSpawnType = PLANE_GUNNER;
+				enemyData.spawnType = orchestratorCurrentSpawnType;
+				enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
+				createNewWave.push(enemyData);
+				enemyData = { 
+					spawnType: null, 
+					framesUntilSpawn: null 
+				}
+				orchestratorSpawnEnemy();
+			}
+			break;
 		case KEY_H:
 			windowState.help = true;
+			break;
+		case KEY_ESCAPE:
+			resetGame();
 			break;
 		case KEY_TAB:
 			secondaryFire = !secondaryFire;

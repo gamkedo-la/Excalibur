@@ -27,4 +27,6 @@ function orchestratorSpawnEnemy() {
     } else if (orchestratorCurrentSpawnType == PLANE_GUNNER) {
         gunnerSpawn();
     }
+    orchestratorCurrentSpawnType = 0;
+    orchestratorSpawnFrameCount = 0;
 }
