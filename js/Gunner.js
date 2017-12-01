@@ -12,7 +12,9 @@ function GunnerClass() {
 	this.hasDroppedYet = false;
 	this.isShooting = false;
 	this.dropX = getValidDropX(canvas.width/2);
-
+    this.isDamaged = false;
+    this.ang = 0;
+	var gravity = vec2.create(0, 0.04);
 	var frameNow = 0;
 	var numFrames = 3;
 	var frameOffsetY = 0;
@@ -36,11 +38,35 @@ function GunnerClass() {
   var pic = (movingLeft) ? gunnerShipLeftPic : gunnerShipRightPic;
 
 	this.draw = function () {
-    canvasContext.drawImage(pic,
-      frameNow * gunnerWidth, frameOffsetY,
-      gunnerWidth, gunnerHeight,
-      this.position.x - gunnerWidth / 2, this.position.y - gunnerHeight,
-      gunnerWidth, gunnerHeight);
+	  var signOfVelocity = this.velocity.x/Math.abs(this.velocity.x);
+   
+      if(this.isDamaged){ 
+			
+			frameOffsetY = gunnerHeight * 2;
+			(signOfVelocity > 0) ? frameNow = 2 : frameNow = 0;
+			canvasContext.save();
+			canvasContext.translate(this.position.x  , this.position.y);
+			canvasContext.rotate(this.ang);
+			canvasContext.drawImage(pic,
+		      frameNow * gunnerWidth, frameOffsetY,
+		      gunnerWidth, gunnerHeight,
+		      -gunnerWidth / 2, -gunnerHeight/2,
+		      gunnerWidth, gunnerHeight);				
+			canvasContext.restore();
+			this.ang +=  signOfVelocity*0.03;
+			this.velocity.x = signOfVelocity*2.8;
+			vec2.add(this.velocity, this.velocity, gravity);
+			vec2.add(this.position, this.position, this.velocity);
+		} else {
+			 canvasContext.drawImage(pic,
+		      frameNow * gunnerWidth, frameOffsetY,
+		      gunnerWidth, gunnerHeight,
+		      this.position.x - gunnerWidth / 2, this.position.y - gunnerHeight,
+		      gunnerWidth, gunnerHeight);
+
+		}
+
+
 	};
 
 	this.move = function () {
@@ -49,20 +75,20 @@ function GunnerClass() {
 		this.colliderAABB.computeBounds();
 
 		if (this.isShooting) {
-      if (masterFrameDelayTick % 10 === 1) {
-        frameNow++;
-        if (frameNow >= numFrames) {
-          this.isShooting = false;
-          this.velocity.x = velocityX;
-          frameNow--;
-          // shoot bullet back
-					var shotX = this.position.x + gunnerCannonOffsetX;
-					var shotY = this.position.y + gunnerCannonOffsetY;
-					var angle = Math.atan2(playerY - shotY, playerX - shotX);
-          var newShot = new EnemyShotClass(shotX, shotY, angle, gunnerShotSpeed);
-          shotList.push(newShot);
-        }
-      }
+	      if (masterFrameDelayTick % 10 === 1) {
+	        frameNow++;
+	        if (frameNow >= numFrames) {
+	          this.isShooting = false;
+	          this.velocity.x = velocityX;
+	          frameNow--;
+	          // shoot bullet back
+						var shotX = this.position.x + gunnerCannonOffsetX;
+						var shotY = this.position.y + gunnerCannonOffsetY;
+						var angle = Math.atan2(playerY - shotY, playerX - shotX);
+	          var newShot = new EnemyShotClass(shotX, shotY, angle, gunnerShotSpeed);
+	          shotList.push(newShot);
+	        }
+	      }
 		}
 	};
 
