@@ -24,7 +24,7 @@ function shipClass() {
 	    var signOfVelocity = this.velocity.x/Math.abs(this.velocity.x);
 		frameCounter++;
 		if(frameCounter%40 == 0){
-		   frameBool = !frameBool;
+		   frameBool = !frameBool; // Used to toggle between high flame and low flame animation. Has a subtle effect on movement of spaceship.
 		}
 		
 		this.frameNow = frameBool ? 1 : 0;
@@ -90,9 +90,8 @@ function shipClass() {
 
 function shipSpawn() {
 	var newShip = new shipClass();
-	shipList.push(newShip);
-
 	newShip.removeMe = false;
+	shipList.push(newShip);
 
 	if(Math.random()<0.5) {
 		newShip.position.x = -shipWidth/2;
