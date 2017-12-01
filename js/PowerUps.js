@@ -214,7 +214,7 @@ function updateShield(shield) {
                 var distanceX = Math.abs(playerX - (currentEnemy.position.x - (currentEnemyWidth / 2)));
                 var distanceY = Math.abs(playerY - (currentEnemy.position.y - (currentEnemyHeight / 2)));
 
-                if (distanceX <= (currentEnemyWidth / 2) || distanceY <= (currentEnemyHeight / 2)) {
+                if (distanceX <= (currentEnemyWidth / 2) && distanceY <= (currentEnemyHeight / 2)) {
                     currentEnemy.removeMe = true;
                 }
 

@@ -1,12 +1,16 @@
 const KEY_TAB = 9;
+const KEY_ENTER = 13;
+const KEY_ESCAPE = 27;
 const KEY_SPACE = 32;
 const KEY_LEFT = 37;
 const KEY_RIGHT = 39;
-const KEY_D = 68;
-const KEY_A = 65;
-const KEY_H = 72;
 const DIGIT_0 = 48; //only for debug
-const KEY_ENTER = 13;
+const DIGIT_1 = 49;
+const DIGIT_2 = 50;
+const KEY_A = 65;
+const KEY_D = 68;
+const KEY_H = 72;
+const KEY_O = 79;
 
 const pauseOnLoseFocus = true;
 
@@ -45,12 +49,14 @@ function windowOnFocus() {
 	if(!windowState.inFocus) {
 		windowState.inFocus = true;
 		gameUpdate = setInterval(update, 1000/30);
-		gameShipSpawn = setInterval(shipSpawn, 1000*2);
-		gameGunnerSpawn = setInterval(gunnerSpawn, 3000*2);
+		if (assaultMode){
+			gameShipSpawn = setInterval(shipSpawn, 1000*2);
+			gameGunnerSpawn = setInterval(gunnerSpawn, 3000*2);
+		}
 	}
 };
 
-function windowOnBlur() {
+function windowOnBlur() { 
 	if (pauseOnLoseFocus) {
 		clearInterval(gameShipSpawn);
 		clearInterval(gameGunnerSpawn);
@@ -65,7 +71,7 @@ function handleInput() {
 			var newShot = new shotClass(cannonEndX, cannonEndY, cannonAngle, cannonShotSpeed);
 			shotList.push(newShot);
 			regularShotSound.play();
-
+			explode(cannonEndX,cannonEndY,EXPLOSION_BOOM,null,null,null,1,1);
 			cannonReloadLeft = cannonReloadFrames;
 		}
 	}else if(holdFire && secondaryFire) {
@@ -73,6 +79,7 @@ function handleInput() {
 			var newShot = new waveShotClass(cannonEndX, cannonEndY, cannonAngle, cannonWaveShotSpeed);
 			shotList.push(newShot);
 			waveShotSound.play();
+			explode(cannonEndX,cannonEndY,EXPLOSION_BOOM,null,null,null,1,1);
 			cannonReloadLeft = cannonWaveReloadFrames;
 		}
 	}
@@ -125,8 +132,43 @@ function keyPress(evt) {
 				windowState.help = false;
 			}
 			break;
+		case KEY_O:
+			if(windowState.firstLoad){
+				windowState.firstLoad = false;
+			}
+			orchestratorMode = true;
+			break;
+		case DIGIT_1:
+			if(orchestratorMode) {
+				orchestratorCurrentSpawnType = PLANE_PARADROPPER;
+				enemyData.spawnType = orchestratorCurrentSpawnType;
+				enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
+				createNewWave.push(enemyData);
+				enemyData = { 
+					spawnType: null, 
+					framesUntilSpawn: null 
+				}
+				orchestratorSpawnEnemy();
+			}
+			break;
+		case DIGIT_2:
+			if(orchestratorMode) {
+				orchestratorCurrentSpawnType = PLANE_GUNNER;
+				enemyData.spawnType = orchestratorCurrentSpawnType;
+				enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
+				createNewWave.push(enemyData);
+				enemyData = { 
+					spawnType: null, 
+					framesUntilSpawn: null 
+				}
+				orchestratorSpawnEnemy();
+			}
+			break;
 		case KEY_H:
 			windowState.help = true;
+			break;
+		case KEY_ESCAPE:
+			resetGame();
 			break;
 		case KEY_TAB:
 			secondaryFire = !secondaryFire;

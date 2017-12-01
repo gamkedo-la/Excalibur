@@ -1,68 +1,48 @@
 var sineShotList=[];
 
 function waveShotClass(x, y, angle, speed) {
+	const SET_PERP_LENGTH = 100;
 	this.position = vec2.create(x, y);
+	this.velocity = vec2.create(this.perpendicularLineEndX, this.perpendicularLineEndY);
 	this.moveAng = angle;
 	this.speed = speed;
 	this.removeMe = false;
-	this.startX = cannonEndX;
-	this.startY = cannonEndY;
-	this.perpendicularLineStartX = cannonEndX;
-	this.perpendicularLineStartY = cannonEndY;
-	this.endX = null;
-	this.endY = null;
-	this.perpendicularLineEndX = null;
-	this.perpendicularLineEndY = null;
-	this.centerLineX = cannonEndX;
-	this.centerLineY = cannonEndY;
-	this.centerLineSpeed = 600;
-	this.sineWaveControl = 0;
-	this.counter = 0;
-	this.perpendicularVectorEndX = null;
-	this.perpendicularVectorEndY = null;
+	this.startX = this.perpendicularLineStartX = this.centerLineX = cannonEndX;
+	this.startY = this.perpendicularLineStartY = this.centerLineY = cannonEndY;
+	this.endX = this.perpendicularLineEndX = this.perpendicularLineEndX = this.perpendicularVectorX = null;
+	this.endY = this.perpendicularLineEndY = this.perpendicularLineEndY = this.perpendicularVectorY = null;
 	this.perpendicularLength = null;
-	const SET_PERP_LENGTH = 100;
+	this.sineWaveControl = this.counter = 0;
+	this.centerLineSpeed = 600;
+	this.colliderLineSeg = new lineSegment();
 
 	this.draw = function () {
 		if (this.centerLineX > canvas.width || this.centerLineX < 0 || this.centerLineY < 0){	
-			//canvasContext.lineWidth = 2;
-			//canvasContext.beginPath();
-			//canvasContext.moveTo(this.startX,this.startY);
-			if (this.endX != null && this.endY != null) {
-				//canvasContext.lineTo(this.endX,this.endY);
-				//canvasContext.strokeStyle = "steelblue";
-				//canvasContext.stroke();
-				perpendicularVectorX = -(this.startY - this.endY);
-				perpendicularVectorY = this.startX - this.endX;
-				this.perpendicularLength = SET_PERP_LENGTH / Math.hypot(perpendicularVectorX, perpendicularVectorY);
-				this.sineWaveControl = Math.sin(this.counter);
-				this.counter += 0.1;
-				this.perpendicularLength *= this.sineWaveControl;
-				perpendicularVectorX *= this.perpendicularLength;
-				perpendicularVectorY *= this.perpendicularLength; 
-				//canvasContext.beginPath();
-				//canvasContext.moveTo(this.perpendicularLineStartX,this.perpendicularLineStartY);
-				this.perpendicularVectorEndX = this.perpendicularLineStartX + perpendicularVectorX;
-				this.perpendicularVectorEndY = this.perpendicularLineStartY + perpendicularVectorY;
-				//canvasContext.lineTo(this.perpendicularVectorEndX,this.perpendicularVectorEndY);
-				//console.log(Math.floor(this.perpendicularVectorEndX) + "   " + Math.floor(this.perpendicularVectorEndY));
-				//canvasContext.strokeStyle = "orange";
-				//canvasContext.stroke();
-				if (masterFrameDelayTick % 16 == 0) {
-					this.frameNow = 0;
-				} else if (masterFrameDelayTick % 16 == 2) {
-						this.frameNow = 1;
-				} else  if (masterFrameDelayTick % 16 == 4){
-						this.frameNow = 2;
-				} else if (masterFrameDelayTick % 16 == 6) {
-						this.frameNow = 3;
-				}
+			this.perpendicularVectorX = -(this.startY - this.endY);
+			this.perpendicularVectorY = this.startX - this.endX;
+			this.perpendicularLength = SET_PERP_LENGTH / Math.hypot(this.perpendicularVectorX, this.perpendicularVectorY);
+			this.perpendicularLength *= this.sineWaveControl;
+			this.sineWaveControl = Math.sin(this.counter);
+			this.counter += 0.1;
+			this.perpendicularVectorX *= this.perpendicularLength;
+			this.perpendicularVectorY *= this.perpendicularLength; 
+			this.perpendicularLineEndX = this.perpendicularLineStartX + this.perpendicularVectorX;
+			this.perpendicularLineEndY = this.perpendicularLineStartY + this.perpendicularVectorY;
+			if (masterFrameDelayTick % 16 == 0) {
+				this.frameNow = 0;
+			} else if (masterFrameDelayTick % 16 == 2) {
+					this.frameNow = 1;
+			} else if (masterFrameDelayTick % 16 == 4){
+					this.frameNow = 2;
+			} else if (masterFrameDelayTick % 16 == 8) {
+					this.frameNow = 3;
+			}
 			canvasContext.drawImage(waveShotPic,
 			this.frameNow * waveShotPicFrameW, 0,
 			waveShotPicFrameW, waveShotPicFrameH,
-			this.position.x - waveShotPicFrameW / 2, this.position.y - waveShotPicFrameH /2,
+			this.position.x - waveShotPicFrameW / 2,
+			this.position.y - waveShotPicFrameH / 2,
 			waveShotPicFrameW, waveShotPicFrameH);
-			}
 		}
 	};
 
@@ -75,11 +55,9 @@ function waveShotClass(x, y, angle, speed) {
 			this.centerLineSpeed = 0;
 			this.perpendicularLineStartX += this.speed * Math.cos(this.moveAng);
 			this.perpendicularLineStartY += this.speed * Math.sin(this.moveAng);
-			this.perpendicularLineEndX += this.speed * Math.cos(this.moveAng);
-			this.perpendicularLineEndY += this.speed * Math.sin(this.moveAng);	
 		}
-		this.position.x = this.perpendicularVectorEndX;
-		this.position.y = this.perpendicularVectorEndY;
+		this.position.x = this.perpendicularLineEndX;
+		this.position.y = this.perpendicularLineEndY;
 	};
 
 	this.shotCollisionAndBoundaryCheck = function () {
@@ -87,6 +65,21 @@ function waveShotClass(x, y, angle, speed) {
 		if (this.position.x < -SET_PERP_LENGTH || this.position.x > canvas.width + SET_PERP_LENGTH || this.position.y < 0) {
 			this.removeMe = true;
 		}
+		// Compute the shot's previous position
+		var prevPos = vec2.create();
+        vec2.sub(prevPos, this.position, this.velocity);
+
+        // Create line segment collider from current & previous positions
+        this.colliderLineSeg.setEndpoints(prevPos, this.position);
+
+        powerUpBoxList.forEach(function(powerUpBox) {
+            if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSeg)) {
+                var useMaxDuration = true;
+                score += scoreForPowerUpShot;
+                powerUpBox.setActive(useMaxDuration);
+                this.removeMe = false;
+            }
+        }, this);
 
 		for (var e = 0; e < shipList.length; e++) {
 			if (this.position.y > shipList[e].position.y - shipHeight / 2 && this.position.y < shipList[e].position.y + shipHeight / 2 &&
@@ -117,17 +110,6 @@ function waveShotClass(x, y, angle, speed) {
 				score += scoreForParachuteShot;
 				alienList[t].isChuteDrawn = false;
 			} // end of parachute collision check
-		}
-
-		/*for (var p = 0; p < powerUpBoxList.length; p++) {
-			if (this.position.y > powerUpBoxList[e].position.y - powerUpHeight / 2 && this.position.y < powerUpBoxList[e].position.y + powerUpHeight / 2 &&
-				this.position.x > powerUpBoxList[e].position.x - powerUpWidth / 2 && this.position.x < powerUpBoxList[e].position.x + powerUpWidth / 2) {
-			   	
-                var useMaxDuration = true;
-                score += scoreForPowerUpShot;
-                powerUpBox.setActive(useMaxDuration);
-                this.removeMe = true;
-            } // end of powerUp collision check
-		} // end of for powerUp.length */
+		} // end of alien collision check
 	}; // end of shotCollisionAndBoundaryCheck function
 } // end of waveShotClass
