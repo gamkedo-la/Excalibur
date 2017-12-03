@@ -7,14 +7,13 @@ var windowState = {
 	inFocus : true, 
 	help : false,
 	firstLoad : true, 
-	help: false
-}
+};
 
 var TitleTextX, subTitleTextX,opacity;
 
-var gameUpdate
-var gameShipSpawn
-var gameGunnerSpawn
+var gameUpdate;
+var gameShipSpawn;
+var gameGunnerSpawn;
 var doingGameOver = false;
 
 var masterFrameDelayTick=0;
@@ -65,10 +64,10 @@ function update() {
 
 			 }
 			 if(TitleTextX >= canvas.width/2 + 10){
-			 	TitleTextX-=15
+			 	TitleTextX-=15;
 			 }
 			 else{
-				opacity = opacity + 0.009
+				opacity = opacity + 0.009;
 			 }
 		}
 		if(windowState.help){
@@ -91,7 +90,7 @@ function update() {
 			 canvasContext.fillText('Press (Enter) to Start game',canvas.width/2 ,canvas.height/2 + 120);
 
 			 canvasContext.restore();
-			 opacity = opacity + 0.002
+			 opacity = opacity + 0.002;
 		}
 
 		else if(!windowState.help && !windowState.firstLoad){
