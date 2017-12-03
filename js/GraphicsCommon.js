@@ -18,3 +18,17 @@ function drawBitmapFlipped(graphic, atX, atY, flipToFaceLeft) {
 		canvasContext.drawImage(graphic,-graphic.width/2,-graphic.height/2);
 		canvasContext.restore();
 }
+
+function drawRect(x,y,w,h,color) {
+	canvasContext.fillStyle = "black";
+	canvasContext.fillRect(x,y,w,h);
+}
+
+function drawStroked(text, x, y) {
+  canvasContext.font = "80px Sans-serif"
+  canvasContext.strokeStyle = 'black';
+  canvasContext.lineWidth = 8;
+  canvasContext.strokeText(text, x, y);
+  canvasContext.fillStyle = 'red';
+  canvasContext.fillText(text, x, y);
+}

@@ -19,6 +19,10 @@ var spritesheet_image_finished_loading = false;
 const EXPLOSION_BOOM = 0;
 const EXPLOSION_RING = 1;
 
+function clearAllExplosions() {
+    explosions = [];
+}
+
 /**
  * spawns a spritesheet-based explosion animation at these coordinates
  * implements a reuse POOL and only makes new objects when required

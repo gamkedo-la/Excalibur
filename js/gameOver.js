@@ -1,82 +1,53 @@
-function fallingAliens () {
+function gameOverSequence() {
+    const ALIEN_COUNT = 50
+    const ENEMY_PADDING = 2
 
-const ALIEN_COUNT = 50
-const ENEMY_PADDING = 2
-var alienVelocity = 60
-var img = new Image();   // image of one alien
-var tripleAliens = new Image(); // image of three consecutive aliens
-img.src = '/images/alien.png' // Set source path
-tripleAliens.src = '/images/alien-anim.png' 	
-var whichAlien = function (min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
-} //which alien
-var enemies = [img,tripleAliens] //add images as they're developed
-var enemiesRandom = enemies[whichAlien(0,1)]
-var enemiesRandomizer = function(enemyList){
-    chosenEnemy = enemyList[whichAlien(0,1)]
-    return chosenEnemy
-  };
-var a = 0
-function drawStroked(text, x, y) {
-    canvasContext.font = "80px Sans-serif"
-    canvasContext.strokeStyle = 'black';
-    canvasContext.lineWidth = 8;
-    canvasContext.strokeText(text, x, y);
-    canvasContext.fillStyle = 'red';
-    canvasContext.fillText(text, x, y);
-}
+    this.gameOverPlaying = false;
 
+    this.gameOverImages; // array set in startGameOverSequence so after load
+    var endScreenFrame = 0;
+    var framesBetweenRows = 4;
+    var framesShowingGameOverTextBeforeReset = 15;
+    var artHeightTopNow = 0; // top y of next row to draw
+    var framesSinceGameOverShown = -1;
 
-var loadLosingScreen = function(){
+    this.randomGameOverImage = function() {
+      var randPicIndex = Math.floor(Math.random()*this.gameOverImages.length);
+      return this.gameOverImages[randPicIndex];
+    };
 
-clearScreen();
-var loadImage = function(image) {
-  
+    this.startGameOverSequence = function() {
+      this.gameOverImages = [singleAlienGameOver,
+                          tripleAliensGameOver];
+      endScreenFrame = 0;
+      artHeightTopNow = 0;
+      framesSinceGameOverShown = -1;
+      this.gameOverPlaying = true;
+      drawRect(0,0,canvas.width,canvas.height,"black");
+    }
 
- 
-  chosenEnemy = enemiesRandomizer(enemies)
-   if(!image) image = this;
-   for(i = 0; i < ALIEN_COUNT; i++){
-    canvasContext.drawImage(chosenEnemy, ((chosenEnemy.width + ENEMY_PADDING) * i) , (30 + ENEMY_PADDING) * a)
-     // canvasContext.drawImage(enemiesRandom, ((enemiesRandom.width + ENEMY_PADDING) * i) , a)
+    this.animateLosingScreen = function() {
+      if(masterFrameDelayTick % framesBetweenRows != 0) {
+        return;
       }
-   a += 1
-  
-   
-   if(a < 23){
-   	setTimeout(loadImage, 200);
-   		}
-   	else {
 
-      drawStroked('GAME OVER!!', canvas.width/6, canvas.height/2)
-   		
-   	}
-   
-} //loadImage
+      if (artHeightTopNow >= canvas.height) {
+        if(framesSinceGameOverShown<0) {
+          drawStroked('GAME OVER!!', canvas.width / 6, canvas.height / 2)
+          framesSinceGameOverShown = framesShowingGameOverTextBeforeReset;
+        } else if(framesSinceGameOverShown-- == 0) {
+          this.gameOverPlaying = false;
+          resetGame();
+        }
+      } else {
+        var chosenEnemy = this.randomGameOverImage();
+        for (i = 0; i < ALIEN_COUNT; i++) {
+            canvasContext.drawImage(chosenEnemy, ((chosenEnemy.width + ENEMY_PADDING) * i),
+              artHeightTopNow)
+        }
 
+        artHeightTopNow += chosenEnemy.height + ENEMY_PADDING;
+      }
+    } // animateLosingScreen
 
-
-if(enemiesRandom.complete) { //check if image was already loaded by the browser
-   loadImage(enemiesRandom);
-
-} //if portion
-else { 
-   enemiesRandom.onload = loadImage;
-} // else statement
-
-
-	
-
-} //loadLosingScreen
-
-loadLosingScreen();
-} //fallingAliens
-
-
-
-
-
-
-
+} // gameOverSequence class

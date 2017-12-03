@@ -74,12 +74,10 @@ function hitPlayer() {
     playerHP--;
     explode(playerX,playerY,EXPLOSION_BOOM,null,null,null,1,2);
     explode(playerX,playerY,EXPLOSION_RING,null,null,null,0,2);
-    
   } else {
     // do nothing
   }
   if (playerHP <= 0) {
-    resetGame();
-    //doingGameOver = true;
+    gameOverManager.startGameOverSequence();
   }
 }

@@ -18,8 +18,9 @@ var maxHealthPowerUpPic = document.createElement("img");
 var tankBodyPic = document.createElement("img");
 var tankCannonPic = document.createElement("img");
 
-
-
+// used for gameOver.js sequence:
+var singleAlienGameOver = document.createElement("img");
+var tripleAliensGameOver = document.createElement("img");
 
 var alienPicFrameW = 43;
 var alienPicFrameH = 27;
@@ -59,8 +60,8 @@ function loadImages() {
         { varName: shotPic, theFile: "ShotVisual.png" },
         { varName: tankBodyPic, theFile: "tank-body.png" },
         { varName: tankCannonPic, theFile: "tank-cannon.png" },
-
-
+        { varName: singleAlienGameOver, theFile: "alien.png" },
+        { varName: tripleAliensGameOver, theFile: "alien-anim.png" }
     ];
 
     picsToLoad = imageList.length;

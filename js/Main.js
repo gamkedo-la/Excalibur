@@ -3,6 +3,8 @@ const scoreForAlienShot = 50;
 const scoreForParachuteShot = 75;
 var score=0;
 
+var gameOverManager = new gameOverSequence();
+
 var windowState = {
 	inFocus : true, 
 	help : false,
@@ -14,7 +16,6 @@ var TitleTextX, subTitleTextX,opacity;
 var gameUpdate;
 var gameShipSpawn;
 var gameGunnerSpawn;
-var doingGameOver = false;
 
 var masterFrameDelayTick=0;
 var canvas, canvasContext;
@@ -94,10 +95,12 @@ function update() {
 		}
 
 		else if(!windowState.help && !windowState.firstLoad){
-				renderScreen();
-				handleInput();
+				if(gameOverManager.gameOverPlaying == false) {
+					drawScrollingBackground();
+					handleInput();
+					moveAll();
+				}
 				drawAll();
-				moveAll();
 			if (!orchestratorMode) {
 				checkFrameCount();
 			} else {
@@ -108,11 +111,11 @@ function update() {
 }
 
 function drawAll() {
-	if(doingGameOver){
-		gameOver();
+	masterFrameDelayTick++;
+	if(gameOverManager.gameOverPlaying){
+		gameOverManager.animateLosingScreen();
 		return;
 	}
-	masterFrameDelayTick++;
 	drawAndRemoveShips();
 	drawAndRemoveAliens();
 	drawAndRemoveShots();
@@ -133,6 +136,7 @@ function moveAll() {
 function resetGame() {
 	clearInterval(gameShipSpawn);
 	clearInterval(gameGunnerSpawn);
+	clearAllExplosions();
 	windowState.firstLoad = true;
 	assaultMode = false;
 	isSpawningWave = false;
@@ -206,7 +210,7 @@ function wrappedDraw(whichImg,pixelOffset) {
 	}
 }
 
-function renderScreen() {
+function drawScrollingBackground() {
 	wrappedDraw(backgroundFarPic, masterFrameDelayTick * 0.15);
 
 	wrappedDraw(backgroundMedPic, masterFrameDelayTick * 0.6);
