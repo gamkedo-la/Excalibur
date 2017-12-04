@@ -1,7 +1,3 @@
-// For reference - Terrence
-//const PLANE_PARADROPPER = 1;
-//const PLANE_GUNNER = 2;
-
 var orchestratorMode = false;
 
 var createNewWave = [];

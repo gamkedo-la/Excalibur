@@ -205,18 +205,26 @@ function keyRelease(evt) {
 			break;
       	case KEY_C:
       		if(orchestratorMode) {
-      			var waveString = ""
+      			var waveString = "";
+      			var enemyType = "";
       			for(var i = 0; i < createNewWave.length; i++) {
+      				if (createNewWave[i].spawnType == 1) {
+      					enemyType = "PLANE_PARADROPPER";
+      				} else if (createNewWave[i].spawnType == 2) {
+      					enemyType = "PLANE_GUNNER";
+      				}
     				if (i == (createNewWave.length) - 1) {
-      					waveString += "{ spawnType: " + createNewWave[i].spawnType + ",  framesUntilSpawn: " +
-      									createNewWave[i].framesUntilSpawn + " } \n"
+      					waveString += "    { spawnType: " + enemyType + ", framesUntilSpawn: " +
+      									createNewWave[i].framesUntilSpawn + " }\n";
       				} else {
-						waveString += "{ spawnType: " + createNewWave[i].spawnType + ",  framesUntilSpawn: " +
-	      								createNewWave[i].framesUntilSpawn + " }, \n"
+						waveString += "    { spawnType: " + enemyType + ", framesUntilSpawn: " +
+	      								createNewWave[i].framesUntilSpawn + " },\n";
       				}
 				}
       			waveString = waveString.slice(0,-1);
-				waveString = "var waveNumber# = [ \n" + waveString + "\n ];"
+				waveString = "var waveNumber# = [ \n" + waveString + "\n];" + 
+							 "\n//Don't forget to change this wave's var name so that # is a number" + 
+							 "\n//and to add this wave into the allWaves array - Terrence";
 	        	copyTextToClipboard(waveString);
 	       	}
 	    	break;
