@@ -138,7 +138,6 @@ function drawAndRemoveShips() {
 			shipList.splice(i,1);
 		}
 	}
-	console.log(shipList);
 }
 
 function moveShips() {

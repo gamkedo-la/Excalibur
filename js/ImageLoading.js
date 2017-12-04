@@ -1,4 +1,8 @@
 var alienPic = document.createElement("img");
+var devilAlienPic = document.createElement("img");
+
+
+
 var spaceshipLeftPic = document.createElement("img");
 var spaceshipRightPic = document.createElement("img");
 var gunnerShipRightPic = document.createElement("img");
@@ -22,8 +26,8 @@ var tankCannonPic = document.createElement("img");
 var singleAlienGameOver = document.createElement("img");
 var tripleAliensGameOver = document.createElement("img");
 
-var alienPicFrameW = 43;
-var alienPicFrameH = 27;
+
+
 var waveShotPicFrameW = waveShotPicFrameH = 12;
 
 var spaceshipPicFrameW = 100;
@@ -46,6 +50,7 @@ function beginLoadingImage(imgVar, fileName) {
 function loadImages() {
     var imageList = [
         { varName: alienPic, theFile: "alien-anim.png" },
+        { varName: devilAlienPic, theFile: "devilAlien-anim.png" },
         { varName: spaceshipRightPic, theFile: "spaceshipRight-anim.png" },
         { varName: spaceshipLeftPic, theFile: "spaceshipLeft-anim.png" },
         { varName: gunnerShipRightPic, theFile: "gunner-ship-right.png" },
@@ -61,7 +66,8 @@ function loadImages() {
         { varName: tankBodyPic, theFile: "tank-body.png" },
         { varName: tankCannonPic, theFile: "tank-cannon.png" },
         { varName: singleAlienGameOver, theFile: "alien.png" },
-        { varName: tripleAliensGameOver, theFile: "alien-anim.png" }
+        { varName: tripleAliensGameOver, theFile: "alien-anim.png" },
+
     ];
 
     picsToLoad = imageList.length;
