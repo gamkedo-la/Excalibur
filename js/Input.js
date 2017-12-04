@@ -8,6 +8,7 @@ const DIGIT_0 = 48; //only for debug
 const DIGIT_1 = 49;
 const DIGIT_2 = 50;
 const KEY_A = 65;
+const KEY_C = 67;
 const KEY_D = 68;
 const KEY_H = 72;
 const KEY_O = 79;
@@ -202,6 +203,11 @@ function keyRelease(evt) {
 		case KEY_D:
 			holdRight = false;
 			break;
+      	case KEY_C:
+      		if(orchestratorMode) {
+	        	copyTextToClipboard(createNewWave[0].spawnType + " and " + createNewWave[0].framesUntilSpawn);
+	       	}
+	    	break;
 	}
 }
 
