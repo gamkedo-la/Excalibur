@@ -205,7 +205,19 @@ function keyRelease(evt) {
 			break;
       	case KEY_C:
       		if(orchestratorMode) {
-	        	copyTextToClipboard(createNewWave[0].spawnType + " and " + createNewWave[0].framesUntilSpawn);
+      			var waveString = ""
+      			for(var i = 0; i < createNewWave.length; i++) {
+    				if (i == (createNewWave.length) - 1) {
+      					waveString += "{ spawnType: " + createNewWave[i].spawnType + ",  framesUntilSpawn: " +
+      									createNewWave[i].framesUntilSpawn + " } \n"
+      				} else {
+						waveString += "{ spawnType: " + createNewWave[i].spawnType + ",  framesUntilSpawn: " +
+	      								createNewWave[i].framesUntilSpawn + " }, \n"
+      				}
+				}
+      			waveString = waveString.slice(0,-1);
+				waveString = "var waveNumber# = [ \n" + waveString + "\n ];"
+	        	copyTextToClipboard(waveString);
 	       	}
 	    	break;
 	}
