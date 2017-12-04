@@ -116,7 +116,7 @@ var alienClass = function() {
 			// canvasContext.fillStyle = "red";
 			// canvasContext.fillRect(this.position.x-alienWidth/2,this.position.y-alienHeight,alienWidth,alienHeight);
 			
-			if (this.isChuteDrawn && this.isWalking == false) {
+			if (this.isChuteDrawn && !this.isWalking) {
 				if (masterFrameDelayTick % 3 == 1) {
 					if (this.frameNow == 2) {
 						this.frameNow = 1;
@@ -124,6 +124,15 @@ var alienClass = function() {
 						this.frameNow = 2;
 					}
 				}
+
+				if (masterFrameDelayTick % 30 == 1 && this.typeOfAlien == 'devil') {
+				    var shotX = this.position.x ;
+                    var shotY = this.position.y - this.animPicHeight/2;
+                    var angle = Math.atan2(playerY - shotY, playerX - shotX);
+                    var newShot = new EnemyShotClass(shotX, shotY, angle, 3);
+                    shotList.push(newShot);
+
+                }
 			} else {
 				this.frameNow = 0;
 			}
@@ -134,11 +143,6 @@ var alienClass = function() {
 			this.position.x - this.animPicWidth / 2, this.position.y - this.animPicHeight,
 			this.animPicWidth, this.animPicHeight);
 
-			canvasContext.drawImage(this.img,
-				this.frameNow * this.animPicWidth, 0,
-				this.animPicWidth, this.animPicHeight,
-				this.position.x - this.animPicWidth / 2, this.position.y - this.animPicHeight,
-				this.animPicWidth, this.animPicHeight);
 
 			if (!this.alreadyGotDrawn) {
 				if (this.position.y > this.chuteY ||
@@ -175,6 +179,8 @@ function devilAlienClass() {
 	this.img = devilAlienPic;
 	this.animPicWidth = 29;
 	this.animPicHeight = 24;
+
+
 }
 devilAlienClass.prototype = new alienClass();
 
