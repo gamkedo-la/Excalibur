@@ -57,7 +57,9 @@ function GunnerClass() {
 			this.velocity.x = signOfVelocity*2.8;
 			vec2.add(this.velocity, this.velocity, gravity);
 			vec2.add(this.position, this.position, this.velocity);
+
 		} else {
+
 			 canvasContext.drawImage(pic,
 		      frameNow * gunnerWidth, frameOffsetY,
 		      gunnerWidth, gunnerHeight,
@@ -82,9 +84,9 @@ function GunnerClass() {
 	          this.velocity.x = velocityX;
 	          frameNow--;
 	          // shoot bullet back
-						var shotX = this.position.x + gunnerCannonOffsetX;
-						var shotY = this.position.y + gunnerCannonOffsetY;
-						var angle = Math.atan2(playerY - shotY, playerX - shotX);
+			  var shotX = this.position.x + gunnerCannonOffsetX;
+			  var shotY = this.position.y + gunnerCannonOffsetY;
+			  var angle = Math.atan2(playerY - shotY, playerX - shotX);
 	          var newShot = new EnemyShotClass(shotX, shotY, angle, gunnerShotSpeed);
 	          shotList.push(newShot);
 	        }
@@ -103,16 +105,16 @@ function GunnerClass() {
 
 	this.spawnAliensFromShip = function () {
 		if (this.hasDroppedYet) {
-      return;
-    }
+	      return;
+	    }
 
-		if ((movingLeft && this.position.x < this.dropX) ||
-			(movingRight && this.position.x > this.dropX)) {
-			this.hasDroppedYet = true;
-			this.velocity.x = 0;
-      this.isShooting = true;
-      frameOffsetY = gunnerHeight;
-		} // crossing drop line
+// 		if (((movingLeft && this.position.x < this.dropX) ||
+// 			(movingRight && this.position.x > this.dropX)) && !this.isDamaged ) {
+// 			this.hasDroppedYet = true;
+// 			this.velocity.x = 0;
+// 		    this.isShooting = true;
+// 		    frameOffsetY = gunnerHeight;
+// 		} // crossing drop line
 	}
 }
 

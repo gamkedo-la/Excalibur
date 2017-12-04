@@ -51,9 +51,10 @@ function shotClass(x, y, angle, speed) {
                 explode(this.position.x,this.position.y,EXPLOSION_BOOM,null,null,null,1,1);
                 explode(this.position.x,this.position.y,EXPLOSION_RING,null,null,null,0,1);
                 
-                score += scoreForShipShot;
-                // shipList[e].removeMe = true;
-                shipList[e].isDamaged = true;
+                if(!shipList[e].isDamaged){
+                    score += scoreForShipShot;
+                    shipList[e].isDamaged = true;
+                }
 
                 if (canSpawnPowerUp()) {
                     spawnPowerUp(shipList[e]);
