@@ -176,6 +176,7 @@ function drawScore() {
 		canvasContext.font = "15px Arial";
 		canvasContext.fillText("[1] for Paradropper",130,20);
 		canvasContext.fillText("[2] for Gunner",97,40);
+		canvasContext.fillText("[C] to copy new Wave",148,60);
 		canvasContext.restore();
 	}
 
