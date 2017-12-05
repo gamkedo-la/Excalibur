@@ -11,7 +11,10 @@ var enemyData = {
 	}
 
 function orchestratorFrameCount() {
-	orchestratorSpawnFrameCount++;
+    orchestratorSpawnFrameCount++;
+    if(usingTimedWeapon) {
+        weaponFrameCount++
+    }
 }
 
 function orchestratorSpawnEnemy() {

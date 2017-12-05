@@ -8,22 +8,26 @@ function laserShotClass(x, y, angle, speed) {
 	this.removeMe = false;
 	this.startX = this.centerLineX = cannonEndX;
 	this.startY = this.centerLineY = cannonEndY;
-	this.position.x = null;
-	this.position.y = null;
+	this.position.x = this.position.y = null;
 	this.centerLineSpeed = 600;
 	this.laserWidth = 18;
 	this.laserHeight = canvas.height + 100;
+	this.frameNow = 0;
 	this.colliderAABB = new aabb(this.laserWidth/2, this.laserHeight/2);
 	//this.colliderLineSeg = new lineSegment();
 
 	this.draw = function () {
 		if (this.centerLineX > canvas.width || this.centerLineX < 0 || this.centerLineY < 0){
-			canvasContext.strokeStyle="steelblue";
-			canvasContext.lineWidth = 18;
-			canvasContext.beginPath();
-			canvasContext.moveTo(this.startX,this.startY);
-			canvasContext.lineTo(this.position.x,this.position.y);
-			canvasContext.stroke();
+			canvasContext.save();
+			canvasContext.translate(this.startX,this.startY);
+			canvasContext.rotate(Math.cos(this.moveAng));
+			canvasContext.drawImage(laserPic,
+			this.frameNow * laserPicFrameW, 0,
+			laserPicFrameW, laserPicFrameH,
+			this.position.x - (laserPicFrameW/ 2),
+			this.position.y - (laserPicFrameH / 2),
+			laserPicFrameW, laserPicFrameH);
+			canvasContext.restore();
 		}
 	};
 
@@ -44,6 +48,7 @@ function laserShotClass(x, y, angle, speed) {
 			this.removeMe = true;
 			usingTimedWeapon = false;
 			weaponFrameCount = 0;
+			this.laserFired = false;
 		}
 		
 		/*// Compute the shot's previous position

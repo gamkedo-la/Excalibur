@@ -1,14 +1,13 @@
 var alienPic = document.createElement("img");
 var devilAlienPic = document.createElement("img");
 
-
-
 var spaceshipLeftPic = document.createElement("img");
 var spaceshipRightPic = document.createElement("img");
 var gunnerShipRightPic = document.createElement("img");
 var gunnerShipLeftPic = document.createElement("img");
 
 var waveShotPic = document.createElement("img");
+var laserPic = document.createElement("img");
 var shotPic = document.createElement("img");
 
 var backgroundFarPic = document.createElement("img");
@@ -26,9 +25,8 @@ var tankCannonPic = document.createElement("img");
 var singleAlienGameOver = document.createElement("img");
 var tripleAliensGameOver = document.createElement("img");
 
-
-
 var waveShotPicFrameW = waveShotPicFrameH = 12;
+var laserPicFrameW = 18, laserPicFrameH = 700;
 
 var spaceshipPicFrameW = 100;
 var spaceshipPicFrameH = 32;
@@ -62,6 +60,7 @@ function loadImages() {
         { varName: healthPowerUpPic, theFile: "healthPowerUp.png" },
         { varName: maxHealthPowerUpPic, theFile: "maxHealthPowerUp.png" },
         { varName: waveShotPic, theFile: "waveShot.png" },
+        { varName: laserPic, theFile: "LaserVisual.png" },
         { varName: shotPic, theFile: "ShotVisual.png" },
         { varName: tankBodyPic, theFile: "tank-body.png" },
         { varName: tankCannonPic, theFile: "tank-cannon.png" },
