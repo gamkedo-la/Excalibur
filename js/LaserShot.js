@@ -1,69 +1,52 @@
-function waveShotClass(x, y, angle, speed) {
+var usingTimedWeapon = false;
+
+function laserShotClass(x, y, angle, speed) {
 	const SET_PERP_LENGTH = 100;
 	this.position = vec2.create(x, y);
-	this.velocity = vec2.create(this.perpendicularLineEndX, this.perpendicularLineEndY);
 	this.moveAng = angle;
 	this.speed = speed;
 	this.removeMe = false;
-	this.startX = this.perpendicularLineStartX = this.centerLineX = cannonEndX;
-	this.startY = this.perpendicularLineStartY = this.centerLineY = cannonEndY;
-	this.endX = this.perpendicularLineEndX = this.perpendicularLineEndX = this.perpendicularVectorX = null;
-	this.endY = this.perpendicularLineEndY = this.perpendicularLineEndY = this.perpendicularVectorY = null;
-	this.perpendicularLength = null;
-	this.sineWaveControl = this.counter = 0;
+	this.startX = this.centerLineX = cannonEndX;
+	this.startY = this.centerLineY = cannonEndY;
+	this.position.x = null;
+	this.position.y = null;
 	this.centerLineSpeed = 600;
-	this.colliderLineSeg = new lineSegment();
+	this.laserWidth = 18;
+	this.laserHeight = canvas.height + 100;
+	this.colliderAABB = new aabb(this.laserWidth/2, this.laserHeight/2);
+	//this.colliderLineSeg = new lineSegment();
 
 	this.draw = function () {
-		if (this.centerLineX > canvas.width || this.centerLineX < 0 || this.centerLineY < 0){	
-			this.perpendicularVectorX = -(this.startY - this.endY);
-			this.perpendicularVectorY = this.startX - this.endX;
-			this.perpendicularLength = SET_PERP_LENGTH / Math.hypot(this.perpendicularVectorX, this.perpendicularVectorY);
-			this.perpendicularLength *= this.sineWaveControl;
-			this.sineWaveControl = Math.sin(this.counter);
-			this.counter += 0.1;
-			this.perpendicularVectorX *= this.perpendicularLength;
-			this.perpendicularVectorY *= this.perpendicularLength; 
-			this.perpendicularLineEndX = this.perpendicularLineStartX + this.perpendicularVectorX;
-			this.perpendicularLineEndY = this.perpendicularLineStartY + this.perpendicularVectorY;
-			if (masterFrameDelayTick % 16 == 0) {
-				this.frameNow = 0;
-			} else if (masterFrameDelayTick % 16 == 2) {
-					this.frameNow = 1;
-			} else if (masterFrameDelayTick % 16 == 4){
-					this.frameNow = 2;
-			} else if (masterFrameDelayTick % 16 == 8) {
-					this.frameNow = 3;
-			}
-			canvasContext.drawImage(waveShotPic,
-			this.frameNow * waveShotPicFrameW, 0,
-			waveShotPicFrameW, waveShotPicFrameH,
-			this.position.x - waveShotPicFrameW / 2,
-			this.position.y - waveShotPicFrameH / 2,
-			waveShotPicFrameW, waveShotPicFrameH);
+		if (this.centerLineX > canvas.width || this.centerLineX < 0 || this.centerLineY < 0){
+			canvasContext.strokeStyle="steelblue";
+			canvasContext.lineWidth = 18;
+			canvasContext.beginPath();
+			canvasContext.moveTo(this.startX,this.startY);
+			canvasContext.lineTo(this.position.x,this.position.y);
+			canvasContext.stroke();
 		}
 	};
 
 	this.move = function () {
 		this.centerLineX += this.centerLineSpeed * Math.cos(this.moveAng);
 		this.centerLineY += this.centerLineSpeed * Math.sin(this.moveAng);
-		if (this.centerLineX > canvas.width || this.centerLineX < 0 || this.centerLineY < 0){
-			this.endX = this.centerLineX;
-			this.endY = this.centerLineY;
+		if (this.centerLineX > canvas.width || this.centerLineX < 0 || this.centerLineY < 0) {
 			this.centerLineSpeed = 0;
-			this.perpendicularLineStartX += this.speed * Math.cos(this.moveAng);
-			this.perpendicularLineStartY += this.speed * Math.sin(this.moveAng);
+			this.position.x = this.centerLineX;
+			this.position.y = this.centerLineY;
 		}
-		this.position.x = this.perpendicularLineEndX;
-		this.position.y = this.perpendicularLineEndY;
 	};
 
 	this.shotCollisionAndBoundaryCheck = function () {
 		// note: not checking screen bottom since we can't shoot down
-		if (this.position.x < -SET_PERP_LENGTH || this.position.x > canvas.width + SET_PERP_LENGTH || this.position.y < 0) {
+
+		if (weaponFrameCount >= 54) {
 			this.removeMe = true;
+			usingTimedWeapon = false;
+			weaponFrameCount = 0;
 		}
-		// Compute the shot's previous position
+		
+		/*// Compute the shot's previous position
 		var prevPos = vec2.create();
         vec2.sub(prevPos, this.position, this.velocity);
 
@@ -77,7 +60,7 @@ function waveShotClass(x, y, angle, speed) {
                 powerUpBox.setActive(useMaxDuration);
                 this.removeMe = false;
             }
-        }, this);
+        }, this);*/
 
 		for (var e = 0; e < shipList.length; e++) {
 			if (this.position.y > shipList[e].position.y - shipHeight / 2 && this.position.y < shipList[e].position.y + shipHeight / 2 &&
@@ -110,4 +93,4 @@ function waveShotClass(x, y, angle, speed) {
 			} // end of parachute collision check
 		} // end of alien collision check
 	}; // end of shotCollisionAndBoundaryCheck function
-} // end of waveShotClass
+}// end of laserShotClass

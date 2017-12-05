@@ -18,6 +18,7 @@ var gunnerShotSpeed = 5;
 var cannonShotSpeed = 5;
 var cannonReloadFrames = 5;
 var cannonWaveReloadFrames = 37;
+var cannonLaserReloadFrames = 60;
 var cannonReloadLeft = 0;
 var cannonWidth = 18;
 
@@ -38,8 +39,8 @@ function drawPlayer() {
   // canvasContext.lineTo(cannonEndX,cannonEndY);
   // canvasContext.stroke();
 
-   cannonEndX = playerX - cannonWidth/4 + cannonLength*Math.cos(cannonAngle);
-   cannonEndY = playerY + playerHeight/2 + cannonLength*Math.sin(cannonAngle);
+   cannonEndX = playerX - cannonWidth/4 + (cannonLength-10)*Math.cos(cannonAngle);
+   cannonEndY = playerY + playerHeight/2 + (cannonLength-10)*Math.sin(cannonAngle);
 
    canvasContext.save();
    canvasContext.translate(playerX ,playerY + playerHeight/2)

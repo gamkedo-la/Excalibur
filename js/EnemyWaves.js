@@ -9,6 +9,7 @@ var timeForText = 90; // time in frames (30 frames/second)
 
 var currentSpawnType = 0;
 var spawnFrameCount = 0;
+var weaponFrameCount = 0;
 var currentEnemyIndex = 0;
 
 var isSpawningWave = false;
@@ -40,6 +41,9 @@ var allWaves = [waveNumber1,waveNumber2];
 
 function checkFrameCount() {
 	spawnFrameCount++;
+	if(usingTimedWeapon) {
+		weaponFrameCount++
+	}
 	/*if (spawnFrameCount % 5 == 0) {
 		console.log("spawnFrameCount: " + spawnFrameCount);
 	}*/

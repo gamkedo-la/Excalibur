@@ -77,11 +77,12 @@ function handleInput() {
 		}
 	}else if(holdFire && secondaryFire) {
 		if(cannonReloadLeft <= 0) {
-			var newShot = new waveShotClass(cannonEndX, cannonEndY, cannonAngle, cannonWaveShotSpeed);
+			usingTimedWeapon = true;
+			var newShot = new laserShotClass(cannonEndX, cannonEndY, cannonAngle, cannonWaveShotSpeed);
 			shotList.push(newShot);
 			waveShotSound.play();
 			explode(cannonEndX,cannonEndY,EXPLOSION_BOOM,null,null,null,1,1);
-			cannonReloadLeft = cannonWaveReloadFrames;
+			cannonReloadLeft = cannonLaserReloadFrames;
 		}
 	}
 	if(cannonReloadLeft>0) {
