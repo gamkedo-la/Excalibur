@@ -6,38 +6,38 @@ function laserShotClass(x, y, angle, speed) {
 	this.moveAng = angle;
 	this.speed = speed;
 	this.removeMe = false;
-	this.startX = this.centerLineX = cannonEndX;
-	this.startY = this.centerLineY = cannonEndY;
-	this.position.x = this.position.y = null;
-	this.centerLineSpeed = 600;
-	this.laserWidth = 18;
-	this.laserHeight = canvas.height + 100;
+	this.startX = this.position.x = cannonEndX;
+	this.startY = this.position.y = cannonEndY;
+	var dx = dy = laserAngle = null;
+	this.findBoundsSpeed= canvas.height + 100;
 	this.frameNow = 0;
-	this.colliderAABB = new aabb(this.laserWidth/2, this.laserHeight/2);
+	laserColliderAABB = new aabb(laserPicFrameW/2, laserPicFrameH/2);
+	laserColliderAABB.computeBounds();
 	//this.colliderLineSeg = new lineSegment();
 
 	this.draw = function () {
-		if (this.centerLineX > canvas.width || this.centerLineX < 0 || this.centerLineY < 0){
+		if (this.position.x > canvas.width || this.position.x < 0 || this.position.y < 0){
 			canvasContext.save();
 			canvasContext.translate(this.startX,this.startY);
-			canvasContext.rotate(Math.cos(this.moveAng));
+			canvasContext.rotate(laserAngle);
 			canvasContext.drawImage(laserPic,
 			this.frameNow * laserPicFrameW, 0,
 			laserPicFrameW, laserPicFrameH,
-			this.position.x - (laserPicFrameW/ 2),
-			this.position.y - (laserPicFrameH / 2),
+			this.position.x - laserPicFrameW/2,
+			this.position.y - laserPicFrameH/2,
 			laserPicFrameW, laserPicFrameH);
 			canvasContext.restore();
 		}
 	};
 
 	this.move = function () {
-		this.centerLineX += this.centerLineSpeed * Math.cos(this.moveAng);
-		this.centerLineY += this.centerLineSpeed * Math.sin(this.moveAng);
-		if (this.centerLineX > canvas.width || this.centerLineX < 0 || this.centerLineY < 0) {
-			this.centerLineSpeed = 0;
-			this.position.x = this.centerLineX;
-			this.position.y = this.centerLineY;
+		this.position.x += this.findBoundsSpeed * Math.cos(this.moveAng);
+		this.position.y += this.findBoundsSpeed * Math.sin(this.moveAng);
+		if (this.position.x > canvas.width || this.position.x < 0 || this.position.y < 0) {
+			this.findBoundsSpeed = 0;
+			dx = this.startX - this.position.x;
+			dy = this.startY - this.position.y;
+			laserAngle = Math.atan2(dy,dx);
 		}
 	};
 
