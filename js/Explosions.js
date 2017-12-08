@@ -1,7 +1,13 @@
 /**
  *
- * EXPLOSIONS
+ * EXPLOSIONS v2
+ * 
  * made for gamkedo by mcfunkypants
+ 
+ * I made the explosions.png sprites by
+ * capturing a realtime engine to video
+ * then turning into a spritesheet 
+ * they are CC0 public domain - enjoy
  *
  */
 
@@ -10,7 +16,7 @@ var explosions_enabled = true;
 var explosion_timestamp = (new Date()).getTime();
 var explosion_w = 64;
 var explosion_h = 64;
-var explosion_spritesheet_framecount = 16;
+var explosion_spritesheet_framecount = 32;
 var explosion_FPS = 60;
 var explosion_FRAME_MS = 1000/explosion_FPS;
 var FAR_AWAY = -999999;
@@ -18,6 +24,8 @@ var spritesheet_image = null;
 var spritesheet_image_finished_loading = false;
 const EXPLOSION_BOOM = 0;
 const EXPLOSION_RING = 1;
+const EXPLOSION_SMOKE = 2;
+const EXPLOSION_SPARKS = 3;
 
 function clearAllExplosions() {
     explosions = [];
@@ -198,4 +206,71 @@ function initExplosions()
     spritesheet_image.onerror = function() {
         console.log('ERROR: Failed to download explosions.png.');
     }
+}
+
+// helper function (inclusive: eg 1,10 may include 1 or 10)
+function randomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+    
+/**
+ * custom effect types for game-specfic animations!
+ * 
+*/
+function playerHitExplosion(x,y) // player got hurt!
+{
+    for (var multi=8; multi<8; multi++)
+    {
+        explode(x+randomInt(-64,64),y+randomInt(-32,32),EXPLOSION_SMOKE,null,null,null,1,Math.random()*4);
+        explode(x+randomInt(-32,32),y+randomInt(-32,32),EXPLOSION_BOOM,null,null,null,1,Math.random()*4);
+    }
+}
+
+function powerupExplosion(x,y) // bonus item hit
+{
+    explode(x,y,EXPLOSION_RING,null,null,null,0,2);
+    for (var multi=0; multi<6; multi++)
+    {
+        explode(x+randomInt(-16,16),y+randomInt(-16,16),EXPLOSION_SPARKS,null,null,null,1,1);
+    }
+}
+
+function alienHitExplosion(x,y) // paratrooper hit
+{
+    for (var multi=0; multi<6; multi++)
+    {
+        explode(x,y,EXPLOSION_SMOKE,null,null,null,0,1);
+    }
+}
+
+function shipHitExplosion(x,y) // enemy hit
+{
+    for (multi=0; multi<6; multi++)
+        explode(x+randomInt(-16,16),y+randomInt(-16,16),EXPLOSION_BOOM,null,null,null,1,Math.random()*1);
+
+    explode(x,y,EXPLOSION_SMOKE,null,null,null,0,2);
+
+    explode(x,y,EXPLOSION_RING,null,null,null,0,2);
+}
+
+function gunfireExplosion(x,y)
+{
+    //explode(x,y,EXPLOSION_SMOKE,null,null,null,0,1);
+    explode(x,y,EXPLOSION_SPARKS,null,null,null,0,1);
+}
+
+function secondaryGunfireExplosion(x,y)
+{
+    explode(x,y,EXPLOSION_SMOKE,null,null,null,0,1);
+    explode(x,y,EXPLOSION_SPARKS,null,null,null,0,1);
+}
+
+function damageSmokeExplosion(x,y)
+{
+    if (Math.random()>0.2) // lots of small smoke
+        explode(x+randomInt(-8,8),y+randomInt(-8,8),EXPLOSION_SMOKE,null,null,null,0,Math.random() * 0.5);
+
+    if (Math.random()>0.9)  // rare big sparks
+        explode(x+randomInt(-8,8),y+randomInt(-8,8),EXPLOSION_SPARKS,null,null,null,0,1);
+
+    if (Math.random()>0.8) // rare randomly sized explosions
+        explode(x+randomInt(-8,8),y+randomInt(-8,8),EXPLOSION_BOOM,null,null,null,0,Math.random());
 }

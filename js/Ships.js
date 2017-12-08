@@ -45,6 +45,7 @@ function shipClass() {
 			this.velocity.x = signOfVelocity*2.6;
 			vec2.add(this.velocity, this.velocity, gravity);
 			vec2.add(this.position, this.position, this.velocity);
+			damageSmokeExplosion(this.position.x,this.position.y);
 		} else {
 			canvasContext.drawImage(this.pic,
 				this.frameNow * spaceshipPicFrameW, 0,

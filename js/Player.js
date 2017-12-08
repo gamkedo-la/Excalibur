@@ -73,8 +73,7 @@ function movePlayer() {
 function hitPlayer() {
   if(!orchestratorMode){
     playerHP--;
-    explode(playerX,playerY,EXPLOSION_BOOM,null,null,null,1,2);
-    explode(playerX,playerY,EXPLOSION_RING,null,null,null,0,2);
+    playerHitExplosion(playerX,playerY);
   } else {
     // do nothing
   }
