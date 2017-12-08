@@ -67,6 +67,9 @@ function GunnerClass() {
 
             vec2.add(this.velocity, this.velocity, gravity);
             vec2.add(this.position, this.position, this.velocity);
+
+            damageSmokeExplosion(this.position.x,this.position.y);
+            
         } else {
             canvasContext.drawImage(pic,
                 frameNow * gunnerWidth, frameOffsetY,

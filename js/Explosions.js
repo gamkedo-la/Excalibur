@@ -196,11 +196,11 @@ function drawExplosions(camerax,cameray)
 
 function initExplosions()
 {
-    console.log('init_explosions...');
+    //console.log('init_explosions...');
     spritesheet_image = new Image();
     spritesheet_image.src = 'images/explosions.png';
     spritesheet_image.onload = function()   {
-        console.log('explosions.png loaded.');
+        //console.log('explosions.png loaded.');
         spritesheet_image_finished_loading = true;
     }
     spritesheet_image.onerror = function() {
@@ -217,7 +217,7 @@ function randomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)
 */
 function playerHitExplosion(x,y) // player got hurt!
 {
-    for (var multi=8; multi<8; multi++)
+    for (var multi=0; multi<8; multi++)
     {
         explode(x+randomInt(-64,64),y+randomInt(-32,32),EXPLOSION_SMOKE,null,null,null,1,Math.random()*4);
         explode(x+randomInt(-32,32),y+randomInt(-32,32),EXPLOSION_BOOM,null,null,null,1,Math.random()*4);
@@ -235,20 +235,20 @@ function powerupExplosion(x,y) // bonus item hit
 
 function alienHitExplosion(x,y) // paratrooper hit
 {
-    for (var multi=0; multi<6; multi++)
+    for (var multi=0; multi<4; multi++)
     {
-        explode(x,y,EXPLOSION_SMOKE,null,null,null,0,1);
+        explode(x+randomInt(-8,8),y+randomInt(-8,8),EXPLOSION_SMOKE,null,null,null,0,1);
     }
 }
 
 function shipHitExplosion(x,y) // enemy hit
 {
     for (multi=0; multi<6; multi++)
-        explode(x+randomInt(-16,16),y+randomInt(-16,16),EXPLOSION_BOOM,null,null,null,1,Math.random()*1);
+        explode(x+randomInt(-20,20),y+randomInt(-20,20),EXPLOSION_BOOM,null,null,null,1,Math.random()*1);
 
     explode(x,y,EXPLOSION_SMOKE,null,null,null,0,2);
 
-    explode(x,y,EXPLOSION_RING,null,null,null,0,2);
+    //explode(x,y,EXPLOSION_RING,null,null,null,0,2);
 }
 
 function gunfireExplosion(x,y)
@@ -271,6 +271,6 @@ function damageSmokeExplosion(x,y)
     if (Math.random()>0.9)  // rare big sparks
         explode(x+randomInt(-8,8),y+randomInt(-8,8),EXPLOSION_SPARKS,null,null,null,0,1);
 
-    if (Math.random()>0.8) // rare randomly sized explosions
-        explode(x+randomInt(-8,8),y+randomInt(-8,8),EXPLOSION_BOOM,null,null,null,0,Math.random());
+    //if (Math.random()>0.8) // rare randomly sized explosions
+    //    explode(x+randomInt(-8,8),y+randomInt(-8,8),EXPLOSION_BOOM,null,null,null,0,Math.random());
 }
