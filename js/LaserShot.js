@@ -9,7 +9,7 @@ function laserShotClass(x, y, angle, speed) {
 	this.startX = this.position.x = cannonEndX;
 	this.startY = this.position.y = cannonEndY;
 	var dx = dy = laserAngle = null;
-	this.findBoundsSpeed= canvas.height + 100;
+	this.findBoundsSpeed = 700;
 	this.frameNow = 0;
 	laserColliderAABB = new aabb(laserPicFrameW/2, laserPicFrameH/2);
 	laserColliderAABB.computeBounds();
@@ -18,15 +18,16 @@ function laserShotClass(x, y, angle, speed) {
 	this.draw = function () {
 		if (this.position.x > canvas.width || this.position.x < 0 || this.position.y < 0){
 			canvasContext.save();
-			canvasContext.translate(this.startX,this.startY);
+			canvasContext.translate(this.startX, this.startY);
 			canvasContext.rotate(laserAngle);
 			canvasContext.drawImage(laserPic,
 			this.frameNow * laserPicFrameW, 0,
 			laserPicFrameW, laserPicFrameH,
 			this.position.x - laserPicFrameW/2,
-			this.position.y - laserPicFrameH/2,
+			this.position.y,
 			laserPicFrameW, laserPicFrameH);
 			canvasContext.restore();
+			console.log(this.position.x,this.position.y);
 		}
 	};
 
@@ -35,8 +36,8 @@ function laserShotClass(x, y, angle, speed) {
 		this.position.y += this.findBoundsSpeed * Math.sin(this.moveAng);
 		if (this.position.x > canvas.width || this.position.x < 0 || this.position.y < 0) {
 			this.findBoundsSpeed = 0;
-			dx = this.startX - this.position.x;
-			dy = this.startY - this.position.y;
+			dx = this.position.x - this.startX;
+			dy = this.position.y - this.startY;
 			laserAngle = Math.atan2(dy,dx);
 		}
 	};
@@ -48,7 +49,6 @@ function laserShotClass(x, y, angle, speed) {
 			this.removeMe = true;
 			usingTimedWeapon = false;
 			weaponFrameCount = 0;
-			this.laserFired = false;
 		}
 		
 		/*// Compute the shot's previous position
