@@ -13,6 +13,8 @@ var shotPic = document.createElement("img");
 var backgroundFarPic = document.createElement("img");
 var backgroundMedPic = document.createElement("img");
 var backgroundNearPic = document.createElement("img");
+var computerBackgroundFarPic = document.createElement("img");
+var computerBackgroundNearPic = document.createElement("img");
 
 var shieldPowerUpPic = document.createElement("img");
 var healthPowerUpPic = document.createElement("img");
@@ -56,6 +58,8 @@ function loadImages() {
         { varName: backgroundFarPic, theFile: "backgroundFar.png" },
         { varName: backgroundMedPic, theFile: "backgroundMed.png" },
         { varName: backgroundNearPic, theFile: "backgroundNear.png" },
+        { varName: computerBackgroundFarPic, theFile: "computerBackground.png" },
+        { varName: computerBackgroundNearPic, theFile: "computerForeground.png" },
         { varName: shieldPowerUpPic, theFile: "shieldPowerUp.png" },
         { varName: healthPowerUpPic, theFile: "healthPowerUp.png" },
         { varName: maxHealthPowerUpPic, theFile: "maxHealthPowerUp.png" },
