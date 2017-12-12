@@ -2,6 +2,7 @@ var audioFormat;
 
 var regularShotSound = new SoundOverlapsClass("./audio/RegularShot");
 var waveShotSound = new SoundOverlapsClass("./audio/WaveShot");
+var shieldPowerUpSound = new SoundOverlapsClass("./audio/ShieldPowerUp");
 var backgroundSound = new backgroundMusicClass("./audio/dew-drops");
 backgroundSound.loopSong();
 

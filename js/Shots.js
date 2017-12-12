@@ -39,6 +39,7 @@ function shotClass(x, y, angle, speed) {
             if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSeg)) {
 
                 powerupExplosion(this.position.x,this.position.y);
+                shieldPowerUpSound.play();
                 
                 var useMaxDuration = true;
                 score += scoreForPowerUpShot;

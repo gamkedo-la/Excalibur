@@ -72,6 +72,7 @@ function waveShotClass(x, y, angle, speed) {
 
         powerUpBoxList.forEach(function(powerUpBox) {
             if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSeg)) {
+            	shieldPowerUpSound.play();
                 var useMaxDuration = true;
                 score += scoreForPowerUpShot;
                 powerUpBox.setActive(useMaxDuration);
