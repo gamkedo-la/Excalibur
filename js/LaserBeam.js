@@ -11,14 +11,12 @@ function laserShotClass(x, y, angle, speed) {
 	var dx = dy = laserAngle = null;
 	this.findBoundsSpeed = 700;
 	this.frameNow = 0;
-	laserColliderAABB = new aabb(laserPicFrameW/2, laserPicFrameH/2);
-	laserColliderAABB.computeBounds();
-	//this.colliderLineSeg = new lineSegment();
+	this.colliderLineSeg = new lineSegment();
 
 	this.draw = function () {
 		if (this.position.x > canvas.width || this.position.x < 0 || this.position.y < 0){
 			canvasContext.save();
-			canvasContext.translate(this.startX, this.startY);
+			canvasContext.translate(this.startX,this.startY);
 			canvasContext.rotate(laserAngle);
 			canvasContext.drawImage(laserPic,
 			this.frameNow * laserPicFrameW, 0,
@@ -27,7 +25,6 @@ function laserShotClass(x, y, angle, speed) {
 			this.position.y,
 			laserPicFrameW, laserPicFrameH);
 			canvasContext.restore();
-			console.log(this.position.x,this.position.y);
 		}
 	};
 
