@@ -1,16 +1,12 @@
 var usingTimedWeapon = false;
 
 function laserShotClass(x, y, angle, speed) {
-	const SET_PERP_LENGTH = 100;
-	this.findBoundsSpeed = 700;
 	this.speed = speed;
-
 	this.position = vec2.create(x, y);
 	// this.moveAng is angle + 90 deg. This is because the image is vertical (pointing in the -Y direction)
 	// To orient the image along the +X direction, have to add 90 degrees (PI/2 radians)
 	this.moveAng = angle + Math.PI / 2;
 	this.removeMe = false;
-
 	this.frameNow = 0;
 	this.colliderLineSeg = new lineSegment();
 
@@ -18,9 +14,10 @@ function laserShotClass(x, y, angle, speed) {
 		canvasContext.save();
 		canvasContext.translate(this.position.x,this.position.y);
 		canvasContext.rotate(this.moveAng + Math.PI);	// Rotate by 180 degrees, so the "top" of the laser is at the cannon, and the bottom points away from the cannon
+		canvasContext.scale(-1,-1);
 		canvasContext.drawImage(laserPic,
 			this.frameNow * laserPicFrameW, 0, laserPicFrameW, laserPicFrameH,
-			-laserPicFrameW/2, 0, laserPicFrameW, laserPicFrameH);
+			laserPicFrameW/2, 0, laserPicFrameW * -1, laserPicFrameH * -1);
 		canvasContext.restore();
 	};
 

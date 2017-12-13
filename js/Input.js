@@ -78,7 +78,7 @@ function handleInput() {
 	}else if(holdFire && secondaryFire) {
 		if(cannonReloadLeft <= 0) {
 			usingTimedWeapon = true;
-			var newShot = new laserShotClass(cannonEndX, cannonEndY, cannonAngle, cannonWaveShotSpeed);
+			var newShot = new laserShotClass(cannonEndX, cannonEndY, cannonAngle, 0);
 			shotList.push(newShot);
 			waveShotSound.play();
 			secondaryGunfireExplosion(cannonEndX,cannonEndY);
