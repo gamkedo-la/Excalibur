@@ -2,41 +2,30 @@ var usingTimedWeapon = false;
 
 function laserShotClass(x, y, angle, speed) {
 	const SET_PERP_LENGTH = 100;
-	this.position = vec2.create(x, y);
-	this.moveAng = angle;
-	this.speed = speed;
-	this.removeMe = false;
-	this.startX = this.position.x = cannonEndX;
-	this.startY = this.position.y = cannonEndY;
-	var dx = dy = laserAngle = null;
 	this.findBoundsSpeed = 700;
+	this.speed = speed;
+
+	this.position = vec2.create(x, y);
+	// this.moveAng is angle + 90 deg. This is because the image is vertical (pointing in the -Y direction)
+	// To orient the image along the +X direction, have to add 90 degrees (PI/2 radians)
+	this.moveAng = angle + Math.PI / 2;
+	this.removeMe = false;
+
 	this.frameNow = 0;
 	this.colliderLineSeg = new lineSegment();
 
 	this.draw = function () {
-		if (this.position.x > canvas.width || this.position.x < 0 || this.position.y < 0){
-			canvasContext.save();
-			canvasContext.translate(this.startX,this.startY);
-			canvasContext.rotate(laserAngle);
-			canvasContext.drawImage(laserPic,
-			this.frameNow * laserPicFrameW, 0,
-			laserPicFrameW, laserPicFrameH,
-			this.position.x - laserPicFrameW/2,
-			this.position.y,
-			laserPicFrameW, laserPicFrameH);
-			canvasContext.restore();
-		}
+		canvasContext.save();
+		canvasContext.translate(this.position.x,this.position.y);
+		canvasContext.rotate(this.moveAng + Math.PI);	// Rotate by 180 degrees, so the "top" of the laser is at the cannon, and the bottom points away from the cannon
+		canvasContext.drawImage(laserPic,
+			this.frameNow * laserPicFrameW, 0, laserPicFrameW, laserPicFrameH,
+			-laserPicFrameW/2, 0, laserPicFrameW, laserPicFrameH);
+		canvasContext.restore();
 	};
 
 	this.move = function () {
-		this.position.x += this.findBoundsSpeed * Math.cos(this.moveAng);
-		this.position.y += this.findBoundsSpeed * Math.sin(this.moveAng);
-		if (this.position.x > canvas.width || this.position.x < 0 || this.position.y < 0) {
-			this.findBoundsSpeed = 0;
-			dx = this.position.x - this.startX;
-			dy = this.position.y - this.startY;
-			laserAngle = Math.atan2(dy,dx);
-		}
+		// laser shot doesn't actually go anywhere
 	};
 
 	this.shotCollisionAndBoundaryCheck = function () {
