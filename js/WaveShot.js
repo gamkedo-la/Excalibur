@@ -68,10 +68,11 @@ function waveShotClass(x, y, angle, speed) {
         vec2.sub(prevPos, this.position, this.velocity);
 
         // Create line segment collider from current & previous positions
-        this.colliderLineSeg.setEndpoints(prevPos, this.position);
+        this.colliderLineSeg.setEndPoints(prevPos, this.position);
 
         powerUpBoxList.forEach(function(powerUpBox) {
             if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSeg)) {
+            	powerupExplosion(this.position.x,this.position.y);
             	shieldPowerUpSound.play();
                 var useMaxDuration = true;
                 score += scoreForPowerUpShot;
@@ -80,21 +81,23 @@ function waveShotClass(x, y, angle, speed) {
             }
         }, this);
 
-		for (var e = 0; e < shipList.length; e++) {
-			if (this.position.y > shipList[e].position.y - shipHeight / 2 && this.position.y < shipList[e].position.y + shipHeight / 2 &&
-				this.position.x > shipList[e].position.x - shipWidth / 2 && this.position.x < shipList[e].position.x + shipWidth / 2 &&
-				!shipList[e].isDamaged) {
-			   	
-			   	shipList[e].isDamaged = true;
-				score += scoreForShipShot;
-				
-				if (canSpawnPowerUp()) {
-                   	spawnPowerUp(shipList[e]);
+        for (var e = 0; e < shipList.length; e++) {
+            if (isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSeg) && !shipList[e].isDamaged) {
+
+                shipHitExplosion(this.position.x,this.position.y);
+
+                if(!shipList[e].isDamaged){
+                    score += scoreForShipShot;
+                    shipList[e].isDamaged = true;
                 }
 
-				this.removeMe = false;
-			}
-		}
+                if (canSpawnPowerUp()) {
+                    spawnPowerUp(shipList[e]);
+                }
+
+                this.removeMe = false;
+            }
+        }
 		for (var t = 0; t < alienList.length; t++) {
 			if (this.position.y > alienList[t].position.y - alienHeight && this.position.y < alienList[t].position.y &&
 				this.position.x > alienList[t].position.x - alienWidth / 2 && this.position.x < alienList[t].position.x + alienWidth / 2) {

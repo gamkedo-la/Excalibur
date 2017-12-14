@@ -1,4 +1,5 @@
 var usingTimedWeapon = false;
+var lowerRight,lowerLeft,topRight,topLeft;
 
 function laserShotClass(x, y, angle, speed) {
 	this.speed = speed;
@@ -8,7 +9,8 @@ function laserShotClass(x, y, angle, speed) {
 	this.moveAng = angle + Math.PI / 2;
 	this.removeMe = false;
 	this.frameNow = 0;
-	this.colliderLineSeg = new lineSegment();
+	this.colliderLineSegLaserRight = new lineSegment();
+	this.colliderLineSegLaserLeft = new lineSegment();
 
 	this.draw = function () {
 		canvasContext.save();
@@ -26,52 +28,54 @@ function laserShotClass(x, y, angle, speed) {
 	};
 
 	this.shotCollisionAndBoundaryCheck = function () {
-		// note: not checking screen bottom since we can't shoot down
 
 		if (weaponFrameCount >= 54) {
 			this.removeMe = true;
 			usingTimedWeapon = false;
 			weaponFrameCount = 0;
 		}
-		
-		/*// Compute the shot's previous position
-		var prevPos = vec2.create();
-        vec2.sub(prevPos, this.position, this.velocity);
 
-        // Create line segment collider from current & previous positions
-        this.colliderLineSeg.setEndpoints(prevPos, this.position);
+		lowerRight = vec2.create(this.position.x + laserPicFrameW/2, this.position.y);
+		lowerLeft = vec2.create(this.position.x - laserPicFrameW/2, this.position.y);
+		topRight = vec2.create(this.position.x + laserPicFrameW/2, this.position.y - laserPicFrameH);
+		topLeft = vec2.create(this.position.x - laserPicFrameW/2, this.position.y - laserPicFrameH);
+		this.colliderLineSegLaserRight.setEndPoints(lowerRight,topRight);
+		this.colliderLineSegLaserLeft.setEndPoints(lowerLeft,topLeft);
 
         powerUpBoxList.forEach(function(powerUpBox) {
-            if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSeg)) {
+            if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSegLaserRight) 
+            	|| isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSegLaserLeft)) {
+            	powerupExplosion(powerUpBox.position.x - powerUpWidth / 2,
+            					 powerUpBox.position.y - powerUpWidth / 2);
+            	shieldPowerUpSound.play();
                 var useMaxDuration = true;
                 score += scoreForPowerUpShot;
                 powerUpBox.setActive(useMaxDuration);
-                this.removeMe = false;
             }
-        }, this);*/
+        }, this);
 
 		for (var e = 0; e < shipList.length; e++) {
-			if (this.position.y > shipList[e].position.y - shipHeight / 2 && this.position.y < shipList[e].position.y + shipHeight / 2 &&
-				this.position.x > shipList[e].position.x - shipWidth / 2 && this.position.x < shipList[e].position.x + shipWidth / 2 &&
-				!shipList[e].isDamaged) {
-			   	
-			   	shipList[e].isDamaged = true;
-				score += scoreForShipShot;
-				
-				if (canSpawnPowerUp()) {
-                   	spawnPowerUp(shipList[e]);
+            if (isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSegLaserRight)
+            	|| isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSegLaserLeft) 
+            	&& !shipList[e].isDamaged) {
+
+                if(!shipList[e].isDamaged){
+                    score += scoreForShipShot;
+                    shipHitExplosion(shipList[e].position.x,shipList[e].position.y);
+                    shipList[e].isDamaged = true;
                 }
 
-				this.removeMe = false;
-			}
-		}
+                if (canSpawnPowerUp()) {
+                    spawnPowerUp(shipList[e]);
+                }
+            }
+        }
 		for (var t = 0; t < alienList.length; t++) {
 			if (this.position.y > alienList[t].position.y - alienHeight && this.position.y < alienList[t].position.y &&
 				this.position.x > alienList[t].position.x - alienWidth / 2 && this.position.x < alienList[t].position.x + alienWidth / 2) {
 			   
 				score += scoreForAlienShot;
 				alienList[t].removeMe = true;
-				this.removeMe = false;
 			} else if (this.position.y > alienList[t].chuteY && this.position.y < alienList[t].chuteY + parachuteH &&
 				this.position.x > alienList[t].chuteX && this.position.x < alienList[t].position.x + parachuteW && alienList[t].isChuteDrawn) {
 				// TODO replace with line segment/aabb intersection test (use shot velocity to compute previous known position; make line seg from last-known to current position)

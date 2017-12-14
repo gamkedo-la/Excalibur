@@ -33,7 +33,7 @@ function shotClass(x, y, angle, speed) {
         vec2.sub(prevPos, this.position, this.velocity);
 
         // Create line segment collider from current & previous positions
-        this.colliderLineSeg.setEndpoints(prevPos, this.position);
+        this.colliderLineSeg.setEndPoints(prevPos, this.position);
 
         powerUpBoxList.forEach(function(powerUpBox) {
             if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSeg)) {
@@ -120,7 +120,7 @@ function EnemyShotClass(x, y, angle, speed) {
         vec2.sub(prevPos, this.position, this.velocity);
 
         // Create line segment collider from current & previous positions
-        this.colliderLineSeg.setEndpoints(prevPos, this.position);
+        this.colliderLineSeg.setEndPoints(prevPos, this.position);
         if (isColliding_AABB_LineSeg(playerColliderAABB, this.colliderLineSeg)) {
             this.removeMe = true;
             hitPlayer();

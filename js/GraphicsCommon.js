@@ -20,7 +20,7 @@ function drawBitmapFlipped(graphic, atX, atY, flipToFaceLeft) {
 }
 
 function drawRect(x,y,w,h,color) {
-	canvasContext.fillStyle = "black";
+	canvasContext.fillStyle = color;
 	canvasContext.fillRect(x,y,w,h);
 }
 
