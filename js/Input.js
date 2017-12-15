@@ -26,6 +26,7 @@ var controlScheme = CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING;
 
 var mouseY = 0;
 var mouseX = 0;
+var mouseCannonY, mouseCannonX;
 
 function initializeInput() {
 	document.addEventListener("keydown",keyPress);

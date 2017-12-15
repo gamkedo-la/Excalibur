@@ -1,5 +1,6 @@
 var usingTimedWeapon = false;
-var lowerRight,lowerLeft,topRight,topLeft;
+var lowerRight = lowerLeft = topRight = topLeft = vec2.create(0,0);
+var restoreLaserPic = laserPic;
 
 function laserShotClass(x, y, angle, speed) {
 	this.speed = speed;
@@ -17,28 +18,52 @@ function laserShotClass(x, y, angle, speed) {
 		canvasContext.translate(this.position.x,this.position.y);
 		canvasContext.rotate(this.moveAng + Math.PI);	// Rotate by 180 degrees, so the "top" of the laser is at the cannon, and the bottom points away from the cannon
 		canvasContext.scale(-1,-1);
+		if (masterFrameDelayTick % 5 == 0) {
+				this.frameNow = 0;
+			} else if (masterFrameDelayTick % 5 == 1) {
+					this.frameNow = 1;
+			}
 		canvasContext.drawImage(laserPic,
 			this.frameNow * laserPicFrameW, 0, laserPicFrameW, laserPicFrameH,
 			laserPicFrameW/2, 0, laserPicFrameW * -1, laserPicFrameH * -1);
+		if (weaponFrameCount > 35) {
+				laserPic = laserPicEnding;
+			}
 		canvasContext.restore();
 	};
 
 	this.move = function () {
+		cannonAngle = angle;
+		playerMoveSpeed = 0;
 		// laser shot doesn't actually go anywhere
 	};
 
 	this.shotCollisionAndBoundaryCheck = function () {
-
 		if (weaponFrameCount >= 54) {
+			cannonAngle = Math.atan2(mouseCannonY, mouseCannonX);
 			this.removeMe = true;
 			usingTimedWeapon = false;
 			weaponFrameCount = 0;
+			playerMoveSpeed = 4;
+			playerX = playerX;
+			laserPic = restoreLaserPic;
 		}
 
-		lowerRight = vec2.create(this.position.x + laserPicFrameW/2, this.position.y);
-		lowerLeft = vec2.create(this.position.x - laserPicFrameW/2, this.position.y);
-		topRight = vec2.create(this.position.x + laserPicFrameW/2, this.position.y - laserPicFrameH);
-		topLeft = vec2.create(this.position.x - laserPicFrameW/2, this.position.y - laserPicFrameH);
+		// lowerRight = vec2.create(this.position.x + laserPicFrameW/2, this.position.y);
+		// lowerLeft = vec2.create(this.position.x - laserPicFrameW/2, this.position.y);
+		// topRight = vec2.create(this.position.x + laserPicFrameW/2, this.position.y - laserPicFrameH);
+		// topLeft = vec2.create(this.position.x - laserPicFrameW/2, this.position.y - laserPicFrameH);
+		//lowerRight = 
+		//var heightVector = vec2.create(0,laserPicFrameH * Math.sin(this.moveAng))
+		vec2.set(lowerRight,(this.position.x + laserPicFrameW/2), this.position.y);
+		vec2.scale(topRight, lowerRight, laserPicFrameH * Math.sin(this.moveAng + Math.PI));
+		//lowerLeft = 
+		vec2.set(lowerLeft,(this.position.x - laserPicFrameW/2), this.position.y);
+		vec2.scale(topLeft, lowerLeft, laserPicFrameH * Math.sin(this.moveAng + Math.PI));
+		//topRight = vec2.create(this.position.x + laserPicFrameW/2, this.position.y - laserPicFrameH);
+		//topLeft = vec2.create(this.position.x - laserPicFrameW/2, this.position.y - laserPicFrameH);
+		// this.colliderLineSegLaserRight.setEndPoints(lowerRight,topRight);
+		// this.colliderLineSegLaserLeft.setEndPoints(lowerLeft,topLeft);
 		this.colliderLineSegLaserRight.setEndPoints(lowerRight,topRight);
 		this.colliderLineSegLaserLeft.setEndPoints(lowerLeft,topLeft);
 

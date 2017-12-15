@@ -7,8 +7,7 @@ const playerWidth=40,playerHeight=40;
 
 var playerColliderAABB = new aabb(playerWidth/2, playerHeight/2);
 
-const playerMoveSpeed=4; // only used if in mouse control scheme
-
+var playerMoveSpeed=4; // only used if in mouse control scheme
 var defaultCannonAng = -Math.PI/2;
 var cannonAngLimit = Math.PI * 0.47;
 var cannonLength=40,cannonAngle=defaultCannonAng,cannonAngleVelocity=0.1;
