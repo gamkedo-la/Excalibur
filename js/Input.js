@@ -137,6 +137,14 @@ function handleInput() {
 				}
 				break;
 			case FIREMODE_LASER:
+				if(cannonReloadLeft <= 0) {
+					usingTimedWeapon = true;
+					var newShot = new laserShotClass(cannonEndX, cannonEndY, cannonAngle, 0);
+					shotList.push(newShot);
+					waveShotSound.play();
+					secondaryGunfireExplosion(cannonEndX,cannonEndY);
+					cannonReloadLeft = cannonLaserReloadFrames;
+				}
 				break;
 			default:
 				console.log("fire mode not yet implemented: " + fireMode);
@@ -234,7 +242,7 @@ function keyPress(evt) {
 			console.log("weapon mode change to: " +
 			fireMode);
 			break;
-			
+
 		case KEY_H:
 			windowState.help = true;
 			break;
