@@ -7,6 +7,13 @@ const KEY_RIGHT = 39;
 const DIGIT_0 = 48; //only for debug
 const DIGIT_1 = 49;
 const DIGIT_2 = 50;
+
+const DIGIT_3 = 51;
+const DIGIT_4 = 52;
+const DIGIT_5 = 53;
+const DIGIT_6 = 54;
+const DIGIT_7 = 55;
+
 const KEY_A = 65;
 const KEY_C = 67;
 const KEY_D = 68;
@@ -16,7 +23,14 @@ const KEY_O = 79;
 const pauseOnLoseFocus = true;
 
 var holdFire, holdLeft, holdRight = false;
-var secondaryFire = false;
+
+const FIREMODE_SINGLE = 0;
+const FIREMODE_TWIN = 1;
+const FIREMODE_SPLIT = 2;
+const FIREMODE_WAVE = 3;
+const FIREMODE_LASER = 4;
+var fireMode = FIREMODE_SINGLE;
+
 var debug = false;
 
 const CONTROL_SCHEME_KEYS_STATIONARY = 0;
@@ -68,23 +82,67 @@ function windowOnBlur() {
 };
 
 function handleInput() {
-	if(holdFire && !secondaryFire) {
-		if(cannonReloadLeft <= 0) {
-			var newShot = new shotClass(cannonEndX, cannonEndY, cannonAngle, cannonShotSpeed);
-			shotList.push(newShot);
-			regularShotSound.play();
-			gunfireExplosion(cannonEndX,cannonEndY);
-			cannonReloadLeft = cannonReloadFrames;
+	if(holdFire) {
+		
+		switch(fireMode) {
+			case FIREMODE_SINGLE:
+				if(cannonReloadLeft <= 0) {
+					var newShot = new shotClass(cannonEndX, cannonEndY, cannonAngle, cannonShotSpeed);
+					shotList.push(newShot);
+					regularShotSound.play();
+					gunfireExplosion(cannonEndX,cannonEndY);
+					cannonReloadLeft = cannonReloadFrames;
+				}
+				break;
+			case FIREMODE_TWIN:
+				if(cannonReloadLeft <= 0) {
+					var shotStartOffsetX = Math.cos(cannonAngle+Math.PI/2) * 7;
+					var shotStartOffsetY = Math.sin(cannonAngle+Math.PI/2) * 7;
+					var newShot = new shotClass(cannonEndX-shotStartOffsetX,
+												cannonEndY-shotStartOffsetY, cannonAngle, cannonShotSpeed);
+					shotList.push(newShot);
+					newShot = new shotClass(cannonEndX+shotStartOffsetX,
+												cannonEndY+shotStartOffsetY, cannonAngle, cannonShotSpeed);
+					shotList.push(newShot);
+					regularShotSound.play();
+					gunfireExplosion(cannonEndX,cannonEndY);
+					cannonReloadLeft = cannonReloadFrames;
+				}
+				break;
+			case FIREMODE_SPLIT:
+				if(cannonReloadLeft <= 0) {
+					var forkAmtInRadians = 0.18;
+					var newShot = new shotClass(cannonEndX, cannonEndY,
+						cannonAngle-forkAmtInRadians, cannonShotSpeed);
+					shotList.push(newShot);
+					newShot = new shotClass(cannonEndX, cannonEndY,
+						cannonAngle+forkAmtInRadians, cannonShotSpeed);
+					shotList.push(newShot);
+					newShot = new shotClass(cannonEndX, cannonEndY,
+						cannonAngle, cannonShotSpeed);
+					shotList.push(newShot);
+					regularShotSound.play();
+					gunfireExplosion(cannonEndX,cannonEndY);
+					cannonReloadLeft = cannonReloadFrames;
+				}
+				break;			break;
+			case FIREMODE_WAVE:
+				if(cannonReloadLeft <= 0) {
+					usingTimedWeapon = true;
+					var newShot = new waveShotClass(cannonEndX, cannonEndY, cannonAngle, cannonWaveShotSpeed);
+					shotList.push(newShot);
+					waveShotSound.play();
+					secondaryGunfireExplosion(cannonEndX,cannonEndY);
+					cannonReloadLeft = cannonWaveReloadFrames;
+				}
+				break;
+			case FIREMODE_LASER:
+				break;
+			default:
+				console.log("fire mode not yet implemented: " + fireMode);
+				break;
 		}
-	}else if(holdFire && secondaryFire) {
-		if(cannonReloadLeft <= 0) {
-			usingTimedWeapon = true;
-			var newShot = new laserShotClass(cannonEndX, cannonEndY, cannonAngle, 0);
-			shotList.push(newShot);
-			waveShotSound.play();
-			secondaryGunfireExplosion(cannonEndX,cannonEndY);
-			cannonReloadLeft = cannonLaserReloadFrames;
-		}
+
 	}
 	if(cannonReloadLeft>0) {
 		cannonReloadLeft--;
@@ -167,6 +225,16 @@ function keyPress(evt) {
 				orchestratorSpawnEnemy();
 			}
 			break;
+		case DIGIT_3:
+		case DIGIT_4:
+		case DIGIT_5:
+		case DIGIT_6:
+		case DIGIT_7:
+			fireMode = (evt.keyCode - DIGIT_3);
+			console.log("weapon mode change to: " +
+			fireMode);
+			break;
+			
 		case KEY_H:
 			windowState.help = true;
 			break;
@@ -174,7 +242,7 @@ function keyPress(evt) {
 			resetGame();
 			break;
 		case KEY_TAB:
-			secondaryFire = !secondaryFire;
+			fireMode = FIREMODE_WAVE;
 			break;
 		case KEY_SPACE:
 			holdFire = true;
