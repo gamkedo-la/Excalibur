@@ -91,22 +91,7 @@ function checkFrameCount() {
 }
 
 function waveStart() {
-	if (allStages[currentStageIndex][currentWaveIndex]) {
-		if (spawnFrameCount < timeForText) {
-			canvasContext.save();
-			canvasContext.font = "40px Tahoma";
-			canvasContext.textAlign = "center";
-			canvasContext.fillStyle = "white";
-			canvasContext.fillText('Wave ' + currentWave + " Incoming" ,canvas.width/2,canvas.height/2 -40);
-			canvasContext.font = "30px Tahoma";
-			canvasContext.fillText('Prepare Excalibur S.D.S!',canvas.width/2 ,canvas.height/2);
-			canvasContext.restore();
-		} else if (spawnFrameCount > timeForText) {
-		   	wave = allStages[currentStageIndex][currentWaveIndex];
-		    spawnFrameCount = 0;
-		    isSpawningWave = true;
-		}
-	} else if (assaultMode) {
+	if (allStages[currentStageIndex] == undefined) {
 		if (spawnFrameCount < timeForText) {
 			canvasContext.save();
 			canvasContext.font = "40px Tahoma";
@@ -121,7 +106,22 @@ function waveStart() {
 			gameGunnerSpawn = setInterval(gunnerSpawn, 3000);
 			isSpawningWave = true;
 		}
-	} // end of else
+	} else if (allStages[currentStageIndex][currentWaveIndex]) {
+		if (spawnFrameCount < timeForText) {
+			canvasContext.save();
+			canvasContext.font = "40px Tahoma";
+			canvasContext.textAlign = "center";
+			canvasContext.fillStyle = "white";
+			canvasContext.fillText('Wave ' + currentWave + " Incoming" ,canvas.width/2,canvas.height/2 -40);
+			canvasContext.font = "30px Tahoma";
+			canvasContext.fillText('Prepare Excalibur S.D.S!',canvas.width/2 ,canvas.height/2);
+			canvasContext.restore();
+		} else if (spawnFrameCount > timeForText) {
+		   	wave = allStages[currentStageIndex][currentWaveIndex];
+		    spawnFrameCount = 0;
+		    isSpawningWave = true;
+		}
+	} // end of else if
 } // end of waveStart
 
 function waveEnd() {
@@ -149,6 +149,10 @@ function waveEnd() {
 
 function intermission() {
 	if (spawnFrameCount > timeBetweenWaves) {
+		if (currentStageIndex == allStages.length){
+			assaultMode = true;
+			return;
+		}
 			currentWaveIndex++;
 			currentWave++;
 			spawnFrameCount = 0;
@@ -160,9 +164,6 @@ function intermission() {
 			changeBackground(currentStageIndex);
 			currentWaveIndex = 0;
 			currentWave = currentWaveIndex + 1;
-		}
-		if (!allStages[currentStageIndex][currentWaveIndex]){
-			assaultMode = true;	
 		}
 	}
 }
