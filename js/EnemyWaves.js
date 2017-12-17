@@ -4,13 +4,14 @@ const PLANE_GUNNER = 2;
 var wave = [];
 var currentWaveIndex = 0;
 var currentWave = currentWaveIndex + 1; 
-var timeBetweenWaves = 60; // time in frames (30 frames/second)
-var timeForText = 90; // time in frames (30 frames/second)
+var timeBetweenWaves = 35; // time in frames (30 frames/second)
+var timeForText = 85; // time in frames (30 frames/second)
 
 var currentSpawnType = 0;
 var spawnFrameCount = 0;
 var weaponFrameCount = 0;
 var currentEnemyIndex = 0;
+var currentStageIndex = 0;
 
 var isSpawningWave = false;
 var waveCompleted = false;
@@ -19,7 +20,7 @@ var waveStarted = false;
 var enableIntermission = false;
 var assaultMode = false;
 
-var waveNumber1 = [
+var stage1WaveNumber1 = [
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 30 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 5 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 5 },
@@ -29,7 +30,7 @@ var waveNumber1 = [
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 10 }
 ];
 
-var waveNumber2 = [
+var stage1WaveNumber2 = [
     { spawnType: PLANE_GUNNER, framesUntilSpawn: 5 },
     { spawnType: PLANE_GUNNER, framesUntilSpawn: 5 },
     { spawnType: PLANE_GUNNER, framesUntilSpawn: 5 },
@@ -37,7 +38,19 @@ var waveNumber2 = [
     { spawnType: PLANE_GUNNER, framesUntilSpawn: 5 }
 ];
 
-var allWaves = [waveNumber1,waveNumber2];
+var stage2WaveNumber1 = [
+    { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 30 },
+    { spawnType: PLANE_GUNNER, framesUntilSpawn: 5 },
+    { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 5 },
+    { spawnType: PLANE_GUNNER, framesUntilSpawn: 5 },
+    { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 30 },
+    { spawnType: PLANE_GUNNER, framesUntilSpawn: 5 },
+    { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 10 }
+];
+
+var stage1 = [stage1WaveNumber1/*,stage1WaveNumber2*/];
+var stage2 = [stage2WaveNumber1]
+var allStages = [stage1,stage2];
 
 function checkFrameCount() {
 	spawnFrameCount++;
@@ -78,7 +91,7 @@ function checkFrameCount() {
 }
 
 function waveStart() {
-	if (allWaves[currentWaveIndex]) {
+	if (allStages[currentStageIndex][currentWaveIndex]) {
 		if (spawnFrameCount < timeForText) {
 			canvasContext.save();
 			canvasContext.font = "40px Tahoma";
@@ -89,7 +102,7 @@ function waveStart() {
 			canvasContext.fillText('Prepare Excalibur S.D.S!',canvas.width/2 ,canvas.height/2);
 			canvasContext.restore();
 		} else if (spawnFrameCount > timeForText) {
-		   	wave = allWaves[currentWaveIndex];
+		   	wave = allStages[currentStageIndex][currentWaveIndex];
 		    spawnFrameCount = 0;
 		    isSpawningWave = true;
 		}
@@ -136,17 +149,31 @@ function waveEnd() {
 
 function intermission() {
 	if (spawnFrameCount > timeBetweenWaves) {
-		currentWaveIndex++;
-		currentWave++;
-		spawnFrameCount = 0;
-		enableIntermission = false;		
-		waveEndExcuted = false;
-		isSpawningWave = false;
-		if (!allWaves[currentWaveIndex]){
-		assaultMode = true;
+			currentWaveIndex++;
+			currentWave++;
+			spawnFrameCount = 0;
+			enableIntermission = false;		
+			waveEndExcuted = false;
+			isSpawningWave = false;
+		if (currentWaveIndex >= stage1.length){
+			currentStageIndex++
+			changeBackground(currentStageIndex);
+			currentWaveIndex = 0;
+			currentWave = currentWaveIndex + 1;
+		}
+		if (!allStages[currentStageIndex][currentWaveIndex]){
+			assaultMode = true;	
 		}
 	}
 }
+
+function changeBackground(currentStage) {
+	if (currentStage == COMPUTER_BACKGROUND) {
+		currentBackgroundMed = computerBackgroundFarPic;
+		currentBackgroundNear = computerBackgroundNearPic;
+	}
+}
+	
 
 function spawnEnemy() {
     if (currentSpawnType == PLANE_PARADROPPER) {

@@ -36,6 +36,8 @@ var spaceshipPicFrameH = 32;
 
 var picsToLoad = 0;
 
+const COMPUTER_BACKGROUND = 1;
+
 function countLoadedImageAndLaunchIfReady() {
     picsToLoad--;
     if (picsToLoad == 0) { // last image loaded?

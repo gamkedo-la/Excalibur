@@ -3,6 +3,10 @@ const scoreForAlienShot = 50;
 const scoreForParachuteShot = 75;
 var score=0;
 
+var currentBackgroundFar = backgroundFarPic;
+var	currentBackgroundMed = backgroundMedPic;
+var	currentBackgroundNear = backgroundNearPic;
+
 var gameOverManager = new gameOverSequence();
 
 var windowState = {
@@ -212,9 +216,9 @@ function wrappedDraw(whichImg,pixelOffset) {
 }
 
 function drawScrollingBackground() {
-	wrappedDraw(backgroundFarPic, masterFrameDelayTick * 0.15);
+	wrappedDraw(currentBackgroundFar, masterFrameDelayTick * 0.15);
 
-	wrappedDraw(backgroundMedPic, masterFrameDelayTick * 0.6);
+	wrappedDraw(currentBackgroundMed, masterFrameDelayTick * 0.6);
 
-	wrappedDraw(backgroundNearPic, masterFrameDelayTick * 4.6);
+	wrappedDraw(currentBackgroundNear, masterFrameDelayTick * 4.6);
 }
