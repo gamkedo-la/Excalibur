@@ -142,6 +142,7 @@ function resetGame() {
 	clearInterval(gameGunnerSpawn);
 	clearAllExplosions();
 	windowState.firstLoad = true;
+	orchestratorMode = false;
 	assaultMode = false;
 	isSpawningWave = false;
 	waveCompleted = false;
@@ -151,6 +152,7 @@ function resetGame() {
 	currentSpawnType = 0;
 	spawnFrameCount = 0;
 	currentEnemyIndex = 0;
+	currentStageIndex = 0;
 	currentWaveIndex = 0;
 	currentWave = currentWaveIndex + 1; 
 	wave = [];
