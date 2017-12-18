@@ -300,9 +300,10 @@ function keyRelease(evt) {
       				}
 				}
       			waveString = waveString.slice(0,-1);
-				waveString = "var waveNumber# = [ \n" + waveString + "\n];" + 
-							 "\n//Don't forget to change this wave's var name so that # is a number" + 
-							 "\n//and to add this wave into the allWaves array - Terrence";
+				waveString = "var stage#WaveNumber# = [ \n" + waveString + "\n];" + 
+							 "\n//Don't forget to change this wave's var name so that all # are numbers" + 
+							 "\n//and to add this wave into the proper stage array in" 
+							 "\n//EnemyWavesController - Terrence";
 	        	copyTextToClipboard(waveString);
 	       	}
 	    	break;
