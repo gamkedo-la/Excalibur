@@ -7,6 +7,8 @@ var zebesBackgroundMusic = new backgroundMusicClass("./audio/dew-drops");
 var computerBackgroundMusic = new backgroundMusicClass("./audio/suspain");
 var menuMusic = new backgroundMusicClass("./audio/beeblebrox");
 
+var currentBackgroundMusic;
+
 function setFormat() {
     var audio = new Audio();
     if (audio.canPlayType("audio/mp3")) {
@@ -32,7 +34,7 @@ function backgroundMusicClass(filenameWithPath) {
         musicSound.play();
     }
 
-    this.pause = function() {
+    this.pauseSound = function() {
         musicSound.pause();
     }
 

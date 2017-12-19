@@ -45,7 +45,6 @@ window.onload = function () {
 
 function loadingDoneSoStartGame () {
 	gameUpdate = setInterval(update, 1000/30);
-	gameLoaded = true;
 }
 
 function update() {
@@ -173,6 +172,9 @@ function resetGame() {
 	resetPowerUps();
 	score=0;
 	playerHP = startHitpoints;
+	TitleTextX = canvas.width;
+	subTitleTextX = 0;
+	opacity = 0;
 	menuMusic.loopSong();
 }
 

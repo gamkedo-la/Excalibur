@@ -83,7 +83,6 @@ function windowOnBlur() {
 
 function handleInput() {
 	if(holdFire) {
-		
 		switch(fireMode) {
 			case FIREMODE_SINGLE:
 				if(cannonReloadLeft <= 0) {
@@ -196,9 +195,11 @@ function keyPress(evt) {
 		case KEY_ENTER:
 			if(windowState.firstLoad){
 				windowState.firstLoad = false;
+				gameLoaded = true;
 			}
 			if(windowState.help){
 				windowState.help = false;
+				gameLoaded = true;
 			}
 			break;
 		case KEY_O:

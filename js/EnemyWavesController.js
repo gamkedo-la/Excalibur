@@ -146,10 +146,12 @@ function changeBackground(stage) {
 		if (stage == ZEBES_BACKGROUND) {
 			menuMusic.startOrStopMusic();
 			zebesBackgroundMusic.loopSong();
+			currentBackgroundMusic = zebesBackgroundMusic;
 		}
 		if (stage == COMPUTER_BACKGROUND) {
 			zebesBackgroundMusic.startOrStopMusic();
 			computerBackgroundMusic.loopSong();
+			currentBackgroundMusic = computerBackgroundMusic;
 			currentBackgroundMed = computerBackgroundFarPic;
 			currentBackgroundNear = computerBackgroundNearPic;
 		}
