@@ -55,7 +55,7 @@ function initializeInput() {
 		case CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING:
 			console.log("Using control scheme: arrow/WASD keys steer, mouse aims");
 			canvas.addEventListener('mousemove', calculateMousePos);
-			canvas.addEventListener('mousedown', function() {holdFire=true;});
+			canvas.addEventListener('mousedown', function() {holdFire=true; /*console.log(topLeft,topRight)*/});
 			canvas.addEventListener('mouseup', function() {holdFire=false;});
 			break;
 	}
@@ -66,8 +66,8 @@ function windowOnFocus() {
 		windowState.inFocus = true;
 		gameUpdate = setInterval(update, 1000/30);
 		if (assaultMode){
-			gameShipSpawn = setInterval(shipSpawn, 1000*2);
-			gameGunnerSpawn = setInterval(gunnerSpawn, 3000*2);
+			gameShipSpawn = setInterval(shipSpawn, 500);
+			gameGunnerSpawn = setInterval(gunnerSpawn, 1500);
 		}
 	}
 };
@@ -83,7 +83,6 @@ function windowOnBlur() {
 
 function handleInput() {
 	if(holdFire) {
-		
 		switch(fireMode) {
 			case FIREMODE_SINGLE:
 				if(cannonReloadLeft <= 0) {
@@ -196,9 +195,11 @@ function keyPress(evt) {
 		case KEY_ENTER:
 			if(windowState.firstLoad){
 				windowState.firstLoad = false;
+				gameLoaded = true;
 			}
 			if(windowState.help){
 				windowState.help = false;
+				gameLoaded = true;
 			}
 			break;
 		case KEY_O:

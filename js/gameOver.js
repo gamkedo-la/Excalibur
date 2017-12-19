@@ -17,6 +17,7 @@ function gameOverSequence() {
     };
 
     this.startGameOverSequence = function() {
+      gcurrentBackgroundMusic.pauseSound();
       this.gameOverImages = [singleAlienGameOver,
                           tripleAliensGameOver];
       endScreenFrame = 0;

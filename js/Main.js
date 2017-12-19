@@ -3,6 +3,8 @@ const scoreForAlienShot = 50;
 const scoreForParachuteShot = 75;
 var score=0;
 
+var gameLoaded = false;
+
 var currentBackgroundFar = backgroundFarPic;
 var	currentBackgroundMed = backgroundMedPic;
 var	currentBackgroundNear = backgroundNearPic;
@@ -23,6 +25,7 @@ var gameGunnerSpawn;
 
 var masterFrameDelayTick=0;
 var canvas, canvasContext;
+menuMusic.loopSong();
 
 window.onload = function () {
 	canvas = document.createElement("canvas");
@@ -47,7 +50,6 @@ function loadingDoneSoStartGame () {
 function update() {
 	if (windowState.inFocus){
 		if(windowState.firstLoad){
-
 			 canvasContext.drawImage(backgroundFarPic,0,0);
 			 canvasContext.drawImage(backgroundMedPic,0,0);
 			 canvasContext.save();
@@ -110,6 +112,10 @@ function update() {
 			} else {
 				orchestratorFrameCount();
 			}
+			if (gameLoaded) {
+				changeBackground(currentStageIndex);
+				gameLoaded = false;
+			}
 		}		
 	}
 }
@@ -121,6 +127,7 @@ function drawAll() {
 		return;
 	}
 	drawAndRemoveShips();
+	drawAndRemoveMissles();
 	drawAndRemoveAliens();
 	drawAndRemoveShots();
 	drawPlayer();
@@ -131,6 +138,7 @@ function drawAll() {
 
 function moveAll() {
 	moveShips();
+	moveMissles();
 	moveAliens();
 	moveShots();
 	movePowerUps();
@@ -155,14 +163,19 @@ function resetGame() {
 	currentStageIndex = 0;
 	currentWaveIndex = 0;
 	currentWave = currentWaveIndex + 1; 
-	wave = [];
+	wave =[];
 	createNewWave = [];
 	shotList = [];
 	shipList = [];
 	alienList = [];
+	missleList = [];
 	resetPowerUps();
 	score=0;
 	playerHP = startHitpoints;
+	TitleTextX = canvas.width;
+	subTitleTextX = 0;
+	opacity = 0;
+	menuMusic.loopSong();
 }
 
 function drawScore() {

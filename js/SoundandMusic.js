@@ -3,9 +3,11 @@ var audioFormat;
 var regularShotSound = new SoundOverlapsClass("./audio/RegularShot");
 var waveShotSound = new SoundOverlapsClass("./audio/WaveShot");
 var shieldPowerUpSound = new SoundOverlapsClass("./audio/ShieldPowerUp");
-var backgroundSound = new backgroundMusicClass("./audio/dew-drops");
-backgroundSound.loopSong();
+var zebesBackgroundMusic = new backgroundMusicClass("./audio/dew-drops");
+var computerBackgroundMusic = new backgroundMusicClass("./audio/suspain");
+var menuMusic = new backgroundMusicClass("./audio/beeblebrox");
 
+var currentBackgroundMusic;
 
 function setFormat() {
     var audio = new Audio();
@@ -30,6 +32,10 @@ function backgroundMusicClass(filenameWithPath) {
         musicSound = new Audio(filenameWithPath + audioFormat);
         musicSound.loop = true;
         musicSound.play();
+    }
+
+    this.pauseSound = function() {
+        musicSound.pause();
     }
 
     this.startOrStopMusic = function() {

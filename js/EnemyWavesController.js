@@ -18,6 +18,9 @@ var waveStarted = false;
 var enableIntermission = false;
 var assaultMode = false;
 
+const ZEBES_BACKGROUND = 0;
+const COMPUTER_BACKGROUND = 1;
+
 var stage1 = [stage1WaveNumber1,stage1WaveNumber2];
 var stage2 = [stage2WaveNumber1]
 var allStages = [stage1,stage2];
@@ -73,8 +76,8 @@ function waveStart() {
 			canvasContext.fillText('All Out Assault!',canvas.width/2 ,canvas.height/2);
 			canvasContext.restore();
 		} else if (spawnFrameCount > timeForText) {
-		    gameShipSpawn = setInterval(shipSpawn, 1000);
-			gameGunnerSpawn = setInterval(gunnerSpawn, 3000);
+		    gameShipSpawn = setInterval(shipSpawn, 500);
+			gameGunnerSpawn = setInterval(gunnerSpawn, 1500);
 			isSpawningWave = true;
 		}
 	} else if (allStages[currentStageIndex][currentWaveIndex]) {
@@ -139,11 +142,21 @@ function intermission() {
 }
 
 function changeBackground(stage) {
-	if (stage == COMPUTER_BACKGROUND) {
-		currentBackgroundMed = computerBackgroundFarPic;
-		currentBackgroundNear = computerBackgroundNearPic;
+	if (!windowState.help && !windowState.firstLoad) {
+		if (stage == ZEBES_BACKGROUND) {
+			menuMusic.startOrStopMusic();
+			zebesBackgroundMusic.loopSong();
+			currentBackgroundMusic = zebesBackgroundMusic;
+		}
+		if (stage == COMPUTER_BACKGROUND) {
+			zebesBackgroundMusic.startOrStopMusic();
+			computerBackgroundMusic.loopSong();
+			currentBackgroundMusic = computerBackgroundMusic;
+			currentBackgroundMed = computerBackgroundFarPic;
+			currentBackgroundNear = computerBackgroundNearPic;
+		}
 	}
-}
+};
 	
 
 function spawnEnemy() {
