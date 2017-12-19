@@ -1,5 +1,6 @@
 var usingTimedWeapon = false;
-var lowerRight = lowerLeft = topRight = topLeft = vec2.create(0,0);
+var laserTopPosition = vec2.create(0, -laserPicFrameH);
+var lowerRight, lowerLeft, topRight, topLeft;
 var restoreLaserPic = laserPic;
 
 function laserShotClass(x, y, angle, speed) {
@@ -49,23 +50,28 @@ function laserShotClass(x, y, angle, speed) {
 			laserPic = restoreLaserPic;
 		}
 
-		// lowerRight = vec2.create(this.position.x + laserPicFrameW/2, this.position.y);
-		// lowerLeft = vec2.create(this.position.x - laserPicFrameW/2, this.position.y);
+		/*lowerRight = vec2.create((this.position.x + laserPicFrameW/2) * Math.cos(this.moveAng), this.position.y);
+		lowerLeft = vec2.create((this.position.x - laserPicFrameW/2) * Math.cos(this.moveAng), this.position.y);
 		// topRight = vec2.create(this.position.x + laserPicFrameW/2, this.position.y - laserPicFrameH);
 		// topLeft = vec2.create(this.position.x - laserPicFrameW/2, this.position.y - laserPicFrameH);
-		//lowerRight = 
-		//var heightVector = vec2.create(0,laserPicFrameH * Math.sin(this.moveAng))
-		vec2.set(lowerRight,(this.position.x + laserPicFrameW/2), this.position.y);
-		vec2.scale(topRight, lowerRight, laserPicFrameH * Math.sin(this.moveAng + Math.PI));
-		//lowerLeft = 
-		vec2.set(lowerLeft,(this.position.x - laserPicFrameW/2), this.position.y);
-		vec2.scale(topLeft, lowerLeft, laserPicFrameH * Math.sin(this.moveAng + Math.PI));
+		topRight = vec2.create();
+		topLeft = vec2.create();
+		//vec2.set(lowerRight,(this.position.x + laserPicFrameW/2) * Math.cos(this.moveAng), this.position.y * Math.sin(this.moveAng));
+		vec2.add(topRight, lowerRight, laserTopPosition);
+		vec2.scale(lowerRight, lowerRight, Math.sin(this.moveAng));
+		topRight.x *= (Math.cos(this.moveAng + Math.PI));
+		//topRight.x *= -1;
+		//topRight.y *= -1;
+		//vec2.set(lowerLeft,(this.position.x - laserPicFrameW/2) * Math.cos(this.moveAng), this.position.y * Math.sin(this.moveAng));
+		vec2.add(topLeft, lowerLeft, laserTopPosition);
+		vec2.scale(lowerLeft, lowerLeft, Math.sin(this.moveAng));
+		topLeft.x *= (Math.cos(this.moveAng + Math.PI));
+		//topLeft.x *= -1;
+		//topLeft.y *= -1;
 		//topRight = vec2.create(this.position.x + laserPicFrameW/2, this.position.y - laserPicFrameH);
 		//topLeft = vec2.create(this.position.x - laserPicFrameW/2, this.position.y - laserPicFrameH);
-		// this.colliderLineSegLaserRight.setEndPoints(lowerRight,topRight);
-		// this.colliderLineSegLaserLeft.setEndPoints(lowerLeft,topLeft);
 		this.colliderLineSegLaserRight.setEndPoints(lowerRight,topRight);
-		this.colliderLineSegLaserLeft.setEndPoints(lowerLeft,topLeft);
+		this.colliderLineSegLaserLeft.setEndPoints(lowerLeft,topLeft);*/
 
         powerUpBoxList.forEach(function(powerUpBox) {
             if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSegLaserRight) 

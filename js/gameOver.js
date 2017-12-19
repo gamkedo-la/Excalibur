@@ -17,6 +17,8 @@ function gameOverSequence() {
     };
 
     this.startGameOverSequence = function() {
+      zebesBackgroundMusic.pause();
+      computerBackgroundMusic.pause();
       this.gameOverImages = [singleAlienGameOver,
                           tripleAliensGameOver];
       endScreenFrame = 0;

@@ -20,6 +20,7 @@ function orchestratorFrameCount() {
 function orchestratorSpawnEnemy() {
     if (orchestratorCurrentSpawnType == PLANE_PARADROPPER) {
         shipSpawn();
+        missleSpawn();
     } else if (orchestratorCurrentSpawnType == PLANE_GUNNER) {
         gunnerSpawn();
     }
