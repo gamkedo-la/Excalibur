@@ -1,6 +1,7 @@
 function waveShotClass(x, y, angle, speed) {
 	const SET_PERP_LENGTH = 100;
 	this.position = vec2.create(x, y);
+	this.prevPosition = vec2.create(x, y);
 	this.velocity = vec2.create(this.perpendicularLineEndX, this.perpendicularLineEndY);
 	this.moveAng = angle;
 	this.speed = speed;
@@ -41,6 +42,16 @@ function waveShotClass(x, y, angle, speed) {
 			this.position.x - waveShotPicFrameW / 2,
 			this.position.y - waveShotPicFrameH / 2,
 			waveShotPicFrameW, waveShotPicFrameH);
+
+			/*
+			// collision segment debug draw
+			canvasContext.beginPath();
+			canvasContext.strokeStyle="lime";
+			canvasContext.moveTo(this.prevPosition.x,
+									this.prevPosition.y);
+			canvasContext.lineTo(this.position.x,
+									this.position.y);
+			canvasContext.stroke();*/
 		}
 	};
 
@@ -54,6 +65,9 @@ function waveShotClass(x, y, angle, speed) {
 			this.perpendicularLineStartX += this.speed * Math.cos(this.moveAng);
 			this.perpendicularLineStartY += this.speed * Math.sin(this.moveAng);
 		}
+		// Copy the shot's previous position for collisions
+		vec2.copy(this.prevPosition,this.position);
+
 		this.position.x = this.perpendicularLineEndX;
 		this.position.y = this.perpendicularLineEndY;
 	};
@@ -63,12 +77,15 @@ function waveShotClass(x, y, angle, speed) {
 		if (this.position.x < -SET_PERP_LENGTH || this.position.x > canvas.width + SET_PERP_LENGTH || this.position.y < 0) {
 			this.removeMe = true;
 		}
-		// Compute the shot's previous position
-		var prevPos = vec2.create();
-        vec2.sub(prevPos, this.position, this.velocity);
+
+		var hitBar = vec2.create(0,0);
+		vec2.sub(hitBar,this.position,this.prevPosition);
+		if(vec2.len(hitBar) > 200) { // hack fix to throw out first frame
+			return;
+		}
 
         // Create line segment collider from current & previous positions
-        this.colliderLineSeg.setEndPoints(prevPos, this.position);
+        this.colliderLineSeg.setEndPoints(this.prevPosition, this.position);
 
         powerUpBoxList.forEach(function(powerUpBox) {
             if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSeg)) {

@@ -2,7 +2,7 @@
 function isColliding_AABB_LineSeg(box, seg) {
 	// Implementing a hacked up version of the separating axis theorem (2D simplified version)
 	// This function is good only for boolean true/false testing.
-	/*
+
 	var segMidPt = vec2.create();
 	vec2.set(segMidPt, (seg.startPt.x + seg.endPt.x) * 0.5, (seg.startPt.y + seg.endPt.y) * 0.5);
 
@@ -19,8 +19,7 @@ function isColliding_AABB_LineSeg(box, seg) {
 		return false;
 
 	// If we're here, then by process of elimination, the segment and box are intersecting
-	return true;*/
-
+	// that got that we're in the bounding box, now will test for edge hits
 	// note: below behaviour works for long seg vs small box (laser), could fail for small line in big box
 	var boxEdge = new lineSegment();
 	var topLeft = vec2.create(box.minPt.x,box.minPt.y);

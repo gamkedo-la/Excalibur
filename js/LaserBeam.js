@@ -31,8 +31,8 @@ function laserShotClass(x, y, angle, speed) {
 		//		laserPic = laserPicEnding;
 		//	}
 		canvasContext.restore();
-		drawRect(lowerRight.x,lowerRight.y,5,5,'red');
-		drawRect(topRight.x,topRight.y,5,5,'lime');
+		//drawRect(lowerRight.x,lowerRight.y,5,5,'red');
+		//drawRect(topRight.x,topRight.y,5,5,'lime');
 		//console.log(lowerRight.x , lowerRight.y, topRight.x, topRight.y);
 	};
 
@@ -61,22 +61,7 @@ function laserShotClass(x, y, angle, speed) {
 							   lowerRight.y + laserPicFrameW * Math.sin(this.moveAng));
 		topLeft = vec2.create(lowerLeft.x + laserPicFrameW * Math.cos(this.moveAng), 
 							  lowerLeft.y + laserPicFrameW * Math.sin(this.moveAng));
-		/*topRight = vec2.create();
-		topLeft = vec2.create();
-		//vec2.set(lowerRight,(this.position.x + laserPicFrameW/2) * Math.cos(this.moveAng), this.position.y * Math.sin(this.moveAng));
-		vec2.add(topRight, lowerRight, laserTopPosition);
-		vec2.scale(lowerRight, lowerRight, Math.sin(this.moveAng));
-		topRight.x *= (Math.cos(this.moveAng + Math.PI));
-		//topRight.x *= -1;
-		//topRight.y *= -1;
-		//vec2.set(lowerLeft,(this.position.x - laserPicFrameW/2) * Math.cos(this.moveAng), this.position.y * Math.sin(this.moveAng));
-		vec2.add(topLeft, lowerLeft, laserTopPosition);
-		vec2.scale(lowerLeft, lowerLeft, Math.sin(this.moveAng));
-		topLeft.x *= (Math.cos(this.moveAng + Math.PI));
-		//topLeft.x *= -1;
-		//topLeft.y *= -1;
-		//topRight = vec2.create(this.position.x + laserPicFrameW/2, this.position.y - laserPicFrameH);
-		//topLeft = vec2.create(this.position.x - laserPicFrameW/2, this.position.y - laserPicFrameH);*/
+
 		this.colliderLineSegLaserRight.setEndPoints(lowerRight,topRight);
 		this.colliderLineSegLaserLeft.setEndPoints(lowerLeft,topLeft);
 
