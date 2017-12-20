@@ -29,7 +29,7 @@ var singleAlienGameOver = document.createElement("img");
 var tripleAliensGameOver = document.createElement("img");
 
 var waveShotPicFrameW = waveShotPicFrameH = 12;
-var laserPicFrameW = 18, laserPicFrameH = 700;
+var laserPicFrameW = 700, laserPicFrameH = 18;
 
 var spaceshipPicFrameW = 100;
 var spaceshipPicFrameH = 32;

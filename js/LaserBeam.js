@@ -8,7 +8,7 @@ function laserShotClass(x, y, angle, speed) {
 	this.position = vec2.create(x, y);
 	// this.moveAng is angle + 90 deg. This is because the image is vertical (pointing in the -Y direction)
 	// To orient the image along the +X direction, have to add 90 degrees (PI/2 radians)
-	this.moveAng = angle + Math.PI / 2;
+	this.moveAng = angle;
 	this.removeMe = false;
 	this.frameNow = 0;
 	this.colliderLineSegLaserRight = new lineSegment();
@@ -17,20 +17,23 @@ function laserShotClass(x, y, angle, speed) {
 	this.draw = function () {
 		canvasContext.save();
 		canvasContext.translate(this.position.x,this.position.y);
-		canvasContext.rotate(this.moveAng + Math.PI);	// Rotate by 180 degrees, so the "top" of the laser is at the cannon, and the bottom points away from the cannon
-		canvasContext.scale(-1,-1);
+		canvasContext.rotate(this.moveAng);	// Rotate by 180 degrees, so the "top" of the laser is at the cannon, and the bottom points away from the cannon
+		//canvasContext.scale(-1,-1);
 		if (masterFrameDelayTick % 5 == 0) {
 				this.frameNow = 0;
 			} else if (masterFrameDelayTick % 5 == 1) {
 					this.frameNow = 1;
 			}
 		canvasContext.drawImage(laserPic,
-			this.frameNow * laserPicFrameW, 0, laserPicFrameW, laserPicFrameH,
-			laserPicFrameW/2, 0, laserPicFrameW * -1, laserPicFrameH * -1);
-		if (weaponFrameCount > 35) {
-				laserPic = laserPicEnding;
-			}
+			0, this.frameNow * laserPicFrameH, laserPicFrameW, laserPicFrameH,
+			0, -laserPicFrameH/2, laserPicFrameW, laserPicFrameH);
+		//if (weaponFrameCount > 35) {
+		//		laserPic = laserPicEnding;
+		//	}
 		canvasContext.restore();
+		drawRect(lowerRight.x,lowerRight.y,5,5,'red');
+		drawRect(topRight.x,topRight.y,5,5,'lime');
+		//console.log(lowerRight.x , lowerRight.y, topRight.x, topRight.y);
 	};
 
 	this.move = function () {
@@ -49,12 +52,16 @@ function laserShotClass(x, y, angle, speed) {
 			playerX = playerX;
 			laserPic = restoreLaserPic;
 		}
-
-		/*lowerRight = vec2.create((this.position.x + laserPicFrameW/2) * Math.cos(this.moveAng), this.position.y);
-		lowerLeft = vec2.create((this.position.x - laserPicFrameW/2) * Math.cos(this.moveAng), this.position.y);
-		// topRight = vec2.create(this.position.x + laserPicFrameW/2, this.position.y - laserPicFrameH);
-		// topLeft = vec2.create(this.position.x - laserPicFrameW/2, this.position.y - laserPicFrameH);
-		topRight = vec2.create();
+		var perpAng = this.moveAng + Math.PI / 2; //perpinducar Angle since we want to go left/right of where barrel is facing
+		lowerRight = vec2.create(this.position.x + (laserPicFrameH/2) * Math.cos(perpAng),
+								  this.position.y + (laserPicFrameH/2) * Math.sin(perpAng));
+		lowerLeft = vec2.create(this.position.x - (laserPicFrameH/2) * Math.cos(perpAng),
+								  this.position.y - (laserPicFrameH/2) * Math.sin(perpAng));
+		topRight = vec2.create(lowerRight.x + laserPicFrameW * Math.cos(this.moveAng),
+							   lowerRight.y + laserPicFrameW * Math.sin(this.moveAng));
+		topLeft = vec2.create(lowerLeft.x + laserPicFrameW * Math.cos(this.moveAng), 
+							  lowerLeft.y + laserPicFrameW * Math.sin(this.moveAng));
+		/*topRight = vec2.create();
 		topLeft = vec2.create();
 		//vec2.set(lowerRight,(this.position.x + laserPicFrameW/2) * Math.cos(this.moveAng), this.position.y * Math.sin(this.moveAng));
 		vec2.add(topRight, lowerRight, laserTopPosition);
@@ -69,9 +76,9 @@ function laserShotClass(x, y, angle, speed) {
 		//topLeft.x *= -1;
 		//topLeft.y *= -1;
 		//topRight = vec2.create(this.position.x + laserPicFrameW/2, this.position.y - laserPicFrameH);
-		//topLeft = vec2.create(this.position.x - laserPicFrameW/2, this.position.y - laserPicFrameH);
+		//topLeft = vec2.create(this.position.x - laserPicFrameW/2, this.position.y - laserPicFrameH);*/
 		this.colliderLineSegLaserRight.setEndPoints(lowerRight,topRight);
-		this.colliderLineSegLaserLeft.setEndPoints(lowerLeft,topLeft);*/
+		this.colliderLineSegLaserLeft.setEndPoints(lowerLeft,topLeft);
 
         powerUpBoxList.forEach(function(powerUpBox) {
             if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSegLaserRight) 
@@ -86,8 +93,8 @@ function laserShotClass(x, y, angle, speed) {
         }, this);
 
 		for (var e = 0; e < shipList.length; e++) {
-            if (isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSegLaserRight)
-            	|| isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSegLaserLeft) 
+            if ((isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSegLaserRight)
+            	|| isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSegLaserLeft)) 
             	&& !shipList[e].isDamaged) {
 
                 if(!shipList[e].isDamaged){
