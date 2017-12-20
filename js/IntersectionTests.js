@@ -27,8 +27,8 @@ function isColliding_AABB_LineSeg(box, seg) {
 	var bottomRight = vec2.create(box.maxPt.x,box.maxPt.y);
 	var bottomLeft = vec2.create(box.minPt.x,box.maxPt.y);
 	boxEdge.setEndPoints(topLeft,topRight);
-//	console.log(boxEdge.startPt.x, boxEdge.startPt.y, boxEdge.endPt.x, boxEdge.endPt.y)
-	//console.log(seg.startPt.x, seg.startPt.y, seg.endPt.x, seg.endPt.y)
+	// console.log(boxEdge.startPt.x, boxEdge.startPt.y, boxEdge.endPt.x, boxEdge.endPt.y)
+	// console.log(seg.startPt.x, seg.startPt.y, seg.endPt.x, seg.endPt.y)
 	if (isColliding_LineSeg_LineSeg(boxEdge,seg)) { // top edge
 		return true;
 	}

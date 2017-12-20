@@ -17,7 +17,7 @@ var gunnerShotSpeed = 5;
 var cannonShotSpeed = 5;
 var cannonReloadFrames = 5;
 var cannonWaveReloadFrames = 17; //// amped to be more powerful than fork shot
-var cannonLaserReloadFrames = 60;
+var cannonLaserReloadFrames = 64;
 var cannonReloadLeft = 0;
 var cannonWidth = 18;
 

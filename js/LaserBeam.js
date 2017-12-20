@@ -18,18 +18,19 @@ function laserShotClass(x, y, angle, speed) {
 		canvasContext.save();
 		canvasContext.translate(this.position.x,this.position.y);
 		canvasContext.rotate(this.moveAng);	// Rotate by 180 degrees, so the "top" of the laser is at the cannon, and the bottom points away from the cannon
-		//canvasContext.scale(-1,-1);
-		if (masterFrameDelayTick % 5 == 0) {
+		if (masterFrameDelayTick % 10 == 0) {
 				this.frameNow = 0;
-			} else if (masterFrameDelayTick % 5 == 1) {
-					this.frameNow = 1;
+			} else if (masterFrameDelayTick % 10 == 5) {
+				this.frameNow = 1;
 			}
-		canvasContext.drawImage(laserPic,
-			0, this.frameNow * laserPicFrameH, laserPicFrameW, laserPicFrameH,
-			0, -laserPicFrameH/2, laserPicFrameW, laserPicFrameH);
-		//if (weaponFrameCount > 35) {
-		//		laserPic = laserPicEnding;
-		//	}
+		if (!this.removeMe)	{
+			canvasContext.drawImage(laserPic,
+				0, this.frameNow * laserPicFrameH, laserPicFrameW, laserPicFrameH,
+				0, -laserPicFrameH/2, laserPicFrameW, laserPicFrameH);
+		}
+		if (weaponFrameCount > 35) {
+				laserPic = laserPicEnding;
+			}
 		canvasContext.restore();
 		//drawRect(lowerRight.x,lowerRight.y,5,5,'red');
 		//drawRect(topRight.x,topRight.y,5,5,'lime');
@@ -44,14 +45,14 @@ function laserShotClass(x, y, angle, speed) {
 
 	this.shotCollisionAndBoundaryCheck = function () {
 		if (weaponFrameCount >= 54) {
-			cannonAngle = Math.atan2(mouseCannonY, mouseCannonX);
+			laserPic = restoreLaserPic;
 			this.removeMe = true;
 			usingTimedWeapon = false;
+			cannonAngle = Math.atan2(mouseCannonY, mouseCannonX);
 			weaponFrameCount = 0;
 			playerMoveSpeed = 4;
-			playerX = playerX;
-			laserPic = restoreLaserPic;
 		}
+
 		var perpAng = this.moveAng + Math.PI / 2; //perpinducar Angle since we want to go left/right of where barrel is facing
 		lowerRight = vec2.create(this.position.x + (laserPicFrameH/2) * Math.cos(perpAng),
 								  this.position.y + (laserPicFrameH/2) * Math.sin(perpAng));
