@@ -5,19 +5,16 @@ var frameNow = 0;
 var diceRoll;
 
 function missleClass() {
-    random1To10();
-    var missleX = diceRoll < 5 ? 0 - 60 : canvas.width + 60;
-    var missleY = -60;
-    this.position = vec2.create(missleX,missleY);
-    this.moveAng = Math.atan2(playerY - this.position.y, playerX - this.position.x);
-    //this.missleSpeedX;
-    this.missleSpeedY = 6;
-    if (missleX == -50) {
-        this.missleSpeedX = 6;
-    } else {
-        this.missleSpeedX = -6;
-    }
+    var diceRoll = Math.random()*10;
+    this.missleX = diceRoll < 5 ? 20 : canvas.width - 20;
+    this.missleY = -60;
+    this.position = vec2.create(this.missleX,this.missleY);
+    this.speed = 5;
+    this.moveAng = Math.atan2(playerY - this.missleY, playerX - this.missleX);
+    this.missleSpeedY = this.missleSpeedX = this.speed;
     this.velocity = vec2.create(Math.cos(this.moveAng), Math.sin(this.moveAng));
+    this.velocity.x *= this.missleSpeedX;
+    this.velocity.y *= this.missleSpeedY;
     this.missleHealth = 3;
     this.colliderAABB = new aabb(missleWidth / 2, missleHeight / 2);
     this.removeMe = false;
@@ -26,12 +23,11 @@ function missleClass() {
     //this.ang = 0;
     //var gravity = vec2.create(0, 0.04);
 
-    var movingLeft = this.velocity.x < 0;
-
-    var misslePic = (movingLeft) ? gunnerShipLeftPic : gunnerShipRightPic;
+    /*var movingLeft = this.velocity.x < 0;
+    var misslePic = (movingLeft) ? gunnerShipLeftPic : gunnerShipRightPic;*/
 
     this.draw = function() {
-        drawRect(this.position.x,this.position.y,missleWidth,missleHeight,"Chartreuse")          
+        drawRect(this.position.x,this.position.y,missleWidth,missleHeight,"Chartreuse");          
     /*canvasContext.drawImage(pic,
         frameNow * gunnerWidth, frameOffsetY,
         gunnerWidth, gunnerHeight,
@@ -41,19 +37,19 @@ function missleClass() {
     };
 
     this.move = function() {
-        this.position.x += this.missleSpeedX * this.velocity.x;
-        this.position.y += this.missleSpeedY * this.velocity.y;
+        vec2.add(this.position, this.position, this.velocity);
+        console.log(this.position.x, this.position.y);
         this.colliderAABB.setCenter(this.position.x, this.position.y); // Synchronize AABB position with ship position
         this.colliderAABB.computeBounds();
     };
 
     this.edgeOfScreenDetection = function() {
-        if (missleY == canvas.height) {
+        if (this.position.y + missleHeight/2 > canvas.height) {
             this.removeMe = true;
         }
-        if (this.isDamaged = true) {
-            this.isDamaged = false;
+        if (this.isDamaged) {
             this.missleHealth--;
+            this.isDamaged = false;
         } 
         if (this.missleHealth == 0) {
             this.removeMe = true;
@@ -82,8 +78,4 @@ function moveMissles() {
 function missleSpawn() {
     var newMissle = new missleClass();
     missleList.push(newMissle);
-}
-
-function random1To10() {
-    diceRoll = Math.random()*10;
 }
