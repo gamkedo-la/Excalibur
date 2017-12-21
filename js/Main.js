@@ -149,6 +149,9 @@ function resetGame() {
 	clearInterval(gameShipSpawn);
 	clearInterval(gameGunnerSpawn);
 	clearAllExplosions();
+	currentBackgroundFar = backgroundFarPic;
+	currentBackgroundMed = backgroundMedPic;
+	currentBackgroundNear = backgroundNearPic;
 	windowState.firstLoad = true;
 	orchestratorMode = false;
 	assaultMode = false;
@@ -163,7 +166,7 @@ function resetGame() {
 	currentStageIndex = 0;
 	currentWaveIndex = 0;
 	currentWave = currentWaveIndex + 1; 
-	wave =[];
+	wave = [];
 	createNewWave = [];
 	shotList = [];
 	shipList = [];

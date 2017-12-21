@@ -27,7 +27,10 @@ function missleClass() {
     var misslePic = (movingLeft) ? gunnerShipLeftPic : gunnerShipRightPic;*/
 
     this.draw = function() {
-        drawRect(this.position.x,this.position.y,missleWidth,missleHeight,"Chartreuse");          
+        drawBitmapCenteredAtLocationWithRotation(misslePic, 
+                                                 this.position.x, this.position.y, 
+                                                 this.moveAng);
+        //drawRect(this.position.x,this.position.y,missleWidth,missleHeight,"Chartreuse");          
     /*canvasContext.drawImage(pic,
         frameNow * gunnerWidth, frameOffsetY,
         gunnerWidth, gunnerHeight,
@@ -38,7 +41,6 @@ function missleClass() {
 
     this.move = function() {
         vec2.add(this.position, this.position, this.velocity);
-        console.log(this.position.x, this.position.y);
         this.colliderAABB.setCenter(this.position.x, this.position.y); // Synchronize AABB position with ship position
         this.colliderAABB.computeBounds();
     };

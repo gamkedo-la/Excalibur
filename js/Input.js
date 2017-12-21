@@ -248,7 +248,10 @@ function keyPress(evt) {
 			windowState.help = true;
 			break;
 		case KEY_ESCAPE:
+			if (currentBackgroundMusic != null) {
+			currentBackgroundMusic.pauseSound();
 			resetGame();
+			}
 			break;
 		case KEY_TAB:
 			fireMode = FIREMODE_WAVE;

@@ -6,6 +6,8 @@ var spaceshipRightPic = document.createElement("img");
 var gunnerShipRightPic = document.createElement("img");
 var gunnerShipLeftPic = document.createElement("img");
 
+var misslePic = document.createElement("img");
+
 var waveShotPic = document.createElement("img");
 var laserPic = document.createElement("img");
 var laserPicEnding = document.createElement("img");
@@ -56,6 +58,7 @@ function loadImages() {
         { varName: spaceshipLeftPic, theFile: "spaceshipLeft-anim.png" },
         { varName: gunnerShipRightPic, theFile: "gunner-ship-right.png" },
         { varName: gunnerShipLeftPic, theFile: "gunner-ship-left.png" },
+        { varName: misslePic, theFile: "misslePlaceholder.png" },
         { varName: backgroundFarPic, theFile: "backgroundFar.png" },
         { varName: backgroundMedPic, theFile: "backgroundMed.png" },
         { varName: backgroundNearPic, theFile: "backgroundNear.png" },
