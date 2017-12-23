@@ -50,6 +50,7 @@ function loadingDoneSoStartGame () {
 function update() {
 	if (windowState.inFocus){
 		if(windowState.firstLoad){
+			 drawSkyGradient(); 
 			 canvasContext.drawImage(backgroundFarPic,0,0);
 			 canvasContext.drawImage(backgroundMedPic,0,0);
 			 canvasContext.save();
@@ -78,6 +79,7 @@ function update() {
 			 }
 		}
 		if(windowState.help){
+			 drawSkyGradient();  
 			 canvasContext.drawImage(backgroundFarPic,0,0);
 			 canvasContext.save();
 			 canvasContext.globalAlpha = opacity;
@@ -233,10 +235,21 @@ function wrappedDraw(whichImg,pixelOffset) {
 	}
 }
 
+// background sky (with time of day simulation gradient)
+// scrolls through a super zoomed in lookup table (gradient texture)
+function drawSkyGradient() {
+	canvasContext.drawImage(
+		timeOfDayGradient,
+		0+((masterFrameDelayTick*0.2)%timeOfDayGradient.width),0,1,100, // source x,y,w,d (scroll source x over time)
+		0,0,800,600); // dest x,y,w,d (scale one pixel worth of the gradient to fill entire screen)
+}
+
 function drawScrollingBackground() {
+
+	drawSkyGradient();
+
+	// background terrain
 	wrappedDraw(currentBackgroundFar, masterFrameDelayTick * 0.15);
-
 	wrappedDraw(currentBackgroundMed, masterFrameDelayTick * 0.6);
-
 	wrappedDraw(currentBackgroundNear, masterFrameDelayTick * 4.6);
 }

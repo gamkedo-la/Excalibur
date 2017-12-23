@@ -30,6 +30,8 @@ var tankCannonPic = document.createElement("img");
 var singleAlienGameOver = document.createElement("img");
 var tripleAliensGameOver = document.createElement("img");
 
+var timeOfDayGradient = document.createElement("img");
+
 var waveShotPicFrameW = waveShotPicFrameH = 12;
 var laserPicFrameW = 1050, laserPicFrameH = 18;
 
@@ -75,6 +77,7 @@ function loadImages() {
         { varName: tankCannonPic, theFile: "tank-cannon.png" },
         { varName: singleAlienGameOver, theFile: "alien.png" },
         { varName: tripleAliensGameOver, theFile: "alien-anim.png" },
+        { varName: timeOfDayGradient, theFile: "time-of-day-gradient.png" },
 
     ];
 
