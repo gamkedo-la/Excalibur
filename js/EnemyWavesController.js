@@ -147,6 +147,7 @@ function changeBackground(stage) {
 			menuMusic.startOrStopMusic();
 			zebesBackgroundMusic.loopSong();
 			currentBackgroundMusic = zebesBackgroundMusic;
+			currentBackgroundMed = backgroundMedPic;
 		}
 		if (stage == COMPUTER_BACKGROUND) {
 			zebesBackgroundMusic.startOrStopMusic();

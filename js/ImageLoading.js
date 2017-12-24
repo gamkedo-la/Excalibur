@@ -13,6 +13,7 @@ var laserPic = document.createElement("img");
 var laserPicEnding = document.createElement("img");
 var shotPic = document.createElement("img");
 
+var backgroundTitlePic = document.createElement("img");
 var backgroundFarPic = document.createElement("img");
 var backgroundMedPic = document.createElement("img");
 var backgroundNearPic = document.createElement("img");
@@ -61,6 +62,7 @@ function loadImages() {
         { varName: gunnerShipRightPic, theFile: "gunner-ship-right.png" },
         { varName: gunnerShipLeftPic, theFile: "gunner-ship-left.png" },
         { varName: misslePic, theFile: "misslePlaceholder.png" },
+        { varName: backgroundTitlePic, theFile: "backgroundTitle.png" },
         { varName: backgroundFarPic, theFile: "backgroundFar.png" },
         { varName: backgroundMedPic, theFile: "backgroundMed.png" },
         { varName: backgroundNearPic, theFile: "backgroundNear.png" },

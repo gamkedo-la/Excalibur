@@ -6,7 +6,7 @@ var score=0;
 var gameLoaded = false;
 
 var currentBackgroundFar = backgroundFarPic;
-var	currentBackgroundMed = backgroundMedPic;
+var	currentBackgroundMed = backgroundTitlePic;
 var	currentBackgroundNear = backgroundNearPic;
 
 var gameOverManager = new gameOverSequence();
@@ -51,8 +51,8 @@ function update() {
 	if (windowState.inFocus){
 		if(windowState.firstLoad){
 			 drawSkyGradient(); 
-			 canvasContext.drawImage(backgroundFarPic,0,0);
-			 canvasContext.drawImage(backgroundMedPic,0,0);
+			 canvasContext.drawImage(currentBackgroundFar,0,0);
+			 canvasContext.drawImage(currentBackgroundMed,0,0);
 			 canvasContext.save();
 			 canvasContext.font = "40px Tahoma";
 			 canvasContext.textAlign = "center";
