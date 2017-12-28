@@ -250,8 +250,8 @@ function keyPress(evt) {
 		case KEY_ESCAPE:
 			if (currentBackgroundMusic != null) {
 			currentBackgroundMusic.pauseSound();
-			resetGame();
 			}
+			resetGame();
 			break;
 		case KEY_TAB:
 			fireMode = FIREMODE_WAVE;

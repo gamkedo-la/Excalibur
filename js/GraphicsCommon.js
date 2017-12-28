@@ -7,7 +7,20 @@ function drawBitmapCenteredAtLocationWithRotation(graphic, atX, atY,withAngle) {
   canvasContext.restore(); // undo the translation movement and rotation since save()
 }
 
-// Moved to GraphicsCommon.js - Terrence.
+function drawAnimatedBitmapCenteredAtLocationWithRotation(graphic, frameNow, 
+                                                          graphicFrameW,graphicFrameH, 
+                                                          atX, atY, withAngle) {
+  canvasContext.save(); // allows us to undo translate movement and rotate spin
+  canvasContext.translate(atX,atY); // sets the point where our graphic will go
+  canvasContext.rotate(withAngle); // sets the rotation
+  canvasContext.drawImage(graphic,
+                          frameNow * graphicFrameW, 0,
+                          graphicFrameW, graphicFrameH,
+                          -graphicFrameW/2,-graphicFrameH/2, 
+                          graphicFrameW, graphicFrameH); // center, animate, draw
+  canvasContext.restore(); // undo the translation movement and rotation since save()
+}
+
 //flip sprite to face mouse or player
 function drawBitmapFlipped(graphic, atX, atY, flipToFaceLeft) {
 		canvasContext.save();

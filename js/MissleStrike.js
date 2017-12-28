@@ -1,6 +1,6 @@
 var missleList = [];
-var missleWidth = 15;
-var missleHeight = 50;
+var missleFrameW = 50;
+var missleFrameH = 15;
 var frameNow = 0;
 var diceRoll;
 
@@ -16,9 +16,10 @@ function missleClass() {
     this.velocity.x *= this.missleSpeedX;
     this.velocity.y *= this.missleSpeedY;
     this.missleHealth = 3;
-    this.colliderAABB = new aabb(missleWidth / 2, missleHeight / 2);
+    this.colliderAABB = new aabb(missleFrameW / 2, missleFrameH / 2);
     this.removeMe = false;
     this.isDamaged = false;
+    this.frameNow = 0;
     
     //this.ang = 0;
     //var gravity = vec2.create(0, 0.04);
@@ -27,9 +28,14 @@ function missleClass() {
     var misslePic = (movingLeft) ? gunnerShipLeftPic : gunnerShipRightPic;*/
 
     this.draw = function() {
-        drawBitmapCenteredAtLocationWithRotation(misslePic, 
+        /*drawBitmapCenteredAtLocationWithRotation(misslePic, 
                                                  this.position.x, this.position.y, 
-                                                 this.moveAng);
+                                                 this.moveAng);*/
+        drawAnimatedBitmapCenteredAtLocationWithRotation(misslePic, this.frameNow, 
+                                                         missleFrameW, missleFrameH, 
+                                                         this.position.x, this.position.y,
+                                                         this.moveAng);
+
         //drawRect(this.position.x,this.position.y,missleWidth,missleHeight,"Chartreuse");          
     /*canvasContext.drawImage(pic,
         frameNow * gunnerWidth, frameOffsetY,
@@ -46,7 +52,7 @@ function missleClass() {
     };
 
     this.edgeOfScreenDetection = function() {
-        if (this.position.y + missleHeight/2 > canvas.height) {
+        if (this.position.y + missleFrameH/2 > canvas.height) {
             this.removeMe = true;
         }
         if (this.isDamaged) {
