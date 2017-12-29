@@ -53,19 +53,13 @@ function update() {
 			 drawSkyGradient(); 
 			 canvasContext.drawImage(currentBackgroundFar,0,0);
 			 canvasContext.drawImage(currentBackgroundMed,0,0);
-			 canvasContext.save();
-			 canvasContext.font = "40px Tahoma";
-			 canvasContext.textAlign = "center";
-			 canvasContext.fillStyle = "white";
-			 canvasContext.fillText('Excalibur',TitleTextX,canvas.height/2 -40);
-			 canvasContext.font = "25px Tahoma";
-			 canvasContext.fillText('Space Defence System',subTitleTextX ,canvas.height/2);
-			 canvasContext.font = "15px Tahoma";
-			 canvasContext.globalAlpha = opacity;
-			 canvasContext.fillText("[H] for Help",canvas.width/2  - 5,canvas.height/2  + 80);
-			 canvasContext.fillText("[Enter] to Play",canvas.width/2  - 5,canvas.height/2  + 100);
-			 canvasContext.fillText("[O] for Orchestrator Mode",canvas.width/2  - 5,canvas.height/2  + 120);
-			 canvasContext.restore();
+			 colorText('Excalibur',TitleTextX,canvas.height/2-40 ,"white","40px Tahoma","center");
+			 colorText('Space Defence System',subTitleTextX ,canvas.height/2,"white","40px Tahoma","center");
+			 colorText("[H] for Help",canvas.width/2  - 5,canvas.height/2  + 80,"white","15px Tahoma","center",opacity);
+			 colorText("[Enter] to Play",canvas.width/2  - 5,canvas.height/2  + 100,"white","15px Tahoma","center",opacity);
+			 colorText("[O] for Orchestrator Mode",canvas.width/2  - 5,canvas.height/2  + 120,"white","15px Tahoma","center",opacity);
+
+			
 
 			 if(subTitleTextX <= canvas.width/2 - 12 ){
 			 	subTitleTextX+=15;
@@ -81,24 +75,11 @@ function update() {
 		if(windowState.help){
 			 drawSkyGradient();  
 			 canvasContext.drawImage(backgroundFarPic,0,0);
-			 canvasContext.save();
-			 canvasContext.globalAlpha = opacity;
-			 canvasContext.font = "30px Tahoma";
-			 canvasContext.textAlign = "center";
-			 canvasContext.fillStyle = "white";
-			 canvasContext.fillText('How To Play',canvas.width/2 ,130);
-			 
-			 canvasContext.textAlign = "left";
-			 canvasContext.font = "15px Tahoma";
-			 canvasContext.fillText("1) WASD or Arrow Keys for Movements",250 ,250  );
-			 canvasContext.fillText("2) Primary Mouse button for Shooting",250,280);
-			 canvasContext.fillText("3) Tab to use secondary weapon",250,310);
-
-			 canvasContext.textAlign = "center"; 
-			 canvasContext.font = "20px Tahoma";
-			 canvasContext.fillText('Press (Enter) to Start game',canvas.width/2 ,canvas.height/2 + 120);
-
-			 canvasContext.restore();
+			 colorText('How To Play',canvas.width/2 ,130,"white","30px Tahoma","center",opacity);
+			 colorText("1) WASD or Arrow Keys for Movements",250 ,250 ,"white","15px Tahoma","left",opacity);
+			 colorText("2) Primary Mouse button for Shooting",250,280 ,"white","15px Tahoma","left",opacity);
+			 colorText("3) Tab to use secondary weapon",250,310 ,"white","15px Tahoma","left",opacity);
+			 colorText('Press (Enter) to Start game',canvas.width/2 ,canvas.height/2 + 120,"white","20px Tahoma","center",opacity);
 			 opacity = opacity + 0.002;
 		}
 
@@ -185,37 +166,30 @@ function resetGame() {
 
 function drawScore() {
 	if (!orchestratorMode) {
-		canvasContext.save();
-		canvasContext.font = "20px Arial";
-		canvasContext.textAlign = "right";
-		canvasContext.fillStyle = "white";
-		canvasContext.fillText("score: " + score,canvas.width-20,30);
-		canvasContext.restore();
+
+			 colorText("score: " + score,canvas.width-20,30,"white","20px Arial","right");
+
 	} else {
-		canvasContext.save();
-		canvasContext.font = "20px Arial";
-		canvasContext.textAlign = "right";
-		canvasContext.fillStyle = "white";
-		canvasContext.fillText("spawnFrameCount: " + orchestratorSpawnFrameCount,canvas.width-10,30);
-		canvasContext.font = "15px Arial";
-		canvasContext.fillText("[1] for Paradropper",130,20);
-		canvasContext.fillText("[2] for Gunner",97,40);
-		canvasContext.fillText("[C] to copy new Wave",148,60);
-		canvasContext.restore();
+			
+			 colorText("spawnFrameCount: " + orchestratorSpawnFrameCount,canvas.width - 10, 30,"white","20px Arial","right");
+			 colorText("[1] for Paradropper",130,20,"white","15px Arial","right");
+			 colorText("[2] for Gunner",97,40,"white","15px Arial","right");
+			 colorText("[C] to copy new Wave",148,60,"white","15px Arial","right");
+
 	}
 
 	if (debug) {
-		canvasContext.fillStyle = "cyan";
-		canvasContext.font = "15px Arial";
-		var lineHeight = 15;
-		var drawTextOutY = 100;
-		canvasContext.fillText("hitpoints: " + playerHP,100,drawTextOutY);
-		drawTextOutY+=lineHeight;
-		canvasContext.fillText("shots: " + shotList.length,100,drawTextOutY);
-		drawTextOutY+=lineHeight;
-		canvasContext.fillText("ships: " + shipList.length,100,drawTextOutY);
-		drawTextOutY+=lineHeight;
-		canvasContext.fillText("aliens: " + alienList.length,100,drawTextOutY);
+			
+			var lineHeight = 15;
+			var drawTextOutY = 100;
+			colorText("hitpoints: " + playerHP,100,drawTextOutY,"cyan","15px Arial");
+			drawTextOutY+=lineHeight;
+			colorText("shots: " + shotList.length,100,drawTextOutY,"cyan","15px Arial");
+			drawTextOutY+=lineHeight;
+			colorText("ships: " + shipList.length,100,drawTextOutY,"cyan","15px Arial");
+			drawTextOutY+=lineHeight;
+			colorText("aliens: " + alienList.length,100,drawTextOutY,"cyan","15px Arial");
+
 	}
 }
 

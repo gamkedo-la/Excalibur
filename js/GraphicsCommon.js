@@ -46,3 +46,13 @@ function drawStroked(text, x, y,fillColor,font,align = 'left') {
   canvasContext.fillStyle = fillColor;
   canvasContext.fillText(text, x, y);
 }
+
+function colorText(showWords,textX,textY,fillColor,fontface,textAlign = 'left',opacity = 1) {
+  canvasContext.save();
+  canvasContext.textAlign = textAlign;
+  canvasContext.font = fontface;
+  canvasContext.globalAlpha = opacity;
+  canvasContext.fillStyle = fillColor;
+  canvasContext.fillText(showWords, textX, textY);
+  canvasContext.restore();
+}
