@@ -37,11 +37,12 @@ function drawRect(x,y,w,h,color) {
 	canvasContext.fillRect(x,y,w,h);
 }
 
-function drawStroked(text, x, y) {
-  canvasContext.font = "80px Sans-serif"
+function drawStroked(text, x, y,fillColor,font,align = 'left') {
+  canvasContext.font = font;
   canvasContext.strokeStyle = 'black';
+  canvasContext.textAlign = align;
   canvasContext.lineWidth = 8;
   canvasContext.strokeText(text, x, y);
-  canvasContext.fillStyle = 'red';
+  canvasContext.fillStyle = fillColor;
   canvasContext.fillText(text, x, y);
 }
