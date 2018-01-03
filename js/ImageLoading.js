@@ -61,7 +61,7 @@ function loadImages() {
         { varName: spaceshipLeftPic, theFile: "spaceshipLeft-anim.png" },
         { varName: gunnerShipRightPic, theFile: "gunner-ship-right.png" },
         { varName: gunnerShipLeftPic, theFile: "gunner-ship-left.png" },
-        { varName: misslePic, theFile: "misslePlaceholder.png" },
+        { varName: misslePic, theFile: "missle.png" },
         { varName: backgroundTitlePic, theFile: "backgroundTitle.png" },
         { varName: backgroundFarPic, theFile: "backgroundFar.png" },
         { varName: backgroundMedPic, theFile: "backgroundMed.png" },

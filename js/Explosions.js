@@ -251,6 +251,19 @@ function shipHitExplosion(x,y) // enemy hit
     //explode(x,y,EXPLOSION_RING,null,null,null,0,2);
 }
 
+function missleExplosionSpawn(x,y) // enemy hit
+{
+    for (multi=0; multi<6; multi++)
+        explode(x/*+randomInt(-10,10)*/,y/*+randomInt(-10,10)*/,EXPLOSION_BOOM,null,null,null,3,3);
+        missleExplosion = new aabb(explosion_w / 2, explosion_w / 2);
+        missleExplosion.setCenter(x,y); // Synchronize AABB position with ship position
+        missleExplosion.computeBounds();
+       // if (isColliding_AABB_LineSeg(playerColliderAABB, missleExplosion.colliderAABB)
+       // hitPlayer();
+    explode(x,y,EXPLOSION_SMOKE,null,null,null,1,1);
+   // x, y, explosionType, destX, destY, delayFrames, startScale, endScale
+}
+
 function gunfireExplosion(x,y)
 {
     //explode(x,y,EXPLOSION_SMOKE,null,null,null,0,1);

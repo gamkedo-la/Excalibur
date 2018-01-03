@@ -7,7 +7,7 @@ function drawBitmapCenteredAtLocationWithRotation(graphic, atX, atY,withAngle) {
   canvasContext.restore(); // undo the translation movement and rotation since save()
 }
 
-function drawAnimatedBitmapCenteredAtLocationWithRotation(graphic, frameNow, 
+function drawAnimatedVerticalBitmapCenteredAtLocationWithRotation(graphic, frameNow, 
                                                           graphicFrameW,graphicFrameH, 
                                                           atX, atY, withAngle) {
   canvasContext.save(); // allows us to undo translate movement and rotate spin
@@ -15,6 +15,20 @@ function drawAnimatedBitmapCenteredAtLocationWithRotation(graphic, frameNow,
   canvasContext.rotate(withAngle); // sets the rotation
   canvasContext.drawImage(graphic,
                           frameNow * graphicFrameW, 0,
+                          graphicFrameW, graphicFrameH,
+                          -graphicFrameW/2,-graphicFrameH/2, 
+                          graphicFrameW, graphicFrameH); // center, animate, draw
+  canvasContext.restore(); // undo the translation movement and rotation since save()
+}
+
+function drawAnimatedHorizontalBitmapCenteredAtLocationWithRotation(graphic, frameNow, 
+                                                          graphicFrameW,graphicFrameH, 
+                                                          atX, atY, withAngle) {
+  canvasContext.save(); // allows us to undo translate movement and rotate spin
+  canvasContext.translate(atX,atY); // sets the point where our graphic will go
+  canvasContext.rotate(withAngle); // sets the rotation
+  canvasContext.drawImage(graphic,
+                          0, frameNow * graphicFrameH,
                           graphicFrameW, graphicFrameH,
                           -graphicFrameW/2,-graphicFrameH/2, 
                           graphicFrameW, graphicFrameH); // center, animate, draw

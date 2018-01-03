@@ -28,21 +28,15 @@ function missleClass() {
     var misslePic = (movingLeft) ? gunnerShipLeftPic : gunnerShipRightPic;*/
 
     this.draw = function() {
-        /*drawBitmapCenteredAtLocationWithRotation(misslePic, 
-                                                 this.position.x, this.position.y, 
-                                                 this.moveAng);*/
-        drawAnimatedBitmapCenteredAtLocationWithRotation(misslePic, this.frameNow, 
+        drawAnimatedHorizontalBitmapCenteredAtLocationWithRotation(misslePic, this.frameNow, 
                                                          missleFrameW, missleFrameH, 
                                                          this.position.x, this.position.y,
                                                          this.moveAng);
-
-        //drawRect(this.position.x,this.position.y,missleWidth,missleHeight,"Chartreuse");          
-    /*canvasContext.drawImage(pic,
-        frameNow * gunnerWidth, frameOffsetY,
-        gunnerWidth, gunnerHeight,
-        this.position.x - gunnerWidth / 2, this.position.y - gunnerHeight,
-        gunnerWidth, gunnerHeight);*/
-
+        if (masterFrameDelayTick % 10 == 0) {
+                this.frameNow = 0;
+            } else if (masterFrameDelayTick % 10 == 5) {
+                this.frameNow = 1;
+            }
     };
 
     this.move = function() {
@@ -53,6 +47,7 @@ function missleClass() {
 
     this.edgeOfScreenDetection = function() {
         if (this.position.y + missleFrameH/2 > canvas.height) {
+            missleExplosionSpawn(this.position.x,this.position.y);
             this.removeMe = true;
         }
         if (this.isDamaged) {
@@ -60,6 +55,7 @@ function missleClass() {
             this.isDamaged = false;
         } 
         if (this.missleHealth == 0) {
+            shipHitExplosion(this.position.x,this.position.y);
             this.removeMe = true;
         }
     };
