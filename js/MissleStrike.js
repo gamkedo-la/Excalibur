@@ -2,7 +2,9 @@ var missleList = [];
 var missleFrameW = 31;
 var missleFrameH = 10;
 var frameNow = 0;
+
 var diceRoll;
+var saveMisslePosition;
 
 function missleClass() {
     var diceRoll = Math.random()*10;
@@ -20,12 +22,6 @@ function missleClass() {
     this.removeMe = false;
     this.isDamaged = false;
     this.frameNow = 0;
-    
-    //this.ang = 0;
-    //var gravity = vec2.create(0, 0.04);
-
-    /*var movingLeft = this.velocity.x < 0;
-    var misslePic = (movingLeft) ? gunnerShipLeftPic : gunnerShipRightPic;*/
 
     this.draw = function() {
         drawAnimatedHorizontalBitmapCenteredAtLocationWithRotation(misslePic, this.frameNow, 
@@ -42,14 +38,16 @@ function missleClass() {
     this.move = function() {
         damageSmokeExplosion(this.position.x,this.position.y);
         vec2.add(this.position, this.position, this.velocity);
-        this.colliderAABB.setCenter(this.position.x, this.position.y); // Synchronize AABB position with ship position
+        this.colliderAABB.setCenter(this.position.x, this.position.y); // Synchronize AABB position with missle position
         this.colliderAABB.computeBounds();
     };
 
     this.edgeOfScreenDetection = function() {
         if (this.position.y + missleFrameH/2 > canvas.height) {
-            missleExplosionSpawn(this.position.x,this.position.y);
-            this.removeMe = true;
+            saveMisslePosition = vec2.create(this.position.x,this.position.y);
+            var newMissleExplosion = new missleExplosionClass();
+            missleList.push(newMissleExplosion);
+            this.position.x = this.position.y = FAR_AWAY; // FAR_AWAY from Explosions.js
         }
         if (this.isDamaged) {
             this.missleHealth--;
@@ -58,6 +56,46 @@ function missleClass() {
         if (this.missleHealth == 0) {
             shipHitExplosion(this.position.x,this.position.y);
             this.removeMe = true;
+        }
+    };
+};
+
+function missleExplosionClass() {
+    this.position = vec2.create(saveMisslePosition.x, saveMisslePosition.y);
+/*  this.colliderAABB = new aabb(explosion_w / 2, explosion_h / 2);
+    this.colliderAABB.setCenter(this.position.x, this.position.y);
+    this.colliderAABB.computeBounds();  */
+    var explosionScale = 3; // 3 because of scaling from missleExplosion() in Explosions.js 
+    this.colliderLineSegMissleExplosionLeft = new lineSegment();
+    this.colliderLineSegMissleExplosionRight = new lineSegment();
+    lowerRight = vec2.create(this.position.x + (explosion_w/2) * explosionScale,
+                            this.position.y + (explosion_h/2) * explosionScale);
+    lowerLeft = vec2.create(this.position.x - (explosion_w/2) * explosionScale,
+                            this.position.y + (explosion_h/2) * explosionScale);
+    topRight = vec2.create(lowerRight.x,
+                           lowerRight.y - (explosion_h * explosionScale));
+    topLeft = vec2.create(lowerLeft.x,
+                          lowerLeft.y - (explosion_h * explosionScale));
+
+    this.colliderLineSegMissleExplosionLeft.setEndPoints(lowerRight,topRight);
+    this.colliderLineSegMissleExplosionRight.setEndPoints(lowerLeft,topLeft);
+    this.removeMe = false;
+
+    this.draw = function() {
+        missleExplosion(this.position.x,this.position.y);
+    };
+
+    this.move = function() {
+       if (isColliding_AABB_LineSeg(playerColliderAABB, this.colliderLineSegMissleExplosionLeft)
+           || isColliding_AABB_LineSeg(playerColliderAABB, this.colliderLineSegMissleExplosionRight)) {
+            hitPlayer();
+       }
+    };
+
+    this.edgeOfScreenDetection = function() {
+        if (!missleExplosion) {
+            this.removeMe = true;
+            missleClass.removeMe = true;
         }
     };
 };

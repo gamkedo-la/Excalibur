@@ -70,12 +70,12 @@ function movePlayer() {
 }
 
 function hitPlayer() {
-  if(!orchestratorMode){
+  /*if(!orchestratorMode){*/
     playerHP--;
     playerHitExplosion(playerX,playerY);
-  } else {
+ /* } else {
     // do nothing
-  }
+  }*/
   if (playerHP <= 0) {
     gameOverManager.startGameOverSequence();
   }

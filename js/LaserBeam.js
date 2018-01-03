@@ -6,8 +6,6 @@ var restoreLaserPic = laserPic;
 function laserShotClass(x, y, angle, speed) {
 	this.speed = speed;
 	this.position = vec2.create(x, y);
-	// this.moveAng is angle + 90 deg. This is because the image is vertical (pointing in the -Y direction)
-	// To orient the image along the +X direction, have to add 90 degrees (PI/2 radians)
 	this.moveAng = angle;
 	this.removeMe = false;
 	this.frameNow = 0;
@@ -17,7 +15,7 @@ function laserShotClass(x, y, angle, speed) {
 	this.draw = function () {
 		canvasContext.save();
 		canvasContext.translate(this.position.x,this.position.y);
-		canvasContext.rotate(this.moveAng);	// Rotate by 180 degrees, so the "top" of the laser is at the cannon, and the bottom points away from the cannon
+		canvasContext.rotate(this.moveAng);
 		if (masterFrameDelayTick % 10 == 0) {
 				this.frameNow = 0;
 			} else if (masterFrameDelayTick % 10 == 5) {
