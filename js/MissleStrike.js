@@ -1,6 +1,6 @@
 var missleList = [];
-var missleFrameW = 50;
-var missleFrameH = 15;
+var missleFrameW = 31;
+var missleFrameH = 10;
 var frameNow = 0;
 var diceRoll;
 
@@ -40,6 +40,7 @@ function missleClass() {
     };
 
     this.move = function() {
+        damageSmokeExplosion(this.position.x,this.position.y);
         vec2.add(this.position, this.position, this.velocity);
         this.colliderAABB.setCenter(this.position.x, this.position.y); // Synchronize AABB position with ship position
         this.colliderAABB.computeBounds();
