@@ -1,5 +1,6 @@
 const PLANE_PARADROPPER = 1;
 const PLANE_GUNNER = 2;
+const MISSILE_STRIKE = 3;
 
 var stage1WaveNumber1 = [
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 30 },

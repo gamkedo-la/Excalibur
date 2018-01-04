@@ -69,4 +69,12 @@ function isColliding_LineSeg_LineSeg(objA, objB) {    // Given 2 line segments, 
 	return (t >= 0 && t <= 1);
 }
 
-
+function boundariesNotOverlapping (aTopLeft, aLowerRight, 
+                                   bTopLeft, bLowerRight) {
+    if (aTopLeft.x > bLowerRight.x || aTopLeft.y > bLowerRight.y ||
+    	aLowerRight.x < bTopLeft.x || aLowerRight.y < bTopLeft.y) {
+    	return true;
+    } else {
+    	return false; 
+	}
+}

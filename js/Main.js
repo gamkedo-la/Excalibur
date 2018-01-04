@@ -1,4 +1,5 @@
 const scoreForShipShot = 100;
+const scoreForMissileShot = 20;
 const scoreForAlienShot = 50;
 const scoreForParachuteShot = 75;
 var score=0;
@@ -111,7 +112,7 @@ function drawAll() {
 		return;
 	}
 	drawAndRemoveShips();
-	drawAndRemoveMissles();
+	drawAndRemoveMissiles();
 	drawAndRemoveAliens();
 	drawAndRemoveShots();
 	drawPlayer();
@@ -122,7 +123,7 @@ function drawAll() {
 
 function moveAll() {
 	moveShips();
-	moveMissles();
+	moveMissiles();
 	moveAliens();
 	moveShots();
 	movePowerUps();
@@ -155,7 +156,7 @@ function resetGame() {
 	shotList = [];
 	shipList = [];
 	alienList = [];
-	missleList = [];
+	missileList = [];
 	resetPowerUps();
 	score=0;
 	playerHP = startHitpoints;
@@ -175,7 +176,8 @@ function drawScore() {
 			 colorText("spawnFrameCount: " + orchestratorSpawnFrameCount,canvas.width - 10, 30,"white","20px Arial","right");
 			 colorText("[1] for Paradropper",130,20,"white","15px Arial","right");
 			 colorText("[2] for Gunner",97,40,"white","15px Arial","right");
-			 colorText("[C] to copy new Wave",148,60,"white","15px Arial","right");
+			 colorText("[M] for Missle Strike",134,60,"white","15px Arial","right");
+			 colorText("[C] to copy new Wave",148,80,"white","15px Arial","right");
 
 	}
 

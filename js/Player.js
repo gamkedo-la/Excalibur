@@ -20,11 +20,12 @@ var cannonWaveReloadFrames = 17; //// amped to be more powerful than fork shot
 var cannonLaserReloadFrames = 64;
 var cannonReloadLeft = 0;
 var cannonWidth = 18;
+var playerTopLeft, playerLowerRight;
 
 
 function drawPlayer() {
 	// base
-	canvasContext.fillStyle="white";
+	// canvasContext.fillStyle="white";
 	// canvasContext.fillRect(playerX-playerWidth/2,playerY,playerWidth,playerHeight);
   canvasContext.drawImage(tankBodyPic,playerX - playerWidth/2,playerY);
 
@@ -64,18 +65,19 @@ function movePlayer() {
       playerX = canvas.width - playerWidth/2;
     }
   }
-
+  playerTopLeft = vec2.create(playerX - playerWidth/2, playerY - playerHeight/2);
+  playerLowerRight = vec2.create(playerX + playerWidth/2, playerY + playerHeight/2);
   playerColliderAABB.setCenter(playerX, playerY);	// Synchronize AABB position with player position
   playerColliderAABB.computeBounds();
 }
 
 function hitPlayer() {
-  /*if(!orchestratorMode){*/
+  if(!orchestratorMode){
     playerHP--;
     playerHitExplosion(playerX,playerY);
- /* } else {
+  } else {
     // do nothing
-  }*/
+  }
   if (playerHP <= 0) {
     gameOverManager.startGameOverSequence();
   }

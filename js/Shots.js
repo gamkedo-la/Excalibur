@@ -65,6 +65,18 @@ function shotClass(x, y, angle, speed) {
                 this.removeMe = true;
             }
         }
+        for (var m = 0; m < missileList.length; m++) {
+            if (isColliding_AABB_LineSeg(missileList[m].colliderAABB, this.colliderLineSeg) && !missileList[m].isDamaged) {
+
+                alienHitExplosion(this.position.x,this.position.y);
+
+                if(!missileList[m].isDamaged){
+                    score += scoreForMissileShot;
+                    missileList[m].isDamaged = true;
+                }
+                this.removeMe = true;
+            }
+        }
         for (var t = 0; t < alienList.length; t++) {
             // TODO replace with line segment/aabb intersection test (use shot velocity to compute previous known position; make line seg from last-known to current position)
             if (this.position.y > alienList[t].position.y - alienHeight && this.position.y < alienList[t].position.y &&

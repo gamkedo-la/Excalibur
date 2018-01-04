@@ -18,6 +18,7 @@ const KEY_A = 65;
 const KEY_C = 67;
 const KEY_D = 68;
 const KEY_H = 72;
+const KEY_M = 77;
 const KEY_O = 79;
 
 const pauseOnLoseFocus = true;
@@ -224,6 +225,19 @@ function keyPress(evt) {
 		case DIGIT_2:
 			if(orchestratorMode) {
 				orchestratorCurrentSpawnType = PLANE_GUNNER;
+				enemyData.spawnType = orchestratorCurrentSpawnType;
+				enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
+				createNewWave.push(enemyData);
+				enemyData = { 
+					spawnType: null, 
+					framesUntilSpawn: null 
+				}
+				orchestratorSpawnEnemy();
+			}
+			break;
+		case KEY_M:
+			if(orchestratorMode) {
+				orchestratorCurrentSpawnType = MISSILE_STRIKE;
 				enemyData.spawnType = orchestratorCurrentSpawnType;
 				enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
 				createNewWave.push(enemyData);

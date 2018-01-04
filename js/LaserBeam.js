@@ -1,6 +1,6 @@
 var usingTimedWeapon = false;
 var laserTopPosition = vec2.create(0, -laserPicFrameH);
-var lowerRight, lowerLeft, topRight, topLeft;
+var laserLowerRight, laserLowerLeft, laserTopRight, laserTopLeft;
 var restoreLaserPic = laserPic;
 
 function laserShotClass(x, y, angle, speed) {
@@ -30,9 +30,9 @@ function laserShotClass(x, y, angle, speed) {
 				laserPic = laserPicEnding;
 			}
 		canvasContext.restore();
-		//drawRect(lowerRight.x,lowerRight.y,5,5,'red');
-		//drawRect(topRight.x,topRight.y,5,5,'lime');
-		//console.log(lowerRight.x , lowerRight.y, topRight.x, topRight.y);
+		//drawRect(laserLowerRight.x,laserLowerRight.y,5,5,'red');
+		//drawRect(laserTopRight.x,laserTopRight.y,5,5,'lime');
+		//console.log(laserLowerRight.x , laserLowerRight.y, laserTopRight.x, laserTopRight.y);
 	};
 
 	this.move = function () {
@@ -52,17 +52,17 @@ function laserShotClass(x, y, angle, speed) {
 		}
 
 		var perpAng = this.moveAng + Math.PI / 2; //perpinducar Angle since we want to go left/right of where barrel is facing
-		lowerRight = vec2.create(this.position.x + (laserPicFrameH/2) * Math.cos(perpAng),
+		laserLowerRight = vec2.create(this.position.x + (laserPicFrameH/2) * Math.cos(perpAng),
 								  this.position.y + (laserPicFrameH/2) * Math.sin(perpAng));
-		lowerLeft = vec2.create(this.position.x - (laserPicFrameH/2) * Math.cos(perpAng),
+		laserLowerLeft = vec2.create(this.position.x - (laserPicFrameH/2) * Math.cos(perpAng),
 								  this.position.y - (laserPicFrameH/2) * Math.sin(perpAng));
-		topRight = vec2.create(lowerRight.x + laserPicFrameW * Math.cos(this.moveAng),
-							   lowerRight.y + laserPicFrameW * Math.sin(this.moveAng));
-		topLeft = vec2.create(lowerLeft.x + laserPicFrameW * Math.cos(this.moveAng), 
-							  lowerLeft.y + laserPicFrameW * Math.sin(this.moveAng));
+		laserTopRight = vec2.create(laserLowerRight.x + laserPicFrameW * Math.cos(this.moveAng),
+							   laserLowerRight.y + laserPicFrameW * Math.sin(this.moveAng));
+		laserTopLeft = vec2.create(laserLowerLeft.x + laserPicFrameW * Math.cos(this.moveAng), 
+							  laserLowerLeft.y + laserPicFrameW * Math.sin(this.moveAng));
 
-		this.colliderLineSegLaserRight.setEndPoints(lowerRight,topRight);
-		this.colliderLineSegLaserLeft.setEndPoints(lowerLeft,topLeft);
+		this.colliderLineSegLaserRight.setEndPoints(laserLowerRight,laserTopRight);
+		this.colliderLineSegLaserLeft.setEndPoints(laserLowerLeft,laserTopLeft);
 
         powerUpBoxList.forEach(function(powerUpBox) {
             if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSegLaserRight) 

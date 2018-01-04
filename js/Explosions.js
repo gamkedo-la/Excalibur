@@ -251,11 +251,10 @@ function shipHitExplosion(x,y) // enemy hit
     //explode(x,y,EXPLOSION_RING,null,null,null,0,2);
 }
 
-function missleExplosion(x,y) // explosion after missle hits bottom of canvas
+function missileExplosion(x,y) // explosion after missile hits bottom of canvas
 {
     explode(x,y,EXPLOSION_BOOM,null,null,null,3,3); 
     explode(x,y,EXPLOSION_SMOKE,null,null,null,1,1);
-   // x, y, explosionType, destX, destY, delayFrames, startScale, endScale
 }
 
 function gunfireExplosion(x,y)
