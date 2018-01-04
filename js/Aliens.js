@@ -17,10 +17,12 @@ var alienInertiaDriftEnabled = true;
 var alienClass = function() {
 		this.fromShip;
 	    this.position = vec2.create();
+	    this.colliderAlienAABB = new aabb(alienWidth/2, alienHeight/2);
 		this.removeMe = false;
 		this.isChuteDrawn = false;
 		this.chuteX = Math.random() * chuteThickness + chuteMargin / 10;
 		this.chuteY = Math.random() * chuteThickness + chuteMargin;
+		this.colliderChuteAABB = new aabb(this.chuteX/2, this.chuteY/2);
 		this.alreadyGotDrawn = false;
 		this.isWalking = false;
 		this.frameNow = 0;
@@ -160,6 +162,8 @@ var alienClass = function() {
 			if (this.isChuteDrawn) {
 				this.chuteX = this.position.x - parachuteW / 2;
 				this.chuteY = this.position.y - alienHeight;
+				this.colliderAABB.setCenter(this.position.x, this.position.y);	// Synchronize AABB position with chute position
+				this.colliderAABB.computeBounds();
 				if (debug) {
 					canvasContext.fillStyle = "gray";
 					canvasContext.fillRect(this.chuteX, this.chuteY,
@@ -169,28 +173,17 @@ var alienClass = function() {
 
 		};
 
-
-
-
-
 //Alien Devil class
 function devilAlienClass() {
 	this.typeOfAlien = 'devil',
 	this.img = devilAlienPic;
 	this.animPicWidth = 29;
 	this.animPicHeight = 24;
-
-
 }
+
 devilAlienClass.prototype = new alienClass();
 
-
-//
-
 function spawnAlien(fromShip) {
-	// var newAlien = new alienClass();
-	// var devilAlien = new devilAlienClass();
-
 	var diceRoll = Math.random()*10;
 	var newAlien = diceRoll < 3 ? new alienClass() : new devilAlienClass();
 
@@ -201,7 +194,6 @@ function spawnAlien(fromShip) {
 }
 
 function drawAndRemoveAliens() {
-	// console.log(alienList);
 	for(var i=0;i<alienList.length;i++) {
 		alienList[i].draw();
 	}

@@ -74,10 +74,27 @@ function shotClass(x, y, angle, speed) {
                     score += scoreForMissileShot;
                     missileList[m].isDamaged = true;
                 }
+
+                if (this.missileDestroyed) {
+                    if (canSpawnPowerUp()) {
+                        spawnPowerUp(missileList[m]);
+                    }
+                    missileList[m].removeMe = true;
+                }
+                
                 this.removeMe = true;
             }
         }
         for (var t = 0; t < alienList.length; t++) {
+            /*for (var t = 0; t < alienList.length; t++) {
+            if (isColliding_AABB_LineSeg(alienList[t].colliderAlienAABB, this.colliderLineSeg)) {
+                alienHitExplosion(this.position.x,this.position.y);
+                score += scoreForAlienShot;
+                alienList[t].removeMe = true;
+                this.removeMe = true;
+            } else if (isColliding_AABB_LineSeg(alienList[t].colliderChuteAABB, this.colliderLineSeg)) {
+                score += scoreForParachuteShot;
+                alienList[t].isChuteDrawn = false;*/
             // TODO replace with line segment/aabb intersection test (use shot velocity to compute previous known position; make line seg from last-known to current position)
             if (this.position.y > alienList[t].position.y - alienHeight && this.position.y < alienList[t].position.y &&
                 this.position.x > alienList[t].position.x - alienWidth / 2 && this.position.x < alienList[t].position.x + alienWidth / 2) {
