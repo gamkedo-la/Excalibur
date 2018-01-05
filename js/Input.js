@@ -26,6 +26,7 @@ const KEY_D = 68;
 const KEY_H = 72;
 const KEY_M = 77;
 const KEY_O = 79;
+const KEY_P = 80; 
 
 const pauseOnLoseFocus = true;
 
@@ -48,6 +49,8 @@ var controlScheme = CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING;
 var mouseY = 0;
 var mouseX = 0;
 var mouseCannonY, mouseCannonX;
+
+var isPaused = false; 
 
 function initializeInput() {
 	document.addEventListener("keydown",keyPress);
@@ -87,6 +90,18 @@ function windowOnBlur() {
 		clearInterval(gameUpdate);
 	}
 };
+
+function gameIsPaused(){
+    if(isPaused) {
+        gameUpdate = setInterval(update, 1000/30);
+        console.log("playing")
+         isPaused = true;
+    }  else if (!isPaused) {
+        clearInterval(gameUpdate)
+        isPaused = false;
+        console.log("is paused")
+    }
+}
 
 function handleInput() {
 	if(holdFire) {
@@ -199,6 +214,15 @@ function keyPress(evt) {
 	}
 
 	switch (evt.keyCode) {
+        case KEY_P:
+            if(isPaused) {
+                gameIsPaused();
+                isPaused = false; 
+            } else if (!isPaused) {
+                gameIsPaused();
+                isPaused = true;
+            }
+            break;
 		case KEY_ENTER:
 			if(windowState.firstLoad){
 				windowState.firstLoad = false;
