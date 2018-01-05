@@ -14,6 +14,12 @@ const DIGIT_5 = 53;
 const DIGIT_6 = 54;
 const DIGIT_7 = 55;
 
+const DIGIT_8 = 56;
+const DIGIT_9 = 57;
+
+const KEY_PLUS = 107;
+const KEY_MINUS = 109;
+
 const KEY_A = 65;
 const KEY_C = 67;
 const KEY_D = 68;
@@ -262,9 +268,6 @@ function keyPress(evt) {
 			windowState.help = true;
 			break;
 		case KEY_ESCAPE:
-			if (currentBackgroundMusic != null) {
-			currentBackgroundMusic.pauseSound();
-			}
 			resetGame();
 			break;
 		case KEY_TAB:
@@ -283,6 +286,16 @@ function keyPress(evt) {
 			break;
 		case DIGIT_0:
 			debug = !debug;
+			break;
+			
+		case DIGIT_9:
+			toggleMute();
+			break;
+		case KEY_PLUS:
+			turnVolumeUp();
+			break;
+		case KEY_MINUS:
+			turnVolumeDown();
 			break;
 	}
 }

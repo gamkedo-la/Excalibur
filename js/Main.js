@@ -26,8 +26,7 @@ var gameGunnerSpawn;
 
 var masterFrameDelayTick=0;
 var canvas, canvasContext;
-menuMusic.loopSong();
-currentBackgroundMusic = menuMusic
+currentBackgroundMusic.loopSong(menuMusic);
 
 window.onload = function () {
 	canvas = document.createElement("canvas");
@@ -163,7 +162,7 @@ function resetGame() {
 	TitleTextX = canvas.width;
 	subTitleTextX = 0;
 	opacity = 0;
-	menuMusic.loopSong();
+	currentBackgroundMusic.loopSong(menuMusic);
 }
 
 function drawScore() {

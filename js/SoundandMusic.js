@@ -3,11 +3,16 @@ var audioFormat;
 var regularShotSound = new SoundOverlapsClass("./audio/RegularShot");
 var waveShotSound = new SoundOverlapsClass("./audio/WaveShot");
 var shieldPowerUpSound = new SoundOverlapsClass("./audio/ShieldPowerUp");
-var zebesBackgroundMusic = new backgroundMusicClass("./audio/dew-drops");
-var computerBackgroundMusic = new backgroundMusicClass("./audio/suspain");
-var menuMusic = new backgroundMusicClass("./audio/beeblebrox");
+var zebesBackgroundMusic = "./audio/dew-drops";
+var computerBackgroundMusic = "./audio/suspain"
+var menuMusic = "./audio/beeblebrox";
 
-var currentBackgroundMusic;
+var currentBackgroundMusic = new backgroundMusicClass();
+
+var currentVolume = 1.0;
+var previousVolume = 1.0;
+var isMuted = false;
+const VOLUME_INCREMENT = 0.05;
 
 function setFormat() {
     var audio = new Audio();
@@ -18,11 +23,11 @@ function setFormat() {
     }
 }
 
-function backgroundMusicClass(filenameWithPath) {
+function backgroundMusicClass() {
 
     let musicSound = null;
-
-    this.loopSong = function() {
+	
+    this.loopSong = function(filenameWithPath) {
         setFormat(); // calling this to ensure that audioFormat is set before needed
 
         if (musicSound != null) {
@@ -30,8 +35,8 @@ function backgroundMusicClass(filenameWithPath) {
             musicSound = null;
         }
         musicSound = new Audio(filenameWithPath + audioFormat);
-        musicSound.loop = true;
-        musicSound.play();
+        musicSound.loop = true;	
+		this.setVolume(currentVolume);
     }
 
     this.pauseSound = function() {
@@ -45,6 +50,15 @@ function backgroundMusicClass(filenameWithPath) {
             musicSound.pause();
         }
     }
+	
+	this.setVolume = function(volume) {
+		musicSound.volume = volume;
+		if(volume == 0) {
+			musicSound.pause();
+		} else if (musicSound.paused) {
+			musicSound.play();
+		}
+	}
 }
 
 function SoundOverlapsClass(filenameWithPath) {
@@ -57,11 +71,11 @@ function SoundOverlapsClass(filenameWithPath) {
     this.play = function() {
         if (altSoundTurn) {
             altSound.currentTime = 0;
-            altSound.volume = getRandomVolume();
+            altSound.volume = getRandomVolume() * currentVolume;
             altSound.play();
         } else {
             mainSound.currentTime = 0;
-            mainSound.volume = getRandomVolume();
+            mainSound.volume = getRandomVolume() * currentVolume;
             mainSound.play();
         }
 
@@ -74,4 +88,39 @@ function getRandomVolume(){
 	var max = 1;
 	var randomVolume = Math.random() * (max - min) + min;
 	return randomVolume.toFixed(2);
+}
+
+function toggleMute() {
+	if(!isMuted)
+	{
+		previousVolume = currentVolume;
+		currentVolume = 0.0;
+		currentBackgroundMusic.setVolume(currentVolume);
+		isMuted = true;
+	} else {
+		currentVolume = previousVolume;
+		currentBackgroundMusic.setVolume(currentVolume);
+		isMuted = false;
+	}
+}
+
+function changeVolume(amount)
+{
+	isMuted = false;
+	currentVolume += amount;
+	if(currentVolume > 1.0) {
+		currentVolume = 1.0;
+	} else if (currentVolume <= 0.0) {
+		currentVolume = 0.0;
+		isMuted = true;
+	}
+	currentBackgroundMusic.setVolume(currentVolume);
+}
+
+function turnVolumeUp() {
+	changeVolume(VOLUME_INCREMENT);
+}
+
+function turnVolumeDown() {
+	changeVolume(-VOLUME_INCREMENT);
 }

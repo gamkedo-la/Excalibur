@@ -144,15 +144,11 @@ function intermission() {
 function changeBackground(stage) {
 	if (!windowState.help && !windowState.firstLoad) {
 		if (stage == ZEBES_BACKGROUND) {
-			menuMusic.startOrStopMusic();
-			zebesBackgroundMusic.loopSong();
-			currentBackgroundMusic = zebesBackgroundMusic;
+			currentBackgroundMusic.loopSong(zebesBackgroundMusic);
 			currentBackgroundMed = backgroundMedPic;
 		}
 		if (stage == COMPUTER_BACKGROUND) {
-			zebesBackgroundMusic.startOrStopMusic();
-			computerBackgroundMusic.loopSong();
-			currentBackgroundMusic = computerBackgroundMusic;
+			currentBackgroundMusic.loopSong(computerBackgroundMusic);
 			currentBackgroundMed = computerBackgroundFarPic;
 			currentBackgroundNear = computerBackgroundNearPic;
 		}
