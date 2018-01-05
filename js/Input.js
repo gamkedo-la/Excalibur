@@ -97,6 +97,8 @@ function gameIsPaused(){
         console.log("playing")
          isPaused = true;
     }  else if (!isPaused) {
+        clearInterval(gameShipSpawn);
+		clearInterval(gameGunnerSpawn);
         clearInterval(gameUpdate)
         isPaused = false;
         console.log("is paused")
