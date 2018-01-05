@@ -162,8 +162,8 @@ var alienClass = function() {
 			if (this.isChuteDrawn) {
 				this.chuteX = this.position.x - parachuteW / 2;
 				this.chuteY = this.position.y - alienHeight;
-				this.colliderAABB.setCenter(this.position.x, this.position.y);	// Synchronize AABB position with chute position
-				this.colliderAABB.computeBounds();
+				this.colliderChuteAABB.setCenter(this.position.x, this.position.y);	// Synchronize AABB position with chute position
+				this.colliderChuteAABB.computeBounds();
 				if (debug) {
 					canvasContext.fillStyle = "gray";
 					canvasContext.fillRect(this.chuteX, this.chuteY,
