@@ -3,6 +3,7 @@ var missileFrameW = 31;
 var missileFrameH = 10;
 var frameNow = 0;
 var delayInMilliseconds = 150;
+var explosionScale = 3; // 3 because of scaling from missileExplosion() in Explosions.js 
 
 var diceRoll;
 var saveMissilePosition;
@@ -49,7 +50,7 @@ function missileClass() {
             saveMissilePosition = vec2.create(this.position.x,this.position.y);
             var newMissileExplosion = new missileExplosionClass();
             missileList.push(newMissileExplosion);
-            this.position.x = this.position.y = FAR_AWAY; // FAR_AWAY from Explosions.js
+            this.position.x = this.position.y = -FAR_AWAY; // FAR_AWAY from Explosions.js
             this.removeMe = true;
         }
         if (this.isDamaged) {
@@ -66,20 +67,10 @@ function missileClass() {
 
 function missileExplosionClass() {
     this.position = vec2.create(saveMissilePosition.x, saveMissilePosition.y);
-    this.colliderAABB = new aabb(explosion_w / 2, explosion_h / 2);
-/*  this.colliderAABB = new aabb(explosion_w / 2, explosion_h / 2);
-    this.colliderAABB.setCenter(this.position.x, this.position.y);
-    this.colliderAABB.computeBounds();  */
-    var explosionScale = 3; // 3 because of scaling from missileExplosion() in Explosions.js 
-    /*this.colliderLineSegMissileExplosionLeft = new lineSegment();
-    this.colliderLineSegMissileExplosionRight = new lineSegment();*/
     this.missileExplosionLowerRight = vec2.create(this.position.x + (explosion_w/2) * explosionScale,
                             this.position.y + (explosion_h/2) * explosionScale);
     this.missileExplosionTopLeft = vec2.create(this.position.x - (explosion_w/2) * explosionScale,
                           this.position.y - (explosion_h * explosionScale));
-
-    /*this.colliderLineSegMissileExplosionLeft.setEndPoints(missileLowerRight,missileTopRight);
-    this.colliderLineSegMissileExplosionRight.setEndPoints(missileLowerLeft,missileTopLeft);*/
     this.removeMe = false;
 
     this.draw = function() {
@@ -88,7 +79,8 @@ function missileExplosionClass() {
 
     this.move = function() {
        if (!boundariesNotOverlapping(playerTopLeft, playerLowerRight,
-                                     this.missileExplosionTopLeft,this.missileExplosionLowerRight)) {
+                                     this.missileExplosionTopLeft,this.missileExplosionLowerRight) 
+           && !shieldActive) {
             setTimeout(function() {
                 hitPlayer();
             }, delayInMilliseconds);

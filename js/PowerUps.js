@@ -30,6 +30,7 @@ const powerUpTypes = Object.keys(powerUps);
 var lastPowerUpDroppedAt = 0;
 var powerUpBoxList = [];
 var activePowerUps = [];
+var shieldActive = false;
 
 function powerUp(fromShip) {
     this.type;
@@ -164,6 +165,7 @@ function drawAndRemovePowerUps() {
     for (var i = activePowerUps.length - 1; i >= 0; i--) {
         if (activePowerUps[i].canDestroy) {
             activePowerUps.splice(i, 1);
+            shieldActive = false;
         }
     }
 }
@@ -185,10 +187,16 @@ function updateShield(shield) {
             list: alienList,
             width: alienWidth,
             height: alienHeight
+        },
+        missiles: {
+            list: missileList,
+            width: missileFrameW,
+            height: missileFrameH
         }
     };
 
     drawShield();
+    shieldActive = true;
     checkShieldCollisions();
 
     function drawShield() {

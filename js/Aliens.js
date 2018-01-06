@@ -22,7 +22,7 @@ var alienClass = function() {
 		this.isChuteDrawn = false;
 		this.chuteX = Math.random() * chuteThickness + chuteMargin / 10;
 		this.chuteY = Math.random() * chuteThickness + chuteMargin;
-		this.colliderChuteAABB = new aabb(this.chuteX/2, this.chuteY/2);
+		this.colliderChuteAABB = new aabb(parachuteW/2, parachuteH/2);
 		this.alreadyGotDrawn = false;
 		this.isWalking = false;
 		this.frameNow = 0;
@@ -43,6 +43,8 @@ var alienClass = function() {
 				}
 				if (this.position.x > playerX) {
 					this.position.x -= alienWalkSpeed;
+				this.colliderAlienAABB.setCenter(this.position.x, this.position.y);	// Synchronize AABB position with chute position
+				this.colliderAlienAABB.computeBounds();
 				}
 				if (Math.abs(this.position.x - playerX) < (playerWidth / 2 - alienWidth / 2)) {
 					this.removeMe = true;
@@ -83,7 +85,9 @@ var alienClass = function() {
 					}
 
 					this.position.x += this.speedX;
-				}
+					this.colliderAlienAABB.setCenter(this.position.x, this.position.y);	// Synchronize AABB position with chute position
+					this.colliderAlienAABB.computeBounds();
+				} 
 				else {
 					var randomDriftFactor = (Math.floor(Math.random() * (20 - 3 + 1)) + 3);
 					this.position.x += this.speedX / randomDriftFactor;
@@ -95,12 +99,15 @@ var alienClass = function() {
 						this.speedX = 0;
 						this.position.x = alienWidth;
 					}
+					this.colliderAlienAABB.setCenter(this.position.x, this.position.y);	// Synchronize AABB position with chute position
+					this.colliderAlienAABB.computeBounds();
 				}
-			}
-			else
-			{
+			} 
+			else {
 				// no inertia trajectory drift (ie, aliens drop straight down)
 				this.position.y += (this.isChuteDrawn ? alienFallSpeedWithChute : alienFallSpeedNoChute);
+				this.colliderAlienAABB.setCenter(this.position.x, this.position.y);	// Synchronize AABB position with chute position
+				this.colliderAlienAABB.computeBounds();
 			}	
 
 			if (this.position.y > canvas.height) { // landing on ground
@@ -114,10 +121,6 @@ var alienClass = function() {
 		};
 
 		alienClass.prototype.draw = function () {
-
-			// canvasContext.fillStyle = "red";
-			// canvasContext.fillRect(this.position.x-alienWidth/2,this.position.y-alienHeight,alienWidth,alienHeight);
-			
 			if (this.isChuteDrawn && !this.isWalking) {
 				if (masterFrameDelayTick % 3 == 1) {
 					if (this.frameNow == 2) {
@@ -151,8 +154,8 @@ var alienClass = function() {
 					this.fromShip.velocity.x < 0 && this.position.x < this.chuteX ||
 					this.fromShip.velocity.x > 0 && this.position.x > canvas.width - this.chuteX)
 				{
-						this.isChuteDrawn = true;
-						this.alreadyGotDrawn = true;
+					this.isChuteDrawn = true;
+					this.alreadyGotDrawn = true;
 				}
 			}
 			
@@ -167,10 +170,9 @@ var alienClass = function() {
 				if (debug) {
 					canvasContext.fillStyle = "gray";
 					canvasContext.fillRect(this.chuteX, this.chuteY,
-						parachuteW, parachuteH);
+					parachuteW, parachuteH);
 				}
 			}
-
 		};
 
 //Alien Devil class
@@ -179,6 +181,8 @@ function devilAlienClass() {
 	this.img = devilAlienPic;
 	this.animPicWidth = 29;
 	this.animPicHeight = 24;
+	this.colliderAlienAABB = new aabb(this.animPicWidth/2, this.animPicHeight/2);
+	this.colliderChuteAABB = new aabb(parachuteW/2, parachuteH/2);
 }
 
 devilAlienClass.prototype = new alienClass();

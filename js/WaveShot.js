@@ -99,7 +99,8 @@ function waveShotClass(x, y, angle, speed) {
         }, this);
 
         for (var e = 0; e < shipList.length; e++) {
-            if (isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSeg) && !shipList[e].isDamaged) {
+            if (isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSeg) 
+            	&& !shipList[e].isDamaged) {
 
                 shipHitExplosion(this.position.x,this.position.y);
 
@@ -116,7 +117,8 @@ function waveShotClass(x, y, angle, speed) {
             }
         }
         for (var m = 0; m < missileList.length; m++) {
-            if (isColliding_AABB_LineSeg(missileList[m].colliderAABB, this.colliderLineSeg) && !missileList[m].isDamaged) {
+            if (isColliding_AABB_LineSeg(missileList[m].colliderAABB, this.colliderLineSeg) 
+            	&& !missileList[m].isDamaged) {
 
                 alienHitExplosion(this.position.x,this.position.y);
 
