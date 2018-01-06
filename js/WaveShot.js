@@ -94,7 +94,6 @@ function waveShotClass(x, y, angle, speed) {
                 var useMaxDuration = true;
                 score += scoreForPowerUpShot;
                 powerUpBox.setActive(useMaxDuration);
-                this.removeMe = false;
             }
         }, this);
 
@@ -112,8 +111,6 @@ function waveShotClass(x, y, angle, speed) {
                 if (canSpawnPowerUp()) {
                     spawnPowerUp(shipList[e]);
                 }
-
-                this.removeMe = false;
             }
         }
         for (var m = 0; m < missileList.length; m++) {
@@ -126,23 +123,20 @@ function waveShotClass(x, y, angle, speed) {
                     score += scoreForMissileShot;
                     missileList[m].isDamaged = true;
                 }
-                this.removeMe = true;
             }
         }
-		for (var t = 0; t < alienList.length; t++) {
-			if (this.position.y > alienList[t].position.y - alienHeight && this.position.y < alienList[t].position.y &&
-				this.position.x > alienList[t].position.x - alienWidth / 2 && this.position.x < alienList[t].position.x + alienWidth / 2) {
-			   
-				score += scoreForAlienShot;
-				alienList[t].removeMe = true;
-				this.removeMe = false;
-			} else if (this.position.y > alienList[t].chuteY && this.position.y < alienList[t].chuteY + parachuteH &&
-				this.position.x > alienList[t].chuteX && this.position.x < alienList[t].position.x + parachuteW && alienList[t].isChuteDrawn) {
-				// TODO replace with line segment/aabb intersection test (use shot velocity to compute previous known position; make line seg from last-known to current position)
-			   	
-				score += scoreForParachuteShot;
-				alienList[t].isChuteDrawn = false;
-			} // end of parachute collision check
-		} // end of alien collision check
+        for (var t = 0; t < alienList.length; t++) {
+            if (isColliding_AABB_LineSeg(alienList[t].colliderAlienAABB, this.colliderLineSeg)) {
+                alienHitExplosion(this.position.x,this.position.y);
+                score += scoreForAlienShot;
+                alienList[t].removeMe = true;
+            }
+            if (alienList[t].isChuteDrawn) {
+                if (isColliding_AABB_LineSeg(alienList[t].colliderChuteAABB, this.colliderLineSeg)) {
+                    score += scoreForParachuteShot;
+                    alienList[t].isChuteDrawn = false;
+                } // end of parachute collision check
+			} // end of if isChuteDrawn == true
+		} // end of for alienList.length
 	}; // end of shotCollisionAndBoundaryCheck function
-} // end of waveShotClass
+}; // end of waveShotClass

@@ -177,7 +177,7 @@ function drawScore() {
 			 colorText("spawnFrameCount: " + orchestratorSpawnFrameCount,canvas.width - 10, 30,"white","20px Arial","right");
 			 colorText("[1] for Paradropper",130,50,"white","15px Arial","right");
 			 colorText("[2] for Gunner",97,70,"white","15px Arial","right");
-			 colorText("[M] for Missile Strike",134,90,"white","15px Arial","right");
+			 colorText("[M] for Missile Strike",136,90,"white","15px Arial","right");
 			 colorText("[C] to copy new Wave",148,110,"white","15px Arial","right");
 
 	}

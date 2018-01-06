@@ -105,19 +105,20 @@ function laserShotClass(x, y, angle, speed) {
                 }
             }
         }
-		for (var t = 0; t < alienList.length; t++) {
-			if (this.position.y > alienList[t].position.y - alienHeight && this.position.y < alienList[t].position.y &&
-				this.position.x > alienList[t].position.x - alienWidth / 2 && this.position.x < alienList[t].position.x + alienWidth / 2) {
-			   
-				score += scoreForAlienShot;
-				alienList[t].removeMe = true;
-			} else if (this.position.y > alienList[t].chuteY && this.position.y < alienList[t].chuteY + parachuteH &&
-				this.position.x > alienList[t].chuteX && this.position.x < alienList[t].position.x + parachuteW && alienList[t].isChuteDrawn) {
-				// TODO replace with line segment/aabb intersection test (use shot velocity to compute previous known position; make line seg from last-known to current position)
-			   	
-				score += scoreForParachuteShot;
-				alienList[t].isChuteDrawn = false;
-			} // end of parachute collision check
-		} // end of alien collision check
+        for (var t = 0; t < alienList.length; t++) {
+            if (isColliding_AABB_LineSeg(alienList[t].colliderAlienAABB, this.colliderLineSegLaserRight)
+            	|| isColliding_AABB_LineSeg(alienList[t].colliderAlienAABB, this.colliderLineSegLaserLeft)) {
+                alienHitExplosion(this.position.x,this.position.y);
+                score += scoreForAlienShot;
+                alienList[t].removeMe = true;
+            }
+            if (alienList[t].isChuteDrawn) {
+                if (isColliding_AABB_LineSeg(alienList[t].colliderChuteAABB, this.colliderLineSegLaserRight)
+            		|| isColliding_AABB_LineSeg(alienList[t].colliderChuteAABB, this.colliderLineSegLaserLeft)) {
+                    score += scoreForParachuteShot;
+                    alienList[t].isChuteDrawn = false;
+            	} // end of parachute collision check
+			} // end of if isChuteDrawn == true
+		} // end of if isChuteDrawn == true
 	}; // end of shotCollisionAndBoundaryCheck function
-}// end of laserShotClass
+}; // end of laserShotClass
