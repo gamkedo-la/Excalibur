@@ -80,6 +80,7 @@ function update() {
 			 colorText("1) WASD or Arrow Keys for Movements",250 ,250 ,"white","15px Tahoma","left",opacity);
 			 colorText("2) Primary Mouse button for Shooting",250,280 ,"white","15px Tahoma","left",opacity);
 			 colorText("3) Tab to use secondary weapon",250,310 ,"white","15px Tahoma","left",opacity);
+            colorText("4) P to pause game",250,340 ,"white","15px Tahoma","left",opacity);
 			 colorText('Press (Enter) to Start game',canvas.width/2 ,canvas.height/2 + 120,"white","20px Tahoma","center",opacity);
 			 opacity = opacity + 0.002;
 		}
@@ -117,6 +118,7 @@ function drawAll() {
 	drawPlayer();
 	drawAndRemovePowerUps();
 	drawScore();
+    drawLives()
 	drawExplosions();
 }
 
@@ -173,10 +175,10 @@ function drawScore() {
 	} else {
 			
 			 colorText("spawnFrameCount: " + orchestratorSpawnFrameCount,canvas.width - 10, 30,"white","20px Arial","right");
-			 colorText("[1] for Paradropper",130,20,"white","15px Arial","right");
-			 colorText("[2] for Gunner",97,40,"white","15px Arial","right");
-			 colorText("[M] for Missile Strike",134,60,"white","15px Arial","right");
-			 colorText("[C] to copy new Wave",148,80,"white","15px Arial","right");
+			 colorText("[1] for Paradropper",130,50,"white","15px Arial","right");
+			 colorText("[2] for Gunner",97,70,"white","15px Arial","right");
+			 colorText("[M] for Missile Strike",134,90,"white","15px Arial","right");
+			 colorText("[C] to copy new Wave",148,110,"white","15px Arial","right");
 
 	}
 
@@ -193,6 +195,10 @@ function drawScore() {
 			colorText("aliens: " + alienList.length,100,drawTextOutY,"cyan","15px Arial");
 
 	}
+}
+
+function drawLives() {
+    colorText("lives: " + playerHP,canvas.width-780,30,"white","20px Arial","left");
 }
 
 // optimization todo: support wider background wrap but draw only on-screen portion
