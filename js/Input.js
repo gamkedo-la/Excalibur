@@ -86,6 +86,7 @@ function windowOnBlur() {
 	if (pauseOnLoseFocus) {
 		clearInterval(gameShipSpawn);
 		clearInterval(gameGunnerSpawn);
+        showPausedScreen()
 		windowState.inFocus = false;
         isPaused = false;
 		clearInterval(gameUpdate);
@@ -93,13 +94,16 @@ function windowOnBlur() {
 };
 
 function gameIsPaused(){
-    if(isPaused) {
+    if(isPaused && waveStarted && !gameOverManager.gameOverPlaying) {
         gameUpdate = setInterval(update, 1000/30);
+        console.log("playing")
          isPaused = true;
-    }  else if (!isPaused) {
+    }  else if (!isPaused && waveStarted && !gameOverManager.gameOverPlaying) {
         clearInterval(gameShipSpawn);
 		clearInterval(gameGunnerSpawn);
+        showPausedScreen()
         clearInterval(gameUpdate);
+        console.log("is paused")
         isPaused = false;
     }
 }

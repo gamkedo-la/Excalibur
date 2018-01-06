@@ -20,6 +20,8 @@ var windowState = {
 
 var TitleTextX, subTitleTextX,opacity;
 
+var pausedScreen;
+
 var gameUpdate;
 var gameShipSpawn;
 var gameGunnerSpawn;
@@ -35,6 +37,7 @@ window.onload = function () {
 	TitleTextX = canvas.width;
 	subTitleTextX = 0;
 	opacity = 0;
+    pausedScreen = canvas.width/2;
 	document.body.appendChild(canvas);
 	canvasContext = canvas.getContext("2d");
 	cannonEndX = playerX = canvas.width/2;
@@ -49,6 +52,7 @@ function loadingDoneSoStartGame () {
 }
 
 function update() {
+    isPaused = false;
 	if (windowState.inFocus){
 		if(windowState.firstLoad){
 			 drawSkyGradient(); 
@@ -199,6 +203,13 @@ function drawScore() {
 
 function drawLives() {
     colorText("lives: " + playerHP,canvas.width-780,30,"white","20px Arial","left");
+}
+
+function showPausedScreen() {
+    if(!isPaused && waveStarted && !gameOverManager.gameOverPlaying){
+        colorText("- P A U S E D -", pausedScreen, canvas.height/2, "white", "40px Arial", "center");
+        console.log("showing pause screen");
+    }
 }
 
 // optimization todo: support wider background wrap but draw only on-screen portion
