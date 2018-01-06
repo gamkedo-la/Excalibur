@@ -3,7 +3,7 @@ var missileFrameW = 31;
 var missileFrameH = 10;
 var frameNow = 0;
 var delayInMilliseconds = 150;
-var explosionScale = 3; // 3 because of scaling from missileExplosion() in Explosions.js 
+var explosionScale = 3; // 3 because of scaling from missileCollisionExplosion() in Explosions.js 
 
 var diceRoll;
 var saveMissilePosition;
@@ -47,34 +47,37 @@ function missileClass() {
 
     this.edgeOfScreenDetection = function() {
         if (this.position.y + missileFrameH/2 > canvas.height) {
+            if (this.missileDestroyed) return;
+            this.missileDestroyed = true;
             saveMissilePosition = vec2.create(this.position.x,this.position.y);
-            var newMissileExplosion = new missileExplosionClass();
+            var newMissileExplosion = new missileExplosionClass(this);
             missileList.push(newMissileExplosion);
             this.position.x = this.position.y = -FAR_AWAY; // FAR_AWAY from Explosions.js
-            this.removeMe = true;
         }
         if (this.isDamaged) {
+            missileHitExplosion(this.position.x,this.position.y, 0.5);
             this.missileHealth--;
+            score += scoreForMissileShot;
             this.isDamaged = false;
         } 
         if (this.missileHealth == 0) {
-            this.missileDestroyed = true;
             shipHitExplosion(this.position.x,this.position.y);
             this.removeMe = true;
         }
     };
 };
 
-function missileExplosionClass() {
+function missileExplosionClass(fromMissile) {
     this.position = vec2.create(saveMissilePosition.x, saveMissilePosition.y);
     this.missileExplosionLowerRight = vec2.create(this.position.x + (explosion_w/2) * explosionScale,
                             this.position.y + (explosion_h/2) * explosionScale);
     this.missileExplosionTopLeft = vec2.create(this.position.x - (explosion_w/2) * explosionScale,
                           this.position.y - (explosion_h * explosionScale));
+    this.colliderAABB = new aabb(explosion_w / 2, explosion_h / 2);
     this.removeMe = false;
 
     this.draw = function() {
-        missileExplosion(this.position.x,this.position.y);
+        missileCollisionExplosion(this.position.x,this.position.y);
     };
 
     this.move = function() {
@@ -88,8 +91,9 @@ function missileExplosionClass() {
     };
 
     this.edgeOfScreenDetection = function() {
-        if (!missileExplosion()) {
+        if (!missileCollisionExplosion()) {
             this.removeMe = true;
+            fromMissile.removeMe = true;
         }
     };
 };
@@ -97,7 +101,7 @@ function missileExplosionClass() {
 function drawAndRemoveMissiles() {
     for(var i=0;i<missileList.length;i++) {
         missileList[i].draw();
-        if (missileList[i].missileDestroyed) {
+        if (missileList[i].missileHealth == 0) {
             if (canSpawnPowerUp()) {
                 spawnPowerUp(missileList[i]);
             }

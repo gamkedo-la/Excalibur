@@ -66,26 +66,19 @@ function shotClass(x, y, angle, speed) {
             } // end of ship collision check
         } // end of for shipList.length
         for (var m = 0; m < missileList.length; m++) {
-            if (!this.missileDestroyed) {
-                if (isColliding_AABB_LineSeg(missileList[m].colliderAABB, this.colliderLineSeg) && !missileList[m].isDamaged) {
+            if (isColliding_AABB_LineSeg(missileList[m].colliderAABB, this.colliderLineSeg) 
+                && !missileList[m].isDamaged) {
 
-                    alienHitExplosion(this.position.x,this.position.y);
+                if(!missileList[m].isDamaged){
+                    missileList[m].isDamaged = true;
+                }
 
-                    if(!missileList[m].isDamaged){
-                        score += scoreForMissileShot;
-                        missileList[m].isDamaged = true;
-                    }
+                if (missileList[m].missileHealth == 0) {
+                    missileList[m].removeMe = true;
+                }
 
-                    if (this.missileDestroyed) {
-                        if (canSpawnPowerUp()) {
-                            spawnPowerUp(missileList[m]);
-                        }
-                        missileList[m].removeMe = true;
-                    }
-
-                    this.removeMe = true;
-                } // end of missile collision check
-            } // end of this.missileDestroyed == false;
+                this.removeMe = true;
+            } // end of missile collision check
         } // end of for missileList.length
         for (var t = 0; t < alienList.length; t++) {
             if (isColliding_AABB_LineSeg(alienList[t].colliderAlienAABB, this.colliderLineSeg)) {
