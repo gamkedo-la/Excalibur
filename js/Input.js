@@ -87,6 +87,7 @@ function windowOnBlur() {
 		clearInterval(gameShipSpawn);
 		clearInterval(gameGunnerSpawn);
 		windowState.inFocus = false;
+        isPaused = false;
 		clearInterval(gameUpdate);
 	}
 };
@@ -94,14 +95,12 @@ function windowOnBlur() {
 function gameIsPaused(){
     if(isPaused) {
         gameUpdate = setInterval(update, 1000/30);
-        console.log("playing")
          isPaused = true;
     }  else if (!isPaused) {
         clearInterval(gameShipSpawn);
 		clearInterval(gameGunnerSpawn);
-        clearInterval(gameUpdate)
+        clearInterval(gameUpdate);
         isPaused = false;
-        console.log("is paused")
     }
 }
 
