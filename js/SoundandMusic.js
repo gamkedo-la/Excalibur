@@ -9,8 +9,13 @@ var explosionSound = new SoundOverlapsClass("./audio/LoudExplosion");
 var zebesBackgroundMusic = "./audio/dew-drops";
 var computerBackgroundMusic = "./audio/suspain"
 var menuMusic = "./audio/beeblebrox";
+
+//game over music
 var gameOverMusic = "./audio/GameOverMusic";
 var gameOverCompMusic = "./audio/GameOverCompLvlMusic";
+//back up sound?
+var endSound = new SoundOverlapsClass("./audio/EndSound");
+
 var currentBackgroundMusic = new backgroundMusicClass();
 
 var currentVolume = 1.0;

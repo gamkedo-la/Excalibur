@@ -7,7 +7,7 @@ function gameOverSequence() {
     this.gameOverImages; // array set in startGameOverSequence so after load
     var endScreenFrame = 0;
     var framesBetweenRows = 4;
-    var framesShowingGameOverTextBeforeReset = 83;
+    var framesShowingGameOverTextBeforeReset = /*14*/ 83;
     var artHeightTopNow = 0; // top y of next row to draw
     var framesSinceGameOverShown = -1;
 
@@ -17,7 +17,12 @@ function gameOverSequence() {
     };
 
     this.startGameOverSequence = function() {
-      currentBackgroundMusic.loopSong(gameOverMusic);
+        currentBackgroundMusic.loopSong(gameOverMusic);
+        //currentBackgroundMusic.loopSong(gameOverCompMusic);
+        
+        /*currentBackgroundMusic.pauseSound();
+       endSound.play();*/
+        
 	  // TODO: pass gameover music into currentBackgroundMusic.loopSong()
       this.gameOverImages = [singleAlienGameOver,
                           tripleAliensGameOver];
