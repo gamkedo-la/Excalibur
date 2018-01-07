@@ -250,6 +250,7 @@ function keyPress(evt) {
 		case KEY_O:
 			if(windowState.firstLoad){
 				windowState.firstLoad = false;
+				gameLoaded = true;
 			}
 			orchestratorMode = true;
 			break;

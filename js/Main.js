@@ -140,9 +140,10 @@ function resetGame() {
 	clearInterval(gameGunnerSpawn);
 	clearAllExplosions();
 	currentBackgroundFar = backgroundFarPic;
-	currentBackgroundMed = backgroundMedPic;
+	currentBackgroundMed = backgroundTitlePic;
 	currentBackgroundNear = backgroundNearPic;
 	windowState.firstLoad = true;
+	windowState.help = false;
 	orchestratorMode = false;
 	assaultMode = false;
 	isSpawningWave = false;
