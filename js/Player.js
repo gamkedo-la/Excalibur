@@ -75,6 +75,7 @@ function hitPlayer() {
   if(!orchestratorMode){
     playerHP--;
     playerHitExplosion(playerX,playerY);
+    explosionSound.play();
   } else {
     // do nothing
   }
