@@ -79,6 +79,9 @@ function windowOnFocus() {
 			gameShipSpawn = setInterval(shipSpawn, 500);
 			gameGunnerSpawn = setInterval(gunnerSpawn, 1500);
 		}
+        if (waveStarted && !gameOverManager.gameOverPlaying) {
+            resumeSound.play();
+        }
 	}
 };
 
@@ -87,21 +90,27 @@ function windowOnBlur() {
 		clearInterval(gameShipSpawn);
 		clearInterval(gameGunnerSpawn);
         showPausedScreen();
+        /*pauseSound.play();*/
 		windowState.inFocus = false;
         isPaused = false;
 		clearInterval(gameUpdate);
 	}
+    if (waveStarted && !gameOverManager.gameOverPlaying) {
+            pauseSound.play();
+        }
 };
 
 function gameIsPaused(){
     if(isPaused && waveStarted && !gameOverManager.gameOverPlaying) {
         gameUpdate = setInterval(update, 1000/30);
+        resumeSound.play();
         console.log("playing");
          isPaused = true;
     }  else if (!isPaused && waveStarted && !gameOverManager.gameOverPlaying) {
         clearInterval(gameShipSpawn);
 		clearInterval(gameGunnerSpawn);
         showPausedScreen();
+        pauseSound.play();
         clearInterval(gameUpdate);
         console.log("is paused");
         isPaused = false;

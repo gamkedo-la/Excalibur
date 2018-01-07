@@ -3,6 +3,8 @@ var audioFormat;
 var regularShotSound = new SoundOverlapsClass("./audio/RegularShot");
 var waveShotSound = new SoundOverlapsClass("./audio/WaveShot");
 var shieldPowerUpSound = new SoundOverlapsClass("./audio/ShieldPowerUp");
+var pauseSound = new SoundOverlapsClass("./audio/PauseSound");
+var resumeSound = new SoundOverlapsClass("./audio/ResumeSound");
 var zebesBackgroundMusic = "./audio/dew-drops";
 var computerBackgroundMusic = "./audio/suspain"
 var menuMusic = "./audio/beeblebrox";
