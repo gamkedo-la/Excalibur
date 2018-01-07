@@ -90,7 +90,6 @@ function windowOnBlur() {
 		clearInterval(gameShipSpawn);
 		clearInterval(gameGunnerSpawn);
         showPausedScreen();
-        /*pauseSound.play();*/
 		windowState.inFocus = false;
         isPaused = false;
 		clearInterval(gameUpdate);
@@ -98,7 +97,7 @@ function windowOnBlur() {
 	    if (waveStarted && !gameOverManager.gameOverPlaying) {
 	        pauseSound.play();
 	    }
-	}
+    }
 };
 
 function gameIsPaused(){
