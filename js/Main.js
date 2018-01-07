@@ -73,7 +73,7 @@ function update() {
 			 if(TitleTextX >= canvas.width/2 + 10){
 			 	TitleTextX-=15;
 			 }
-			 else{
+			 else if(!windowState.help){
 				opacity = opacity + 0.009;
 			 }
 		}
@@ -86,7 +86,7 @@ function update() {
 			 colorText("3) Tab to use secondary weapon",250,310 ,"white","15px Tahoma","left",opacity);
             colorText("4) P to pause game",250,340 ,"white","15px Tahoma","left",opacity);
 			 colorText('Press (Enter) to Start game',canvas.width/2 ,canvas.height/2 + 120,"white","20px Tahoma","center",opacity);
-			 opacity = opacity + 0.002;
+			 opacity = opacity + 0.009;
 		}
 
 		else if(!windowState.help && !windowState.firstLoad){
