@@ -45,6 +45,7 @@ window.onload = function () {
 	initializeInput();
 	loadImages();
 	initExplosions();
+	mainMenu.initialize();
 };
 
 function loadingDoneSoStartGame () {
@@ -55,38 +56,36 @@ function update() {
     isPaused = false;
 	if (windowState.inFocus){
 		if(windowState.firstLoad){
-			 drawSkyGradient(); 
-			 canvasContext.drawImage(currentBackgroundFar,0,0);
-			 canvasContext.drawImage(currentBackgroundMed,0,0);
-			 colorText('Excalibur',TitleTextX,canvas.height/2-40 ,"white","40px Tahoma","center");
-			 colorText('Space Defence System',subTitleTextX ,canvas.height/2,"white","40px Tahoma","center");
-			 colorText("[H] for Help",canvas.width/2  - 5,canvas.height/2  + 80,"white","15px Tahoma","center",opacity);
-			 colorText("[Enter] to Play",canvas.width/2  - 5,canvas.height/2  + 100,"white","15px Tahoma","center",opacity);
-			 colorText("[O] for Orchestrator Mode",canvas.width/2  - 5,canvas.height/2  + 120,"white","15px Tahoma","center",opacity);
-
+			drawSkyGradient(); 
+			canvasContext.drawImage(currentBackgroundFar,0,0);
+			canvasContext.drawImage(currentBackgroundMed,0,0);
+			colorText('Excalibur',TitleTextX,canvas.height/2-40 ,"white",mainMenu.titleFont,"center");
+			colorText('Space Defence System',subTitleTextX ,canvas.height/2,"white",mainMenu.titleFont,"center");
 			
+			mainMenu.drawButtons(opacity);
+				
+				
+			if(subTitleTextX <= canvas.width/2 - 12 ){
+				subTitleTextX+=15;
 
-			 if(subTitleTextX <= canvas.width/2 - 12 ){
-			 	subTitleTextX+=15;
-
-			 }
-			 if(TitleTextX >= canvas.width/2 + 10){
-			 	TitleTextX-=15;
-			 }
-			 else if(!windowState.help){
+			}
+			if(TitleTextX >= canvas.width/2 + 10){
+				TitleTextX-=15;
+			}
+			else if(!windowState.help){
 				opacity = opacity + 0.009;
-			 }
+			}
 		}
 		if(windowState.help){
-			 drawSkyGradient();  
-			 canvasContext.drawImage(backgroundFarPic,0,0);
-			 colorText('How To Play',canvas.width/2 ,130,"white","30px Tahoma","center",opacity);
-			 colorText("1) WASD or Arrow Keys for Movements",250 ,250 ,"white","15px Tahoma","left",opacity);
-			 colorText("2) Primary Mouse button for Shooting",250,280 ,"white","15px Tahoma","left",opacity);
-			 colorText("3) Tab to use secondary weapon",250,310 ,"white","15px Tahoma","left",opacity);
-            colorText("4) P to pause game",250,340 ,"white","15px Tahoma","left",opacity);
-			 colorText('Press (Enter) to Start game',canvas.width/2 ,canvas.height/2 + 120,"white","20px Tahoma","center",opacity);
-			 opacity = opacity + 0.009;
+			drawSkyGradient();  
+			canvasContext.drawImage(backgroundFarPic,0,0);
+			colorText('How To Play',canvas.width/2 ,130,"white","30px Tahoma","center",opacity);
+			colorText("1) WASD or Arrow Keys for Movements",250 ,250 ,"white","15px Tahoma","left",opacity);
+			colorText("2) Primary Mouse button for Shooting",250,280 ,"white","15px Tahoma","left",opacity);
+			colorText("3) Tab to use secondary weapon",250,310 ,"white","15px Tahoma","left",opacity);
+			colorText("4) P to pause game",250,340 ,"white","15px Tahoma","left",opacity);
+			colorText('Press (Enter) to Start game',canvas.width/2 ,canvas.height/2 + 120,"white","20px Tahoma","center",opacity);
+			opacity = opacity + 0.009;
 		}
 
 		else if(!windowState.help && !windowState.firstLoad){
@@ -122,7 +121,7 @@ function drawAll() {
 	drawPlayer();
 	drawAndRemovePowerUps();
 	drawScore();
-    drawLives()
+	drawLives()
 	drawExplosions();
 }
 
@@ -207,25 +206,25 @@ function drawLives() {
 }
 
 function showPausedScreen() {
-    if(!isPaused && waveStarted && !gameOverManager.gameOverPlaying){
-        colorText("- P A U S E D -", pausedScreen, canvas.height/2, "white", "40px Arial", "center");
-        console.log("showing pause screen");
-    }
+	if(!isPaused && waveStarted && !gameOverManager.gameOverPlaying){
+		colorText("- P A U S E D -", pausedScreen, canvas.height/2, "white", "40px Arial", "center");
+		console.log("showing pause screen");
+	}
 }
 
 // optimization todo: support wider background wrap but draw only on-screen portion
 function wrappedDraw(whichImg,pixelOffset) {
 	var wrappedOffset = pixelOffset % whichImg.width;
 	canvasContext.drawImage(whichImg, 0,0, 
-							whichImg.width-wrappedOffset,whichImg.height,
-							wrappedOffset,0,
-							whichImg.width-wrappedOffset,whichImg.height);
+	                        whichImg.width-wrappedOffset,whichImg.height,
+	                        wrappedOffset,0,
+	                        whichImg.width-wrappedOffset,whichImg.height);
 	var drawSize = (whichImg.width-wrappedOffset);
 	if(drawSize<whichImg.width) { // avoids Firefox issue on 0 image dim
-		canvasContext.drawImage(whichImg, drawSize,0, 
-			wrappedOffset,whichImg.height,
-			0,0,
-			wrappedOffset,whichImg.height);
+		canvasContext.drawImage(whichImg, drawSize,0,
+		                        wrappedOffset,whichImg.height,
+		                        0,0,
+		                        wrappedOffset,whichImg.height);
 	}
 }
 
@@ -234,7 +233,7 @@ function wrappedDraw(whichImg,pixelOffset) {
 function drawSkyGradient() {
 	canvasContext.drawImage(
 		timeOfDayGradient,
-		0+((masterFrameDelayTick*0.2)%timeOfDayGradient.width),0,1,100, // source x,y,w,d (scroll source x over time)
+		((masterFrameDelayTick*0.2)%timeOfDayGradient.width),0,1,100, // source x,y,w,d (scroll source x over time)
 		0,0,800,600); // dest x,y,w,d (scale one pixel worth of the gradient to fill entire screen)
 }
 
@@ -246,4 +245,20 @@ function drawScrollingBackground() {
 	wrappedDraw(currentBackgroundFar, masterFrameDelayTick * 0.15);
 	wrappedDraw(currentBackgroundMed, masterFrameDelayTick * 0.6);
 	wrappedDraw(currentBackgroundNear, masterFrameDelayTick * 4.6);
+}
+
+function startGame() {
+	windowState.firstLoad = false;
+	gameLoaded = true;
+}
+
+function openHelp() {
+	windowState.help = true;
+}
+
+function startOrchestratorMode() {
+	if(windowState.firstLoad){
+		startGame();
+	}
+	orchestratorMode = true;
 }

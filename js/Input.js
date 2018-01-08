@@ -65,8 +65,8 @@ function initializeInput() {
 		case CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING:
 			console.log("Using control scheme: arrow/WASD keys steer, mouse aims");
 			canvas.addEventListener('mousemove', calculateMousePos);
-			canvas.addEventListener('mousedown', function() {holdFire=true; /*console.log(topLeft,topRight)*/});
-			canvas.addEventListener('mouseup', function() {holdFire=false;});
+			canvas.addEventListener('mousedown', onMouseDown);
+			canvas.addEventListener('mouseup', onMouseUp);
 			break;
 	}
 }
@@ -239,8 +239,7 @@ function keyPress(evt) {
             break;
 		case KEY_ENTER:
 			if(windowState.firstLoad){
-				windowState.firstLoad = false;
-				gameLoaded = true;
+				startGame();
 			}
 			if(windowState.help){
 				windowState.help = false;
@@ -248,11 +247,7 @@ function keyPress(evt) {
 			}
 			break;
 		case KEY_O:
-			if(windowState.firstLoad){
-				windowState.firstLoad = false;
-				gameLoaded = true;
-			}
-			orchestratorMode = true;
+			startOrchestratorMode();
 			break;
 		case DIGIT_1:
 			if(orchestratorMode) {
@@ -304,7 +299,7 @@ function keyPress(evt) {
 			break;
 
 		case KEY_H:
-			windowState.help = true;
+			openHelp();
 			break;
 		case KEY_ESCAPE:
 			resetGame();
@@ -385,4 +380,29 @@ function calculateMousePos(evt) {
     const root = document.documentElement;
     mouseX = evt.clientX - rect.left - root.scrollLeft;
     mouseY = evt.clientY - rect.top - root.scrollTop;
+}
+
+function onMouseDown(evt) {
+	evt.preventDefault();
+	switch (evt.button) { //switch in case more mouse buttons are added
+		case 0:
+			holdFire=true;
+			
+			if(windowState.firstLoad) {
+				mainMenu.checkButtons();
+			}
+			break;
+	}
+}
+
+function onMouseUp(evt) {
+	switch (evt.button) {
+		case 0:
+			holdFire=false;
+			break;
+	}
+}
+
+function mouseInside(x, y, width, height) {
+	return mouseX > x && mouseX < x + width && mouseY > y	&& mouseY < y + height;
 }

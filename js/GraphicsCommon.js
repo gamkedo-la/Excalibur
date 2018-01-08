@@ -70,3 +70,25 @@ function colorText(showWords,textX,textY,fillColor,fontface,textAlign = 'left',o
   canvasContext.fillText(showWords, textX, textY);
   canvasContext.restore();
 }
+
+function getFontWeight(font) {
+  canvasContext.save();
+  canvasContext.font = this.buttonFont;
+  
+  var weight = parseInt(font.match(/\d+/)[0]); //regex match the first string of digits
+  
+  canvasContext.restore();
+  
+  return weight;
+}
+
+function getTextWidth(txt, font) {
+  canvasContext.save();
+  canvasContext.font = font;
+  
+  var width = canvasContext.measureText(txt).width;
+  
+  canvasContext.restore();
+  
+  return width;
+}
