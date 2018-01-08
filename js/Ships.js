@@ -78,7 +78,7 @@ function shipClass() {
 		if (!this.isDamaged) {
 			var movingLeft = this.velocity.x < 0;
 			var movingRight = this.velocity.x > 0;
-			if (this.hasDroppedYet) {
+			if (!this.hasDroppedYet) {
 				if ((movingLeft && this.position.x < this.dropX) ||
 					(movingRight && this.position.x > this.dropX)) {
 					this.hasDroppedYet = true;
