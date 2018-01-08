@@ -246,6 +246,11 @@ function keyPress(evt) {
 				windowState.help = false;
 				gameLoaded = true;
 			}
+            if(gameOverManager.gameOverPlaying) {
+                gameOverManager.gameOverPlaying = false;
+                resetGame();
+                gameLoaded = true;
+            }
 			break;
 		case KEY_O:
 			if(windowState.firstLoad){
