@@ -31,17 +31,25 @@ var canvas, canvasContext;
 currentBackgroundMusic.loopSong(menuMusic);
 
 window.onload = function () {
+	window.addEventListener("focus", windowOnFocus);
+ 	window.addEventListener("blur", windowOnBlur);
+	
 	canvas = document.createElement("canvas");
 	canvas.width = 800;
 	canvas.height = 600;
+	
 	TitleTextX = canvas.width;
 	subTitleTextX = 0;
 	opacity = 0;
-    pausedScreen = canvas.width/2;
+	
+	pausedScreen = canvas.width/2;
+	
 	document.body.appendChild(canvas);
 	canvasContext = canvas.getContext("2d");
+	
 	cannonEndX = playerX = canvas.width/2;
 	cannonEndY = playerY = canvas.height-playerHeight;
+	
 	initializeInput();
 	loadImages();
 	initExplosions();
@@ -261,3 +269,35 @@ function startOrchestratorMode() {
 	}
 	orchestratorMode = true;
 }
+
+function windowOnFocus() {
+	currentBackgroundMusic.resumeSound();
+	if(!windowState.inFocus) {
+		windowState.inFocus = true;
+		gameUpdate = setInterval(update, 1000/30);
+		
+		if (assaultMode){
+			gameShipSpawn = setInterval(shipSpawn, 500);
+			gameGunnerSpawn = setInterval(gunnerSpawn, 1500);
+		}
+		if (waveStarted && !gameOverManager.gameOverPlaying) {
+			resumeSound.play();
+		}
+	}
+};
+
+function windowOnBlur() { 
+	currentBackgroundMusic.pauseSound();
+	if (pauseOnLoseFocus && !isPaused) {
+		clearInterval(gameShipSpawn);
+		clearInterval(gameGunnerSpawn);
+		showPausedScreen();
+		windowState.inFocus = false;
+		isPaused = false;
+		clearInterval(gameUpdate);
+		
+		if (waveStarted && !gameOverManager.gameOverPlaying) {
+			pauseSound.play();
+		}
+	}
+};

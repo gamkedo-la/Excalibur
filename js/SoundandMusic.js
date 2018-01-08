@@ -52,6 +52,10 @@ function backgroundMusicClass() {
         musicSound.pause();
     }
 
+    this.resumeSound = function() {
+        musicSound.play();
+    }
+		
     this.startOrStopMusic = function() {
         if (musicSound.paused) {
             musicSound.play();

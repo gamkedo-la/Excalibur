@@ -55,8 +55,6 @@ var isPaused = false;
 function initializeInput() {
 	document.addEventListener("keydown",keyPress);
 	document.addEventListener("keyup",keyRelease);
-	window.addEventListener("focus", windowOnFocus);
- 	window.addEventListener("blur", windowOnBlur);
 
 	switch(controlScheme) {
 		case CONTROL_SCHEME_KEYS_STATIONARY:
@@ -70,35 +68,6 @@ function initializeInput() {
 			break;
 	}
 }
-
-function windowOnFocus() {
-	if(!windowState.inFocus) {
-		windowState.inFocus = true;
-		gameUpdate = setInterval(update, 1000/30);
-		if (assaultMode){
-			gameShipSpawn = setInterval(shipSpawn, 500);
-			gameGunnerSpawn = setInterval(gunnerSpawn, 1500);
-		}
-        if (waveStarted && !gameOverManager.gameOverPlaying) {
-            resumeSound.play();
-        }
-	}
-};
-
-function windowOnBlur() { 
-	if (pauseOnLoseFocus && !isPaused) {
-		clearInterval(gameShipSpawn);
-		clearInterval(gameGunnerSpawn);
-        showPausedScreen();
-		windowState.inFocus = false;
-        isPaused = false;
-		clearInterval(gameUpdate);
-		
-	    if (waveStarted && !gameOverManager.gameOverPlaying) {
-	        pauseSound.play();
-	    }
-    }
-};
 
 function gameIsPaused(){
     if(isPaused && waveStarted && !gameOverManager.gameOverPlaying) {
