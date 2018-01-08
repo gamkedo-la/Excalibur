@@ -270,7 +270,9 @@ function keyPress(evt) {
 			openHelp();
 			break;
 		case KEY_ESCAPE:
+            if(!gameOverManager.gameOverPlaying){
 			resetGame();
+            }
 			break;
 		case KEY_TAB:
 			fireMode = FIREMODE_WAVE;
