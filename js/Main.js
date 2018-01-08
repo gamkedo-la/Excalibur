@@ -63,6 +63,7 @@ function update() {
 			colorText('Excalibur',TitleTextX,canvas.height/2-40 ,"white",mainMenu.titleFont,"center");
 			colorText('Space Defence System',subTitleTextX ,canvas.height/2,"white",mainMenu.titleFont,"center");
 			
+			mainMenu.handleSliders();
 			mainMenu.drawButtons(opacity);
 				
 				

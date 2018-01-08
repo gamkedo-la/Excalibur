@@ -78,7 +78,7 @@ function shipClass() {
 		if (!this.isDamaged) {
 			var movingLeft = this.velocity.x < 0;
 			var movingRight = this.velocity.x > 0;
-			if (this.hasDroppedYet == false) {
+			if (this.hasDroppedYet) {
 				if ((movingLeft && this.position.x < this.dropX) ||
 					(movingRight && this.position.x > this.dropX)) {
 					this.hasDroppedYet = true;
@@ -111,7 +111,7 @@ function shipSpawn() {
 
 function getValidDropX(maxWidth) {
   var safeToDropHere = false;
-  while(safeToDropHere === false) {
+  while(!safeToDropHere) {
     safeToDropHere = true;
 
     validXPixelTopDrop = Math.random() * maxWidth;

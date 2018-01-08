@@ -8,6 +8,9 @@ mainMenu = {
 	//Must initialize these after the canvas has been set up
 	buttonProperties: {},
 	buttons: [],
+	volumeSlider: {},
+	
+	volumeSliderActive: false,
 	
 	initialize: function() {
 		this.buttonProperties = {
@@ -32,6 +35,24 @@ mainMenu = {
 				onClick : startOrchestratorMode,
 			},
 		];
+		
+		this.volumeSlider = new function(){
+			this.txt = "Master Volume";
+			this.spacing = 5;
+			
+			this.width = 200;
+			this.height = 10;
+			this.x = canvas.width/2  - 5 - this.width/2;
+			this.y = canvas.height/2  + 180 - this.height/2;
+			
+			this.handleWidth = 30;
+			this.handleHeight = 30;
+			this.handlePosition = currentVolume;
+			this.handleY = this.y - this.handleHeight/2 + this.height/2;
+			this.getHandleX = function() {
+				return this.x + this.handlePosition * (this.width - this.handleWidth);
+			};
+		};
 		
 		this.setButtonBounds();
 	},
@@ -61,12 +82,37 @@ mainMenu = {
 				this.buttons[i].onClick();
 			}
 		}
+		
+		var slider = this.volumeSlider;
+		
+		if(mouseInside(slider.getHandleX(), slider.handleY, slider.handleWidth, slider.handleHeight)) {
+			this.volumeSliderActive = true;
+		}
+	},
+	
+	handleSliders: function() {
+		if(this.volumeSliderActive) {
+			var slider = this.volumeSlider;
+			
+			var handleX = mouseX - slider.handleWidth/2;
+			
+			handleX = clamp(handleX, slider.x, slider.x + slider.width - slider.handleWidth);
+			setVolume((handleX - slider.x)/(slider.width - slider.handleWidth));
+			this.volumeSlider.handlePosition = currentVolume;
+			
+			localStorage.setItem("masterVolume", currentVolume);
+		}
+	},
+	
+	releaseSliders: function() {
+		this.volumeSliderActive = false;
 	},
 	
 	drawButtons: function(opacity) {
+		var prop = this.buttonProperties;
+		
 		for (var i = 0; i < this.buttons.length; i++) {
 			var bounds = this.buttons[i].bounds;
-			var prop = this.buttonProperties;
 			
 			var fontOverhangAdjustment = (bounds.height - prop.padding * 2) * this.fontOverhangRatio;
 			var posX = bounds.x + prop.padding;
@@ -85,5 +131,17 @@ mainMenu = {
 				canvasContext.globalAlpha = tempAlpha;
 			}
 		}
+		
+		var slider = this.volumeSlider;
+		drawRect(slider.x, slider.y, slider.width, slider.height, "yellow");
+		drawRect(slider.getHandleX(), slider.handleY, slider.handleWidth, slider.handleHeight, "purple");
+		
+		var txtX = slider.x + slider.width/2;
+		var txtY = slider.y - getFontWeight(this.buttonFont) + slider.spacing;
+		colorText(slider.txt, txtX, txtY, "white", this.buttonFont, "center", opacity);
 	},
+};
+
+var clamp = function(n, min, max) {
+  return Math.min(Math.max(n, min), max);
 };

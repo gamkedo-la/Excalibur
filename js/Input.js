@@ -367,6 +367,10 @@ function onMouseUp(evt) {
 	switch (evt.button) {
 		case 0:
 			holdFire=false;
+			
+			if(windowState.mainMenu) {
+				mainMenu.releaseSliders();
+			}
 			break;
 	}
 }

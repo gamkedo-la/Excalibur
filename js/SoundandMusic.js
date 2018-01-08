@@ -18,7 +18,12 @@ var endSound = new SoundOverlapsClass("./audio/EndSound");
 
 var currentBackgroundMusic = new backgroundMusicClass();
 
-var currentVolume = 1.0;
+var currentVolume = localStorage.getItem("masterVolume");
+if(currentVolume === null){
+	currentVolume = 1;
+}
+	
+
 var previousVolume = 1.0;
 var isMuted = false;
 const VOLUME_INCREMENT = 0.05;
