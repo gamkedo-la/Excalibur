@@ -17,20 +17,21 @@ function gameOverSequence() {
     };
 
     this.startGameOverSequence = function() {
+        waveStarted = false;
         currentBackgroundMusic.loopSong(gameOverMusic);
         //currentBackgroundMusic.loopSong(gameOverCompMusic);
         
         /*currentBackgroundMusic.pauseSound();
-       endSound.play();*/
+        endSound.play();*/
         
-	  // TODO: pass gameover music into currentBackgroundMusic.loopSong()
-      this.gameOverImages = [singleAlienGameOver,
-                          tripleAliensGameOver];
-      endScreenFrame = 0;
-      artHeightTopNow = 0;
-      framesSinceGameOverShown = -1;
-      this.gameOverPlaying = true;
-      drawRect(0,0,canvas.width,canvas.height,"black");
+        // TODO: pass gameover music into currentBackgroundMusic.loopSong()
+        this.gameOverImages = [singleAlienGameOver,
+                              tripleAliensGameOver];
+        endScreenFrame = 0;
+        artHeightTopNow = 0;
+        framesSinceGameOverShown = -1;
+        this.gameOverPlaying = true;
+        drawRect(0,0,canvas.width,canvas.height,"black");
     }
 
     this.animateLosingScreen = function() {

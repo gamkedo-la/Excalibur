@@ -69,18 +69,22 @@ function initializeInput() {
 	}
 }
 
-function gameIsPaused(){
-    if(isPaused && waveStarted && !gameOverManager.gameOverPlaying) {
-        gameUpdate = setInterval(update, 1000/30);
-        resumeSound.play();
-         isPaused = true;
-    }  else if (!isPaused && waveStarted && !gameOverManager.gameOverPlaying) {
+function togglePause(){
+    if(!waveStarted || windowState.help){
+        return;
+    }
+
+    isPaused = !isPaused;
+		
+    if(isPaused) {
         clearInterval(gameShipSpawn);
-		clearInterval(gameGunnerSpawn);
+        clearInterval(gameGunnerSpawn);
         showPausedScreen();
         pauseSound.play();
         clearInterval(gameUpdate);
-        isPaused = false;
+    } else {
+        gameUpdate = setInterval(update, 1000/30);
+        resumeSound.play();
     }
 }
 
@@ -195,28 +199,20 @@ function keyPress(evt) {
 	}
 
 	switch (evt.keyCode) {
-        case KEY_P:
-            if(isPaused) {
-                gameIsPaused();
-                isPaused = false; 
-            } else if (!isPaused) {
-                gameIsPaused();
-                isPaused = true;
-            }
-            break;
+		case KEY_P:
+			togglePause();
+			break;
 		case KEY_ENTER:
-			if(windowState.firstLoad){
+			if(windowState.mainMenu){
 				startGame();
 			}
 			if(windowState.help){
-				windowState.help = false;
-				gameLoaded = true;
+				startGame();
 			}
-            if(gameOverManager.gameOverPlaying) {
-                gameOverManager.gameOverPlaying = false;
-                resetGame();
-                gameLoaded = true;
-            }
+			if(gameOverManager.gameOverPlaying) {
+				gameOverManager.gameOverPlaying = false;
+				resetGame();
+			}
 			break;
 		case KEY_O:
 			startOrchestratorMode();
@@ -360,7 +356,7 @@ function onMouseDown(evt) {
 		case 0:
 			holdFire=true;
 			
-			if(windowState.firstLoad) {
+			if(windowState.mainMenu) {
 				mainMenu.checkButtons();
 			}
 			break;

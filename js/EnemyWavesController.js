@@ -142,7 +142,7 @@ function intermission() {
 }
 
 function changeBackground(stage) {
-	if (!windowState.help && !windowState.firstLoad) {
+	if (!windowState.help && !windowState.mainMenu) {
 		if (stage == ZEBES_BACKGROUND) {
 			currentBackgroundMusic.loopSong(zebesBackgroundMusic);
 			currentBackgroundMed = backgroundMedPic;

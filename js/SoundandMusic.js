@@ -55,7 +55,7 @@ function backgroundMusicClass() {
     this.resumeSound = function() {
         musicSound.play();
     }
-		
+
     this.startOrStopMusic = function() {
         if (musicSound.paused) {
             musicSound.play();
@@ -117,10 +117,10 @@ function toggleMute() {
 	}
 }
 
-function changeVolume(amount)
+function setVolume(amount)
 {
 	isMuted = false;
-	currentVolume += amount;
+	currentVolume = amount;
 	if(currentVolume > 1.0) {
 		currentVolume = 1.0;
 	} else if (currentVolume <= 0.0) {
@@ -131,9 +131,9 @@ function changeVolume(amount)
 }
 
 function turnVolumeUp() {
-	changeVolume(VOLUME_INCREMENT);
+	setVolume(currentVolume + VOLUME_INCREMENT);
 }
 
 function turnVolumeDown() {
-	changeVolume(-VOLUME_INCREMENT);
+	setVolume(currentVolume - VOLUME_INCREMENT);
 }

@@ -4,8 +4,6 @@ const scoreForAlienShot = 50;
 const scoreForParachuteShot = 75;
 var score=0;
 
-var gameLoaded = false;
-
 var currentBackgroundFar = backgroundFarPic;
 var	currentBackgroundMed = backgroundTitlePic;
 var	currentBackgroundNear = backgroundNearPic;
@@ -15,12 +13,10 @@ var gameOverManager = new gameOverSequence();
 var windowState = {
 	inFocus : true, 
 	help : false,
-	firstLoad : true, 
+	mainMenu : true, 
 };
 
 var TitleTextX, subTitleTextX,opacity;
-
-var pausedScreen;
 
 var gameUpdate;
 var gameShipSpawn;
@@ -42,8 +38,6 @@ window.onload = function () {
 	subTitleTextX = 0;
 	opacity = 0;
 	
-	pausedScreen = canvas.width/2;
-	
 	document.body.appendChild(canvas);
 	canvasContext = canvas.getContext("2d");
 	
@@ -61,9 +55,8 @@ function loadingDoneSoStartGame () {
 }
 
 function update() {
-    isPaused = false;
 	if (windowState.inFocus){
-		if(windowState.firstLoad){
+		if(windowState.mainMenu){
 			drawSkyGradient(); 
 			canvasContext.drawImage(currentBackgroundFar,0,0);
 			canvasContext.drawImage(currentBackgroundMed,0,0);
@@ -84,7 +77,7 @@ function update() {
 				opacity = opacity + 0.009;
 			}
 		}
-		if(windowState.help){
+		else if(windowState.help){
 			drawSkyGradient();  
 			canvasContext.drawImage(backgroundFarPic,0,0);
 			colorText('How To Play',canvas.width/2 ,130,"white","30px Tahoma","center",opacity);
@@ -95,9 +88,8 @@ function update() {
 			colorText('Press (Enter) to Start game',canvas.width/2 ,canvas.height/2 + 120,"white","20px Tahoma","center",opacity);
 			opacity = opacity + 0.009;
 		}
-
-		else if(!windowState.help && !windowState.firstLoad){
-				if(gameOverManager.gameOverPlaying == false) {
+		else {
+				if(!gameOverManager.gameOverPlaying) {
 					drawScrollingBackground();
 					handleInput();
 					moveAll();
@@ -107,10 +99,6 @@ function update() {
 				checkFrameCount();
 			} else {
 				orchestratorFrameCount();
-			}
-			if (gameLoaded) {
-				changeBackground(currentStageIndex);
-				gameLoaded = false;
 			}
 		}		
 	}
@@ -145,19 +133,26 @@ function moveAll() {
 function resetGame() {
 	clearInterval(gameShipSpawn);
 	clearInterval(gameGunnerSpawn);
+	clearInterval(gameUpdate);
+
 	clearAllExplosions();
+	
 	currentBackgroundFar = backgroundFarPic;
 	currentBackgroundMed = backgroundTitlePic;
 	currentBackgroundNear = backgroundNearPic;
-	windowState.firstLoad = true;
+	
+	windowState.mainMenu = true;
 	windowState.help = false;
 	orchestratorMode = false;
 	assaultMode = false;
+	
 	isSpawningWave = false;
 	waveCompleted = false;
 	waveEndExcuted = false;
 	waveStarted = false;
+	isPaused = false;
 	enableIntermission = false;
+	
 	currentSpawnType = 0;
 	spawnFrameCount = 0;
 	currentEnemyIndex = 0;
@@ -166,17 +161,23 @@ function resetGame() {
 	currentWave = currentWaveIndex + 1; 
 	wave = [];
 	createNewWave = [];
+	
 	shotList = [];
 	shipList = [];
 	alienList = [];
 	missileList = [];
+	
 	resetPowerUps();
 	score=0;
 	playerHP = startHitpoints;
+	
 	TitleTextX = canvas.width;
 	subTitleTextX = 0;
 	opacity = 0;
+	
 	currentBackgroundMusic.loopSong(menuMusic);
+	
+	gameUpdate = setInterval(update, 1000/30);
 }
 
 function drawScore() {
@@ -214,9 +215,7 @@ function drawLives() {
 }
 
 function showPausedScreen() {
-    if(!isPaused && waveStarted && !gameOverManager.gameOverPlaying){
-        colorText("- P A U S E D -", pausedScreen, canvas.height/2, "white", "40px Arial", "center");
-    }
+    colorText("- P A U S E D -", canvas.width/2, canvas.height/2, "white", "40px Arial", "center");
 }
 
 // optimization todo: support wider background wrap but draw only on-screen portion
@@ -255,16 +254,23 @@ function drawScrollingBackground() {
 }
 
 function startGame() {
-	windowState.firstLoad = false;
-	gameLoaded = true;
+	windowState.help = false;
+	windowState.mainMenu = false;
+	
+	changeBackground(currentStageIndex);
 }
 
 function openHelp() {
+	if(isPaused) {
+		return;
+	}
+	
+	windowState.mainMenu = false;
 	windowState.help = true;
 }
 
 function startOrchestratorMode() {
-	if(windowState.firstLoad){
+	if(windowState.mainMenu){
 		startGame();
 	}
 	orchestratorMode = true;
@@ -280,7 +286,7 @@ function windowOnFocus() {
 			gameShipSpawn = setInterval(shipSpawn, 500);
 			gameGunnerSpawn = setInterval(gunnerSpawn, 1500);
 		}
-		if (waveStarted && !gameOverManager.gameOverPlaying) {
+		if (waveStarted) {
 			resumeSound.play();
 		}
 	}
@@ -291,13 +297,12 @@ function windowOnBlur() {
 	if (pauseOnLoseFocus && !isPaused) {
 		clearInterval(gameShipSpawn);
 		clearInterval(gameGunnerSpawn);
-		showPausedScreen();
 		windowState.inFocus = false;
-		isPaused = false;
 		clearInterval(gameUpdate);
 		
-		if (waveStarted && !gameOverManager.gameOverPlaying) {
+		if (waveStarted) {
 			pauseSound.play();
+			showPausedScreen();
 		}
 	}
 };
