@@ -38,22 +38,17 @@ mainMenu = {
 	
 	// Size the buttons based on the text length and font size
 	setButtonBounds: function(){
+		var prop = this.buttonProperties;
+		var height = getFontWeight(this.buttonFont) + prop.padding * 2; // Height is the same for all buttons
+		
 		for(var i = 0; i < this.buttons.length; i++) {
-			var prop = this.buttonProperties;
 			var bounds = {};
-			var textAnchor = {};
 			
-			bounds.width = getTextWidth(this.buttons[i].txt, this.buttonFont);
-			bounds.height = getFontWeight(this.buttonFont);
-			
-			bounds.width += prop.padding * 2;
-			bounds.height += prop.padding * 2;
+			bounds.width = getTextWidth(this.buttons[i].txt, this.buttonFont) + prop.padding * 2;
+			bounds.height = height;
 			
 			bounds.x = prop.anchorX - (bounds.width/2);
-			bounds.y = prop.anchorY - (bounds.height * this.fontOverhangRatio) + ((bounds.height + prop.verticalSpacing) * i);
-			
-			textAnchor.x = prop.anchorX;
-			textAnchor.y = prop.anchorY;
+			bounds.y = prop.anchorY - (height * this.fontOverhangRatio) + ((height + prop.verticalSpacing) * i);
 			
 			this.buttons[i].bounds = bounds;
 		}
