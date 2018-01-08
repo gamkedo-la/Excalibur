@@ -37,11 +37,13 @@ function gameOverSequence() {
       if(masterFrameDelayTick % framesBetweenRows != 0) {
         return;
       }
+    
 
       if (artHeightTopNow >= canvas.height) {
         if(framesSinceGameOverShown<0) {
           drawStroked('GAME OVER!!', canvas.width / 6, canvas.height / 2, 'red' , '80px Sans-serif')
-          drawStroked('Final Score :'+ score, canvas.width / 2, canvas.height / 2 + 80, 'white' , '60px Sans-serif','center')
+          drawStroked('Final Score :'+ score, canvas.width / 2, canvas.height / 2 + 80, 'white' , '60px Sans-serif','center');
+            drawStroked(" [  P R E S S  E N T E R  ]", canvas.width/2, canvas.height/2 + 140, "white", "30px arial", "center");
           framesSinceGameOverShown = framesShowingGameOverTextBeforeReset;
         } else if(framesSinceGameOverShown-- == 0) {
           this.gameOverPlaying = false;
