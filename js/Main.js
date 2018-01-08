@@ -206,10 +206,9 @@ function drawLives() {
 }
 
 function showPausedScreen() {
-	if(!isPaused && waveStarted && !gameOverManager.gameOverPlaying){
-		colorText("- P A U S E D -", pausedScreen, canvas.height/2, "white", "40px Arial", "center");
-		console.log("showing pause screen");
-	}
+    if(!isPaused && waveStarted && !gameOverManager.gameOverPlaying){
+        colorText("- P A U S E D -", pausedScreen, canvas.height/2, "white", "40px Arial", "center");
+    }
 }
 
 // optimization todo: support wider background wrap but draw only on-screen portion

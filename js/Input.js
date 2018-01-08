@@ -104,7 +104,6 @@ function gameIsPaused(){
     if(isPaused && waveStarted && !gameOverManager.gameOverPlaying) {
         gameUpdate = setInterval(update, 1000/30);
         resumeSound.play();
-        console.log("playing");
          isPaused = true;
     }  else if (!isPaused && waveStarted && !gameOverManager.gameOverPlaying) {
         clearInterval(gameShipSpawn);
@@ -112,7 +111,6 @@ function gameIsPaused(){
         showPausedScreen();
         pauseSound.play();
         clearInterval(gameUpdate);
-        console.log("is paused");
         isPaused = false;
     }
 }
@@ -245,6 +243,11 @@ function keyPress(evt) {
 				windowState.help = false;
 				gameLoaded = true;
 			}
+            if(gameOverManager.gameOverPlaying) {
+                gameOverManager.gameOverPlaying = false;
+                resetGame();
+                gameLoaded = true;
+            }
 			break;
 		case KEY_O:
 			startOrchestratorMode();
