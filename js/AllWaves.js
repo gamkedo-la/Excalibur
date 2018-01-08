@@ -29,3 +29,16 @@ var stage2WaveNumber1 = [
     { spawnType: PLANE_GUNNER, framesUntilSpawn: 5 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 10 }
 ];
+
+var stage3WaveNumber1 = [ 
+    { spawnType: MISSILE_STRIKE, framesUntilSpawn: 7 },
+    { spawnType: MISSILE_STRIKE, framesUntilSpawn: 7 },
+    { spawnType: MISSILE_STRIKE, framesUntilSpawn: 7 },
+    { spawnType: MISSILE_STRIKE, framesUntilSpawn: 7 },
+    { spawnType: MISSILE_STRIKE, framesUntilSpawn: 1 },
+    { spawnType: MISSILE_STRIKE, framesUntilSpawn: 37 },
+    { spawnType: MISSILE_STRIKE, framesUntilSpawn: 7 },
+    { spawnType: MISSILE_STRIKE, framesUntilSpawn: 7 },
+    { spawnType: MISSILE_STRIKE, framesUntilSpawn: 7 },
+    { spawnType: MISSILE_STRIKE, framesUntilSpawn: 1 }
+];

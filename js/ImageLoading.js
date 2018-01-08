@@ -19,6 +19,9 @@ var backgroundMedPic = document.createElement("img");
 var backgroundNearPic = document.createElement("img");
 var computerBackgroundFarPic = document.createElement("img");
 var computerBackgroundNearPic = document.createElement("img");
+var beachBackgroundFarPic = document.createElement("img");
+var beachBackgroundMedPic = document.createElement("img");
+var beachBackgroundNearPic = document.createElement("img");
 
 var shieldPowerUpPic = document.createElement("img");
 var healthPowerUpPic = document.createElement("img");
@@ -68,6 +71,9 @@ function loadImages() {
         { varName: backgroundNearPic, theFile: "backgroundNear.png" },
         { varName: computerBackgroundFarPic, theFile: "computerBackground.png" },
         { varName: computerBackgroundNearPic, theFile: "computerForeground.png" },
+        { varName: beachBackgroundFarPic, theFile: "beachBackground.png" },
+        { varName: beachBackgroundMedPic, theFile: "beachMidground.png" },
+        { varName: beachBackgroundNearPic, theFile: "beachForeground.png" },
         { varName: shieldPowerUpPic, theFile: "shieldPowerUp.png" },
         { varName: healthPowerUpPic, theFile: "healthPowerUp.png" },
         { varName: maxHealthPowerUpPic, theFile: "maxHealthPowerUp.png" },

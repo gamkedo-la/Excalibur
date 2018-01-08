@@ -319,10 +319,12 @@ function keyRelease(evt) {
       			var waveString = "";
       			var enemyType = "";
       			for(var i = 0; i < createNewWave.length; i++) {
-      				if (createNewWave[i].spawnType == 1) {
+      				if (createNewWave[i].spawnType == PLANE_PARADROPPER) {
       					enemyType = "PLANE_PARADROPPER";
-      				} else if (createNewWave[i].spawnType == 2) {
+      				} else if (createNewWave[i].spawnType == PLANE_GUNNER) {
       					enemyType = "PLANE_GUNNER";
+      				} else if (createNewWave[i].spawnType == MISSILE_STRIKE) {
+      					enemyType = "MISSILE_STRIKE";
       				}
     				if (i == (createNewWave.length) - 1) {
       					waveString += "    { spawnType: " + enemyType + ", framesUntilSpawn: " +
@@ -334,9 +336,10 @@ function keyRelease(evt) {
 				}
       			waveString = waveString.slice(0,-1);
 				waveString = "var stage#WaveNumber# = [ \n" + waveString + "\n];" + 
-							 "\n//Don't forget to change this wave's var name so that all # are numbers" + 
-							 "\n//and to add this wave into the proper stage array in" 
-							 "\n//EnemyWavesController - Terrence";
+							"\n//Wave arrays are in AllWaves.js" + 
+							"\n//Don't forget to change this wave's var name so that all # are numbers" + 
+							"\n//and to add this wave into the proper stage array in" +
+							"\n//EnemyWavesController - Terrence";
 	        	copyTextToClipboard(waveString);
 	       	}
 	    	break;

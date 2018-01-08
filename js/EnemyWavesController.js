@@ -3,7 +3,7 @@ var currentWaveIndex = 0;
 var currentWave = currentWaveIndex + 1;
 var currentStageIndex = 0; 
 var currentStage = currentStageIndex + 1;
-var stageNames = ["Planet Zebes", "Inside Super Computer"]
+var stageNames = ["Planet Zebes", "Inside Super Computer", "Crystalline Coast"];
 var timeBetweenWaves = 25; // time in frames (30 frames/second)
 var timeForText = 85; // time in frames (30 frames/second)
 var spawnFrameCount = 0;
@@ -20,10 +20,12 @@ var assaultMode = false;
 
 const ZEBES_BACKGROUND = 0;
 const COMPUTER_BACKGROUND = 1;
+const BEACH_BACKGROUND = 2;
 
 var stage1 = [stage1WaveNumber1,stage1WaveNumber2];
 var stage2 = [stage2WaveNumber1]
-var allStages = [stage1,stage2];
+var stage3 = [stage3WaveNumber1]
+var allStages = [stage1,stage2, stage3];
 
 function checkFrameCount() {
 	spawnFrameCount++;
@@ -43,7 +45,8 @@ function checkFrameCount() {
     		intermission();
     	}
     }
-    if (waveStarted && shipList.length == 0 && alienList.length == 0) {
+    if (waveStarted && shipList.length == 0 && alienList.length == 0
+    	&& missileList.length == 0) {
 		waveCompleted = true;
     }
     if (wave[currentEnemyIndex] == undefined) { // this is probably bad form - Terrence
@@ -152,6 +155,12 @@ function changeBackground(stage) {
 			currentBackgroundMed = computerBackgroundFarPic;
 			currentBackgroundNear = computerBackgroundNearPic;
 		}
+		if (stage == BEACH_BACKGROUND) {
+			currentBackgroundMusic.loopSong(zebesBackgroundMusic);
+			currentBackgroundFar = beachBackgroundFarPic;
+			currentBackgroundMed = beachBackgroundMedPic;
+			currentBackgroundNear = beachBackgroundNearPic;
+		}
 	}
 };
 	
@@ -161,5 +170,7 @@ function spawnEnemy() {
         shipSpawn();
     } else if (currentSpawnType == PLANE_GUNNER) {
         gunnerSpawn();
+    } else if (currentSpawnType == MISSILE_STRIKE) {
+        missileSpawn();
     }
 }

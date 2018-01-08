@@ -273,8 +273,8 @@ function openHelp() {
 function startOrchestratorMode() {
 	if(windowState.mainMenu){
 		startGame();
+		orchestratorMode = true;
 	}
-	orchestratorMode = true;
 }
 
 function windowOnFocus() {
