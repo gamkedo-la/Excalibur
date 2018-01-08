@@ -349,8 +349,8 @@ function keyRelease(evt) {
 function calculateMousePos(evt) {
     const rect = canvas.getBoundingClientRect();
     const root = document.documentElement;
-    mouseX = evt.clientX - rect.left - root.scrollLeft;
-    mouseY = evt.clientY - rect.top - root.scrollTop;
+    mouseX = evt.clientX - rect.left;
+    mouseY = evt.clientY - rect.top;
 }
 
 function onMouseDown(evt) {
