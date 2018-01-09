@@ -263,10 +263,14 @@ function keyPress(evt) {
 			break;
 
 		case KEY_H:
+            if(!gameOverManager.gameOverPlaying){
 			openHelp();
+            }
 			break;
 		case KEY_ESCAPE:
+            if(!gameOverManager.gameOverPlaying && !windowState.mainMenu & !windowState.help){
 			resetGame();
+            }
 			break;
 		case KEY_TAB:
 			fireMode = FIREMODE_WAVE;
