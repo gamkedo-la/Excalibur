@@ -8,9 +8,7 @@ mainMenu = {
 	//Must initialize these after the canvas has been set up
 	buttonProperties: {},
 	buttons: [],
-	volumeSlider: {},
-	
-	volumeSliderActive: false,
+	sliders: [],
 	
 	initialize: function() {
 		this.buttonProperties = {
@@ -36,24 +34,54 @@ mainMenu = {
 			},
 		];
 		
-		this.volumeSlider = new function(){
-			this.txt = "Master Volume";
-			this.spacing = 5;
-			
-			this.width = 200;
-			this.height = 10;
-			this.x = canvas.width/2  - 5 - this.width/2;
-			this.y = canvas.height/2  + 180 - this.height/2;
-			
-			this.handleWidth = 30;
-			this.handleHeight = 30;
-			this.handlePosition = currentVolume;
-			this.handleY = this.y - this.handleHeight/2 + this.height/2;
-			this.getHandleX = function() {
-				return this.x + this.handlePosition * (this.width - this.handleWidth);
-			};
-		};
-		
+		this.sliders = [
+			new function(){
+				this.txt = "Music Volume";
+				this.spacing = 5;
+				
+				this.width = 200;
+				this.height = 10;
+				this.x = canvas.width/2  - 5 - this.width/2;
+				this.y = canvas.height/2  + 180 - this.height/2;
+				
+				this.handleWidth = 30;
+				this.handleHeight = 30;
+				this.handlePosition = musicVolume;
+				this.handleY = this.y - this.handleHeight/2 + this.height/2;
+				this.getHandleX = function() {
+					return this.x + this.handlePosition * (this.width - this.handleWidth);
+				};
+				
+				this.active = false;
+				this.onSlide = function(volume){
+					setMusicVolume(volume);
+					localStorage.setItem("musicVolume", musicVolume);
+				}
+			},
+			new function(){
+				this.txt = "Effects Volume";
+				this.spacing = 5;
+				
+				this.width = 200;
+				this.height = 10;
+				this.x = canvas.width/2  - 5 - this.width/2;
+				this.y = canvas.height/2  + 240 - this.height/2;
+				
+				this.handleWidth = 30;
+				this.handleHeight = 30;
+				this.handlePosition = effectsVolume;
+				this.handleY = this.y - this.handleHeight/2 + this.height/2;
+				this.getHandleX = function() {
+					return this.x + this.handlePosition * (this.width - this.handleWidth);
+				};
+				
+				this.active = false;
+				this.onSlide = function(volume){
+					setEffectsVolume(volume);
+					localStorage.setItem("effectsVolume", effectsVolume);
+				}
+			},
+		]
 		this.setButtonBounds();
 	},
 	
@@ -83,29 +111,36 @@ mainMenu = {
 			}
 		}
 		
-		var slider = this.volumeSlider;
+		var sliders = this.sliders;
 		
-		if(mouseInside(slider.getHandleX(), slider.handleY, slider.handleWidth, slider.handleHeight)) {
-			this.volumeSliderActive = true;
+		for(var i = 0; i < sliders.length; i++){
+			if(mouseInside(sliders[i].getHandleX(), sliders[i].handleY, sliders[i].handleWidth, sliders[i].handleHeight)) {
+				sliders[i].active = true;
+				console.log("Slide start");
+			}
 		}
 	},
 	
 	handleSliders: function() {
-		if(this.volumeSliderActive) {
-			var slider = this.volumeSlider;
-			
-			var handleX = mouseX - slider.handleWidth/2;
-			
-			handleX = clamp(handleX, slider.x, slider.x + slider.width - slider.handleWidth);
-			setVolume((handleX - slider.x)/(slider.width - slider.handleWidth));
-			this.volumeSlider.handlePosition = currentVolume;
-			
-			localStorage.setItem("masterVolume", currentVolume);
+		sliders = this.sliders;
+		for(i = 0; i < sliders.length; i++) {
+			if(sliders[i].active) {
+				console.log("Sliding");
+				var handleX = mouseX - sliders[i].handleWidth/2;
+				
+				handleX = clamp(handleX, sliders[i].x, sliders[i].x + sliders[i].width - sliders[i].handleWidth);
+				
+				sliders[i].handlePosition = (handleX - sliders[i].x)/(sliders[i].width - sliders[i].handleWidth);
+				sliders[i].onSlide(sliders[i].handlePosition);
+			}
 		}
 	},
 	
 	releaseSliders: function() {
-		this.volumeSliderActive = false;
+		for(i = 0; i < this.sliders.length; i++) {
+			this.sliders[i].active = false;
+		}
+		console.log("all sliders stop");
 	},
 	
 	drawButtons: function(opacity) {
@@ -132,13 +167,15 @@ mainMenu = {
 			}
 		}
 		
-		var slider = this.volumeSlider;
-		drawRect(slider.x, slider.y, slider.width, slider.height, "yellow");
-		drawRect(slider.getHandleX(), slider.handleY, slider.handleWidth, slider.handleHeight, "purple");
-		
-		var txtX = slider.x + slider.width/2;
-		var txtY = slider.y - getFontWeight(this.buttonFont) + slider.spacing;
-		colorText(slider.txt, txtX, txtY, "white", this.buttonFont, "center", opacity);
+		var sliders = this.sliders;
+		for(var i = 0; i < sliders.length; i++) {
+			drawRect(sliders[i].x, sliders[i].y, sliders[i].width, sliders[i].height, "yellow");
+			drawRect(sliders[i].getHandleX(), sliders[i].handleY, sliders[i].handleWidth, sliders[i].handleHeight, "purple");
+			
+			var txtX = sliders[i].x + sliders[i].width/2;
+			var txtY = sliders[i].y - getFontWeight(this.buttonFont) + sliders[i].spacing;
+			colorText(sliders[i].txt, txtX, txtY, "white", this.buttonFont, "center", opacity);
+		}
 	},
 };
 

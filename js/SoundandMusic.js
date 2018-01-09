@@ -16,13 +16,16 @@ var gameOverCompMusic = "./audio/GameOverCompLvlMusic";
 
 var currentBackgroundMusic = new backgroundMusicClass();
 
-var currentVolume = localStorage.getItem("masterVolume");
-if(currentVolume === null){
-	currentVolume = 1;
-}
-	
+var musicVolume = localStorage.getItem("musicVolume");
+var effectsVolume = localStorage.getItem("effectsVolume");
 
-var previousVolume = 1.0;
+if(musicVolume === null){
+	musicVolume = 1;
+}
+if(effectsVolume === null){
+	effectsVolume = 1;
+}
+
 var isMuted = false;
 const VOLUME_INCREMENT = 0.05;
 
@@ -47,8 +50,8 @@ function backgroundMusicClass() {
             musicSound = null;
         }
         musicSound = new Audio(filenameWithPath + audioFormat);
-        musicSound.loop = true;	
-		this.setVolume(currentVolume);
+        musicSound.loop = true;
+        this.setVolume(musicVolume);
     }
 
     this.pauseSound = function() {
@@ -68,8 +71,10 @@ function backgroundMusicClass() {
     }
 	
 	this.setVolume = function(volume) {
-		musicSound.volume = volume;
-		if(volume == 0) {
+		// Multipliction by a boolean serves as 1 for true and 0 for false
+		musicSound.volume = volume * !isMuted;
+		
+		if(musicSound.volume == 0) {
 			musicSound.pause();
 		} else if (musicSound.paused) {
 			musicSound.play();
@@ -87,11 +92,11 @@ function SoundOverlapsClass(filenameWithPath) {
     this.play = function() {
         if (altSoundTurn) {
             altSound.currentTime = 0;
-            altSound.volume = getRandomVolume() * currentVolume;
+            altSound.volume = getRandomVolume() * effectsVolume * !isMuted;
             altSound.play();
         } else {
             mainSound.currentTime = 0;
-            mainSound.volume = getRandomVolume() * currentVolume;
+            mainSound.volume = getRandomVolume() * effectsVolume * !isMuted;
             mainSound.play();
         }
 
@@ -107,36 +112,36 @@ function getRandomVolume(){
 }
 
 function toggleMute() {
-	if(!isMuted)
-	{
-		previousVolume = currentVolume;
-		currentVolume = 0.0;
-		currentBackgroundMusic.setVolume(currentVolume);
-		isMuted = true;
-	} else {
-		currentVolume = previousVolume;
-		currentBackgroundMusic.setVolume(currentVolume);
-		isMuted = false;
+	isMuted = !isMuted;
+	currentBackgroundMusic.setVolume(musicVolume);
+}
+
+function setEffectsVolume(amount)
+{
+	effectsVolume = amount;
+	if(effectsVolume > 1.0) {
+		effectsVolume = 1.0;
+	} else if (effectsVolume < 0.0) {
+		effectsVolume = 0.0;
 	}
 }
 
-function setVolume(amount)
-{
-	isMuted = false;
-	currentVolume = amount;
-	if(currentVolume > 1.0) {
-		currentVolume = 1.0;
-	} else if (currentVolume <= 0.0) {
-		currentVolume = 0.0;
-		isMuted = true;
+function setMusicVolume(amount){
+	musicVolume = amount;
+	if(musicVolume > 1.0) {
+		musicVolume = 1.0;
+	} else if (musicVolume < 0.0) {
+		musicVolume = 0.0;
 	}
-	currentBackgroundMusic.setVolume(currentVolume);
+	currentBackgroundMusic.setVolume(musicVolume);
 }
 
 function turnVolumeUp() {
-	setVolume(currentVolume + VOLUME_INCREMENT);
+	setMusicVolume(musicVolume + VOLUME_INCREMENT);
+	setEffectsVolume(effectsVolume + VOLUME_INCREMENT);
 }
 
 function turnVolumeDown() {
-	setVolume(currentVolume - VOLUME_INCREMENT);
+	setMusicVolume(musicVolume - VOLUME_INCREMENT);
+	setEffectsVolume(effectsVolume - VOLUME_INCREMENT);
 }
