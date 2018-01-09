@@ -2,6 +2,8 @@ var playerX,playerY;
 
 const startHitpoints = 3;
 var playerHP = startHitpoints;
+var playerInvulnerabilityTime = 35;
+var playerInvulnerabilityRemaining = 0;
 
 const playerWidth=40,playerHeight=40;
 
@@ -24,9 +26,12 @@ var playerTopLeft, playerLowerRight;
 
 
 function drawPlayer() {
-	// base
-	// canvasContext.fillStyle="white";
-	// canvasContext.fillRect(playerX-playerWidth/2,playerY,playerWidth,playerHeight);
+  if(playerInvulnerabilityRemaining %4 > 2){
+    return;
+  }
+  // base
+  // canvasContext.fillStyle="white";
+  // canvasContext.fillRect(playerX-playerWidth/2,playerY,playerWidth,playerHeight);
   canvasContext.drawImage(tankBodyPic,playerX - playerWidth/2,playerY - playerHeight/2);
 
   // cannon
@@ -69,15 +74,18 @@ function movePlayer() {
   playerLowerRight = vec2.create(playerX + playerWidth/2, playerY + playerHeight/2);
   playerColliderAABB.setCenter(playerX, playerY);	// Synchronize AABB position with player position
   playerColliderAABB.computeBounds();
+  
+  if(playerInvulnerabilityRemaining > 0) {
+    playerInvulnerabilityRemaining--;
+  }
 }
 
 function hitPlayer() {
-  if(!orchestratorMode){
+  if(!orchestratorMode && playerInvulnerabilityRemaining <= 0){
     playerHP--;
+    playerInvulnerabilityRemaining = playerInvulnerabilityTime;
     playerHitExplosion(playerX,playerY);
     explosionSound.play();
-  } else {
-    // do nothing
   }
   if (playerHP <= 0) {
     gameOverManager.startGameOverSequence();

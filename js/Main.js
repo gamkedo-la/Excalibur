@@ -172,6 +172,7 @@ function resetGame() {
 	resetPowerUps();
 	score=0;
 	playerHP = startHitpoints;
+	playerInvulTimer = 0;
 	
 	TitleTextX = canvas.width;
 	subTitleTextX = 0;
