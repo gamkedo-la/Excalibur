@@ -2,8 +2,8 @@ var playerX,playerY;
 
 const startHitpoints = 3;
 var playerHP = startHitpoints;
-var playerInvulnerabilityTime = 35;
-var playerInvulnerabilityRemaining = 0;
+var playerInvulFrames = 35;
+var playerInvulTimer = 0;
 
 const playerWidth=40,playerHeight=40;
 
@@ -26,7 +26,7 @@ var playerTopLeft, playerLowerRight;
 
 
 function drawPlayer() {
-  if(playerInvulnerabilityRemaining %4 > 2){
+  if(playerInvulTimer %4 > 2){
     return;
   }
   // base
@@ -75,15 +75,15 @@ function movePlayer() {
   playerColliderAABB.setCenter(playerX, playerY);	// Synchronize AABB position with player position
   playerColliderAABB.computeBounds();
   
-  if(playerInvulnerabilityRemaining > 0) {
-    playerInvulnerabilityRemaining--;
+  if(playerInvulTimer > 0) {
+    playerInvulTimer--;
   }
 }
 
 function hitPlayer() {
-  if(!orchestratorMode && playerInvulnerabilityRemaining <= 0){
+  if(!orchestratorMode && playerInvulTimer <= 0){
     playerHP--;
-    playerInvulnerabilityRemaining = playerInvulnerabilityTime;
+    playerInvulTimer = playerInvulFrames;
     playerHitExplosion(playerX,playerY);
     explosionSound.play();
   }
