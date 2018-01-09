@@ -21,9 +21,6 @@ function gameOverSequence() {
         currentBackgroundMusic.loopSong(gameOverMusic);
         //currentBackgroundMusic.loopSong(gameOverCompMusic);
         
-        /*currentBackgroundMusic.pauseSound();
-        endSound.play();*/
-        
         // TODO: pass gameover music into currentBackgroundMusic.loopSong()
         this.gameOverImages = [singleAlienGameOver,
                               tripleAliensGameOver];

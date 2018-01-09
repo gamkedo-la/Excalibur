@@ -267,10 +267,12 @@ function keyPress(evt) {
 			break;
 
 		case KEY_H:
+            if(!gameOverManager.gameOverPlaying){
 			openHelp();
+            }
 			break;
 		case KEY_ESCAPE:
-            if(!gameOverManager.gameOverPlaying){
+            if(!gameOverManager.gameOverPlaying && !windowState.mainMenu & !windowState.help){
 			resetGame();
             }
 			break;
