@@ -27,7 +27,7 @@ function drawPlayer() {
 	// base
 	// canvasContext.fillStyle="white";
 	// canvasContext.fillRect(playerX-playerWidth/2,playerY,playerWidth,playerHeight);
-  canvasContext.drawImage(tankBodyPic,playerX - playerWidth/2,playerY);
+  canvasContext.drawImage(tankBodyPic,playerX - playerWidth/2,playerY - playerHeight/2);
 
   // cannon
   // canvasContext.strokeStyle="lime";
@@ -39,12 +39,12 @@ function drawPlayer() {
   // canvasContext.lineTo(cannonEndX,cannonEndY);
   // canvasContext.stroke();
 
-   cannonEndX = playerX - cannonWidth/4 + (cannonLength-10)*Math.cos(cannonAngle);
-   cannonEndY = playerY + playerHeight/2 + (cannonLength-10)*Math.sin(cannonAngle);
+   cannonEndX = playerX + (cannonLength-10)*Math.cos(cannonAngle);
+   cannonEndY = playerY + (cannonLength-10)*Math.sin(cannonAngle);
 
    canvasContext.save();
-   canvasContext.translate(playerX ,playerY + playerHeight/2)
-   canvasContext.rotate(cannonAngle + cannonAngLimit);
+   canvasContext.translate(playerX ,playerY)
+   canvasContext.rotate(cannonAngle + Math.PI/2);
    canvasContext.drawImage(tankCannonPic, - cannonWidth/2, -cannonLength + cannonLength/4 );
    canvasContext.restore();
 }

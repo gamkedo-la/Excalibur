@@ -174,18 +174,14 @@ function handleInput() {
 			var mouseCannonY = mouseY - playerY;
 			var mouseCannonX = mouseX - playerX;
 
-			// cannon was flipping left-to-right when mouse goes below deck
-			if (mouseCannonY > 0 && mouseCannonX < 0) {
-				mouseCannonY = -mouseCannonY;
-			}
-
-      	cannonAngle = Math.atan2(mouseCannonY, mouseCannonX);
+			cannonAngle = Math.atan2(mouseCannonY, mouseCannonX);
 
 			movePlayer();
 			break;
 	}
-
-	if (cannonAngle < defaultCannonAng - cannonAngLimit) {
+	
+	// This could likely be done without the magic number using some kind of modulo angle formula
+	if (cannonAngle < defaultCannonAng - cannonAngLimit || cannonAngle > Math.PI/2) {
 		cannonAngle = defaultCannonAng - cannonAngLimit;
 	} else 	if (cannonAngle > defaultCannonAng + cannonAngLimit) {
 		cannonAngle = defaultCannonAng + cannonAngLimit;

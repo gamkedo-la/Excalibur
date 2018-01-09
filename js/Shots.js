@@ -15,7 +15,7 @@ function shotClass(x, y, angle, speed) {
     this.removeMe = false;
 
     this.draw = function() {
-        drawBitmapCenteredAtLocationWithRotation(shotPic, this.position.x, this.position.y, Math.cos(this.moveAng));
+        drawBitmapCenteredAtLocationWithRotation(shotPic, this.position.x, this.position.y, this.moveAng + Math.PI/2);
     };
 
     this.move = function() {

@@ -42,7 +42,8 @@ window.onload = function () {
 	canvasContext = canvas.getContext("2d");
 	
 	cannonEndX = playerX = canvas.width/2;
-	cannonEndY = playerY = canvas.height-playerHeight;
+	playerY = canvas.height-playerHeight/2;
+	cannonEndY = playerY + playerHeight/2;
 	
 	initializeInput();
 	loadImages();
