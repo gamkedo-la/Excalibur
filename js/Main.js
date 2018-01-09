@@ -41,9 +41,9 @@ window.onload = function () {
 	document.body.appendChild(canvas);
 	canvasContext = canvas.getContext("2d");
 	
-	cannonEndX = playerX = canvas.width/2;
+	playerX = canvas.width/2;
 	playerY = canvas.height-playerHeight/2;
-	cannonEndY = playerY + playerHeight/2;
+	playerY + playerHeight/2;
 	
 	initializeInput();
 	loadImages();
@@ -171,6 +171,7 @@ function resetGame() {
 	
 	resetPowerUps();
 	score=0;
+	playerX = canvas.width/2;
 	playerHP = startHitpoints;
 	playerInvulTimer = 0;
 	

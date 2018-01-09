@@ -61,7 +61,6 @@ function movePlayer() {
     } else {
       playerX = playerWidth/2;
     }
-
   }
   if(holdRight) {
     if (playerX + playerWidth/2 < canvas.width) {
