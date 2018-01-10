@@ -138,6 +138,9 @@ mainMenu = {
 	
 	releaseSliders: function() {
 		for(i = 0; i < this.sliders.length; i++) {
+			if(this.sliders[i].txt === "Effects Volume" && this.sliders[i].active) {
+				regularShotSound.play();
+			}
 			this.sliders[i].active = false;
 		}
 		console.log("all sliders stop");
