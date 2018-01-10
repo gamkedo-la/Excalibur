@@ -3,8 +3,7 @@ var devilAlienPic = document.createElement("img");
 
 var spaceshipLeftPic = document.createElement("img");
 var spaceshipRightPic = document.createElement("img");
-var gunnerShipRightPic = document.createElement("img");
-var gunnerShipLeftPic = document.createElement("img");
+var gunnerShipPic = document.createElement("img");
 
 var missilePic = document.createElement("img");
 
@@ -62,8 +61,7 @@ function loadImages() {
         { varName: devilAlienPic, theFile: "devilAlien-anim.png" },
         { varName: spaceshipRightPic, theFile: "spaceshipRight-anim.png" },
         { varName: spaceshipLeftPic, theFile: "spaceshipLeft-anim.png" },
-        { varName: gunnerShipRightPic, theFile: "gunner-ship-right.png" },
-        { varName: gunnerShipLeftPic, theFile: "gunner-ship-left.png" },
+        { varName: gunnerShipPic, theFile: "gunner-ship.png" },
         { varName: missilePic, theFile: "missile.png" },
         { varName: backgroundTitlePic, theFile: "backgroundTitle.png" },
         { varName: backgroundFarPic, theFile: "backgroundFar.png" },

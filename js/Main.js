@@ -1,3 +1,5 @@
+var debug = false;
+
 const scoreForShipShot = 100;
 const scoreForMissileShot = 20;
 const scoreForAlienShot = 50;
@@ -10,6 +12,7 @@ var	currentBackgroundNear = backgroundNearPic;
 
 var gameOverManager = new gameOverSequence();
 
+var isPaused = false; 
 var windowState = {
 	inFocus : true, 
 	help : false,
@@ -41,9 +44,9 @@ window.onload = function () {
 	document.body.appendChild(canvas);
 	canvasContext = canvas.getContext("2d");
 	
-	cannonEndX = playerX = canvas.width/2;
+	playerX = canvas.width/2;
 	playerY = canvas.height-playerHeight/2;
-	cannonEndY = playerY + playerHeight/2;
+	playerY + playerHeight/2;
 	
 	initializeInput();
 	loadImages();
@@ -171,7 +174,9 @@ function resetGame() {
 	
 	resetPowerUps();
 	score=0;
+	playerX = canvas.width/2;
 	playerHP = startHitpoints;
+	playerInvulTimer = 0;
 	
 	TitleTextX = canvas.width;
 	subTitleTextX = 0;
@@ -271,6 +276,26 @@ function openHelp() {
 	windowState.help = true;
 }
 
+function togglePause(){
+    if((!waveStarted || windowState.help) && !orchestratorMode){
+			console.log("no pause");
+        return;
+    }
+
+    isPaused = !isPaused;
+		
+    if(isPaused) {
+        clearInterval(gameShipSpawn);
+        clearInterval(gameGunnerSpawn);
+        showPausedScreen();
+        pauseSound.play();
+        clearInterval(gameUpdate);
+    } else {
+        gameUpdate = setInterval(update, 1000/30);
+        resumeSound.play();
+    }
+}
+
 function startOrchestratorMode() {
 	if(windowState.mainMenu){
 		startGame();
@@ -292,11 +317,11 @@ function windowOnFocus() {
 			resumeSound.play();
 		}
 	}
-};
+}
 
 function windowOnBlur() { 
 	currentBackgroundMusic.pauseSound();
-	if (pauseOnLoseFocus && !isPaused) {
+	if (!isPaused) {
 		clearInterval(gameShipSpawn);
 		clearInterval(gameGunnerSpawn);
 		windowState.inFocus = false;
@@ -307,4 +332,4 @@ function windowOnBlur() {
 			showPausedScreen();
 		}
 	}
-};
+}

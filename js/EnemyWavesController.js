@@ -34,9 +34,6 @@ function checkFrameCount() {
 	if(usingTimedWeapon) {
 		weaponFrameCount++
 	}
-	/*if (spawnFrameCount % 5 == 0) {
-		console.log("spawnFrameCount: " + spawnFrameCount);
-	}*/
     if (wave.length < 1) {
     	if (!isSpawningWave) {
             waveStart();

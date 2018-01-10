@@ -28,8 +28,6 @@ const KEY_M = 77;
 const KEY_O = 79;
 const KEY_P = 80; 
 
-const pauseOnLoseFocus = true;
-
 var holdFire, holdLeft, holdRight = false;
 
 const FIREMODE_SINGLE = 0;
@@ -39,8 +37,6 @@ const FIREMODE_WAVE = 3;
 const FIREMODE_LASER = 4;
 var fireMode = FIREMODE_SINGLE;
 
-var debug = false;
-
 const CONTROL_SCHEME_KEYS_STATIONARY = 0;
 const CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING = 1;
 
@@ -49,8 +45,6 @@ var controlScheme = CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING;
 var mouseY = 0;
 var mouseX = 0;
 var mouseCannonY, mouseCannonX;
-
-var isPaused = false; 
 
 function initializeInput() {
 	document.addEventListener("keydown",keyPress);
@@ -67,25 +61,6 @@ function initializeInput() {
 			canvas.addEventListener('mouseup', onMouseUp);
 			break;
 	}
-}
-
-function togglePause(){
-    if(!waveStarted || windowState.help){
-        return;
-    }
-
-    isPaused = !isPaused;
-		
-    if(isPaused) {
-        clearInterval(gameShipSpawn);
-        clearInterval(gameGunnerSpawn);
-        showPausedScreen();
-        pauseSound.play();
-        clearInterval(gameUpdate);
-    } else {
-        gameUpdate = setInterval(update, 1000/30);
-        resumeSound.play();
-    }
 }
 
 function handleInput() {
