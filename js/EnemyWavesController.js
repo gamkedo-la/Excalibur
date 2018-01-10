@@ -22,6 +22,8 @@ const ZEBES_BACKGROUND = 0;
 const COMPUTER_BACKGROUND = 1;
 const BEACH_BACKGROUND = 2;
 
+var currentBackground = ZEBES_BACKGROUND;
+
 var stage1 = [stage1WaveNumber1,stage1WaveNumber2];
 var stage2 = [stage2WaveNumber1]
 var stage3 = [stage3WaveNumber1]
@@ -146,16 +148,17 @@ function intermission() {
 
 function changeBackground(stage) {
 	if (!windowState.help && !windowState.mainMenu) {
-		if (stage == ZEBES_BACKGROUND) {
+        currentBackground = stage;
+		if (currentBackground == ZEBES_BACKGROUND) {
 			currentBackgroundMusic.loopSong(zebesBackgroundMusic);
 			currentBackgroundMed = backgroundMedPic;
 		}
-		if (stage == COMPUTER_BACKGROUND) {
+		if (currentBackground == COMPUTER_BACKGROUND) {
 			currentBackgroundMusic.loopSong(computerBackgroundMusic);
 			currentBackgroundMed = computerBackgroundFarPic;
 			currentBackgroundNear = computerBackgroundNearPic;
 		}
-		if (stage == BEACH_BACKGROUND) {
+		if (currentBackground == BEACH_BACKGROUND) {
 			currentBackgroundMusic.loopSong(zebesBackgroundMusic);
 			currentBackgroundFar = beachBackgroundFarPic;
 			currentBackgroundMed = beachBackgroundMedPic;

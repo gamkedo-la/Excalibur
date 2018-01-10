@@ -18,8 +18,11 @@ function gameOverSequence() {
 
     this.startGameOverSequence = function() {
         waveStarted = false;
+        if(currentBackground == ZEBES_BACKGROUND){
         currentBackgroundMusic.loopSong(gameOverMusic);
-        //currentBackgroundMusic.loopSong(gameOverCompMusic);
+        } else if (currentBackground == COMPUTER_BACKGROUND){
+        currentBackgroundMusic.loopSong(gameOverCompMusic);
+        }
         
         // TODO: pass gameover music into currentBackgroundMusic.loopSong()
         this.gameOverImages = [singleAlienGameOver,
