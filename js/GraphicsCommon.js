@@ -37,18 +37,18 @@ function drawAnimatedHorizontalBitmapCenteredAtLocationWithRotation(graphic, fra
 
 //flip sprite to face mouse or player
 function drawBitmapFlipped(graphic, atX, atY, flipToFaceLeft) {
-		canvasContext.save();
-  		canvasContext.translate(atX, atY);
-		if(flipToFaceLeft) {
-			canvasContext.scale(-1.0,1.0);
-		}
-		canvasContext.drawImage(graphic,-graphic.width/2,-graphic.height/2);
-		canvasContext.restore();
+  canvasContext.save();
+  canvasContext.translate(atX, atY);
+  if(flipToFaceLeft) {
+    canvasContext.scale(-1.0,1.0);
+  }
+  canvasContext.drawImage(graphic,-graphic.width/2,-graphic.height/2);
+  canvasContext.restore();
 }
 
 function drawRect(x,y,w,h,color) {
-	canvasContext.fillStyle = color;
-	canvasContext.fillRect(x,y,w,h);
+  canvasContext.fillStyle = color;
+  canvasContext.fillRect(x,y,w,h);
 }
 
 function drawStroked(text, x, y,fillColor,font,align = 'left') {
@@ -91,4 +91,23 @@ function getTextWidth(txt, font) {
   canvasContext.restore();
   
   return width;
+}
+
+function SpriteSheetClass(sheetIn, widthIn, heightIn){
+  var sheet = sheetIn;
+  var width = widthIn;
+  var height = heightIn;
+  
+  this.draw = function(col, row, atX, atY, withAngle, flipped) {
+    canvasContext.save();
+    canvasContext.translate(atX, atY);
+    canvasContext.scale(flipped ? -1 : 1, 1);
+    canvasContext.rotate(withAngle);
+    canvasContext.drawImage(sheet,
+                            col * width, row * height,
+                            width, height,
+                            -width/2, -height/2,
+                            width, height);
+    canvasContext.restore();
+  }
 }
