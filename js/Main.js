@@ -277,13 +277,14 @@ function openHelp() {
 }
 
 function togglePause(){
-    if((!waveStarted || windowState.help) && !orchestratorMode){
-			console.log("no pause");
+    var levelIsInPlay = assaultMode || waveStarted;
+    if((!levelIsInPlay || windowState.help) && !orchestratorMode){
+		console.log(waveStarted, windowState.help, orchestratorMode);	
+        console.log("no pause");
         return;
     }
 
-    isPaused = !isPaused;
-		
+    isPaused = !isPaused;	
     if(isPaused) {
         clearInterval(gameShipSpawn);
         clearInterval(gameGunnerSpawn);

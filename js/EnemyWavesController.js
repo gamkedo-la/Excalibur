@@ -57,7 +57,6 @@ function checkFrameCount() {
         spawnFrameCount = 0;
         currentEnemyIndex++;
         waveStarted = true;
-
         if (currentEnemyIndex >= wave.length) {
             currentEnemyIndex = 0;
             wave = [];

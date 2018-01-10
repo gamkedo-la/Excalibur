@@ -235,6 +235,7 @@ function powerupExplosion(x,y) // bonus item hit
 
 function alienHitExplosion(x,y) // paratrooper hit
 {
+    explosionSound.play();
     for (var multi=0; multi<4; multi++)
     {
         explode(x+randomInt(-8,8),y+randomInt(-8,8),EXPLOSION_SMOKE,null,null,null,0,1);
@@ -243,6 +244,7 @@ function alienHitExplosion(x,y) // paratrooper hit
 
 function shipHitExplosion(x,y) // enemy hit
 {
+    explosionSound.play();
     for (multi=0; multi<6; multi++)
         explode(x+randomInt(-20,20),y+randomInt(-20,20),EXPLOSION_BOOM,null,null,null,1,Math.random()*1);
 
