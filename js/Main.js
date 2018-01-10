@@ -277,7 +277,8 @@ function openHelp() {
 }
 
 function togglePause(){
-    if(!waveStarted || windowState.help || !orchestratorMode){
+    if((!waveStarted || windowState.help) && !orchestratorMode){
+			console.log("no pause");
         return;
     }
 

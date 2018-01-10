@@ -1,6 +1,6 @@
 function GunnerClass() {
     var gunnerWidth = 75;
-    var gunnerHeight = 25;
+    var gunnerHeight = 24;
     var gunnerCannonOffsetX = -5.5;
     var gunnerCannonOffsetY = gunnerHeight / 2;
 
