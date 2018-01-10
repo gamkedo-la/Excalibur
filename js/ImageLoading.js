@@ -29,6 +29,8 @@ var maxHealthPowerUpPic = document.createElement("img");
 var tankBodyPic = document.createElement("img");
 var tankCannonPic = document.createElement("img");
 
+var heartPic = document.createElement("img");
+
 // used for gameOver.js sequence:
 var singleAlienGameOver = document.createElement("img");
 var tripleAliensGameOver = document.createElement("img");
@@ -84,6 +86,7 @@ function loadImages() {
         { varName: singleAlienGameOver, theFile: "alien.png" },
         { varName: tripleAliensGameOver, theFile: "alien-anim.png" },
         { varName: timeOfDayGradient, theFile: "time-of-day-gradient.png" },
+        { varName: heartPic, theFile: "heart.png" }
 
     ];
 
