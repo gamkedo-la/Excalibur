@@ -72,7 +72,7 @@ function backgroundMusicClass() {
 	
 	this.setVolume = function(volume) {
 		// Multipliction by a boolean serves as 1 for true and 0 for false
-		musicSound.volume = volume * !isMuted;
+		musicSound.volume = Math.pow(volume * !isMuted, 2);
 		
 		if(musicSound.volume == 0) {
 			musicSound.pause();
@@ -85,27 +85,25 @@ function backgroundMusicClass() {
 function SoundOverlapsClass(filenameWithPath) {
     setFormat();
 
-    var altSoundTurn = false;
-    var mainSound = new Audio(filenameWithPath + audioFormat);
-    var altSound = new Audio(filenameWithPath + audioFormat);
+    var fullFilename = filenameWithPath;
+		var soundIndex = 0;
+    var sounds = [new Audio(fullFilename + audioFormat), new Audio(fullFilename + audioFormat)];
 
     this.play = function() {
-        if (altSoundTurn) {
-            altSound.currentTime = 0;
-            altSound.volume = getRandomVolume() * effectsVolume * !isMuted;
-            altSound.play();
-        } else {
-            mainSound.currentTime = 0;
-            mainSound.volume = getRandomVolume() * effectsVolume * !isMuted;
-            mainSound.play();
-        }
+				if(!sounds[soundIndex].paused) {
+					sounds.splice(soundIndex, 0, new Audio(fullFilename + audioFormat));
+					console.log(sounds);
+				}
+        sounds[soundIndex].currentTime = 0;
+        sounds[soundIndex].volume = Math.pow(getRandomVolume() * effectsVolume * !isMuted, 2);
+        sounds[soundIndex].play();
 
-        this.altSoundTurn = !this.altSoundTurn; //toggling between true and false
+        soundIndex = (++soundIndex) % sounds.length;
     }
 }
 
 function getRandomVolume(){
-	var min = 0.5;
+	var min = 0.9;
 	var max = 1;
 	var randomVolume = Math.random() * (max - min) + min;
 	return randomVolume.toFixed(2);

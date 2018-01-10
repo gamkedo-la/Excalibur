@@ -1,7 +1,6 @@
 var missileList = [];
 var missileFrameW = 31;
 var missileFrameH = 10;
-var frameNow = 0;
 var delayInMilliseconds = 150;
 var explosionScale = 3; // 3 because of scaling from missileCollisionExplosion() in Explosions.js 
 
