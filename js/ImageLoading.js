@@ -37,6 +37,8 @@ var tripleAliensGameOver = document.createElement("img");
 
 var timeOfDayGradient = document.createElement("img");
 
+var targetReticlePic = document.createElement("img");
+
 var waveShotPicFrameW = waveShotPicFrameH = 12;
 var laserPicFrameW = 1050, laserPicFrameH = 18;
 
@@ -86,7 +88,8 @@ function loadImages() {
         { varName: singleAlienGameOver, theFile: "alien.png" },
         { varName: tripleAliensGameOver, theFile: "alien-anim.png" },
         { varName: timeOfDayGradient, theFile: "time-of-day-gradient.png" },
-        { varName: heartPic, theFile: "heart.png" }
+        { varName: heartPic, theFile: "heart.png" },
+        { varName: targetReticlePic, theFile: "targetReticle.png" }
 
     ];
 

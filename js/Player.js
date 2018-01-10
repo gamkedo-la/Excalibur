@@ -24,8 +24,23 @@ var cannonReloadLeft = 0;
 var cannonWidth = 18;
 var playerTopLeft, playerLowerRight;
 
+const DRAW_TARGET_RETICLE = true; // an aimer
 
 function drawPlayer() {
+  
+  if (DRAW_TARGET_RETICLE && controlScheme == CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING)
+  {
+    canvasContext.beginPath();
+    canvasContext.lineWidth=2;
+    canvasContext.setLineDash([2,8]);
+    canvasContext.moveTo(playerX,playerY);
+    canvasContext.lineTo(mouseX,mouseY);
+    canvasContext.closePath();
+    canvasContext.strokeStyle = "rgba(100, 90, 80, 0.5)";
+    canvasContext.stroke();
+    canvasContext.drawImage(targetReticlePic,mouseX-20,mouseY-20);
+  }
+  
   if(playerInvulTimer %4 > 2){
     return;
   }
