@@ -92,7 +92,6 @@ function SoundOverlapsClass(filenameWithPath) {
     this.play = function() {
 				if(!sounds[soundIndex].paused) {
 					sounds.splice(soundIndex, 0, new Audio(fullFilename + audioFormat));
-					console.log(sounds);
 				}
         sounds[soundIndex].currentTime = 0;
         sounds[soundIndex].volume = Math.pow(getRandomVolume() * effectsVolume * !isMuted, 2);
