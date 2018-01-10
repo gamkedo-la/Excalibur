@@ -22,6 +22,10 @@ function gameOverSequence() {
         currentBackgroundMusic.loopSong(gameOverMusic);
         } else if (currentBackground == COMPUTER_BACKGROUND){
         currentBackgroundMusic.loopSong(gameOverCompMusic);
+        } else if (currentBackground == BEACH_BACKGROUND){
+        currentBackgroundMusic.loopSong(gameOverMusic);
+        } else if (assaultMode) {
+        currentBackgroundMusic.loopSong(gameOverMusic);
         }
         
         // TODO: pass gameover music into currentBackgroundMusic.loopSong()

@@ -294,13 +294,19 @@ function togglePause(){
 
     isPaused = !isPaused;	
     if(isPaused) {
+    	if(assaultMode) {
         clearInterval(gameShipSpawn);
         clearInterval(gameGunnerSpawn);
+    	}
         showPausedScreen();
         pauseSound.play();
         clearInterval(gameUpdate);
     } else {
         gameUpdate = setInterval(update, 1000/30);
+        if (assaultMode){
+			gameShipSpawn = setInterval(shipSpawn, 500);
+			gameGunnerSpawn = setInterval(gunnerSpawn, 1500);
+		}
         resumeSound.play();
     }
 }
