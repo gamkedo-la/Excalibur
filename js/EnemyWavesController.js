@@ -1,7 +1,7 @@
 var wave = [];
 var currentWaveIndex = 0;
 var currentWave = currentWaveIndex + 1;
-var currentStageIndex = 2; 
+var currentStageIndex = 0; 
 var currentStage = currentStageIndex + 1;
 var stageNames = ["Planet Zebes", "Inside Super Computer", "Crystalline Coast"];
 var timeBetweenWaves = 25; // time in frames (30 frames/second)
