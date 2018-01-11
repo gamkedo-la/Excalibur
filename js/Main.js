@@ -235,7 +235,7 @@ function showPausedScreen() {
 
 // optimization todo: support wider background wrap but draw only on-screen portion
 function wrappedDraw(whichImg,pixelOffset) {
-	var wrappedOffset = pixelOffset % whichImg.width;
+	var wrappedOffset = Math.floor(pixelOffset % whichImg.width);
 	canvasContext.drawImage(whichImg, 0,0, 
 	                        whichImg.width-wrappedOffset,whichImg.height,
 	                        wrappedOffset,0,
