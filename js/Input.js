@@ -249,7 +249,11 @@ function keyPress(evt) {
             }
 			break;
 		case KEY_TAB:
-			fireMode = FIREMODE_WAVE;
+			if (!assaultMode) {
+				currentWaveIndex = (allStages[currentStageIndex].length) - 1;
+				enableIntermission = true; 
+				intermission()
+			}
 			break;
 		case KEY_SPACE:
 			holdFire = true;

@@ -24,6 +24,7 @@ var TitleTextX, subTitleTextX,opacity;
 var gameUpdate;
 var gameShipSpawn;
 var gameGunnerSpawn;
+var gameMissileSpawn;
 
 var masterFrameDelayTick=0;
 var canvas, canvasContext;
@@ -138,6 +139,7 @@ function moveAll() {
 function resetGame() {
 	clearInterval(gameShipSpawn);
 	clearInterval(gameGunnerSpawn);
+	clearInterval(gameMissileSpawn);
 	clearInterval(gameUpdate);
 
 	clearAllExplosions();
@@ -297,6 +299,7 @@ function togglePause(){
     	if(assaultMode) {
         clearInterval(gameShipSpawn);
         clearInterval(gameGunnerSpawn);
+        clearInterval(gameMissileSpawn);
     	}
         showPausedScreen();
         pauseSound.play();
@@ -306,6 +309,7 @@ function togglePause(){
         if (assaultMode){
 			gameShipSpawn = setInterval(shipSpawn, 500);
 			gameGunnerSpawn = setInterval(gunnerSpawn, 1500);
+			gameMissileSpawn = setInterval(missileSpawn, 2000);
 		}
         resumeSound.play();
     }
@@ -327,6 +331,7 @@ function windowOnFocus() {
 		if (assaultMode){
 			gameShipSpawn = setInterval(shipSpawn, 500);
 			gameGunnerSpawn = setInterval(gunnerSpawn, 1500);
+			gameMissileSpawn = setInterval(missileSpawn, 2000);
 		}
 		if (waveStarted) {
 			resumeSound.play();
@@ -339,6 +344,7 @@ function windowOnBlur() {
 	if (!isPaused) {
 		clearInterval(gameShipSpawn);
 		clearInterval(gameGunnerSpawn);
+		clearInterval(gameMissileSpawn);
 		windowState.inFocus = false;
 		clearInterval(gameUpdate);
 		

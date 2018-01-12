@@ -79,6 +79,7 @@ function waveStart() {
 		} else if (spawnFrameCount > timeForText) {
 		    gameShipSpawn = setInterval(shipSpawn, 500);
 			gameGunnerSpawn = setInterval(gunnerSpawn, 1500);
+			gameMissileSpawn = setInterval(missileSpawn, 2000);
 			isSpawningWave = true;
 		}
 	} else if (allStages[currentStageIndex][currentWaveIndex]) {
