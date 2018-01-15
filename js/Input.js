@@ -24,6 +24,7 @@ const KEY_A = 65;
 const KEY_C = 67;
 const KEY_D = 68;
 const KEY_H = 72;
+const KEY_K = 75;
 const KEY_M = 77;
 const KEY_O = 79;
 const KEY_P = 80; 
@@ -186,6 +187,10 @@ function keyPress(evt) {
 				resetGame();
 			}
 			break;
+        case KEY_K:
+            if(!gameOverManager.gameOverPlaying){
+             gameOverManager.startGameOverSequence();
+            }
 		case KEY_O:
 			startOrchestratorMode();
 			break;
@@ -269,7 +274,6 @@ function keyPress(evt) {
 		case DIGIT_0:
 			debug = !debug;
 			break;
-			
 		case DIGIT_9:
 			toggleMute();
 			break;
