@@ -30,7 +30,7 @@ const KEY_P = 80;
 
 //for debugging
 const KEY_K = 75;
-const KEY_SHIFT = 16;
+const KEY_BACKSPACE = 8;
 
 var holdFire, holdLeft, holdRight = false;
 
@@ -304,7 +304,7 @@ function keyRelease(evt) {
 		case KEY_D:
 			holdRight = false;
 			break;
-        case KEY_SHIFT:
+        case KEY_BACKSPACE:
             playerHP = 3;
       	case KEY_C:
       		if(orchestratorMode) {
