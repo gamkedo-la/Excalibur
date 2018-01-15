@@ -173,7 +173,9 @@ function keyPress(evt) {
 
 	switch (evt.keyCode) {
 		case KEY_P:
+            if(!gameOverManager.gameOverPlaying){
 			togglePause();
+            }
 			break;
 		case KEY_ENTER:
 			if(windowState.mainMenu){
@@ -188,9 +190,10 @@ function keyPress(evt) {
 			}
 			break;
         case KEY_K:
-            if(!gameOverManager.gameOverPlaying){
+            if(!gameOverManager.gameOverPlaying && !windowState.mainMenu && !windowState.help){
              gameOverManager.startGameOverSequence();
             }
+            break;
 		case KEY_O:
 			startOrchestratorMode();
 			break;

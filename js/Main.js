@@ -295,7 +295,7 @@ function togglePause(){
     }
 
     isPaused = !isPaused;	
-    if(isPaused) {
+    if(isPaused && !gameOverManager.gameOverPlaying) {
     	if(assaultMode) {
         clearInterval(gameShipSpawn);
         clearInterval(gameGunnerSpawn);
@@ -333,7 +333,7 @@ function windowOnFocus() {
 			gameGunnerSpawn = setInterval(gunnerSpawn, 1500);
 			gameMissileSpawn = setInterval(missileSpawn, 2000);
 		}
-		if (waveStarted) {
+		if (waveStarted && !gameOverManager.gameOverPlaying) {
 			resumeSound.play();
 		}
 	}
@@ -348,7 +348,7 @@ function windowOnBlur() {
 		windowState.inFocus = false;
 		clearInterval(gameUpdate);
 		
-		if (waveStarted) {
+		if (waveStarted && !gameOverManager.gameOverPlaying) {
 			pauseSound.play();
 			showPausedScreen();
 		}
