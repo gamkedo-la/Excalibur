@@ -67,7 +67,7 @@ function checkFrameCount() {
 function waveStart() {
 	if (allStages[currentStageIndex] == undefined) {
 		assaultMode = true;
-		if (spawnFrameCount < timeForText) {
+		if (spawnFrameCount < timeForText && !gameOverManager.gameOverPlaying) {
 			canvasContext.save();
 			canvasContext.font = "40px Tahoma";
 			canvasContext.textAlign = "center";
@@ -83,7 +83,7 @@ function waveStart() {
 			isSpawningWave = true;
 		}
 	} else if (allStages[currentStageIndex][currentWaveIndex]) {
-		if (spawnFrameCount < timeForText) {
+		if (spawnFrameCount < timeForText && !gameOverManager.gameOverPlaying) {
 			canvasContext.save();
 			canvasContext.font = "40px Tahoma";
 			canvasContext.textAlign = "center";
@@ -108,7 +108,7 @@ function waveEnd() {
 		waveStarted = false;
 		return;
 	}
-	if (spawnFrameCount < timeForText) {
+	if (spawnFrameCount < timeForText && !gameOverManager.gameOverPlaying) {
 		canvasContext.save();
 		canvasContext.font = "40px Tahoma";
 		canvasContext.textAlign = "center";
