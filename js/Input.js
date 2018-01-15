@@ -24,10 +24,13 @@ const KEY_A = 65;
 const KEY_C = 67;
 const KEY_D = 68;
 const KEY_H = 72;
-const KEY_K = 75;
 const KEY_M = 77;
 const KEY_O = 79;
 const KEY_P = 80; 
+
+//for debugging
+const KEY_K = 75;
+const KEY_SHIFT = 16;
 
 var holdFire, holdLeft, holdRight = false;
 
@@ -190,7 +193,7 @@ function keyPress(evt) {
 			}
 			break;
         case KEY_K:
-            if(!gameOverManager.gameOverPlaying && !windowState.mainMenu && !windowState.help){
+            if(!gameOverManager.gameOverPlaying && !windowState.mainMenu && !windowState.help && !isPaused){
              gameOverManager.startGameOverSequence();
             }
             break;
@@ -301,6 +304,8 @@ function keyRelease(evt) {
 		case KEY_D:
 			holdRight = false;
 			break;
+        case KEY_SHIFT:
+            playerHP = 3;
       	case KEY_C:
       		if(orchestratorMode) {
       			var waveString = "";

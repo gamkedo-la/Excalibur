@@ -295,7 +295,7 @@ function togglePause(){
     }
 
     isPaused = !isPaused;	
-    if(isPaused && !gameOverManager.gameOverPlaying) {
+    if(isPaused) {
     	if(assaultMode) {
         clearInterval(gameShipSpawn);
         clearInterval(gameGunnerSpawn);
