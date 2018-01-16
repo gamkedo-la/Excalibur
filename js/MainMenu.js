@@ -116,7 +116,6 @@ mainMenu = {
 		for(var i = 0; i < sliders.length; i++){
 			if(mouseInside(sliders[i].getHandleX(), sliders[i].handleY, sliders[i].handleWidth, sliders[i].handleHeight)) {
 				sliders[i].active = true;
-				console.log("Slide start");
 			}
 		}
 	},
@@ -125,7 +124,6 @@ mainMenu = {
 		sliders = this.sliders;
 		for(i = 0; i < sliders.length; i++) {
 			if(sliders[i].active) {
-				console.log("Sliding");
 				var handleX = mouseX - sliders[i].handleWidth/2;
 				
 				handleX = clamp(handleX, sliders[i].x, sliders[i].x + sliders[i].width - sliders[i].handleWidth);
@@ -143,7 +141,6 @@ mainMenu = {
 			}
 			this.sliders[i].active = false;
 		}
-		console.log("all sliders stop");
 	},
 	
 	drawButtons: function(opacity) {

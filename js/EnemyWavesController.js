@@ -77,8 +77,8 @@ function waveStart() {
 			canvasContext.fillText('All Out Assault!',canvas.width/2 ,canvas.height/2);
 			canvasContext.restore();
 		} else if (spawnFrameCount > timeForText) {
-		    gameShipSpawn = setInterval(shipSpawn, 500);
-			gameGunnerSpawn = setInterval(gunnerSpawn, 1500);
+		    gameDropshipSpawn = setInterval(dropshipSpawn, 500);
+			gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
 			isSpawningWave = true;
 		}
 	} else if (allStages[currentStageIndex][currentWaveIndex]) {
@@ -166,9 +166,9 @@ function changeBackground(stage) {
 
 function spawnEnemy() {
     if (currentSpawnType == PLANE_PARADROPPER) {
-        shipSpawn();
-    } else if (currentSpawnType == PLANE_GUNNER) {
-        gunnerSpawn();
+        dropshipSpawn();
+    } else if (currentSpawnType == PLANE_GUNSHIP) {
+        gunshipSpawn();
     } else if (currentSpawnType == MISSILE_STRIKE) {
         missileSpawn();
     }

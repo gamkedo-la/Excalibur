@@ -3,6 +3,8 @@ const shotHeight = 4;
 var shotList = [];
 
 function shotClass(x, y, angle, speed) {
+    this.width = shotWidth;
+    this.height = shotHeight;
     this.position = vec2.create(x, y);
     this.moveAng = angle;
     this.speed = speed;
@@ -49,33 +51,16 @@ function shotClass(x, y, angle, speed) {
         }, this);
 
         for (var e = 0; e < shipList.length; e++) {
-            if (isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSeg) && !shipList[e].isDamaged) {
-
-                shipHitExplosion(this.position.x,this.position.y);
-
-                if(!shipList[e].isDamaged){
-                    score += scoreForShipShot;
-                    shipList[e].isDamaged = true;
-                }
-
-                if (canSpawnPowerUp()) {
-                    spawnPowerUp(shipList[e]);
-                }
+            if (isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSeg) && shipList[e].health > 0) {
+                shipList[e].hit(this.position);
 
                 this.removeMe = true;
             } // end of ship collision check
         } // end of for shipList.length
         for (var m = 0; m < missileList.length; m++) {
             if (isColliding_AABB_LineSeg(missileList[m].colliderAABB, this.colliderLineSeg) 
-                && !missileList[m].isDamaged) {
-
-                if(!missileList[m].isDamaged){
-                    missileList[m].isDamaged = true;
-                }
-
-                if (missileList[m].missileHealth == 0) {
-                    missileList[m].removeMe = true;
-                }
+                && missileList[m].health > 0) {
+                missileList[m].hit(this.position);
 
                 this.removeMe = true;
             } // end of missile collision check
@@ -98,6 +83,8 @@ function shotClass(x, y, angle, speed) {
 }; // end of shotClass
 
 function EnemyShotClass(x, y, angle, speed) {
+    this.width = shotWidth;
+    this.height = shotHeight;
     this.position = vec2.create(x, y);
 
     this.moveAng = angle;

@@ -1,7 +1,5 @@
 var debug = false;
 
-const scoreForShipShot = 100;
-const scoreForMissileShot = 20;
 const scoreForAlienShot = 50;
 const scoreForParachuteShot = 75;
 var score=0;
@@ -22,8 +20,8 @@ var windowState = {
 var TitleTextX, subTitleTextX,opacity;
 
 var gameUpdate;
-var gameShipSpawn;
-var gameGunnerSpawn;
+var gameDropshipSpawn;
+var gameGunshipSpawn;
 
 var masterFrameDelayTick=0;
 var canvas, canvasContext;
@@ -52,6 +50,7 @@ window.onload = function () {
 	loadImages();
 	initExplosions();
 	mainMenu.initialize();
+	initializeEnemyClasses();
 };
 
 function loadingDoneSoStartGame () {
@@ -136,8 +135,8 @@ function moveAll() {
 }
 
 function resetGame() {
-	clearInterval(gameShipSpawn);
-	clearInterval(gameGunnerSpawn);
+	clearInterval(gameDropshipSpawn);
+	clearInterval(gameGunshipSpawn);
 	clearInterval(gameUpdate);
 
 	clearAllExplosions();
@@ -196,7 +195,7 @@ function drawScore() {
 			
 			 colorText("spawnFrameCount: " + orchestratorSpawnFrameCount,canvas.width - 10, 30,"white","20px Arial","right");
 			 colorText("[1] for Paradropper",130,50,"white","15px Arial","right");
-			 colorText("[2] for Gunner",97,70,"white","15px Arial","right");
+			 colorText("[2] for Gunship",97,70,"white","15px Arial","right");
 			 colorText("[M] for Missile Strike",136,90,"white","15px Arial","right");
 			 colorText("[C] to copy new Wave",148,110,"white","15px Arial","right");
 
@@ -295,8 +294,8 @@ function togglePause(){
     isPaused = !isPaused;	
     if(isPaused) {
     	if(assaultMode) {
-        clearInterval(gameShipSpawn);
-        clearInterval(gameGunnerSpawn);
+        clearInterval(gameDropshipSpawn);
+        clearInterval(gameGunshipSpawn);
     	}
         showPausedScreen();
         pauseSound.play();
@@ -304,8 +303,8 @@ function togglePause(){
     } else {
         gameUpdate = setInterval(update, 1000/30);
         if (assaultMode){
-			gameShipSpawn = setInterval(shipSpawn, 500);
-			gameGunnerSpawn = setInterval(gunnerSpawn, 1500);
+			gameDropshipSpawn = setInterval(dropshipSpawn, 500);
+			gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
 		}
         resumeSound.play();
     }
@@ -325,8 +324,8 @@ function windowOnFocus() {
 		gameUpdate = setInterval(update, 1000/30);
 		
 		if (assaultMode){
-			gameShipSpawn = setInterval(shipSpawn, 500);
-			gameGunnerSpawn = setInterval(gunnerSpawn, 1500);
+			gameDropshipSpawn = setInterval(dropshipSpawn, 500);
+			gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
 		}
 		if (waveStarted) {
 			resumeSound.play();
@@ -337,8 +336,8 @@ function windowOnFocus() {
 function windowOnBlur() { 
 	currentBackgroundMusic.pauseSound();
 	if (!isPaused) {
-		clearInterval(gameShipSpawn);
-		clearInterval(gameGunnerSpawn);
+		clearInterval(gameDropshipSpawn);
+		clearInterval(gameGunshipSpawn);
 		windowState.inFocus = false;
 		clearInterval(gameUpdate);
 		
