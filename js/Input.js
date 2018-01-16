@@ -306,6 +306,7 @@ function keyRelease(evt) {
 			break;
         case KEY_BACKSPACE:
             playerHP = 3;
+            break;
       	case KEY_C:
       		if(orchestratorMode) {
       			var waveString = "";

@@ -231,7 +231,15 @@ function drawLives() {
     }
 }
 
+function tintScreen(){
+    canvasContext.fillStyle = "black";
+    canvasContext.globalAlpha = 0.2;
+    canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+    canvasContext.globalAlpha = 1.0; 
+}
+
 function showPausedScreen() {
+    tintScreen();
     colorText("- P A U S E D -", canvas.width/2, canvas.height/2, "white", "40px Arial", "center");
 }
 
@@ -339,7 +347,8 @@ function windowOnFocus() {
 	}
 }
 
-function windowOnBlur() { 
+function windowOnBlur() {
+    tintScreen();
 	currentBackgroundMusic.pauseSound();
 	if (!isPaused) {
 		clearInterval(gameShipSpawn);
