@@ -215,7 +215,7 @@ function keyPress(evt) {
 			break;
 		case DIGIT_2:
 			if(orchestratorMode) {
-				orchestratorCurrentSpawnType = PLANE_GUNNER;
+				orchestratorCurrentSpawnType = PLANE_GUNSHIP;
 				enemyData.spawnType = orchestratorCurrentSpawnType;
 				enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
 				createNewWave.push(enemyData);
@@ -314,8 +314,8 @@ function keyRelease(evt) {
       			for(var i = 0; i < createNewWave.length; i++) {
       				if (createNewWave[i].spawnType == PLANE_PARADROPPER) {
       					enemyType = "PLANE_PARADROPPER";
-      				} else if (createNewWave[i].spawnType == PLANE_GUNNER) {
-      					enemyType = "PLANE_GUNNER";
+      				} else if (createNewWave[i].spawnType == PLANE_GUNSHIP) {
+      					enemyType = "PLANE_GUNSHIP";
       				} else if (createNewWave[i].spawnType == MISSILE_STRIKE) {
       					enemyType = "MISSILE_STRIKE";
       				}

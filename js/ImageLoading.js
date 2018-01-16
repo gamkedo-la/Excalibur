@@ -1,9 +1,8 @@
 var alienPic = document.createElement("img");
 var devilAlienPic = document.createElement("img");
 
-var spaceshipLeftPic = document.createElement("img");
-var spaceshipRightPic = document.createElement("img");
-var gunnerShipPic = document.createElement("img");
+var dropshipPic = document.createElement("img");
+var gunshipPic = document.createElement("img");
 
 var missilePic = document.createElement("img");
 
@@ -43,9 +42,6 @@ var targetReticlePic = document.createElement("img");
 var waveShotPicFrameW = waveShotPicFrameH = 12;
 var laserPicFrameW = 1050, laserPicFrameH = 18;
 
-var spaceshipPicFrameW = 100;
-var spaceshipPicFrameH = 32;
-
 var picsToLoad = 0;
 
 function countLoadedImageAndLaunchIfReady() {
@@ -64,9 +60,8 @@ function loadImages() {
     var imageList = [
         { varName: alienPic, theFile: "alien-anim.png" },
         { varName: devilAlienPic, theFile: "devilAlien-anim.png" },
-        { varName: spaceshipRightPic, theFile: "spaceshipRight-anim.png" },
-        { varName: spaceshipLeftPic, theFile: "spaceshipLeft-anim.png" },
-        { varName: gunnerShipPic, theFile: "gunner-ship.png" },
+        { varName: dropshipPic, theFile: "spaceship-anim.png" },
+        { varName: gunshipPic, theFile: "gunship.png" },
         { varName: missilePic, theFile: "missile.png" },
         { varName: backgroundTitlePic, theFile: "backgroundTitle.png" },
         { varName: backgroundFarPic, theFile: "backgroundFar.png" },

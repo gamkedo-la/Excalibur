@@ -15,6 +15,8 @@ var alienList = [];
 var alienInertiaDriftEnabled = true;
 
 var alienClass = function() {
+		this.width = alienWidth;
+		this.height = alienHeight;
 		this.fromShip;
 	    this.position = vec2.create();
 	    this.colliderAlienAABB = new aabb(alienWidth/2, alienHeight/2);
@@ -192,7 +194,7 @@ function spawnAlien(fromShip) {
 	var newAlien = diceRoll < 3 ? new alienClass() : new devilAlienClass();
 
 	newAlien.fromShip = fromShip;
-	newAlien.position = vec2.create(fromShip.position.v[0], fromShip.position.v[1] + shipHeight);
+	newAlien.position = vec2.create(fromShip.position.v[0], fromShip.position.v[1] + fromShip.height);
 	newAlien.launchY = newAlien.position.y;
 	alienList.push(newAlien);
 }

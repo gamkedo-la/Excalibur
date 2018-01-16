@@ -99,30 +99,14 @@ function waveShotClass(x, y, angle, speed) {
 
         for (var e = 0; e < shipList.length; e++) {
             if (isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSeg) 
-            	&& !shipList[e].isDamaged) {
-
-                shipHitExplosion(this.position.x,this.position.y);
-
-                if(!shipList[e].isDamaged){
-                    score += scoreForShipShot;
-                    shipList[e].isDamaged = true;
-                }
-
-                if (canSpawnPowerUp()) {
-                    spawnPowerUp(shipList[e]);
-                }
+            	&& shipList[e].health > 0) {
+                shipList[e].hit(this.position);
             }
         }
         for (var m = 0; m < missileList.length; m++) {
             if (isColliding_AABB_LineSeg(missileList[m].colliderAABB, this.colliderLineSeg) 
-            	&& !missileList[m].isDamaged) {
-
-                alienHitExplosion(this.position.x,this.position.y);
-
-                if(!missileList[m].isDamaged){
-                    score += scoreForMissileShot;
-                    missileList[m].isDamaged = true;
-                }
+            	&& missileList[m].health > 0) {
+                missileList[m].hit(this.position);
             }
         }
         for (var t = 0; t < alienList.length; t++) {

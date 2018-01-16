@@ -41,7 +41,7 @@ function powerUp(fromShip) {
     this.type;
     this.properties;
     this.activeDuration;
-    this.position = vec2.create(fromShip.position.v[0], fromShip.position.v[1] + shipHeight);
+    this.position = vec2.create(fromShip.position.v[0], fromShip.position.v[1] + fromShip.height/2);
     this.canDestroy = false;
     this.isActive = false;
     this.colliderAABB = new aabb(powerUpWidth, powerUpHeight);
@@ -191,23 +191,11 @@ function movePowerUps() {
 }
 
 function updateShield(shield) {
-    var enemyEntities = {
-        shots: {
-            list: shotList,
-            width: shotWidth,
-            height: shotHeight
-        },
-        aliens: {
-            list: alienList,
-            width: alienWidth,
-            height: alienHeight
-        },
-        missiles: {
-            list: missileList,
-            width: missileFrameW,
-            height: missileFrameH
-        }
-    };
+    var enemyEntities = [
+        shotList,
+        alienList,
+        missileList,
+    ];
 
     drawShield();
     shieldActive = true;
@@ -222,33 +210,31 @@ function updateShield(shield) {
 
     function checkShieldCollisions() {
 
-        Object.keys(enemyEntities).forEach(function(enemyEntity) {
-            var currentList = enemyEntities[enemyEntity].list;
-            var currentEnemyWidth = enemyEntities[enemyEntity].width;
-            var currentEnemyHeight = enemyEntities[enemyEntity].height;
+        for(var j = 0; j < enemyEntities.length; j++){
+            var currentList = enemyEntities[j];
 
             for (var i = 0; i < currentList.length; i++) {
                 var currentEnemy = currentList[i];
 
                 // ignore collisions with shots if they aren't from the enemy
-                if (enemyEntity == 'shots' && !currentList[i].fromEnemy) continue;
+                if (currentList === shotList && !currentList[i].fromEnemy) continue;
 
-                var distanceX = Math.abs(playerX - (currentEnemy.position.x - (currentEnemyWidth / 2)));
-                var distanceY = Math.abs(playerY - (currentEnemy.position.y - (currentEnemyHeight / 2)));
+                var distanceX = Math.abs(playerX - (currentEnemy.position.x - (currentEnemy.width / 2)));
+                var distanceY = Math.abs(playerY - (currentEnemy.position.y - (currentEnemy.height / 2)));
 
-                if (distanceX <= (currentEnemyWidth / 2) && distanceY <= (currentEnemyHeight / 2)) {
+                if (distanceX <= (currentEnemy.width / 2) && distanceY <= (currentEnemy.height / 2)) {
                     currentEnemy.removeMe = true;
                 }
 
                 // test for corner collisions
-                distanceX -= currentEnemyWidth / 2;
-                distanceY -= currentEnemyHeight / 2;
+                distanceX -= currentEnemy.width / 2;
+                distanceY -= currentEnemy.height / 2;
                 var radiusSquared = shield.properties.radius * shield.properties.radius;
                 if (distanceX * distanceX + distanceY * distanceY <= radiusSquared) {
                     currentEnemy.removeMe = true;
                 }
             }
-        });
+        }
     }
 }
 
