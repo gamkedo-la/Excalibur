@@ -28,6 +28,10 @@ const KEY_M = 77;
 const KEY_O = 79;
 const KEY_P = 80; 
 
+//for debugging
+const KEY_K = 75;
+const KEY_BACKSPACE = 8;
+
 var holdFire, holdLeft, holdRight = false;
 
 const FIREMODE_SINGLE = 0;
@@ -35,6 +39,7 @@ const FIREMODE_TWIN = 1;
 const FIREMODE_SPLIT = 2;
 const FIREMODE_WAVE = 3;
 const FIREMODE_LASER = 4;
+const MAX_FIREMODE = FIREMODE_LASER;
 var fireMode = FIREMODE_SINGLE;
 
 const CONTROL_SCHEME_KEYS_STATIONARY = 0;
@@ -171,7 +176,9 @@ function keyPress(evt) {
 
 	switch (evt.keyCode) {
 		case KEY_P:
+            if(!gameOverManager.gameOverPlaying){
 			togglePause();
+            }
 			break;
 		case KEY_ENTER:
 			if(windowState.mainMenu){
@@ -185,6 +192,11 @@ function keyPress(evt) {
 				resetGame();
 			}
 			break;
+        case KEY_K:
+            if(!gameOverManager.gameOverPlaying && !windowState.mainMenu && !windowState.help && !isPaused){
+             gameOverManager.startGameOverSequence();
+            }
+            break;
 		case KEY_O:
 			startOrchestratorMode();
 			break;
@@ -248,7 +260,11 @@ function keyPress(evt) {
             }
 			break;
 		case KEY_TAB:
-			fireMode = FIREMODE_WAVE;
+			if (!assaultMode) {
+				currentWaveIndex = (allStages[currentStageIndex].length) - 1;
+				enableIntermission = true; 
+				intermission()
+			}
 			break;
 		case KEY_SPACE:
 			holdFire = true;
@@ -264,7 +280,6 @@ function keyPress(evt) {
 		case DIGIT_0:
 			debug = !debug;
 			break;
-			
 		case DIGIT_9:
 			toggleMute();
 			break;
@@ -289,6 +304,8 @@ function keyRelease(evt) {
 		case KEY_D:
 			holdRight = false;
 			break;
+        case KEY_BACKSPACE:
+            playerHP = 3;
       	case KEY_C:
       		if(orchestratorMode) {
       			var waveString = "";

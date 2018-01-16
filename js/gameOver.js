@@ -11,12 +11,15 @@ function gameOverSequence() {
     var artHeightTopNow = 0; // top y of next row to draw
     var framesSinceGameOverShown = -1;
 
+
     this.randomGameOverImage = function() {
       var randPicIndex = Math.floor(Math.random()*this.gameOverImages.length);
       return this.gameOverImages[randPicIndex];
     };
 
     this.startGameOverSequence = function() {
+        // reset fireMode
+        fireMode = FIREMODE_SINGLE;
         waveStarted = false;
         if(currentBackground == ZEBES_BACKGROUND){
         currentBackgroundMusic.loopSong(gameOverMusic);

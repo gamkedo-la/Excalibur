@@ -1,7 +1,7 @@
 var wave = [];
 var currentWaveIndex = 0;
 var currentWave = currentWaveIndex + 1;
-var currentStageIndex = 2; 
+var currentStageIndex = 0; 
 var currentStage = currentStageIndex + 1;
 var stageNames = ["Planet Zebes", "Inside Super Computer", "Crystalline Coast"];
 var timeBetweenWaves = 25; // time in frames (30 frames/second)
@@ -67,7 +67,7 @@ function checkFrameCount() {
 function waveStart() {
 	if (allStages[currentStageIndex] == undefined) {
 		assaultMode = true;
-		if (spawnFrameCount < timeForText) {
+		if (spawnFrameCount < timeForText && !gameOverManager.gameOverPlaying) {
 			canvasContext.save();
 			canvasContext.font = "40px Tahoma";
 			canvasContext.textAlign = "center";
@@ -79,10 +79,11 @@ function waveStart() {
 		} else if (spawnFrameCount > timeForText) {
 		    gameDropshipSpawn = setInterval(dropshipSpawn, 500);
 			gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
+			gameMissileSpawn = setInterval(missileSpawn, 2000);
 			isSpawningWave = true;
 		}
 	} else if (allStages[currentStageIndex][currentWaveIndex]) {
-		if (spawnFrameCount < timeForText) {
+		if (spawnFrameCount < timeForText && !gameOverManager.gameOverPlaying) {
 			canvasContext.save();
 			canvasContext.font = "40px Tahoma";
 			canvasContext.textAlign = "center";
@@ -107,7 +108,7 @@ function waveEnd() {
 		waveStarted = false;
 		return;
 	}
-	if (spawnFrameCount < timeForText) {
+	if (spawnFrameCount < timeForText && !gameOverManager.gameOverPlaying) {
 		canvasContext.save();
 		canvasContext.font = "40px Tahoma";
 		canvasContext.textAlign = "center";

@@ -15,14 +15,19 @@ const powerUps = {
         'radius': 60
     },
     'health': {
-    	'image': healthPowerUpPic,
+        'image': healthPowerUpPic,
         'description': 'Restores one point of health to the player.',
         'updateFunction': restoreHealth
     },
     'maxHealth': {
-    	'image': maxHealthPowerUpPic,
+        'image': maxHealthPowerUpPic,
         'description': 'Restores all health to the player.',
         'updateFunction': restoreMaxHealth
+    },
+    'firemodeUp': {
+        'image': firemodePowerUpPic,
+        'description': 'Increases fire power of the player.',
+        'updateFunction': increaseFirePower
     }
 };
 const powerUpTypes = Object.keys(powerUps);
@@ -140,6 +145,15 @@ function getRandomPowerUpType() {
         }
     }
 
+    if(fireMode >= MAX_FIREMODE) {
+        this.powerUpTypes = [];
+        for (var i = 0; i < powerUpTypes.length; i++) {
+            if (powerUpTypes[i].toLowerCase().indexOf('firemode') < 0) {
+                this.powerUpTypes.push(powerUpTypes[i]);
+            }
+        }
+    }
+
     var min = 0;
     var max = this.powerUpTypes.length - 1;
     var randomIndex = Math.floor(Math.random() * (max - min + 1) + min);
@@ -224,16 +238,23 @@ function updateShield(shield) {
     }
 }
 
+function increaseFirePower(powerUp) {
+    if (fireMode >= MAX_FIREMODE) return;
+    fireMode++;
+    powerUp.isActive = false;
+    powerUp.canDestroy = true;
+}
+
 function restoreHealth(powerUp) {
-	if(playerHP === startHitpoints) return;
-	playerHP++;
-	powerUp.isActive = false;
-	powerUp.canDestroy = true;
+    if (playerHP === startHitpoints) return;
+    playerHP++;
+    powerUp.isActive = false;
+    powerUp.canDestroy = true;
 }
 
 function restoreMaxHealth(powerUp) {
-	if(playerHP === startHitpoints) return;
-	playerHP = startHitpoints;
-	powerUp.isActive = false;
-	powerUp.canDestroy = true;
+    if (playerHP === startHitpoints) return;
+    playerHP = startHitpoints;
+    powerUp.isActive = false;
+    powerUp.canDestroy = true;
 }

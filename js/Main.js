@@ -22,6 +22,7 @@ var TitleTextX, subTitleTextX,opacity;
 var gameUpdate;
 var gameDropshipSpawn;
 var gameGunshipSpawn;
+var gameMissileSpawn;
 
 var masterFrameDelayTick=0;
 var canvas, canvasContext;
@@ -137,6 +138,7 @@ function moveAll() {
 function resetGame() {
 	clearInterval(gameDropshipSpawn);
 	clearInterval(gameGunshipSpawn);
+	clearInterval(gameMissileSpawn);
 	clearInterval(gameUpdate);
 
 	clearAllExplosions();
@@ -234,7 +236,7 @@ function showPausedScreen() {
 
 // optimization todo: support wider background wrap but draw only on-screen portion
 function wrappedDraw(whichImg,pixelOffset) {
-	var wrappedOffset = pixelOffset % whichImg.width;
+	var wrappedOffset = Math.floor(pixelOffset % whichImg.width);
 	canvasContext.drawImage(whichImg, 0,0, 
 	                        whichImg.width-wrappedOffset,whichImg.height,
 	                        wrappedOffset,0,
@@ -296,6 +298,7 @@ function togglePause(){
     	if(assaultMode) {
         clearInterval(gameDropshipSpawn);
         clearInterval(gameGunshipSpawn);
+        clearInterval(gameMissileSpawn);
     	}
         showPausedScreen();
         pauseSound.play();
@@ -305,6 +308,7 @@ function togglePause(){
         if (assaultMode){
 			gameDropshipSpawn = setInterval(dropshipSpawn, 500);
 			gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
+			gameMissileSpawn = setInterval(missileSpawn, 2000);
 		}
         resumeSound.play();
     }
@@ -326,8 +330,9 @@ function windowOnFocus() {
 		if (assaultMode){
 			gameDropshipSpawn = setInterval(dropshipSpawn, 500);
 			gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
+			gameMissileSpawn = setInterval(missileSpawn, 2000);
 		}
-		if (waveStarted) {
+		if (waveStarted && !gameOverManager.gameOverPlaying) {
 			resumeSound.play();
 		}
 	}
@@ -338,10 +343,11 @@ function windowOnBlur() {
 	if (!isPaused) {
 		clearInterval(gameDropshipSpawn);
 		clearInterval(gameGunshipSpawn);
+		clearInterval(gameMissileSpawn);
 		windowState.inFocus = false;
 		clearInterval(gameUpdate);
 		
-		if (waveStarted) {
+		if (waveStarted && !gameOverManager.gameOverPlaying) {
 			pauseSound.play();
 			showPausedScreen();
 		}

@@ -24,6 +24,7 @@ var beachBackgroundNearPic = document.createElement("img");
 var shieldPowerUpPic = document.createElement("img");
 var healthPowerUpPic = document.createElement("img");
 var maxHealthPowerUpPic = document.createElement("img");
+var firemodePowerUpPic = document.createElement("img");
 
 var tankBodyPic = document.createElement("img");
 var tankCannonPic = document.createElement("img");
@@ -74,6 +75,7 @@ function loadImages() {
         { varName: shieldPowerUpPic, theFile: "shieldPowerUp.png" },
         { varName: healthPowerUpPic, theFile: "healthPowerUp.png" },
         { varName: maxHealthPowerUpPic, theFile: "maxHealthPowerUp.png" },
+        { varName: firemodePowerUpPic, theFile: "firemodePowerUp.png" },
         { varName: waveShotPic, theFile: "waveShot.png" },
         { varName: laserPic, theFile: "LaserVisual.png" },
         { varName: laserPicEnding, theFile: "LaserVisualEnding.png" },
