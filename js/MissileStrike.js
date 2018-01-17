@@ -10,6 +10,10 @@ function MissileClass() {
 	//EnemyClass(width, height, speed, angle, health)
 	EnemyClass.call(this, 31, 10, 5, Math.atan2(playerY - this.position.y, playerX - this.position.x), 3);
 	
+	this.explosion = function(x, y) {
+		missileHitExplosion(x, y, 0.5);
+	};
+
 	this.score = 20;
 	this.numFrames = 2;
 	this.ticksPerFrame = 5;
@@ -33,16 +37,21 @@ function MissileClass() {
 			this.removeMe = true;
 		}
 	};
+	
+	this.parentCheckLineCollision = this.checkLineCollision;
+	this.checkLineCollision = function(lineSegment, projectilePos) {
+		var hit = this.parentCheckLineCollision(lineSegment, this.position);
 		
-	this.parentHit = this.hit;
-  this.hit = function() {
-    this.parentHit();
-	  missileHitExplosion(this.position.x,this.position.y, 0.5);
-	  
-		if(this.health === 0) {
-			shipHitExplosion(this.position.x,this.position.y);
-			this.removeMe = true;
+		if(hit) {
+			if(this.health === 1) {
+				this.explosion = shipHitExplosion;
+			}
+			else if(this.health === 0) {
+				this.removeMe = true;
+			}
 		}
+		
+		return hit;
   };
 }
 
@@ -75,6 +84,9 @@ function missileExplosionClass(initPos) {
             this.removeMe = true;
 				}
     };
+		
+		// TODO maybe take explosions off the missile list so this function isn't needed
+    this.checkLineCollision = function(lineSegment, projectilePos) {};
 }
 
 function drawAndRemoveMissiles() {

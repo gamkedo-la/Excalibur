@@ -43,67 +43,48 @@ function laserShotClass(x, y, angle, speed) {
 
 	this.shotCollisionAndBoundaryCheck = function () {
 		if (weaponFrameCount >= 54) {
-			laserPic = restoreLaserPic;
-			this.removeMe = true;
-			usingTimedWeapon = false;
-			cannonAngle = Math.atan2(mouseCannonY, mouseCannonX);
-			weaponFrameCount = 0;
-			playerMoveSpeed = 4;
+				laserPic = restoreLaserPic;
+				this.removeMe = true;
+				usingTimedWeapon = false;
+				cannonAngle = Math.atan2(mouseCannonY, mouseCannonX);
+				weaponFrameCount = 0;
+				playerMoveSpeed = 4;
 		}
-
+	
 		var perpAng = this.moveAng + Math.PI / 2; //perpinducar Angle since we want to go left/right of where barrel is facing
 		laserLowerRight = vec2.create(this.position.x + (laserPicFrameH/2) * Math.cos(perpAng),
-								  this.position.y + (laserPicFrameH/2) * Math.sin(perpAng));
+																	this.position.y + (laserPicFrameH/2) * Math.sin(perpAng));
 		laserLowerLeft = vec2.create(this.position.x - (laserPicFrameH/2) * Math.cos(perpAng),
-								  this.position.y - (laserPicFrameH/2) * Math.sin(perpAng));
+																this.position.y - (laserPicFrameH/2) * Math.sin(perpAng));
 		laserTopRight = vec2.create(laserLowerRight.x + laserPicFrameW * Math.cos(this.moveAng),
-							   laserLowerRight.y + laserPicFrameW * Math.sin(this.moveAng));
+																laserLowerRight.y + laserPicFrameW * Math.sin(this.moveAng));
 		laserTopLeft = vec2.create(laserLowerLeft.x + laserPicFrameW * Math.cos(this.moveAng), 
-							  laserLowerLeft.y + laserPicFrameW * Math.sin(this.moveAng));
-
+															laserLowerLeft.y + laserPicFrameW * Math.sin(this.moveAng));
+	
 		this.colliderLineSegLaserRight.setEndPoints(laserLowerRight,laserTopRight);
 		this.colliderLineSegLaserLeft.setEndPoints(laserLowerLeft,laserTopLeft);
-
-        powerUpBoxList.forEach(function(powerUpBox) {
-            if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSegLaserRight) 
-            	|| isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSegLaserLeft)) {
-            	powerupExplosion(powerUpBox.position.x - powerUpWidth / 2,
-            					 powerUpBox.position.y - powerUpWidth / 2);
-            	shieldPowerUpSound.play();
-                var useMaxDuration = true;
-                score += scoreForPowerUpShot;
-                powerUpBox.setActive(useMaxDuration);
-            }
-        }, this);
-
-		for (var e = 0; e < shipList.length; e++) {
-            if ((isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSegLaserRight)
-            	|| isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSegLaserLeft)) 
-            	&& shipList[e].health > 0) {
-                shipList[e].hit(shipList[e].position);
-            }
-        }
-        for (var m = 0; m < missileList.length; m++) {
-            if ((isColliding_AABB_LineSeg(missileList[m].colliderAABB, this.colliderLineSegLaserRight)
-            	|| isColliding_AABB_LineSeg(missileList[m].colliderAABB, this.colliderLineSegLaserLeft)) 
-            	&& missileList[m].health > 0) {
-                missileList[m].hit(missileList[m].position);
-            }
-        }
-        for (var t = 0; t < alienList.length; t++) {
-            if (isColliding_AABB_LineSeg(alienList[t].colliderAlienAABB, this.colliderLineSegLaserRight)
-            	|| isColliding_AABB_LineSeg(alienList[t].colliderAlienAABB, this.colliderLineSegLaserLeft)) {
-                alienHitExplosion(this.position.x,this.position.y);
-                score += scoreForAlienShot;
-                alienList[t].removeMe = true;
-            }
-            if (alienList[t].isChuteDrawn) {
-                if (isColliding_AABB_LineSeg(alienList[t].colliderChuteAABB, this.colliderLineSegLaserRight)
-            		|| isColliding_AABB_LineSeg(alienList[t].colliderChuteAABB, this.colliderLineSegLaserLeft)) {
-                    score += scoreForParachuteShot;
-                    alienList[t].isChuteDrawn = false;
-            	} // end of parachute collision check
-			} // end of if isChuteDrawn == true
-		} // end of if isChuteDrawn == true
+	
+		powerUpBoxList.forEach(function(powerUpBox) {
+				if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSegLaserRight) 
+					|| isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSegLaserLeft)) {
+					powerupExplosion(powerUpBox.position.x - powerUpWidth / 2,
+									powerUpBox.position.y - powerUpWidth / 2);
+					shieldPowerUpSound.play();
+						var useMaxDuration = true;
+						score += scoreForPowerUpShot;
+						powerUpBox.setActive(useMaxDuration);
+				}
+		}, this);
+	
+		this.checkCollisions(shipList);
+		this.checkCollisions(missileList);
+		this.checkCollisions(alienList);
 	}; // end of shotCollisionAndBoundaryCheck function
+
+	this.checkCollisions = function(list) {
+		for (var t = 0; t < list.length; t++) {
+			list[t].checkLineCollision(this.colliderLineSegLaserRight, list[t].position);
+			list[t].checkLineCollision(this.colliderLineSegLaserLeft, list[t].position);
+		}
+	};
 }; // end of laserShotClass

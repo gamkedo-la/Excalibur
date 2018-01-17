@@ -47,11 +47,22 @@ function EnemyClass(width, height, speed, angle, health) {
 		}
 	};
 	
-	this.hit = function() {
-		this.health--;
-		score += this.score;
-		if (canSpawnPowerUp()) {
-			spawnPowerUp(this);
+	this.checkLineCollision = function(lineSegment, projectilePos) {
+		if(this.health <= 0 || this.removeMe) {
+			return;
 		}
+		
+		if(isColliding_AABB_LineSeg(this.colliderAABB, lineSegment)) {
+			this.explosion(projectilePos.x, projectilePos.y);
+			this.health--;
+			score += this.score;
+			
+			if (canSpawnPowerUp()) {
+				spawnPowerUp(this);
+			}
+			
+			return true;
+		}
+		return false;
 	};
 }

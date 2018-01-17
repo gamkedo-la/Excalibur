@@ -97,30 +97,14 @@ function waveShotClass(x, y, angle, speed) {
             }
         }, this);
 
-        for (var e = 0; e < shipList.length; e++) {
-            if (isColliding_AABB_LineSeg(shipList[e].colliderAABB, this.colliderLineSeg) 
-            	&& shipList[e].health > 0) {
-                shipList[e].hit(this.position);
-            }
+        this.checkCollisions(shipList);
+        this.checkCollisions(missileList);
+        this.checkCollisions(alienList);
+    }; // end of shotCollisionAndBoundaryCheck function
+    
+    this.checkCollisions = function(list) {
+        for (var i = 0; i < list.length; i++) {
+            list[i].checkLineCollision(this.colliderLineSeg, this.position);
         }
-        for (var m = 0; m < missileList.length; m++) {
-            if (isColliding_AABB_LineSeg(missileList[m].colliderAABB, this.colliderLineSeg) 
-            	&& missileList[m].health > 0) {
-                missileList[m].hit(this.position);
-            }
-        }
-        for (var t = 0; t < alienList.length; t++) {
-            if (isColliding_AABB_LineSeg(alienList[t].colliderAlienAABB, this.colliderLineSeg)) {
-                alienHitExplosion(this.position.x,this.position.y);
-                score += scoreForAlienShot;
-                alienList[t].removeMe = true;
-            }
-            if (alienList[t].isChuteDrawn) {
-                if (isColliding_AABB_LineSeg(alienList[t].colliderChuteAABB, this.colliderLineSeg)) {
-                    score += scoreForParachuteShot;
-                    alienList[t].isChuteDrawn = false;
-                } // end of parachute collision check
-			} // end of if isChuteDrawn == true
-		} // end of for alienList.length
-	}; // end of shotCollisionAndBoundaryCheck function
+    };
 }; // end of waveShotClass

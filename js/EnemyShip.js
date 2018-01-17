@@ -24,6 +24,7 @@ function EnemyShipClass(width, height, speed, angle, health) {
 	
 	var deathRotation = Math.random() > 0.5 ? 0.02 : -0.02;
 	var deathVelocity = this.movingLeft ? -2.6 : 2.6;
+	this.explosion = shipHitExplosion;
 	
 	this.draw = function () {
 		if (this.health <= 0) {
@@ -50,31 +51,10 @@ function EnemyShipClass(width, height, speed, angle, health) {
 		return ((this.movingLeft && this.position.x < this.dropX) ||
 		        (!this.movingLeft && this.position.x > this.dropX));
 	};
-	
-	this.parentHit = this.hit;
-	this.hit = function(projectilePos) {
-		this.parentHit();
-		shipHitExplosion(projectilePos.x, projectilePos.y);
-	};
 }
 
 function getValidDropX(maxWidth) {
-	var safeToDropHere = false;
-	validXPixelTopDrop = Math.random() * (maxWidth - dropMarginFromEdge * 2) + dropMarginFromEdge;
-	
-	/* // Currently unused
-	while(!safeToDropHere) {
-		safeToDropHere = true;
-		validXPixelTopDrop = Math.random() * (maxWidth - dropMarginFromEdge * 2) + dropMarginFromEdge;
-		
-		if( Math.abs(canvas.width/2-validXPixelTopDrop) < dropMarginFromCenter) {
-			if (!alienInertiaDriftEnabled) {
-				safeToDropHere = false;
-			}
-		}
-	}
-	*/
-	return validXPixelTopDrop;
+	return Math.random() * (maxWidth - dropMarginFromEdge * 2) + dropMarginFromEdge;
 }
 
 function drawAndRemoveShips() {
