@@ -24,7 +24,7 @@ const BEACH_BACKGROUND = 2;
 
 var currentBackground = ZEBES_BACKGROUND;
 
-var stage1 = [stage1WaveNumber1,stage1WaveNumber2];
+var stage1 = [stage1WaveNumber1,stage1WaveNumber2,stage1WaveNumber3];
 var stage2 = [stage2WaveNumber1]
 var stage3 = [stage3WaveNumber1]
 var allStages = [stage1,stage2, stage3];
