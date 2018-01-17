@@ -66,7 +66,7 @@ var alienClass = function() {
 				
 					// TODO: refactor as a more dynamic parabola equation
 					// this was written in 10 mins as proof of concept to see the little buggers have a trajectory
-					if (positionComparedToLaunchY < this.fromShip.height / 1) {
+					if (positionComparedToLaunchY < undefined / 1) {
 						this.position.y += alienFallSpeedNoChute / 100;
 					}
 					else if (positionComparedToLaunchY < theDiff / 3) {
