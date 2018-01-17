@@ -46,6 +46,7 @@ function checkFrameCount() {
     }
     if (waveStarted && shipList.length == 0 && alienList.length == 0
     	&& missileList.length == 0) {
+    	shotList.length = 0;
 		waveCompleted = true;
     }
     if (wave[currentEnemyIndex] == undefined) { // this is probably bad form - Terrence
@@ -67,15 +68,17 @@ function checkFrameCount() {
 function waveStart() {
 	if (allStages[currentStageIndex] == undefined) {
 		assaultMode = true;
+		currentBackground = ZEBES_BACKGROUND
+		currentBackgroundFar = backgroundFarPic;
+		currentBackgroundMed = backgroundMedPic;
+		currentBackgroundNear = backgroundNearPic;
 		if (spawnFrameCount < timeForText && !gameOverManager.gameOverPlaying) {
-			canvasContext.save();
 			canvasContext.font = "40px Tahoma";
 			canvasContext.textAlign = "center";
 			canvasContext.fillStyle = "white";
 			canvasContext.fillText("Aliens Incoming!" ,canvas.width/2,canvas.height/2 -40);
 			canvasContext.font = "30px Tahoma";
 			canvasContext.fillText('All Out Assault!',canvas.width/2 ,canvas.height/2);
-			canvasContext.restore();
 		} else if (spawnFrameCount > timeForText) {
 		    gameDropshipSpawn = setInterval(dropshipSpawn, 500);
 			gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
@@ -84,7 +87,6 @@ function waveStart() {
 		}
 	} else if (allStages[currentStageIndex][currentWaveIndex]) {
 		if (spawnFrameCount < timeForText && !gameOverManager.gameOverPlaying) {
-			canvasContext.save();
 			canvasContext.font = "40px Tahoma";
 			canvasContext.textAlign = "center";
 			canvasContext.fillStyle = "white";
@@ -92,7 +94,6 @@ function waveStart() {
 			canvasContext.fillText('Wave ' + currentWave + " Incoming" ,canvas.width/2,canvas.height/2 -40);
 			canvasContext.font = "30px Tahoma";
 			canvasContext.fillText('Prepare Excalibur S.D.S!',canvas.width/2 ,canvas.height/2);
-			canvasContext.restore();
 		} else if (spawnFrameCount > timeForText) {
 		   	wave = allStages[currentStageIndex][currentWaveIndex];
 		    spawnFrameCount = 0;
@@ -109,7 +110,6 @@ function waveEnd() {
 		return;
 	}
 	if (spawnFrameCount < timeForText && !gameOverManager.gameOverPlaying) {
-		canvasContext.save();
 		canvasContext.font = "40px Tahoma";
 		canvasContext.textAlign = "center";
 		canvasContext.fillStyle = "white";
@@ -117,7 +117,6 @@ function waveEnd() {
 		canvasContext.fillText('Wave ' + currentWave + " Complete!" ,canvas.width/2,canvas.height/2 -40);
 		canvasContext.font = "30px Tahoma";
 		canvasContext.fillText('Alien Invasion Repelled!',canvas.width/2 ,canvas.height/2);
-		canvasContext.restore();
 	} else if (spawnFrameCount > timeForText) {
 		spawnFrameCount = 0;
 		waveCompleted = false;
@@ -148,7 +147,9 @@ function changeBackground(stage) {
         currentBackground = stage;
 		if (currentBackground == ZEBES_BACKGROUND) {
 			currentBackgroundMusic.loopSong(zebesBackgroundMusic);
+			currentBackgroundFar = backgroundFarPic;
 			currentBackgroundMed = backgroundMedPic;
+			currentBackgroundNear = backgroundNearPic;
 		}
 		if (currentBackground == COMPUTER_BACKGROUND) {
 			currentBackgroundMusic.loopSong(computerBackgroundMusic);

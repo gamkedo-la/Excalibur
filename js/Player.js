@@ -10,6 +10,8 @@ const playerWidth=40,playerHeight=40;
 var playerColliderAABB = new aabb(playerWidth/2, playerHeight/2);
 
 var playerMoveSpeed=4; // only used if in mouse control scheme
+var playerIceMoveSpeedRight = 0;
+var playerIceMoveSpeedLeft = 0;
 var defaultCannonAng = -Math.PI/2;
 var cannonAngLimit = Math.PI * 0.47;
 var cannonLength=40,cannonAngle=defaultCannonAng,cannonAngleVelocity=0.1;
@@ -69,20 +71,70 @@ function drawPlayer() {
 }
 
 function movePlayer() {
-  if(holdLeft) {
-    if (playerX - playerWidth/2 > 0) {
-      playerX -= playerMoveSpeed;
-    } else {
-      playerX = playerWidth/2;
-    }
+  switch(currentBackground) {
+    case ZEBES_BACKGROUND:
+    case COMPUTER_BACKGROUND:
+      if(holdLeft) {
+        if (playerX - playerWidth/2 > 0) {
+          playerX -= playerMoveSpeed;
+        } else {
+          playerX = playerWidth/2;
+        }
+      }
+      if(holdRight) {
+        if (playerX + playerWidth/2 < canvas.width) {
+          playerX += playerMoveSpeed;
+        } else {
+          playerX = canvas.width - playerWidth/2;
+        }
+      }
+      break;
+    case BEACH_BACKGROUND:
+      if(holdLeft) {
+        if (playerX - playerWidth/2 > 0) {
+          if (playerIceMoveSpeedLeft < 2) {
+            playerIceMoveSpeedLeft -= playerIceMoveSpeedRight;
+            playerIceMoveSpeedRight = 0;
+            playerIceMoveSpeedLeft += 0.2;
+          } else if (playerIceMoveSpeedLeft < 4) {
+            playerIceMoveSpeedLeft += 0.5;
+          }
+          playerX -= playerIceMoveSpeedLeft;
+        } else {
+          playerX = playerWidth/2;
+        }
+      } else if (!holdLeft && playerIceMoveSpeedLeft > 0 && playerX - playerWidth/2 < canvas.width) {
+        playerIceMoveSpeedLeft -= 0.08;
+        playerX -= playerIceMoveSpeedLeft;
+        if (playerX - playerWidth/2 < 0) {
+        playerX = playerWidth/2;
+        playerIceMoveSpeedLeft = 0;
+        }  
+      } 
+      if(holdRight) {
+        if (playerX + playerWidth/2 < canvas.width) {
+          if (playerIceMoveSpeedRight < 2) {
+            playerIceMoveSpeedRight -= playerIceMoveSpeedLeft;
+            playerIceMoveSpeedLeft = 0;
+            playerIceMoveSpeedRight += 0.2;
+          } else if (playerIceMoveSpeedRight < 4) {
+            playerIceMoveSpeedRight += 0.5;
+          }
+          playerX += playerIceMoveSpeedRight;
+        } else {
+          playerX = canvas.width - playerWidth/2;
+        }
+      } else if (!holdRight && playerIceMoveSpeedRight > 0 && playerX + playerWidth/2 < canvas.width) {
+        playerIceMoveSpeedRight -= 0.08;
+        playerX += playerIceMoveSpeedRight;
+        if (playerX + playerWidth/2 > canvas.width) {
+          playerX = canvas.width - playerWidth/2;
+          playerIceMoveSpeedRight = 0;
+        } 
+      } 
+    break;
   }
-  if(holdRight) {
-    if (playerX + playerWidth/2 < canvas.width) {
-      playerX += playerMoveSpeed;
-    } else {
-      playerX = canvas.width - playerWidth/2;
-    }
-  }
+
   playerTopLeft = vec2.create(playerX - playerWidth/2, playerY - playerHeight/2);
   playerLowerRight = vec2.create(playerX + playerWidth/2, playerY + playerHeight/2);
   playerColliderAABB.setCenter(playerX, playerY);	// Synchronize AABB position with player position
