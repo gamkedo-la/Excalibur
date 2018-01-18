@@ -234,7 +234,7 @@ function tintScreen(){
     canvasContext.fillStyle = "black";
     canvasContext.globalAlpha = 0.2;
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-    canvasContext.globalAlpha = 1.0; 
+    canvasContext.globalAlpha = 1.0;
 }
 
 function showPausedScreen() {
@@ -347,10 +347,10 @@ function windowOnFocus() {
 }
 
 function windowOnBlur() {
-	if (!gameOverManager.gameOverPlaying) {
+	if (!gameOverManager.gameOverPlaying && !windowState.mainMenu && !windowState.help && !isPaused) {
 	    tintScreen();
 		currentBackgroundMusic.pauseSound();
-		if (!isPaused) {
+		if (!isPaused && !windowState.help) {
 			clearInterval(gameDropshipSpawn);
 			clearInterval(gameGunshipSpawn);
 			clearInterval(gameMissileSpawn);

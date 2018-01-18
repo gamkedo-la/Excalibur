@@ -255,7 +255,7 @@ function keyPress(evt) {
             }
 			break;
 		case KEY_ESCAPE:
-            if(!gameOverManager.gameOverPlaying && !windowState.mainMenu & !windowState.help){
+            if(!gameOverManager.gameOverPlaying && !windowState.mainMenu && !windowState.help){
 			resetGame();
             }
 			break;
