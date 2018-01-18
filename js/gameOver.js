@@ -53,10 +53,10 @@ function gameOverSequence() {
           drawStroked('Final Score :'+ score, canvas.width / 2, canvas.height / 2 + 80, 'white' , '60px Sans-serif','center');
             drawStroked(" [  P R E S S  E N T E R  ]", canvas.width/2, canvas.height/2 + 140, "white", "30px arial", "center");
           framesSinceGameOverShown = framesShowingGameOverTextBeforeReset;
-        } else if(framesSinceGameOverShown-- == 0) {
+        } /*else if(framesSinceGameOverShown-- == 0) {
           this.gameOverPlaying = false;
           resetGame();
-        }
+        }*/
       } else {
         var chosenEnemy = this.randomGameOverImage();
         for (i = 0; i < ALIEN_COUNT; i++) {

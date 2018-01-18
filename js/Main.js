@@ -347,18 +347,20 @@ function windowOnFocus() {
 }
 
 function windowOnBlur() {
-    tintScreen();
-	currentBackgroundMusic.pauseSound();
-	if (!isPaused) {
-		clearInterval(gameDropshipSpawn);
-		clearInterval(gameGunshipSpawn);
-		clearInterval(gameMissileSpawn);
-		windowState.inFocus = false;
-		clearInterval(gameUpdate);
-		
-		if (waveStarted && !gameOverManager.gameOverPlaying) {
-			pauseSound.play();
-			showPausedScreen();
+	if (!gameOverManager.gameOverPlaying) {
+	    tintScreen();
+		currentBackgroundMusic.pauseSound();
+		if (!isPaused) {
+			clearInterval(gameDropshipSpawn);
+			clearInterval(gameGunshipSpawn);
+			clearInterval(gameMissileSpawn);
+			windowState.inFocus = false;
+			clearInterval(gameUpdate);
+			
+			if (waveStarted) {
+				pauseSound.play();
+				showPausedScreen();
+			}
 		}
 	}
 }
