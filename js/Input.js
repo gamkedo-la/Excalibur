@@ -21,6 +21,7 @@ const KEY_PLUS = 107;
 const KEY_MINUS = 109;
 
 const KEY_A = 65;
+const KEY_B = 66;
 const KEY_C = 67;
 const KEY_D = 68;
 const KEY_H = 72;
@@ -33,6 +34,7 @@ const KEY_K = 75;
 const KEY_BACKSPACE = 8;
 
 var holdFire, holdLeft, holdRight = false;
+var smartBombActive = false;
 
 const FIREMODE_SINGLE = 0;
 const FIREMODE_TWIN = 1;
@@ -299,6 +301,9 @@ function keyRelease(evt) {
 		case KEY_LEFT:
 		case KEY_A:
 			holdLeft = false;
+			break;
+		case KEY_B:
+			smartBombActive = true;
 			break;
 		case KEY_RIGHT:
 		case KEY_D:

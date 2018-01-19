@@ -94,12 +94,23 @@ function update() {
 			opacity = opacity + 0.009;
 		}
 		else {
-				if(!gameOverManager.gameOverPlaying) {
-					drawScrollingBackground();
-					handleInput();
-					moveAll();
+			if(!gameOverManager.gameOverPlaying) {
+				drawScrollingBackground();
+				handleInput();
+				moveAll();
+			}
+			drawAll();
+			if (smartBombActive) {
+				//Destroy all ships
+				for (var ship of shipList) {
+					ship.removeMe = true;
 				}
-				drawAll();
+				//Destroy all aliens
+				for (var alien of alienList) {
+					alien.removeMe = true;
+				}
+				smartBombActive = false;
+			}
 			if (!orchestratorMode && !carnageMode) {
 				checkFrameCount();
 			} else if (orchestratorMode && !carnageMode) {

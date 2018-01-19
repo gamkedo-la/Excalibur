@@ -62,7 +62,18 @@ function checkFrameCount() {
             currentEnemyIndex = 0;
             wave = [];
         }
-    }
+	}
+	if (smartBombActive) {
+		//Destroy all ships
+		for (var ship of shipList) {
+			ship.removeMe = true;
+		}
+		//Destroy all aliens
+		for (var alien of alienList) {
+			alien.removeMe = true;
+		}
+		smartBombActive = false;
+	}
 }
 
 function waveStart() {
