@@ -100,10 +100,12 @@ function update() {
 					moveAll();
 				}
 				drawAll();
-			if (!orchestratorMode) {
+			if (!orchestratorMode && !carnageMode) {
 				checkFrameCount();
-			} else {
+			} else if (orchestratorMode && !carnageMode) {
 				orchestratorFrameCount();
+			} else if (!orchestratorMode && carnageMode) {
+				carnageModeController();
 			}
 		}		
 	}
@@ -151,6 +153,7 @@ function resetGame() {
 	windowState.help = false;
 	orchestratorMode = false;
 	assaultMode = false;
+	carnageMode = false;
 	
 	isSpawningWave = false;
 	waveCompleted = false;
@@ -158,6 +161,7 @@ function resetGame() {
 	waveStarted = false;
 	isPaused = false;
 	enableIntermission = false;
+	carnageStarted = false;
 	
 	currentSpawnType = 0;
 	spawnFrameCount = 0;
@@ -189,11 +193,11 @@ function resetGame() {
 }
 
 function drawScore() {
-	if (!orchestratorMode) {
+	if (!orchestratorMode || carnageMode) {
 
 			 colorText("score: " + score,canvas.width-20,30,"white","20px Arial","right");
 
-	} else {
+	} else if (orchestratorMode && !carnageMode) {
 			
 			 colorText("spawnFrameCount: " + orchestratorSpawnFrameCount,canvas.width - 10, 30,"white","20px Arial","right");
 			 colorText("[1] for Paradropper",130,50,"white","15px Arial","right");

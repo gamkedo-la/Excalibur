@@ -334,6 +334,9 @@ function keyRelease(evt) {
 							"\n//and to add this wave into the proper stage array in" +
 							"\n//EnemyWavesController - Terrence";
 	        	copyTextToClipboard(waveString);
+	       	} else if (windowState.mainMenu) {
+	       		carnageMode = true;
+	       		startGame();
 	       	}
 	    	break;
 	}
