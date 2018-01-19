@@ -106,6 +106,8 @@ function update() {
 				orchestratorFrameCount();
 			} else if (!orchestratorMode && carnageMode) {
 				carnageModeController();
+				cannonReloadFrames = 3;
+				cannonWaveReloadFrames = 5;
 			}
 		}		
 	}
@@ -135,61 +137,6 @@ function moveAll() {
 	moveShots();
 	movePowerUps();
 	updateExplosions();
-}
-
-function resetGame() {
-	clearInterval(gameDropshipSpawn);
-	clearInterval(gameGunshipSpawn);
-	clearInterval(gameMissileSpawn);
-	clearInterval(gameUpdate);
-
-	clearAllExplosions();
-	
-	currentBackgroundFar = backgroundFarPic;
-	currentBackgroundMed = backgroundTitlePic;
-	currentBackgroundNear = backgroundNearPic;
-	
-	windowState.mainMenu = true;
-	windowState.help = false;
-	orchestratorMode = false;
-	assaultMode = false;
-	carnageMode = false;
-	
-	isSpawningWave = false;
-	waveCompleted = false;
-	waveEndExcuted = false;
-	waveStarted = false;
-	isPaused = false;
-	enableIntermission = false;
-	carnageStarted = false;
-	
-	currentSpawnType = 0;
-	spawnFrameCount = 0;
-	currentEnemyIndex = 0;
-	currentStageIndex = 0;
-	currentWaveIndex = 0;
-	currentWave = currentWaveIndex + 1; 
-	wave = [];
-	createNewWave = [];
-	
-	shotList = [];
-	shipList = [];
-	alienList = [];
-	missileList = [];
-	
-	resetPowerUps();
-	score=0;
-	playerX = canvas.width/2;
-	playerHP = startHitpoints;
-	playerInvulTimer = 0;
-	
-	TitleTextX = canvas.width;
-	subTitleTextX = 0;
-	opacity = 0;
-	
-	currentBackgroundMusic.loopSong(menuMusic);
-	
-	gameUpdate = setInterval(update, 1000/30);
 }
 
 function drawScore() {
@@ -298,7 +245,7 @@ function openHelp() {
 }
 
 function togglePause(){
-    var levelIsInPlay = assaultMode || waveStarted;
+    var levelIsInPlay = assaultMode || waveStarted || carnageStarted;
     if((!levelIsInPlay || windowState.help) && !orchestratorMode){
 		console.log(waveStarted, windowState.help, orchestratorMode);	
         console.log("no pause");
@@ -307,7 +254,7 @@ function togglePause(){
 
     isPaused = !isPaused;	
     if(isPaused) {
-    	if(assaultMode) {
+    	if(assaultMode || carnageStarted) {
         clearInterval(gameDropshipSpawn);
         clearInterval(gameGunshipSpawn);
         clearInterval(gameMissileSpawn);
@@ -321,6 +268,10 @@ function togglePause(){
 			gameDropshipSpawn = setInterval(dropshipSpawn, 500);
 			gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
 			gameMissileSpawn = setInterval(missileSpawn, 2000);
+		} else if (carnageStarted) {
+			gameDropshipSpawn = setInterval(dropshipSpawn, 75);
+			gameGunshipSpawn = setInterval(gunshipSpawn, 75);
+			gameMissileSpawn = setInterval(missileSpawn, 500);
 		}
         resumeSound.play();
     }
@@ -343,6 +294,10 @@ function windowOnFocus() {
 			gameDropshipSpawn = setInterval(dropshipSpawn, 500);
 			gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
 			gameMissileSpawn = setInterval(missileSpawn, 2000);
+		} else if (carnageStarted) {
+			gameDropshipSpawn = setInterval(dropshipSpawn, 75);
+			gameGunshipSpawn = setInterval(gunshipSpawn, 75);
+			gameMissileSpawn = setInterval(missileSpawn, 500);
 		}
 		if (waveStarted && !gameOverManager.gameOverPlaying) {
 			resumeSound.play();

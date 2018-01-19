@@ -125,19 +125,3 @@ function moveShots() {
         shotList[i].shotCollisionAndBoundaryCheck();
     }
 }
-
-// Saved incase AABB collision needs to be replaced - Terrence
-
-/*if (this.position.y > alienList[t].position.y - alienHeight && this.position.y < alienList[t].position.y &&
-                this.position.x > alienList[t].position.x - alienWidth / 2 && this.position.x < alienList[t].position.x + alienWidth / 2) {
-
-                alienHitExplosion(this.position.x,this.position.y);
-
-                score += scoreForAlienShot;
-                alienList[t].removeMe = true;
-                this.removeMe = true;
-            } else if (this.position.y > alienList[t].chuteY && this.position.y < alienList[t].chuteY + parachuteH &&
-                this.position.x > alienList[t].chuteX && this.position.x < alienList[t].position.x + parachuteW && alienList[t].isChuteDrawn) {
-                score += scoreForParachuteShot;
-                alienList[t].isChuteDrawn = false;
-            }*/

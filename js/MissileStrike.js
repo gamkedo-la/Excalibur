@@ -66,6 +66,7 @@ function missileExplosionClass(initPos) {
 
     this.draw = function() {
         missileCollisionExplosion(this.position.x,this.position.y);
+        explosionSound.play();
     };
 
     this.move = function() {

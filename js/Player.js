@@ -146,7 +146,7 @@ function movePlayer() {
 }
 
 function hitPlayer() {
-  if(!orchestratorMode && playerInvulTimer <= 0){
+  if(!orchestratorMode && !carnageMode && playerInvulTimer <= 0){
     playerHP--;
     playerInvulTimer = playerInvulFrames;
     playerHitExplosion(playerX,playerY);

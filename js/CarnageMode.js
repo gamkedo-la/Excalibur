@@ -1,23 +1,28 @@
 var carnageMode = false;
 var carnageStarted = false;
+var toggleCarnageModeSpawning = false;
 
 function carnageModeController() {
-	if (shipList.length > 500 || missileList.length > 500) {
+	carnageStarted = true;
+	if(usingTimedWeapon) {
+		weaponFrameCount++
+	}
+	if (shipList.length > 200) {
 		clearInterval(gameDropshipSpawn);
 		clearInterval(gameGunshipSpawn);
 		clearInterval(gameMissileSpawn);
-		carnageStarted = false;
+		toggleCarnageModeSpawning = false;
 	} else {
 		carnage();
 	}
 }
 
 function carnage() {
-	if (carnageStarted) {
+	if (toggleCarnageModeSpawning) {
 		return;
 	}
-	gameDropshipSpawn = setInterval(dropshipSpawn, 100);
-	gameGunshipSpawn = setInterval(gunshipSpawn, 100);
-	gameMissileSpawn = setInterval(missileSpawn, 100);
-	carnageStarted = true;
+	gameDropshipSpawn = setInterval(dropshipSpawn, 75);
+	gameGunshipSpawn = setInterval(gunshipSpawn, 75);
+	gameMissileSpawn = setInterval(missileSpawn, 500);
+	toggleCarnageModeSpawning = true;
 };
