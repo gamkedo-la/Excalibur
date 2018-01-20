@@ -10,7 +10,7 @@ function laserShotClass(x, y, angle, speed) {
 	this.frameNow = 0;
 	this.colliderLineSegLaserRight = new lineSegment();
 	this.colliderLineSegLaserLeft = new lineSegment();
-	this.laserStartLife = this.laserLife = cannonReloadLeft * (0.1+playerUpgradeROF*0.3);
+	this.laserStartLife = this.laserLife = cannonReloadLeft * (0.1+playerUpgradeROF*0.2);
 
 	this.draw = function () {
 		canvasContext.save();
