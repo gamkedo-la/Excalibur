@@ -8,7 +8,6 @@ var timeBetweenWaves = 25; // time in frames (30 frames/second)
 var timeForText = 85; // time in frames (30 frames/second)
 var spawnFrameCount = 0;
 var currentSpawnType = 0;
-var weaponFrameCount = 0;
 var currentEnemyIndex = 0;
 
 var isSpawningWave = false;
@@ -29,11 +28,40 @@ var stage2 = [stage2WaveNumber1]
 var stage3 = [stage3WaveNumber1]
 var allStages = [stage1,stage2, stage3];
 
+var isUpgradeTime = false;
+
 function checkFrameCount() {
-	spawnFrameCount++;
-	if(usingTimedWeapon) {
-		weaponFrameCount++
+	if(isUpgradeTime) {
+		var canUpSpeed = playerUpgradeSpeed<MAX_UPGRADES_PER_KIND,
+			canUpROF=playerUpgradeROF<MAX_UPGRADES_PER_KIND,
+			canUpHealth=playerUpgradeHealth<MAX_UPGRADES_PER_KIND;
+		if(canUpHealth == false && canUpROF == false && canUpSpeed == false) {
+			isUpgradeTime = false;
+		} else {
+			canvasContext.font = "40px Tahoma";
+			canvasContext.textAlign = "center";
+			canvasContext.fillStyle = "white";
+			var textLineSkip = 40;
+			var textLineY = canvas.height/2 - textLineSkip *3;
+			canvasContext.fillText("Time for an upgrade!",canvas.width/2,textLineY);
+			textLineY+= textLineSkip * 2;
+			if(canUpSpeed) {
+				canvasContext.fillText("1. Dodge Speed ("+playerUpgradeSpeed+"/"+MAX_UPGRADES_PER_KIND+")",canvas.width/2,textLineY);
+			}
+			textLineY+= textLineSkip;
+			if(canUpROF) {
+				canvasContext.fillText("2. Rate of Fire ("+playerUpgradeROF+"/"+MAX_UPGRADES_PER_KIND+")" ,canvas.width/2,textLineY);
+			}
+			textLineY+= textLineSkip;
+			if(canUpHealth) {
+				canvasContext.fillText("3. Extra Health ("+playerUpgradeHealth+"/"+MAX_UPGRADES_PER_KIND+")" ,canvas.width/2,textLineY);
+			}
+			textLineY+= textLineSkip*2;
+			canvasContext.fillText('Type '+(canUpSpeed ? '1 ' : "")+(canUpROF ? '2 ' : "")+(canUpHealth ? '3 ' : "")+'to choose...',canvas.width/2 ,textLineY);
+			return;
+		}
 	}
+	spawnFrameCount++;
     if (wave.length < 1) {
     	if (!isSpawningWave) {
             waveStart();
@@ -131,18 +159,19 @@ function waveEnd() {
 	} else if (spawnFrameCount > timeForText) {
 		spawnFrameCount = 0;
 		waveCompleted = false;
+		isUpgradeTime = true;
 		enableIntermission = true;
 	}
 }
 
 function intermission() {
 	if (spawnFrameCount > timeBetweenWaves) {
-			currentWaveIndex++;
-			currentWave++;
-			spawnFrameCount = 0;
-			enableIntermission = false;		
-			waveEndExcuted = false;
-			isSpawningWave = false;
+		currentWaveIndex++;
+		currentWave++;
+		spawnFrameCount = 0;
+		enableIntermission = false;		
+		waveEndExcuted = false;
+		isSpawningWave = false;
 		if (currentWaveIndex == allStages[currentStageIndex].length){
 			currentStageIndex++;
 			currentStage++;

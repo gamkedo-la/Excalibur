@@ -4,9 +4,6 @@ var toggleCarnageModeSpawning = false;
 
 function carnageModeController() {
 	carnageStarted = true;
-	if(usingTimedWeapon) {
-		weaponFrameCount++
-	}
 	if (shipList.length > 200) {
 		clearInterval(gameDropshipSpawn);
 		clearInterval(gameGunshipSpawn);

@@ -1,4 +1,3 @@
-var usingTimedWeapon = false;
 var laserTopPosition = vec2.create(0, -laserPicFrameH);
 var laserLowerRight, laserLowerLeft, laserTopRight, laserTopLeft;
 var restoreLaserPic = laserPic;
@@ -11,6 +10,7 @@ function laserShotClass(x, y, angle, speed) {
 	this.frameNow = 0;
 	this.colliderLineSegLaserRight = new lineSegment();
 	this.colliderLineSegLaserLeft = new lineSegment();
+	this.laserStartLife = this.laserLife = cannonReloadLeft * (0.1+playerUpgradeROF*0.3);
 
 	this.draw = function () {
 		canvasContext.save();
@@ -24,11 +24,11 @@ function laserShotClass(x, y, angle, speed) {
 		if (!this.removeMe)	{
 			canvasContext.drawImage(laserPic,
 				0, this.frameNow * laserPicFrameH, laserPicFrameW, laserPicFrameH,
-				0, -laserPicFrameH/2, laserPicFrameW, laserPicFrameH);
+				0, -laserPicFrameH*this.beamThickness/2, laserPicFrameW, laserPicFrameH*this.beamThickness);
 		}
-		if (weaponFrameCount > 35) {
-				laserPic = laserPicEnding;
-			}
+		if (this.laserLife < this.laserStartLife/3) {
+			laserPic = laserPicEnding;
+		}
 		canvasContext.restore();
 		//drawRect(laserLowerRight.x,laserLowerRight.y,5,5,'red');
 		//drawRect(laserTopRight.x,laserTopRight.y,5,5,'lime');
@@ -36,26 +36,27 @@ function laserShotClass(x, y, angle, speed) {
 	};
 
 	this.move = function () {
-		cannonAngle = angle;
-		playerMoveSpeed = 0;
-		// laser shot doesn't actually go anywhere
+		this.laserLife--;
+		this.beamThickness = (1+playerUpgradeROF) * (this.laserStartLife/2-(Math.abs(this.laserLife-this.laserStartLife/2)))/20.0;
+		this.moveAng = cannonAngle;
+		this.position.x = cannonEndX;
+		this.position.y = cannonEndY;
+		// playerMoveSpeed = 0;
+		// laser shot follows player craft
 	};
 
 	this.shotCollisionAndBoundaryCheck = function () {
-		if (weaponFrameCount >= 54) {
-				laserPic = restoreLaserPic;
-				this.removeMe = true;
-				usingTimedWeapon = false;
-				cannonAngle = Math.atan2(mouseCannonY, mouseCannonX);
-				weaponFrameCount = 0;
-				playerMoveSpeed = 4;
+		if (this.laserLife < 0) {
+			laserPic = restoreLaserPic;
+			this.removeMe = true;
+			return;
 		}
 	
 		var perpAng = this.moveAng + Math.PI / 2; //perpinducar Angle since we want to go left/right of where barrel is facing
-		laserLowerRight = vec2.create(this.position.x + (laserPicFrameH/2) * Math.cos(perpAng),
-																	this.position.y + (laserPicFrameH/2) * Math.sin(perpAng));
-		laserLowerLeft = vec2.create(this.position.x - (laserPicFrameH/2) * Math.cos(perpAng),
-																this.position.y - (laserPicFrameH/2) * Math.sin(perpAng));
+		laserLowerRight = vec2.create(this.position.x + (laserPicFrameH*this.beamThickness/2) * Math.cos(perpAng),
+																	this.position.y + (laserPicFrameH*this.beamThickness/2) * Math.sin(perpAng));
+		laserLowerLeft = vec2.create(this.position.x - (laserPicFrameH*this.beamThickness/2) * Math.cos(perpAng),
+																this.position.y - (laserPicFrameH*this.beamThickness/2) * Math.sin(perpAng));
 		laserTopRight = vec2.create(laserLowerRight.x + laserPicFrameW * Math.cos(this.moveAng),
 																laserLowerRight.y + laserPicFrameW * Math.sin(this.moveAng));
 		laserTopLeft = vec2.create(laserLowerLeft.x + laserPicFrameW * Math.cos(this.moveAng), 

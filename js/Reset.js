@@ -39,13 +39,7 @@ function resetGame() {
 	alienList = [];
 	missileList = [];
 	
-	resetPowerUps();
-	score=0;
-	playerX = canvas.width/2;
-	playerHP = startHitpoints;
-	playerInvulTimer = 0;
-	cannonReloadFrames = 5;
-	cannonWaveReloadFrames = 17;
+	resetPlayer();
 	
 	TitleTextX = canvas.width;
 	subTitleTextX = 0;

@@ -79,7 +79,7 @@ function handleInput() {
 					shotList.push(newShot);
 					regularShotSound.play();
 					gunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = cannonReloadFrames;
+					cannonReloadLeft = cannonReloadFrames-playerUpgradeROF;
 				}
 				break;
 			case FIREMODE_TWIN:
@@ -94,7 +94,7 @@ function handleInput() {
 					shotList.push(newShot);
 					regularShotSound.play();
 					gunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = cannonReloadFrames;
+					cannonReloadLeft = cannonReloadFrames-playerUpgradeROF;
 				}
 				break;
 			case FIREMODE_SPLIT:
@@ -111,27 +111,26 @@ function handleInput() {
 					shotList.push(newShot);
 					regularShotSound.play();
 					gunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = cannonReloadFrames;
+					cannonReloadLeft = cannonReloadFrames-playerUpgradeROF;
 				}
 				break;			break;
 			case FIREMODE_WAVE:
 				if(cannonReloadLeft <= 0) {
-					usingTimedWeapon = true;
 					var newShot = new waveShotClass(cannonEndX, cannonEndY, cannonAngle, cannonWaveShotSpeed);
 					shotList.push(newShot);
 					waveShotSound.play();
 					secondaryGunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = cannonWaveReloadFrames;
+					cannonReloadLeft = cannonWaveReloadFrames * (1.0-(playerUpgradeROF/(MAX_UPGRADES_PER_KIND+1)));
 				}
 				break;
 			case FIREMODE_LASER:
 				if(cannonReloadLeft <= 0) {
-					usingTimedWeapon = true;
+					cannonReloadLeft = cannonLaserReloadFrames * (1.0-(playerUpgradeROF/(MAX_UPGRADES_PER_KIND+1)));
+					// NOTE: compute cannonReloadLeft prior to laserShotClass, bases lifetime on it
 					var newShot = new laserShotClass(cannonEndX, cannonEndY, cannonAngle, 0);
 					shotList.push(newShot);
 					waveShotSound.play();
 					secondaryGunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = cannonLaserReloadFrames;
 				}
 				break;
 			default:
@@ -213,6 +212,9 @@ function keyPress(evt) {
 					framesUntilSpawn: null 
 				}
 				orchestratorSpawnEnemy();
+			} else if(isUpgradeTime && playerUpgradeSpeed<MAX_UPGRADES_PER_KIND) {
+		 		playerUpgradeSpeed++;
+				isUpgradeTime = false;
 			}
 			break;
 		case DIGIT_2:
@@ -226,7 +228,27 @@ function keyPress(evt) {
 					framesUntilSpawn: null 
 				}
 				orchestratorSpawnEnemy();
+			} else if(isUpgradeTime && playerUpgradeROF<MAX_UPGRADES_PER_KIND) {
+		 		playerUpgradeROF++;
+				isUpgradeTime = false;
 			}
+			break;
+		case DIGIT_3:
+		 	if(isUpgradeTime && playerUpgradeHealth<MAX_UPGRADES_PER_KIND) {
+		 		playerHP++;
+		 		playerUpgradeHealth++;
+				isUpgradeTime = false;
+			}
+			break;
+		/*case DIGIT_4: // testing key
+			isUpgradeTime = true;
+			break;*/
+		case DIGIT_5:
+		case DIGIT_6:
+		case DIGIT_7:
+			fireMode = (evt.keyCode - DIGIT_3);
+			console.log("weapon mode change to: " +
+			fireMode);
 			break;
 		case KEY_M:
 			if(orchestratorMode) {
@@ -241,16 +263,6 @@ function keyPress(evt) {
 				orchestratorSpawnEnemy();
 			}
 			break;
-		case DIGIT_3:
-		case DIGIT_4:
-		case DIGIT_5:
-		case DIGIT_6:
-		case DIGIT_7:
-			fireMode = (evt.keyCode - DIGIT_3);
-			console.log("weapon mode change to: " +
-			fireMode);
-			break;
-
 		case KEY_H:
             if(!gameOverManager.gameOverPlaying){
 			openHelp();

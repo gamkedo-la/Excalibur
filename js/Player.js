@@ -27,6 +27,30 @@ var playerTopLeft, playerLowerRight;
 
 const DRAW_TARGET_RETICLE = true; // an aimer
 
+var playerUpgradeSpeed = 0;
+var playerUpgradeROF = 0;
+var playerUpgradeHealth = 0;
+const MAX_UPGRADES_PER_KIND = 3;
+var playerMoveUpgradeIncrement = 1.6;
+var playerIceMoveUpgradeIncrement = 1.0;
+
+function resetPlayerUpgrades() {
+  playerUpgradeSpeed = 0;
+  playerUpgradeROF = 0;
+  playerUpgradeHealth = 0;
+}
+
+function resetPlayer() {
+  resetPowerUps();
+  score=0;
+  playerX = canvas.width/2;
+  playerHP = startHitpoints;
+  playerInvulTimer = 0;
+  cannonReloadFrames = 5;
+  cannonWaveReloadFrames = 17;
+  resetPlayerUpgrades();
+}
+
 function drawPlayer() {
   
   if (DRAW_TARGET_RETICLE && controlScheme == CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING)
@@ -76,14 +100,14 @@ function movePlayer() {
     case COMPUTER_BACKGROUND:
       if(holdLeft) {
         if (playerX - playerWidth/2 > 0) {
-          playerX -= playerMoveSpeed;
+          playerX -= playerMoveSpeed + playerMoveUpgradeIncrement*playerUpgradeSpeed;
         } else {
           playerX = playerWidth/2;
         }
       }
       if(holdRight) {
         if (playerX + playerWidth/2 < canvas.width) {
-          playerX += playerMoveSpeed;
+          playerX += playerMoveSpeed + playerMoveUpgradeIncrement*playerUpgradeSpeed;
         } else {
           playerX = canvas.width - playerWidth/2;
         }
@@ -95,16 +119,16 @@ function movePlayer() {
           if (playerIceMoveSpeedLeft < 2) {
             playerIceMoveSpeedLeft -= playerIceMoveSpeedRight;
             playerIceMoveSpeedRight = 0;
-            playerIceMoveSpeedLeft += 0.2;
+            playerIceMoveSpeedLeft += 0.2 + playerIceMoveUpgradeIncrement*playerUpgradeSpeed;
           } else if (playerIceMoveSpeedLeft < 4) {
-            playerIceMoveSpeedLeft += 0.5;
+            playerIceMoveSpeedLeft += 0.5 + playerIceMoveUpgradeIncrement*playerUpgradeSpeed;
           }
           playerX -= playerIceMoveSpeedLeft;
         } else {
           playerX = playerWidth/2;
         }
       } else if (!holdLeft && playerIceMoveSpeedLeft > 0 && playerX - playerWidth/2 < canvas.width) {
-        playerIceMoveSpeedLeft -= 0.08;
+        playerIceMoveSpeedLeft -= 0.08 + 0.25*playerIceMoveUpgradeIncrement*playerUpgradeSpeed;
         playerX -= playerIceMoveSpeedLeft;
         if (playerX - playerWidth/2 < 0) {
         playerX = playerWidth/2;
@@ -116,16 +140,16 @@ function movePlayer() {
           if (playerIceMoveSpeedRight < 2) {
             playerIceMoveSpeedRight -= playerIceMoveSpeedLeft;
             playerIceMoveSpeedLeft = 0;
-            playerIceMoveSpeedRight += 0.2;
+            playerIceMoveSpeedRight += 0.2 + playerIceMoveUpgradeIncrement*playerUpgradeSpeed;
           } else if (playerIceMoveSpeedRight < 4) {
-            playerIceMoveSpeedRight += 0.5;
+            playerIceMoveSpeedRight += 0.5 + playerIceMoveUpgradeIncrement*playerUpgradeSpeed;
           }
           playerX += playerIceMoveSpeedRight;
         } else {
           playerX = canvas.width - playerWidth/2;
         }
       } else if (!holdRight && playerIceMoveSpeedRight > 0 && playerX + playerWidth/2 < canvas.width) {
-        playerIceMoveSpeedRight -= 0.08;
+        playerIceMoveSpeedRight -= 0.08 + 0.25*playerIceMoveUpgradeIncrement*playerUpgradeSpeed;
         playerX += playerIceMoveSpeedRight;
         if (playerX + playerWidth/2 > canvas.width) {
           playerX = canvas.width - playerWidth/2;
