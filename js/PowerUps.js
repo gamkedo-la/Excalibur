@@ -103,7 +103,15 @@ function powerUp(fromShip) {
             this.position.y < (playerY + playerHeight);
 
         if (isCollidingWithPlayer) {
-            this.setActive();
+            //this.setActive();
+
+            powerupExplosion(this.position.x,this.position.y);
+            shieldPowerUpSound.play();
+            
+            var useMaxDuration = true;
+            this.setActive(useMaxDuration);
+            this.removeMe = true;
+
         }
     }
 }

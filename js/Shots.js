@@ -37,6 +37,7 @@ function shotClass(x, y, angle, speed) {
         // Create line segment collider from current & previous positions
         this.colliderLineSeg.setEndPoints(prevPos, this.position);
 
+        /* // no longer allowing collection of powerups by shots, happened very often by accident, hard to tell cause/effect :)
         powerUpBoxList.forEach(function(powerUpBox) {
             if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSeg)) {
 
@@ -48,7 +49,7 @@ function shotClass(x, y, angle, speed) {
                 powerUpBox.setActive(useMaxDuration);
                 this.removeMe = true;
             }
-        }, this);
+        }, this);*/
 
         this.checkCollisions(shipList);
         this.checkCollisions(missileList);

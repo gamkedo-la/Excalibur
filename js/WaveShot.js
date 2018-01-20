@@ -87,7 +87,7 @@ function waveShotClass(x, y, angle, speed) {
         // Create line segment collider from current & previous positions
         this.colliderLineSeg.setEndPoints(this.prevPosition, this.position);
 
-        powerUpBoxList.forEach(function(powerUpBox) {
+        /*powerUpBoxList.forEach(function(powerUpBox) {
             if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSeg)) {
             	powerupExplosion(this.position.x,this.position.y);
             	shieldPowerUpSound.play();
@@ -95,7 +95,7 @@ function waveShotClass(x, y, angle, speed) {
                 score += scoreForPowerUpShot;
                 powerUpBox.setActive(useMaxDuration);
             }
-        }, this);
+        }, this);*/
 
         this.checkCollisions(shipList);
         this.checkCollisions(missileList);

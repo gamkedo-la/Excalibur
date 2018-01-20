@@ -65,7 +65,7 @@ function laserShotClass(x, y, angle, speed) {
 		this.colliderLineSegLaserRight.setEndPoints(laserLowerRight,laserTopRight);
 		this.colliderLineSegLaserLeft.setEndPoints(laserLowerLeft,laserTopLeft);
 	
-		powerUpBoxList.forEach(function(powerUpBox) {
+		/*powerUpBoxList.forEach(function(powerUpBox) {
 				if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSegLaserRight) 
 					|| isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSegLaserLeft)) {
 					powerupExplosion(powerUpBox.position.x - powerUpWidth / 2,
@@ -75,7 +75,7 @@ function laserShotClass(x, y, angle, speed) {
 						score += scoreForPowerUpShot;
 						powerUpBox.setActive(useMaxDuration);
 				}
-		}, this);
+		}, this);*/
 	
 		this.checkCollisions(shipList);
 		this.checkCollisions(missileList);
