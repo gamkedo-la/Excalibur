@@ -24,6 +24,8 @@ var fantasyFarPic = document.createElement("img");
 var fantasyMedPic = document.createElement("img");
 var fantasyNearPic = document.createElement("img");
 var starryBackgroundFarPic = document.createElement("img");
+var starryBackgroundMidPic = document.createElement("img");
+var starryBackgroundNearPic = document.createElement("img");
 
 var shieldPowerUpPic = document.createElement("img");
 var healthPowerUpPic = document.createElement("img");
@@ -72,6 +74,8 @@ function loadImages() {
         { varName: backgroundMedPic, theFile: "SpaceMidground.png" },
         { varName: backgroundNearPic, theFile: "SpaceForeground.png" },
 		{ varName: starryBackgroundFarPic, theFile: "StarryBG.png" },
+		{ varName: starryBackgroundMidPic, theFile: "StarryBGMid.png" },
+		{ varName: starryBackgroundNearPic, theFile: "StarryBGNear.pnd" },
         { varName: fantasyFarPic, theFile: "FantasyBackground.png" },
         { varName: fantasyMedPic, theFile: "FantasyMidground.png" },
         { varName: fantasyNearPic, theFile: "FantasyForeground.png" },
