@@ -3,7 +3,7 @@ var currentWaveIndex = 0;
 var currentWave = currentWaveIndex + 1;
 var currentStageIndex = 0; 
 var currentStage = currentStageIndex + 1;
-var stageNames = ["Planet Zebes", "Inside Super Computer", "Crystalline Coast", "Fantasy Zone"];
+var stageNames = ["Planet Zebes", "Inside Super Computer", "Crystalline Coast", "Fantasy Zone", "Starfield"];
 var timeBetweenWaves = 25; // time in frames (30 frames/second)
 var timeForText = 85; // time in frames (30 frames/second)
 var spawnFrameCount = 0;
@@ -21,6 +21,7 @@ const ZEBES_BACKGROUND = 0;
 const COMPUTER_BACKGROUND = 1;
 const BEACH_BACKGROUND = 2;
 const FANTASY_BACKGROUND = 3;
+const STARS_BACKGROUND = 4;
 
 var currentBackground = ZEBES_BACKGROUND;
 
@@ -28,7 +29,8 @@ var stage1 = [stage1WaveNumber1,stage1WaveNumber2,stage1WaveNumber3];
 var stage2 = [stage2WaveNumber1]
 var stage3 = [stage3WaveNumber1]
 var stage4 = [stage1WaveNumber3]
-var allStages = [stage1,stage2, stage3, stage4];
+var stage5 = [stage1WaveNumber2]
+var allStages = [stage1,stage2, stage3, stage4, stage5];
 
 var isUpgradeTime = false;
 
@@ -210,6 +212,12 @@ function changeBackground(stage) {
 				currentBackgroundFar = fantasyFarPic;
 				currentBackgroundMed = fantasyMedPic;
 				currentBackgroundNear = fantasyNearPic;
+        		break;
+			case STARS_BACKGROUND:
+				currentBackgroundMusic.loopSong(computerBackgroundMusic);
+				currentBackgroundFar = starryBackgroundFarPic;
+				currentBackgroundMed = starryBackgroundMidPic;
+				currentBackgroundNear = starryBackgroundNearPic;
         		break;
 		}
 	}

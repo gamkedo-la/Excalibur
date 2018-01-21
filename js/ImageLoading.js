@@ -75,7 +75,7 @@ function loadImages() {
         { varName: backgroundNearPic, theFile: "SpaceForeground.png" },
 		{ varName: starryBackgroundFarPic, theFile: "StarryBG.png" },
 		{ varName: starryBackgroundMidPic, theFile: "StarryBGMid.png" },
-		{ varName: starryBackgroundNearPic, theFile: "StarryBGNear.pnd" },
+		{ varName: starryBackgroundNearPic, theFile: "StarryBGNear.png" },
         { varName: fantasyFarPic, theFile: "FantasyBackground.png" },
         { varName: fantasyMedPic, theFile: "FantasyMidground.png" },
         { varName: fantasyNearPic, theFile: "FantasyForeground.png" },
