@@ -20,6 +20,9 @@ var computerBackgroundNearPic = document.createElement("img");
 var beachBackgroundFarPic = document.createElement("img");
 var beachBackgroundMedPic = document.createElement("img");
 var beachBackgroundNearPic = document.createElement("img");
+var fantasyFarPic = document.createElement("img");
+var fantasyMedPic = document.createElement("img");
+var fantasyNearPic = document.createElement("img");
 
 var shieldPowerUpPic = document.createElement("img");
 var healthPowerUpPic = document.createElement("img");
@@ -64,9 +67,12 @@ function loadImages() {
         { varName: gunshipPic, theFile: "gunship.png" },
         { varName: missilePic, theFile: "missile.png" },
         { varName: backgroundTitlePic, theFile: "backgroundTitle.png" },
-        { varName: backgroundFarPic, theFile: "backgroundFar.png" },
-        { varName: backgroundMedPic, theFile: "backgroundMed.png" },
-        { varName: backgroundNearPic, theFile: "backgroundNear.png" },
+        { varName: backgroundFarPic, theFile: "SpaceBackground.png" },
+        { varName: backgroundMedPic, theFile: "SpaceMidground.png" },
+        { varName: backgroundNearPic, theFile: "SpaceForeground.png" },
+        { varName: fantasyFarPic, theFile: "FantasyBackground.png" },
+        { varName: fantasyMedPic, theFile: "FantasyMidground.png" },
+        { varName: fantasyNearPic, theFile: "FantasyForeground.png" },
         { varName: computerBackgroundFarPic, theFile: "computerBackground.png" },
         { varName: computerBackgroundNearPic, theFile: "computerForeground.png" },
         { varName: beachBackgroundFarPic, theFile: "BeachBackground.png" },

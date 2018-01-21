@@ -3,7 +3,7 @@ var currentWaveIndex = 0;
 var currentWave = currentWaveIndex + 1;
 var currentStageIndex = 0; 
 var currentStage = currentStageIndex + 1;
-var stageNames = ["Planet Zebes", "Inside Super Computer", "Crystalline Coast"];
+var stageNames = ["Planet Zebes", "Inside Super Computer", "Crystalline Coast", "Fantasy Zone"];
 var timeBetweenWaves = 25; // time in frames (30 frames/second)
 var timeForText = 85; // time in frames (30 frames/second)
 var spawnFrameCount = 0;
@@ -20,13 +20,15 @@ var assaultMode = false;
 const ZEBES_BACKGROUND = 0;
 const COMPUTER_BACKGROUND = 1;
 const BEACH_BACKGROUND = 2;
+const FANTASY_BACKGROUND = 3;
 
 var currentBackground = ZEBES_BACKGROUND;
 
 var stage1 = [stage1WaveNumber1,stage1WaveNumber2,stage1WaveNumber3];
 var stage2 = [stage2WaveNumber1]
 var stage3 = [stage3WaveNumber1]
-var allStages = [stage1,stage2, stage3];
+var stage4 = [stage1WaveNumber3]
+var allStages = [stage1,stage2, stage3, stage4];
 
 var isUpgradeTime = false;
 
@@ -185,22 +187,30 @@ function intermission() {
 function changeBackground(stage) {
 	if (!windowState.help && !windowState.mainMenu) {
         currentBackground = stage;
-		if (currentBackground == ZEBES_BACKGROUND) {
-			currentBackgroundMusic.loopSong(zebesBackgroundMusic);
-			currentBackgroundFar = backgroundFarPic;
-			currentBackgroundMed = backgroundMedPic;
-			currentBackgroundNear = backgroundNearPic;
-		}
-		if (currentBackground == COMPUTER_BACKGROUND) {
-			currentBackgroundMusic.loopSong(computerBackgroundMusic);
-			currentBackgroundMed = computerBackgroundFarPic;
-			currentBackgroundNear = computerBackgroundNearPic;
-		}
-		if (currentBackground == BEACH_BACKGROUND) {
-			currentBackgroundMusic.loopSong(zebesBackgroundMusic);
-			currentBackgroundFar = beachBackgroundFarPic;
-			currentBackgroundMed = beachBackgroundMedPic;
-			currentBackgroundNear = beachBackgroundNearPic;
+		switch (currentBackground) {
+			case ZEBES_BACKGROUND:
+				currentBackgroundMusic.loopSong(zebesBackgroundMusic);
+				currentBackgroundFar = backgroundFarPic;
+				currentBackgroundMed = backgroundMedPic;
+				currentBackgroundNear = backgroundNearPic;
+				break;
+			case COMPUTER_BACKGROUND:
+				currentBackgroundMusic.loopSong(computerBackgroundMusic);
+				currentBackgroundMed = computerBackgroundFarPic;
+				currentBackgroundNear = computerBackgroundNearPic;
+				break;
+			case BEACH_BACKGROUND:
+				currentBackgroundMusic.loopSong(zebesBackgroundMusic);
+				currentBackgroundFar = beachBackgroundFarPic;
+				currentBackgroundMed = beachBackgroundMedPic;
+				currentBackgroundNear = beachBackgroundNearPic;
+				break;
+			case FANTASY_BACKGROUND:
+				currentBackgroundMusic.loopSong(computerBackgroundMusic);
+				currentBackgroundFar = fantasyFarPic;
+				currentBackgroundMed = fantasyMedPic;
+				currentBackgroundNear = fantasyNearPic;
+        		break;
 		}
 	}
 };
