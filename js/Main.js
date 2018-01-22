@@ -88,7 +88,7 @@ function update() {
 			colorText('How To Play',canvas.width/2 ,130,"white","30px Tahoma","center",opacity);
 			colorText("1) WASD or Arrow Keys for Movements",250 ,250 ,"white","15px Tahoma","left",opacity);
 			colorText("2) Primary Mouse button for Shooting",250,280 ,"white","15px Tahoma","left",opacity);
-			colorText("3) Tab to use secondary weapon",250,310 ,"white","15px Tahoma","left",opacity);
+			colorText("3) Tab to skip levels",250,310 ,"white","15px Tahoma","left",opacity); // TODO: remove for release
 			colorText("4) P to pause and resume game",250,340 ,"white","15px Tahoma","left",opacity);
 			colorText('Press (Enter) to Start game',canvas.width/2 ,canvas.height/2 + 120,"white","20px Tahoma","center",opacity);
 			opacity = opacity + 0.009;
