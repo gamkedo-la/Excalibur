@@ -152,8 +152,7 @@ function moveAll() {
 
 function drawScore() {
 	if (!orchestratorMode || carnageMode) {
-
-			 colorText("score: " + score,canvas.width-20,30,"white","20px Arial","right");
+			 colorText("Score: " + numberWithCommas(score),canvas.width-20,30,"white","20px Arial","right");
 
 	} else if (orchestratorMode && !carnageMode) {
 			
@@ -178,6 +177,10 @@ function drawScore() {
 			colorText("aliens: " + alienList.length,100,drawTextOutY,"cyan","15px Arial");
 
 	}
+}
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function drawLives() {
