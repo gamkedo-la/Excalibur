@@ -66,6 +66,7 @@ function initializeInput() {
 			canvas.addEventListener('mousemove', calculateMousePos);
 			canvas.addEventListener('mousedown', onMouseDown);
 			canvas.addEventListener('mouseup', onMouseUp);
+			canvas.addEventListener ("mouseout", onMouseUp);
 			break;
 	}
 }
@@ -183,7 +184,13 @@ function keyPress(evt) {
 			break;
 		case KEY_ENTER:
 			if(windowState.mainMenu){
+				if(firstLoad) {
+					openHelp();
+					firstLoad = false;
+					return;
+				} else {
 				startGame();
+				}
 			}
 			if(windowState.help){
 				startGame();
@@ -243,6 +250,13 @@ function keyPress(evt) {
 		/*case DIGIT_4: // testing key
 			isUpgradeTime = true;
 			break;*/
+		case DIGIT_4: // testing key
+			if (controlScheme == CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING) {
+				controlScheme = CONTROL_SCHEME_KEYS_STATIONARY;
+			} else {
+				controlScheme = CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING;
+			}
+			break;
 		case DIGIT_5:
 		case DIGIT_6:
 		case DIGIT_7:
@@ -284,6 +298,11 @@ function keyPress(evt) {
 			holdFire = true;
 			break;
 		case KEY_LEFT:
+			/*if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY) {
+				movePlayer();
+			} else {*/
+				holdLeft = true;
+			//}
 		case KEY_A:
 			holdLeft = true;
 			break;
@@ -364,6 +383,7 @@ function calculateMousePos(evt) {
     const root = document.documentElement;
     mouseX = evt.clientX - rect.left;
     mouseY = evt.clientY - rect.top;
+    //console.log(Math.floor(mouseX));
 }
 
 function onMouseDown(evt) {

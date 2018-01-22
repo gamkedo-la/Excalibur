@@ -10,6 +10,7 @@ var	currentBackgroundNear = backgroundNearPic;
 
 var gameOverManager = new gameOverSequence();
 
+var firstLoad = true;
 var isPaused = false; 
 var windowState = {
 	inFocus : true, 
@@ -86,10 +87,15 @@ function update() {
 			drawSkyGradient();  
 			canvasContext.drawImage(backgroundFarPic,0,0);
 			colorText('How To Play',canvas.width/2 ,130,"white","30px Tahoma","center",opacity);
-			colorText("1) WASD or Arrow Keys for Movements",250 ,250 ,"white","15px Tahoma","left",opacity);
-			colorText("2) Primary Mouse button for Shooting",250,280 ,"white","15px Tahoma","left",opacity);
-			colorText("3) Tab to skip levels",250,310 ,"white","15px Tahoma","left",opacity); // TODO: remove for release
+			colorText("1) AD or Left/Right Arrow Keys for movement",250 ,250 ,"white","15px Tahoma","left",opacity);
+			colorText("2) Mouse button for shooting",250,280 ,"white","15px Tahoma","left",opacity);
+			colorText("3) Pick-up power-ups using tank",250,310 ,"white","15px Tahoma","left",opacity);
 			colorText("4) P to pause and resume game",250,340 ,"white","15px Tahoma","left",opacity);
+			colorText("5) Tab to skip levels",250,370 ,"white","15px Tahoma","left",opacity); // TODO: remove for release
+			canvasContext.drawImage(firemodePowerUpPic, 470, 295);
+			canvasContext.drawImage(shieldPowerUpPic, 505, 300);
+			canvasContext.drawImage(healthPowerUpPic, 532, 300);
+			canvasContext.drawImage(maxHealthPowerUpPic, 559, 300);
 			colorText('Press (Enter) to Start game',canvas.width/2 ,canvas.height/2 + 120,"white","20px Tahoma","center",opacity);
 			opacity = opacity + 0.009;
 		}
