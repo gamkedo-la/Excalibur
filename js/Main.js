@@ -87,7 +87,7 @@ function update() {
 			drawSkyGradient();  
 			canvasContext.drawImage(backgroundFarPic,0,0);
 			colorText('How To Play',canvas.width/2 ,130,"white","30px Tahoma","center",opacity);
-			colorText("1) AD or Left/Right Arrow Keys for movement",250 ,250 ,"white","15px Tahoma","left",opacity);
+			colorText("1) A/D keys or Left/Right arrow keys for movement",250 ,250 ,"white","15px Tahoma","left",opacity);
 			colorText("2) Mouse button for shooting",250,280 ,"white","15px Tahoma","left",opacity);
 			colorText("3) Pick-up power-ups using tank",250,310 ,"white","15px Tahoma","left",opacity);
 			colorText("4) P to pause and resume game",250,340 ,"white","15px Tahoma","left",opacity);

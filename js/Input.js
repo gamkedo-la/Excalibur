@@ -34,6 +34,7 @@ const KEY_K = 75;
 const KEY_BACKSPACE = 8;
 
 var holdFire, holdLeft, holdRight = false;
+var rotateLeft, rotateRight = false;
 var smartBombActive = false;
 
 const FIREMODE_SINGLE = 0;
@@ -145,12 +146,13 @@ function handleInput() {
 	}
 	switch(controlScheme) {
 		case CONTROL_SCHEME_KEYS_STATIONARY:
-			if(holdLeft) {
+			if(rotateLeft) {
 				cannonAngle -= cannonAngleVelocity;
 			}
-			if(holdRight) {
+			if(rotateRight) {
 				cannonAngle += cannonAngleVelocity;
 			}
+			movePlayer();
 			break;
 		case CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING:
 			var mouseCannonY = mouseY - playerY;
@@ -298,17 +300,24 @@ function keyPress(evt) {
 			holdFire = true;
 			break;
 		case KEY_LEFT:
-			/*if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY) {
-				movePlayer();
-			} else {*/
-				holdLeft = true;
-			//}
-		case KEY_A:
 			holdLeft = true;
 			break;
+		case KEY_A:
+			if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY) {
+				rotateLeft = true;
+			} else {
+			holdLeft = true;
+			}
+			break;
 		case KEY_RIGHT:
-		case KEY_D:
 			holdRight = true;
+			break;
+		case KEY_D:
+			if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY) {
+				rotateRight = true;
+			} else {
+			holdRight = true;
+			}
 			break;
 		case DIGIT_0:
 			debug = !debug;
@@ -330,15 +339,27 @@ function keyRelease(evt) {
 			holdFire = false;
 			break;
 		case KEY_LEFT:
-		case KEY_A:
 			holdLeft = false;
+			break;
+		case KEY_A:
+			if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY) {
+				rotateLeft = false;
+			} else {
+				holdLeft = false;
+			}
 			break;
 		case KEY_B:
 			smartBombActive = true;
 			break;
 		case KEY_RIGHT:
-		case KEY_D:
 			holdRight = false;
+			break;
+		case KEY_D:
+			if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY) {
+				rotateRight = false;
+			} else {
+				holdRight = false;
+			}
 			break;
         case KEY_BACKSPACE:
             playerHP = 3;
