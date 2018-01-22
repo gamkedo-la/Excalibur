@@ -29,6 +29,10 @@ var masterFrameDelayTick=0;
 var canvas, canvasContext;
 currentBackgroundMusic.loopSong(menuMusic);
 
+var timeStarted;
+var timeElapsedInSeconds = 0;
+var frameCount = 0;
+
 window.onload = function () {
 	window.addEventListener("focus", windowOnFocus);
  	window.addEventListener("blur", windowOnBlur);
@@ -163,6 +167,11 @@ function drawScore() {
 	} else if (orchestratorMode && !carnageMode) {
 			
 			 colorText("spawnFrameCount: " + orchestratorSpawnFrameCount,canvas.width - 10, 30,"white","20px Arial","right");
+
+			 colorText("frameCount: " + frameCount, canvas.width - 10, 50, "white", "20px Arial", "right");
+			 colorText("Time Elapsed: " + timeElapsedInSeconds.toFixed(1), canvas.width - 10, 70, "white", "20px Arial", "right");
+			 colorText("Frame Rate: " + (frameCount / timeElapsedInSeconds).toFixed(1), canvas.width - 10, 90, "white", "20px Arial", "right");
+
 			 colorText("[1] for Paradropper",130,50,"white","15px Arial","right");
 			 colorText("[2] for Gunship",97,70,"white","15px Arial","right");
 			 colorText("[M] for Missile Strike",136,90,"white","15px Arial","right");
@@ -253,6 +262,8 @@ function startGame() {
 	windowState.mainMenu = false;
 	
 	changeBackground(currentStageIndex);
+
+	timeStarted = new Date().getTime();
 }
 
 function openHelp() {
