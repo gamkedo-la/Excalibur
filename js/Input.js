@@ -195,7 +195,7 @@ function keyPress(evt) {
 					firstLoad = false;
 					return;
 				} else {
-				startGame();
+					startGame();
 				}
 			}
 			if(windowState.help){
@@ -419,6 +419,9 @@ function onMouseDown(evt) {
 			
 			if(windowState.mainMenu) {
 				mainMenu.checkButtons();
+			} else if (gameOverManager.gameOverPlaying) {
+				gameOverManager.gameOverPlaying = false;
+				resetGame();
 			}
 			break;
 	}
