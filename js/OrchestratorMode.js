@@ -12,6 +12,8 @@ var enemyData = {
 
 function orchestratorFrameCount() {
     orchestratorSpawnFrameCount++;
+    frameCount++;
+    timeElapsedInSeconds = (new Date().getTime() - timeStarted) / 1000;
 }
 
 function orchestratorSpawnEnemy() {

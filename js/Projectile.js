@@ -1,3 +1,5 @@
+var shotsFired = 0;
+
 var shotList = [];
 
 function initializeShotClasses() {
@@ -49,7 +51,7 @@ function ShotClass(x, y, angle, speed) {
 	
 	this.checkCollisions = function(list) {
 		for (var i = 0; i < list.length; i++) {
-			list[i].checkLineCollision(this.colliderLineSeg, this.position)
+			list[i].checkLineCollision(this.colliderLineSeg, this.position);
 		}
 	};
 };

@@ -10,6 +10,7 @@ var	currentBackgroundNear = backgroundNearPic;
 
 var gameOverManager = new gameOverSequence();
 
+var firstLoad = true;
 var isPaused = false; 
 var windowState = {
 	inFocus : true, 
@@ -27,6 +28,10 @@ var gameMissileSpawn;
 var masterFrameDelayTick=0;
 var canvas, canvasContext;
 currentBackgroundMusic.loopSong(menuMusic);
+
+var timeStarted;
+var timeElapsedInSeconds = 0;
+var frameCount = 0;
 
 window.onload = function () {
 	window.addEventListener("focus", windowOnFocus);
@@ -87,10 +92,15 @@ function update() {
 			drawSkyGradient();  
 			canvasContext.drawImage(backgroundFarPic,0,0);
 			colorText('How To Play',canvas.width/2 ,130,"white","30px Tahoma","center",opacity);
-			colorText("1) WASD or Arrow Keys for Movements",250 ,250 ,"white","15px Tahoma","left",opacity);
-			colorText("2) Primary Mouse button for Shooting",250,280 ,"white","15px Tahoma","left",opacity);
-			colorText("3) Tab to use secondary weapon",250,310 ,"white","15px Tahoma","left",opacity);
+			colorText("1) A/D keys or Left/Right arrow keys for movement",250 ,250 ,"white","15px Tahoma","left",opacity);
+			colorText("2) Mouse button for shooting",250,280 ,"white","15px Tahoma","left",opacity);
+			colorText("3) Pick-up power-ups using tank",250,310 ,"white","15px Tahoma","left",opacity);
 			colorText("4) P to pause and resume game",250,340 ,"white","15px Tahoma","left",opacity);
+			colorText("5) Tab to skip levels",250,370 ,"white","15px Tahoma","left",opacity); // TODO: remove for release
+			canvasContext.drawImage(firemodePowerUpPic, 470, 295);
+			canvasContext.drawImage(shieldPowerUpPic, 505, 300);
+			canvasContext.drawImage(healthPowerUpPic, 532, 300);
+			canvasContext.drawImage(maxHealthPowerUpPic, 559, 300);
 			colorText('Press (Enter) to Start game',canvas.width/2 ,canvas.height/2 + 120,"white","20px Tahoma","center",opacity);
 			opacity = opacity + 0.009;
 		}
@@ -118,6 +128,8 @@ function update() {
 				orchestratorFrameCount();
 			} else if (!orchestratorMode && carnageMode) {
 				carnageModeController();
+				cannonReloadFrames = 3;
+				cannonWaveReloadFrames = 5;
 			}
 		}		
 	}
@@ -149,69 +161,21 @@ function moveAll() {
 	updateExplosions();
 }
 
-function resetGame() {
-	clearInterval(gameDropshipSpawn);
-	clearInterval(gameGunshipSpawn);
-	clearInterval(gameMissileSpawn);
-	clearInterval(gameUpdate);
-
-	clearAllExplosions();
-	
-	currentBackgroundFar = backgroundFarPic;
-	currentBackgroundMed = backgroundTitlePic;
-	currentBackgroundNear = backgroundNearPic;
-	
-	windowState.mainMenu = true;
-	windowState.help = false;
-	orchestratorMode = false;
-	assaultMode = false;
-	carnageMode = false;
-	
-	isSpawningWave = false;
-	waveCompleted = false;
-	waveEndExcuted = false;
-	waveStarted = false;
-	isPaused = false;
-	enableIntermission = false;
-	carnageStarted = false;
-	
-	currentSpawnType = 0;
-	spawnFrameCount = 0;
-	currentEnemyIndex = 0;
-	currentStageIndex = 0;
-	currentWaveIndex = 0;
-	currentWave = currentWaveIndex + 1; 
-	wave = [];
-	createNewWave = [];
-	
-	shotList = [];
-	shipList = [];
-	alienList = [];
-	missileList = [];
-	
-	resetPowerUps();
-	score=0;
-	playerX = canvas.width/2;
-	playerHP = startHitpoints;
-	playerInvulTimer = 0;
-	
-	TitleTextX = canvas.width;
-	subTitleTextX = 0;
-	opacity = 0;
-	
-	currentBackgroundMusic.loopSong(menuMusic);
-	
-	gameUpdate = setInterval(update, 1000/30);
-}
-
 function drawScore() {
 	if (!orchestratorMode || carnageMode) {
-
-			 colorText("score: " + score,canvas.width-20,30,"white","20px Arial","right");
+			 colorText("Score: " + numberWithCommas(score),canvas.width-20,30,"white","20px Arial","right");
 
 	} else if (orchestratorMode && !carnageMode) {
 			
 			 colorText("spawnFrameCount: " + orchestratorSpawnFrameCount,canvas.width - 10, 30,"white","20px Arial","right");
+
+			 colorText("frameCount: " + frameCount, canvas.width - 10, 50, "white", "20px Arial", "right");
+			 colorText("Time Elapsed: " + timeElapsedInSeconds.toFixed(1), canvas.width - 10, 70, "white", "20px Arial", "right");
+			 colorText("Frame Rate: " + (frameCount / timeElapsedInSeconds).toFixed(1), canvas.width - 10, 90, "white", "20px Arial", "right");
+
+			 colorText("Shots Fired: " + shotsFired, canvas.width - 10, 110, "white", "20px Arial", "right");
+			 colorText("Number Of Hits: " + shotsHit, canvas.width - 10, 130, "white", "20px Arial", "right");
+
 			 colorText("[1] for Paradropper",130,50,"white","15px Arial","right");
 			 colorText("[2] for Gunship",97,70,"white","15px Arial","right");
 			 colorText("[M] for Missile Strike",136,90,"white","15px Arial","right");
@@ -234,15 +198,20 @@ function drawScore() {
 	}
 }
 
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 function drawLives() {
     //colorText("lives: " + playerHP,canvas.width-780,30,"white","20px Arial","left");
     var gap = 5;
     var cornerX = 30;
     var cornerY = 15;
-    var maxHeartsToShow = 5;
-    var heartsToShow = Math.min(playerHP, maxHeartsToShow);
-    for(var i = 0; i < heartsToShow; i++) {
-        canvasContext.drawImage(heartPic, cornerX + i * (heartPic.width + gap), cornerY);
+    var maxHeartsToShow = startHitpoints+playerUpgradeHealth;
+    for(var i = 0; i < maxHeartsToShow; i++) {
+        canvasContext.drawImage(
+        	(i < playerHP ? heartPic : heartlessPic)
+        	, cornerX + i * (heartPic.width + gap), cornerY);
     }
 }
 
@@ -279,7 +248,7 @@ function wrappedDraw(whichImg,pixelOffset) {
 function drawSkyGradient() {
 	canvasContext.drawImage(
 		timeOfDayGradient,
-		((masterFrameDelayTick*0.2)%timeOfDayGradient.width),0,1,100, // source x,y,w,d (scroll source x over time)
+		(Math.floor(masterFrameDelayTick*0.2)%timeOfDayGradient.width),0,1,100, // source x,y,w,d (scroll source x over time)
 		0,0,800,600); // dest x,y,w,d (scale one pixel worth of the gradient to fill entire screen)
 }
 
@@ -298,6 +267,12 @@ function startGame() {
 	windowState.mainMenu = false;
 	
 	changeBackground(currentStageIndex);
+
+	timeStarted = new Date().getTime();
+	timeElapsedInSeconds = 0;
+	frameCount = 0;
+	shotsFired = 0;
+	shotsHit = 0;
 }
 
 function openHelp() {
@@ -310,7 +285,7 @@ function openHelp() {
 }
 
 function togglePause(){
-    var levelIsInPlay = assaultMode || waveStarted;
+    var levelIsInPlay = assaultMode || waveStarted || carnageStarted;
     if((!levelIsInPlay || windowState.help) && !orchestratorMode){
 		console.log(waveStarted, windowState.help, orchestratorMode);	
         console.log("no pause");
@@ -319,7 +294,7 @@ function togglePause(){
 
     isPaused = !isPaused;	
     if(isPaused) {
-    	if(assaultMode) {
+    	if(assaultMode || carnageStarted) {
         clearInterval(gameDropshipSpawn);
         clearInterval(gameGunshipSpawn);
         clearInterval(gameMissileSpawn);
@@ -333,6 +308,10 @@ function togglePause(){
 			gameDropshipSpawn = setInterval(dropshipSpawn, 500);
 			gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
 			gameMissileSpawn = setInterval(missileSpawn, 2000);
+		} else if (carnageStarted) {
+			gameDropshipSpawn = setInterval(dropshipSpawn, 75);
+			gameGunshipSpawn = setInterval(gunshipSpawn, 75);
+			gameMissileSpawn = setInterval(missileSpawn, 500);
 		}
         resumeSound.play();
     }
@@ -355,6 +334,10 @@ function windowOnFocus() {
 			gameDropshipSpawn = setInterval(dropshipSpawn, 500);
 			gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
 			gameMissileSpawn = setInterval(missileSpawn, 2000);
+		} else if (carnageStarted) {
+			gameDropshipSpawn = setInterval(dropshipSpawn, 75);
+			gameGunshipSpawn = setInterval(gunshipSpawn, 75);
+			gameMissileSpawn = setInterval(missileSpawn, 500);
 		}
 		if (waveStarted && !gameOverManager.gameOverPlaying) {
 			resumeSound.play();

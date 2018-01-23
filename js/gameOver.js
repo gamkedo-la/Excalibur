@@ -49,9 +49,17 @@ function gameOverSequence() {
 
       if (artHeightTopNow >= canvas.height) {
         if(framesSinceGameOverShown<0) {
-          drawStroked('GAME OVER!!', canvas.width / 6, canvas.height / 2, 'red' , '80px Sans-serif')
-          drawStroked('Final Score :'+ score, canvas.width / 2, canvas.height / 2 + 80, 'white' , '60px Sans-serif','center');
-            drawStroked(" [  P R E S S  E N T E R  ]", canvas.width/2, canvas.height/2 + 140, "white", "30px arial", "center");
+          drawRect(50, 50, canvas.width - 100, canvas.height - 100, "rgba(50, 50, 50, 0.8)")
+            
+          drawStroked("GAME OVER!!", canvas.width / 2, canvas.height / 4 - 20, "red", "70px Sans-serif", "center")
+          drawStroked("Final Score :" + score, canvas.width / 2, canvas.height / 4 + 100, "white", "45px Sans-serif", "center");
+
+          drawStroked("Shots Fired: "+ shotsFired, canvas.width / 2, canvas.height / 4 + 180, "white", "30px Sans-serif", "center");
+          drawStroked("Number Of Hits: "+ shotsHit, canvas.width / 2, canvas.height / 4 + 220, "white", "30px Sans-serif", "center");
+          drawStroked("Hit-Miss Ratio: "+ (shotsHit / shotsFired * 100).toFixed(1) + "%", canvas.width / 2, canvas.height / 4 + 260, "white", "30px Sans-serif", "center");
+            
+          drawStroked("[ PRESS  ENTER  or  CLICK  MOUSE ]", canvas.width / 2, canvas.height / 4 + 360, "white", "35px arial", "center");
+
           framesSinceGameOverShown = framesShowingGameOverTextBeforeReset;
         } /*else if(framesSinceGameOverShown-- == 0) {
           this.gameOverPlaying = false;

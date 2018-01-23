@@ -129,6 +129,10 @@ alienClass.prototype.draw = function () {
 		this.frameNow = 0;
 	}
 
+	if(this.state === this.states.noChute) {
+		this.frameNow = 3;
+	}
+
 	canvasContext.drawImage(this.img,
 	                        this.frameNow * this.animPicWidth, 0,
 	                        this.animPicWidth, this.animPicHeight,

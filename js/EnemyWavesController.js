@@ -3,12 +3,11 @@ var currentWaveIndex = 0;
 var currentWave = currentWaveIndex + 1;
 var currentStageIndex = 0; 
 var currentStage = currentStageIndex + 1;
-var stageNames = ["Planet Zebes", "Inside Super Computer", "Crystalline Coast"];
+var stageNames = ["Planet Zebes", "Inside Super Computer", "Crystalline Coast", "Fantasy Zone", "Starfield"];
 var timeBetweenWaves = 25; // time in frames (30 frames/second)
 var timeForText = 85; // time in frames (30 frames/second)
 var spawnFrameCount = 0;
 var currentSpawnType = 0;
-var weaponFrameCount = 0;
 var currentEnemyIndex = 0;
 
 var isSpawningWave = false;
@@ -21,17 +20,52 @@ var assaultMode = false;
 const ZEBES_BACKGROUND = 0;
 const COMPUTER_BACKGROUND = 1;
 const BEACH_BACKGROUND = 2;
+const FANTASY_BACKGROUND = 3;
+const STARS_BACKGROUND = 4;
 
 var currentBackground = ZEBES_BACKGROUND;
 
 var stage1 = [stage1WaveNumber1,stage1WaveNumber2,stage1WaveNumber3];
 var stage2 = [stage2WaveNumber1]
 var stage3 = [stage3WaveNumber1]
-var allStages = [stage1,stage2, stage3];
+var stage4 = [stage1WaveNumber3]
+var stage5 = [stage1WaveNumber2]
+var allStages = [stage1,stage2, stage3, stage4, stage5];
+
+var isUpgradeTime = false;
 
 function checkFrameCount() {
-    spawnFrameCount++;
-    
+	if(isUpgradeTime) {
+		var canUpSpeed = playerUpgradeSpeed<MAX_UPGRADES_PER_KIND,
+			canUpROF=playerUpgradeROF<MAX_UPGRADES_PER_KIND,
+			canUpHealth=playerUpgradeHealth<MAX_UPGRADES_PER_KIND;
+		if(canUpHealth == false && canUpROF == false && canUpSpeed == false) {
+			isUpgradeTime = false;
+		} else {
+			canvasContext.font = "40px Tahoma";
+			canvasContext.textAlign = "center";
+			canvasContext.fillStyle = "white";
+			var textLineSkip = 40;
+			var textLineY = canvas.height/2 - textLineSkip *3;
+			canvasContext.fillText("Time for an upgrade!",canvas.width/2,textLineY);
+			textLineY+= textLineSkip * 2;
+			if(canUpSpeed) {
+				canvasContext.fillText("1. Dodge Speed ("+playerUpgradeSpeed+"/"+MAX_UPGRADES_PER_KIND+")",canvas.width/2,textLineY);
+			}
+			textLineY+= textLineSkip;
+			if(canUpROF) {
+				canvasContext.fillText("2. Rate of Fire ("+playerUpgradeROF+"/"+MAX_UPGRADES_PER_KIND+")" ,canvas.width/2,textLineY);
+			}
+			textLineY+= textLineSkip;
+			if(canUpHealth) {
+				canvasContext.fillText("3. Extra Health ("+playerUpgradeHealth+"/"+MAX_UPGRADES_PER_KIND+")" ,canvas.width/2,textLineY);
+			}
+			textLineY+= textLineSkip*2;
+			canvasContext.fillText('Type '+(canUpSpeed ? '1 ' : "")+(canUpROF ? '2 ' : "")+(canUpHealth ? '3 ' : "")+'to choose...',canvas.width/2 ,textLineY);
+			return;
+		}
+	}
+	spawnFrameCount++;
     if (wave.length < 1) {
     	if (!isSpawningWave) {
             waveStart();
@@ -129,18 +163,19 @@ function waveEnd() {
 	} else if (spawnFrameCount > timeForText) {
 		spawnFrameCount = 0;
 		waveCompleted = false;
+		isUpgradeTime = true;
 		enableIntermission = true;
 	}
 }
 
 function intermission() {
 	if (spawnFrameCount > timeBetweenWaves) {
-			currentWaveIndex++;
-			currentWave++;
-			spawnFrameCount = 0;
-			enableIntermission = false;		
-			waveEndExcuted = false;
-			isSpawningWave = false;
+		currentWaveIndex++;
+		currentWave++;
+		spawnFrameCount = 0;
+		enableIntermission = false;		
+		waveEndExcuted = false;
+		isSpawningWave = false;
 		if (currentWaveIndex == allStages[currentStageIndex].length){
 			currentStageIndex++;
 			currentStage++;
@@ -154,22 +189,36 @@ function intermission() {
 function changeBackground(stage) {
 	if (!windowState.help && !windowState.mainMenu) {
         currentBackground = stage;
-		if (currentBackground == ZEBES_BACKGROUND) {
-			currentBackgroundMusic.loopSong(zebesBackgroundMusic);
-			currentBackgroundFar = backgroundFarPic;
-			currentBackgroundMed = backgroundMedPic;
-			currentBackgroundNear = backgroundNearPic;
-		}
-		if (currentBackground == COMPUTER_BACKGROUND) {
-			currentBackgroundMusic.loopSong(computerBackgroundMusic);
-			currentBackgroundMed = computerBackgroundFarPic;
-			currentBackgroundNear = computerBackgroundNearPic;
-		}
-		if (currentBackground == BEACH_BACKGROUND) {
-			currentBackgroundMusic.loopSong(zebesBackgroundMusic);
-			currentBackgroundFar = beachBackgroundFarPic;
-			currentBackgroundMed = beachBackgroundMedPic;
-			currentBackgroundNear = beachBackgroundNearPic;
+		switch (currentBackground) {
+			case ZEBES_BACKGROUND:
+				currentBackgroundMusic.loopSong(zebesBackgroundMusic);
+				currentBackgroundFar = backgroundFarPic;
+				currentBackgroundMed = backgroundMedPic;
+				currentBackgroundNear = backgroundNearPic;
+				break;
+			case COMPUTER_BACKGROUND:
+				currentBackgroundMusic.loopSong(computerBackgroundMusic);
+				currentBackgroundMed = computerBackgroundFarPic;
+				currentBackgroundNear = computerBackgroundNearPic;
+				break;
+			case BEACH_BACKGROUND:
+				currentBackgroundMusic.loopSong(zebesBackgroundMusic);
+				currentBackgroundFar = beachBackgroundFarPic;
+				currentBackgroundMed = beachBackgroundMedPic;
+				currentBackgroundNear = beachBackgroundNearPic;
+				break;
+			case FANTASY_BACKGROUND:
+				currentBackgroundMusic.loopSong(computerBackgroundMusic);
+				currentBackgroundFar = fantasyFarPic;
+				currentBackgroundMed = fantasyMedPic;
+				currentBackgroundNear = fantasyNearPic;
+        		break;
+			case STARS_BACKGROUND:
+				currentBackgroundMusic.loopSong(computerBackgroundMusic);
+				currentBackgroundFar = starryBackgroundFarPic;
+				currentBackgroundMed = starryBackgroundMidPic;
+				currentBackgroundNear = starryBackgroundNearPic;
+        		break;
 		}
 	}
 };

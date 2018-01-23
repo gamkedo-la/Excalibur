@@ -34,6 +34,7 @@ const KEY_K = 75;
 const KEY_BACKSPACE = 8;
 
 var holdFire, holdLeft, holdRight = false;
+var rotateLeft, rotateRight = false;
 var smartBombActive = false;
 
 const FIREMODE_SINGLE = 0;
@@ -66,6 +67,7 @@ function initializeInput() {
 			canvas.addEventListener('mousemove', calculateMousePos);
 			canvas.addEventListener('mousedown', onMouseDown);
 			canvas.addEventListener('mouseup', onMouseUp);
+			canvas.addEventListener ("mouseout", onMouseUp);
 			break;
 	}
 }
@@ -75,15 +77,19 @@ function handleInput() {
 		switch(fireMode) {
 			case FIREMODE_SINGLE:
 				if(cannonReloadLeft <= 0) {
+					cannonReloadLeft = CannonShotClass.reloadTime - playerUpgradeROF;
+					
 					var newShot = new CannonShotClass(cannonEndX, cannonEndY, cannonAngle);
 					shotList.push(newShot);
 					regularShotSound.play();
+					shotsFired++;
 					gunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = CannonShotClass.reloadTime;
 				}
 				break;
 			case FIREMODE_TWIN:
 				if(cannonReloadLeft <= 0) {
+					cannonReloadLeft = CannonShotClass.reloadTime - playerUpgradeROF;
+					
 					var shotStartOffsetX = Math.cos(cannonAngle+Math.PI/2) * 7;
 					var shotStartOffsetY = Math.sin(cannonAngle+Math.PI/2) * 7;
 					var newShot = new CannonShotClass(cannonEndX-shotStartOffsetX,
@@ -93,12 +99,14 @@ function handleInput() {
 												cannonEndY+shotStartOffsetY, cannonAngle);
 					shotList.push(newShot);
 					regularShotSound.play();
+					shotsFired++;
 					gunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = CannonShotClass.reloadTime;
 				}
 				break;
 			case FIREMODE_SPLIT:
 				if(cannonReloadLeft <= 0) {
+					cannonReloadLeft = CannonShotClass.reloadTime - playerUpgradeROF;
+					
 					var forkAmtInRadians = 0.18;
 					var newShot = new CannonShotClass(cannonEndX, cannonEndY,
 						cannonAngle-forkAmtInRadians);
@@ -110,45 +118,49 @@ function handleInput() {
 						cannonAngle);
 					shotList.push(newShot);
 					regularShotSound.play();
+					shotsFired++;
 					gunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = CannonShotClass.reloadTime;
 				}
 				break;			break;
 			case FIREMODE_WAVE:
 				if(cannonReloadLeft <= 0) {
+					cannonReloadLeft = WaveShotClass.reloadTime * (1.0-(playerUpgradeROF/(MAX_UPGRADES_PER_KIND+1)));
+					
 					var newShot = new WaveShotClass(cannonEndX, cannonEndY, cannonAngle);
 					shotList.push(newShot);
 					waveShotSound.play();
+					shotsFired++;
 					secondaryGunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = WaveShotClass.reloadTime;
 				}
 				break;
 			case FIREMODE_LASER:
 				if(cannonReloadLeft <= 0) {
+					cannonReloadLeft = LaserShotClass.reloadTime * (1.0-(playerUpgradeROF/(MAX_UPGRADES_PER_KIND+1)));
+					// NOTE: compute cannonReloadLeft prior to laserShotClass, bases lifetime on it
 					var newShot = new LaserShotClass(cannonEndX, cannonEndY, cannonAngle);
 					shotList.push(newShot);
 					waveShotSound.play();
+					shotsFired++;
 					secondaryGunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = LaserShotClass.reloadTime;
 				}
 				break;
 			default:
 				console.log("fire mode not yet implemented: " + fireMode);
 				break;
 		}
-
 	}
 	if(cannonReloadLeft>0) {
 		cannonReloadLeft--;
 	}
 	switch(controlScheme) {
 		case CONTROL_SCHEME_KEYS_STATIONARY:
-			if(holdLeft) {
+			if(rotateLeft) {
 				cannonAngle -= cannonAngleVelocity;
 			}
-			if(holdRight) {
+			if(rotateRight) {
 				cannonAngle += cannonAngleVelocity;
 			}
+			movePlayer();
 			break;
 		case CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING:
 			var mouseCannonY = mouseY - playerY;
@@ -182,7 +194,13 @@ function keyPress(evt) {
 			break;
 		case KEY_ENTER:
 			if(windowState.mainMenu){
-				startGame();
+				if(firstLoad) {
+					openHelp();
+					firstLoad = false;
+					return;
+				} else {
+					startGame();
+				}
 			}
 			if(windowState.help){
 				startGame();
@@ -211,6 +229,9 @@ function keyPress(evt) {
 					framesUntilSpawn: null 
 				}
 				orchestratorSpawnEnemy();
+			} else if(isUpgradeTime && playerUpgradeSpeed<MAX_UPGRADES_PER_KIND) {
+		 		playerUpgradeSpeed++;
+				isUpgradeTime = false;
 			}
 			break;
 		case DIGIT_2:
@@ -224,7 +245,34 @@ function keyPress(evt) {
 					framesUntilSpawn: null 
 				}
 				orchestratorSpawnEnemy();
+			} else if(isUpgradeTime && playerUpgradeROF<MAX_UPGRADES_PER_KIND) {
+		 		playerUpgradeROF++;
+				isUpgradeTime = false;
 			}
+			break;
+		case DIGIT_3:
+		 	if(isUpgradeTime && playerUpgradeHealth<MAX_UPGRADES_PER_KIND) {
+		 		playerHP++;
+		 		playerUpgradeHealth++;
+				isUpgradeTime = false;
+			}
+			break;
+		/*case DIGIT_4: // testing key
+			isUpgradeTime = true;
+			break;*/
+		case DIGIT_4: // testing key
+			if (controlScheme == CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING) {
+				controlScheme = CONTROL_SCHEME_KEYS_STATIONARY;
+			} else {
+				controlScheme = CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING;
+			}
+			break;
+		case DIGIT_5:
+		case DIGIT_6:
+		case DIGIT_7:
+			fireMode = (evt.keyCode - DIGIT_3);
+			console.log("weapon mode change to: " +
+			fireMode);
 			break;
 		case KEY_M:
 			if(orchestratorMode) {
@@ -239,16 +287,6 @@ function keyPress(evt) {
 				orchestratorSpawnEnemy();
 			}
 			break;
-		case DIGIT_3:
-		case DIGIT_4:
-		case DIGIT_5:
-		case DIGIT_6:
-		case DIGIT_7:
-			fireMode = (evt.keyCode - DIGIT_3);
-			console.log("weapon mode change to: " +
-			fireMode);
-			break;
-
 		case KEY_H:
             if(!gameOverManager.gameOverPlaying){
 			openHelp();
@@ -270,12 +308,24 @@ function keyPress(evt) {
 			holdFire = true;
 			break;
 		case KEY_LEFT:
-		case KEY_A:
 			holdLeft = true;
 			break;
+		case KEY_A:
+			if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY) {
+				rotateLeft = true;
+			} else {
+			holdLeft = true;
+			}
+			break;
 		case KEY_RIGHT:
-		case KEY_D:
 			holdRight = true;
+			break;
+		case KEY_D:
+			if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY) {
+				rotateRight = true;
+			} else {
+			holdRight = true;
+			}
 			break;
 		case DIGIT_0:
 			debug = !debug;
@@ -297,15 +347,27 @@ function keyRelease(evt) {
 			holdFire = false;
 			break;
 		case KEY_LEFT:
-		case KEY_A:
 			holdLeft = false;
+			break;
+		case KEY_A:
+			if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY) {
+				rotateLeft = false;
+			} else {
+				holdLeft = false;
+			}
 			break;
 		case KEY_B:
 			smartBombActive = true;
 			break;
 		case KEY_RIGHT:
-		case KEY_D:
 			holdRight = false;
+			break;
+		case KEY_D:
+			if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY) {
+				rotateRight = false;
+			} else {
+				holdRight = false;
+			}
 			break;
         case KEY_BACKSPACE:
             playerHP = 3;
@@ -350,6 +412,7 @@ function calculateMousePos(evt) {
     const root = document.documentElement;
     mouseX = evt.clientX - rect.left;
     mouseY = evt.clientY - rect.top;
+    //console.log(Math.floor(mouseX));
 }
 
 function onMouseDown(evt) {
@@ -360,6 +423,9 @@ function onMouseDown(evt) {
 			
 			if(windowState.mainMenu) {
 				mainMenu.checkButtons();
+			} else if (gameOverManager.gameOverPlaying) {
+				gameOverManager.gameOverPlaying = false;
+				resetGame();
 			}
 			break;
 	}

@@ -1,6 +1,5 @@
-//var laserLowerRight, laserLowerLeft, laserTopRight, laserTopLeft;
 LaserShotClass.reloadTime = 64;
-
+//TODO add beamThickness and laserLife stuff from Chris' commits
 function LaserShotClass(x, y, angle) {
 	// ShotClass(x, y, angle, speed)
 	ShotClass.call(this, x, y, angle, 0);
@@ -20,6 +19,8 @@ function LaserShotClass(x, y, angle) {
 	this.sprite = new SpriteSheetClass(laserPic, this.width, this.height);
 	
 	this.colliderLineSegLaserLeft = new lineSegment();
+//this.laserStartLife = this.laserLife = cannonReloadLeft * (0.1+playerUpgradeROF*0.2);  //??
+<<<<<<< HEAD
 	this.colliderLineSegLaserRight = new lineSegment();
 
 	this.draw = function () {
@@ -41,12 +42,15 @@ function LaserShotClass(x, y, angle) {
 	this.move = function () {
 		this.tickCount++;
 		
+		//this.laserLife--;//??
+		//this.beamThickness = (1+playerUpgradeROF) * (this.laserStartLife/2-(Math.abs(this.laserLife-this.laserStartLife/2)))/20.0;//??
+		
+		this.moveAng = cannonAngle;
+		this.position.x = cannonEndX;
+		this.position.y = cannonEndY;
+		
 		if (this.tickCount >= this.duration) {
 			this.removeMe = true;
-			playerMoveSpeed = 4;
-		} else {
-			cannonAngle = angle;
-			playerMoveSpeed = 0;
 		}
 	};
 
