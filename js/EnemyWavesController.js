@@ -30,10 +30,8 @@ var stage3 = [stage3WaveNumber1]
 var allStages = [stage1,stage2, stage3];
 
 function checkFrameCount() {
-	spawnFrameCount++;
-	if(usingTimedWeapon) {
-		weaponFrameCount++
-	}
+    spawnFrameCount++;
+    
     if (wave.length < 1) {
     	if (!isSpawningWave) {
             waveStart();

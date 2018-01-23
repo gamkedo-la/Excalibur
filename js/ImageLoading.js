@@ -39,7 +39,6 @@ var timeOfDayGradient = document.createElement("img");
 
 var targetReticlePic = document.createElement("img");
 
-var waveShotPicFrameW = waveShotPicFrameH = 12;
 var laserPicFrameW = 1050, laserPicFrameH = 18;
 
 var picsToLoad = 0;

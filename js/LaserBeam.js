@@ -1,90 +1,76 @@
-var usingTimedWeapon = false;
-var laserTopPosition = vec2.create(0, -laserPicFrameH);
-var laserLowerRight, laserLowerLeft, laserTopRight, laserTopLeft;
-var restoreLaserPic = laserPic;
+//var laserLowerRight, laserLowerLeft, laserTopRight, laserTopLeft;
+LaserShotClass.reloadTime = 64;
 
-function laserShotClass(x, y, angle, speed) {
-	this.speed = speed;
-	this.position = vec2.create(x, y);
-	this.moveAng = angle;
-	this.removeMe = false;
-	this.frameNow = 0;
-	this.colliderLineSegLaserRight = new lineSegment();
+function LaserShotClass(x, y, angle) {
+	// ShotClass(x, y, angle, speed)
+	ShotClass.call(this, x, y, angle, 0);
+	
+	this.width = 18;
+	this.height = 1050;
+	
+	this.tickCount = 0;
+	this.numFrames = 2;
+	this.ticksPerFrame = 6;
+	this.frames = 2;
+	this.frameOffset = 0;
+	
+	this.duration = 54;
+	this.thickLaserRatio = 3/5;
+	
+	this.sprite = new SpriteSheetClass(laserPic, this.width, this.height);
+	
 	this.colliderLineSegLaserLeft = new lineSegment();
+	this.colliderLineSegLaserRight = new lineSegment();
 
 	this.draw = function () {
-		canvasContext.save();
-		canvasContext.translate(this.position.x,this.position.y);
-		canvasContext.rotate(this.moveAng);
-		if (masterFrameDelayTick % 10 == 0) {
-				this.frameNow = 0;
-			} else if (masterFrameDelayTick % 10 == 5) {
-				this.frameNow = 1;
-			}
-		if (!this.removeMe)	{
-			canvasContext.drawImage(laserPic,
-				0, this.frameNow * laserPicFrameH, laserPicFrameW, laserPicFrameH,
-				0, -laserPicFrameH/2, laserPicFrameW, laserPicFrameH);
+		var frameNow = Math.floor(this.tickCount / this.ticksPerFrame) % this.frames + this.frameOffset;
+		var flipSprite = Math.floor((this.tickCount + this.ticksPerFrame/2) / this.ticksPerFrame) % this.frames;
+		
+		this.sprite.draw(frameNow, 0,
+		                 this.position.x + this.height/2 * Math.cos(this.moveAng),
+		                 this.position.y + this.height/2 * Math.sin(this.moveAng),
+		                 this.moveAng + Math.PI/2,
+		                 flipSprite);
+		
+		// Swap to thin laser part way through shooting
+		if (this.tickCount > this.duration * this.thickLaserRatio) {
+			this.frameOffset = this.numFrames;
 		}
-		if (weaponFrameCount > 35) {
-				laserPic = laserPicEnding;
-			}
-		canvasContext.restore();
-		//drawRect(laserLowerRight.x,laserLowerRight.y,5,5,'red');
-		//drawRect(laserTopRight.x,laserTopRight.y,5,5,'lime');
-		//console.log(laserLowerRight.x , laserLowerRight.y, laserTopRight.x, laserTopRight.y);
 	};
 
 	this.move = function () {
-		cannonAngle = angle;
-		playerMoveSpeed = 0;
-		// laser shot doesn't actually go anywhere
+		this.tickCount++;
+		
+		if (this.tickCount >= this.duration) {
+			this.removeMe = true;
+			playerMoveSpeed = 4;
+		} else {
+			cannonAngle = angle;
+			playerMoveSpeed = 0;
+		}
 	};
 
-	this.shotCollisionAndBoundaryCheck = function () {
-		if (weaponFrameCount >= 54) {
-				laserPic = restoreLaserPic;
-				this.removeMe = true;
-				usingTimedWeapon = false;
-				cannonAngle = Math.atan2(mouseCannonY, mouseCannonX);
-				weaponFrameCount = 0;
-				playerMoveSpeed = 4;
-		}
-	
+	this.updateCollider = function () {
 		var perpAng = this.moveAng + Math.PI / 2; //perpinducar Angle since we want to go left/right of where barrel is facing
-		laserLowerRight = vec2.create(this.position.x + (laserPicFrameH/2) * Math.cos(perpAng),
-																	this.position.y + (laserPicFrameH/2) * Math.sin(perpAng));
-		laserLowerLeft = vec2.create(this.position.x - (laserPicFrameH/2) * Math.cos(perpAng),
-																this.position.y - (laserPicFrameH/2) * Math.sin(perpAng));
-		laserTopRight = vec2.create(laserLowerRight.x + laserPicFrameW * Math.cos(this.moveAng),
-																laserLowerRight.y + laserPicFrameW * Math.sin(this.moveAng));
-		laserTopLeft = vec2.create(laserLowerLeft.x + laserPicFrameW * Math.cos(this.moveAng), 
-															laserLowerLeft.y + laserPicFrameW * Math.sin(this.moveAng));
-	
-		this.colliderLineSegLaserRight.setEndPoints(laserLowerRight,laserTopRight);
+		
+		var lowerXOffset = (this.width/2) * Math.cos(perpAng);
+		var lowerYOffset = (this.width/2) * Math.sin(perpAng);
+		var lengthXOffset = this.height * Math.cos(this.moveAng);
+		var lengthYOffset = this.height * Math.sin(this.moveAng);
+		
+		var laserLowerLeft = vec2.create(this.position.x - lowerXOffset, this.position.y - lowerYOffset);
+		var laserLowerRight = vec2.create(this.position.x + lowerXOffset, this.position.y + lowerYOffset);
+		var laserTopLeft = vec2.create(laserLowerLeft.x + lengthXOffset, laserLowerLeft.y + lengthYOffset);
+		var laserTopRight = vec2.create(laserLowerRight.x + lengthXOffset, laserLowerRight.y + lengthYOffset);
+		
 		this.colliderLineSegLaserLeft.setEndPoints(laserLowerLeft,laserTopLeft);
-	
-		powerUpBoxList.forEach(function(powerUpBox) {
-				if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSegLaserRight) 
-					|| isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSegLaserLeft)) {
-					powerupExplosion(powerUpBox.position.x - powerUpWidth / 2,
-									powerUpBox.position.y - powerUpWidth / 2);
-					shieldPowerUpSound.play();
-						var useMaxDuration = true;
-						score += scoreForPowerUpShot;
-						powerUpBox.setActive(useMaxDuration);
-				}
-		}, this);
-	
-		this.checkCollisions(shipList);
-		this.checkCollisions(missileList);
-		this.checkCollisions(alienList);
-	}; // end of shotCollisionAndBoundaryCheck function
+		this.colliderLineSegLaserRight.setEndPoints(laserLowerRight,laserTopRight);
+	};
 
 	this.checkCollisions = function(list) {
-		for (var t = 0; t < list.length; t++) {
-			list[t].checkLineCollision(this.colliderLineSegLaserRight, list[t].position);
-			list[t].checkLineCollision(this.colliderLineSegLaserLeft, list[t].position);
+		for (var i = 0; i < list.length; i++) {
+			list[i].checkLineCollision(this.colliderLineSegLaserLeft, list[i].position);
+			list[i].checkLineCollision(this.colliderLineSegLaserRight, list[i].position);
 		}
 	};
-}; // end of laserShotClass
+};

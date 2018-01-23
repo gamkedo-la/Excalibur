@@ -52,6 +52,7 @@ window.onload = function () {
 	initExplosions();
 	mainMenu.initialize();
 	initializeEnemyClasses();
+	initializeShotClasses();
 };
 
 function loadingDoneSoStartGame () {

@@ -75,63 +75,61 @@ function handleInput() {
 		switch(fireMode) {
 			case FIREMODE_SINGLE:
 				if(cannonReloadLeft <= 0) {
-					var newShot = new shotClass(cannonEndX, cannonEndY, cannonAngle, cannonShotSpeed);
+					var newShot = new CannonShotClass(cannonEndX, cannonEndY, cannonAngle);
 					shotList.push(newShot);
 					regularShotSound.play();
 					gunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = cannonReloadFrames;
+					cannonReloadLeft = CannonShotClass.reloadTime;
 				}
 				break;
 			case FIREMODE_TWIN:
 				if(cannonReloadLeft <= 0) {
 					var shotStartOffsetX = Math.cos(cannonAngle+Math.PI/2) * 7;
 					var shotStartOffsetY = Math.sin(cannonAngle+Math.PI/2) * 7;
-					var newShot = new shotClass(cannonEndX-shotStartOffsetX,
-												cannonEndY-shotStartOffsetY, cannonAngle, cannonShotSpeed);
+					var newShot = new CannonShotClass(cannonEndX-shotStartOffsetX,
+												cannonEndY-shotStartOffsetY, cannonAngle);
 					shotList.push(newShot);
-					newShot = new shotClass(cannonEndX+shotStartOffsetX,
-												cannonEndY+shotStartOffsetY, cannonAngle, cannonShotSpeed);
+					newShot = new CannonShotClass(cannonEndX+shotStartOffsetX,
+												cannonEndY+shotStartOffsetY, cannonAngle);
 					shotList.push(newShot);
 					regularShotSound.play();
 					gunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = cannonReloadFrames;
+					cannonReloadLeft = CannonShotClass.reloadTime;
 				}
 				break;
 			case FIREMODE_SPLIT:
 				if(cannonReloadLeft <= 0) {
 					var forkAmtInRadians = 0.18;
-					var newShot = new shotClass(cannonEndX, cannonEndY,
-						cannonAngle-forkAmtInRadians, cannonShotSpeed);
+					var newShot = new CannonShotClass(cannonEndX, cannonEndY,
+						cannonAngle-forkAmtInRadians);
 					shotList.push(newShot);
-					newShot = new shotClass(cannonEndX, cannonEndY,
-						cannonAngle+forkAmtInRadians, cannonShotSpeed);
+					newShot = new CannonShotClass(cannonEndX, cannonEndY,
+						cannonAngle+forkAmtInRadians);
 					shotList.push(newShot);
-					newShot = new shotClass(cannonEndX, cannonEndY,
-						cannonAngle, cannonShotSpeed);
+					newShot = new CannonShotClass(cannonEndX, cannonEndY,
+						cannonAngle);
 					shotList.push(newShot);
 					regularShotSound.play();
 					gunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = cannonReloadFrames;
+					cannonReloadLeft = CannonShotClass.reloadTime;
 				}
 				break;			break;
 			case FIREMODE_WAVE:
 				if(cannonReloadLeft <= 0) {
-					usingTimedWeapon = true;
-					var newShot = new waveShotClass(cannonEndX, cannonEndY, cannonAngle, cannonWaveShotSpeed);
+					var newShot = new WaveShotClass(cannonEndX, cannonEndY, cannonAngle);
 					shotList.push(newShot);
 					waveShotSound.play();
 					secondaryGunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = cannonWaveReloadFrames;
+					cannonReloadLeft = WaveShotClass.reloadTime;
 				}
 				break;
 			case FIREMODE_LASER:
 				if(cannonReloadLeft <= 0) {
-					usingTimedWeapon = true;
-					var newShot = new laserShotClass(cannonEndX, cannonEndY, cannonAngle, 0);
+					var newShot = new LaserShotClass(cannonEndX, cannonEndY, cannonAngle);
 					shotList.push(newShot);
 					waveShotSound.play();
 					secondaryGunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = cannonLaserReloadFrames;
+					cannonReloadLeft = LaserShotClass.reloadTime;
 				}
 				break;
 			default:
@@ -162,7 +160,7 @@ function handleInput() {
 			break;
 	}
 	
-	// This could likely be done without the magic number using some kind of modulo angle formula
+	// This could likely be done using some kind of modulo angle formula
 	if (cannonAngle < defaultCannonAng - cannonAngLimit || cannonAngle > Math.PI/2) {
 		cannonAngle = defaultCannonAng - cannonAngLimit;
 	} else 	if (cannonAngle > defaultCannonAng + cannonAngLimit) {

@@ -1,143 +1,24 @@
-const shotWidth = 4;
-const shotHeight = 4;
 var shotList = [];
 
-function shotClass(x, y, angle, speed) {
-    this.width = shotWidth;
-    this.height = shotHeight;
-    this.position = vec2.create(x, y);
-    this.moveAng = angle;
-    this.speed = speed;
+CannonShotClass.reloadTime = 5;
 
-    this.velocity = vec2.create(Math.cos(this.moveAng), Math.sin(this.moveAng));
-    vec2.scale(this.velocity, this.velocity, this.speed);
-
-    this.colliderLineSeg = new lineSegment();
-
-    this.removeMe = false;
-
-    this.draw = function() {
-        drawBitmapCenteredAtLocationWithRotation(shotPic, this.position.x, this.position.y, this.moveAng + Math.PI/2);
-    };
-
-    this.move = function() {
-        vec2.add(this.position, this.position, this.velocity);
-    };
-
-    this.shotCollisionAndBoundaryCheck = function() {
-        // note: not checking screen bottom since we can't shoot down
-        if (this.position.x < 0 || this.position.x > canvas.width || this.position.y < 0) {
-            this.removeMe = true;
-        }
-
-        // Compute the shot's previous position
-        var prevPos = vec2.create();
-        vec2.sub(prevPos, this.position, this.velocity);
-
-        // Create line segment collider from current & previous positions
-        this.colliderLineSeg.setEndPoints(prevPos, this.position);
-
-        powerUpBoxList.forEach(function(powerUpBox) {
-            if (isColliding_AABB_LineSeg(powerUpBox.colliderAABB, this.colliderLineSeg)) {
-
-                powerupExplosion(this.position.x,this.position.y);
-                shieldPowerUpSound.play();
-                
-                var useMaxDuration = true;
-                score += scoreForPowerUpShot;
-                powerUpBox.setActive(useMaxDuration);
-                this.removeMe = true;
-            }
-        }, this);
-
-        this.checkCollisions(shipList);
-        this.checkCollisions(missileList);
-        this.checkCollisions(alienList);
-    }; // end of shotCollisionAndBoundaryCheck function
-    
-    this.checkCollisions = function(list) {
-        for (var i = 0; i < list.length; i++) {
-            if(list[i].checkLineCollision(this.colliderLineSeg, this.position)){
-                this.removeMe = true;
-            }
-        }
-    };
-}; // end of shotClass
-
-function EnemyShotClass(x, y, angle, speed) {
-    this.width = shotWidth;
-    this.height = shotHeight;
-    this.position = vec2.create(x, y);
-
-    this.moveAng = angle;
-    this.speed = speed;
-    this.fromEnemy = true;
-
-    this.velocity = vec2.create(Math.cos(this.moveAng), Math.sin(this.moveAng));
-    vec2.scale(this.velocity, this.velocity, this.speed);
-
-    this.colliderLineSeg = new lineSegment();
-
-    this.removeMe = false;
-
-    this.draw = function() {
-        canvasContext.fillStyle = "red";
-        canvasContext.fillRect(this.position.x - 1, this.position.y - 1, shotWidth, shotHeight);
-    };
-
-    this.move = function() {
-        vec2.add(this.position, this.position, this.velocity);
-    };
-
-    this.shotCollisionAndBoundaryCheck = function() {
-        if (this.position.x < 0 || this.position.x > canvas.width || this.position.y > canvas.height) {
-            this.removeMe = true;
-        }
-        // Compute the shot's previous position
-        var prevPos = vec2.create();
-        vec2.sub(prevPos, this.position, this.velocity);
-
-        // Create line segment collider from current & previous positions
-        this.colliderLineSeg.setEndPoints(prevPos, this.position);
-        if (isColliding_AABB_LineSeg(playerColliderAABB, this.colliderLineSeg)) {
-            this.removeMe = true;
-            hitPlayer();
-        }
-    };
-
-} // end of EnemyShotClass
-
-function drawAndRemoveShots() {
-    var i;
-    for (i = 0; i < shotList.length; i++) {
-        shotList[i].draw();
-    }
-    for (i = shotList.length - 1; i >= 0; i--) {
-        if (shotList[i].removeMe) {
-            shotList.splice(i, 1);
-        }
-    }
-}
-
-function moveShots() {
-    for (var i = 0; i < shotList.length; i++) {
-        shotList[i].move();
-        shotList[i].shotCollisionAndBoundaryCheck();
-    }
-}
-
-// Saved incase AABB collision needs to be replaced - Terrence
-
-/*if (this.position.y > alienList[t].position.y - alienHeight && this.position.y < alienList[t].position.y &&
-                this.position.x > alienList[t].position.x - alienWidth / 2 && this.position.x < alienList[t].position.x + alienWidth / 2) {
-
-                alienHitExplosion(this.position.x,this.position.y);
-
-                score += scoreForAlienShot;
-                alienList[t].removeMe = true;
-                this.removeMe = true;
-            } else if (this.position.y > alienList[t].chuteY && this.position.y < alienList[t].chuteY + parachuteH &&
-                this.position.x > alienList[t].chuteX && this.position.x < alienList[t].position.x + parachuteW && alienList[t].isChuteDrawn) {
-                score += scoreForParachuteShot;
-                alienList[t].isChuteDrawn = false;
-            }*/
+function CannonShotClass(x, y, angle) {
+	// ShotClass(x, y, angle, speed)
+	ShotClass.call(this, x, y, angle, 15);
+	
+	this.sprite = new SpriteSheetClass(shotPic, 8, 8);
+	
+	this.colliderLineSeg = new lineSegment();
+	
+	this.draw = function() {
+		this.sprite.draw(0, 0, this.position.x, this.position.y, this.moveAng + Math.PI/2, false);
+	};
+	
+	this.checkCollisions = function(list) {
+		for (var i = 0; i < list.length; i++) {
+			if(list[i].checkLineCollision(this.colliderLineSeg, this.position)){
+				this.removeMe = true;
+			}
+		}
+	};
+};

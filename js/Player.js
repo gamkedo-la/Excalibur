@@ -16,11 +16,6 @@ var defaultCannonAng = -Math.PI/2;
 var cannonAngLimit = Math.PI * 0.47;
 var cannonLength=40,cannonAngle=defaultCannonAng,cannonAngleVelocity=0.1;
 var cannonEndX, cannonEndY;
-var cannonWaveShotSpeed = 3.4;
-var cannonShotSpeed = 15;
-var cannonReloadFrames = 5;
-var cannonWaveReloadFrames = 17; //// amped to be more powerful than fork shot
-var cannonLaserReloadFrames = 64;
 var cannonReloadLeft = 0;
 var cannonWidth = 18;
 var playerTopLeft, playerLowerRight;
