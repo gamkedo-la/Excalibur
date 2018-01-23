@@ -1,4 +1,5 @@
 var shotsFired = 0;
+var shotsHit = 0;
 
 var shotList = [];
 

@@ -56,6 +56,7 @@ function EnemyClass(width, height, speed, angle, health) {
 			this.explosion(projectilePos.x, projectilePos.y);
 			this.health--;
 			score += this.score;
+			shotsHit++;
 			
 			if (canSpawnPowerUp()) {
 				spawnPowerUp(this);
