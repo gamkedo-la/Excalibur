@@ -246,7 +246,7 @@ function wrappedDraw(whichImg,pixelOffset) {
 function drawSkyGradient() {
 	canvasContext.drawImage(
 		timeOfDayGradient,
-		((masterFrameDelayTick*0.2)%timeOfDayGradient.width),0,1,100, // source x,y,w,d (scroll source x over time)
+		(Math.floor(masterFrameDelayTick*0.2)%timeOfDayGradient.width),0,1,100, // source x,y,w,d (scroll source x over time)
 		0,0,800,600); // dest x,y,w,d (scale one pixel worth of the gradient to fill entire screen)
 }
 
