@@ -177,6 +177,9 @@ function drawScore() {
 
 			 colorText("Shots Fired: " + shotsFired, canvas.width - 10, 110, "white", "20px Arial", "right");
 			 colorText("Number Of Hits: " + shotsHit, canvas.width - 10, 130, "white", "20px Arial", "right");
+			 colorText("Ships Hit: " + shotsHitShips, canvas.width - 10, 150, "white", "20px Arial", "right");
+			 colorText("Aliens Hit: " + shotsHitAliens, canvas.width - 10, 170, "white", "20px Arial", "right");
+			 colorText("Parachutes Hit: " + shotsHitParachutes, canvas.width - 10, 190, "white", "20px Arial", "right");
 
 			 colorText("[1] for Paradropper",130,50,"white","15px Arial","right");
 			 colorText("[2] for Gunship",97,70,"white","15px Arial","right");

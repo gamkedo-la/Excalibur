@@ -1,5 +1,8 @@
 var shotsFired = 0;
 var shotsHit = 0;
+var shotsHitShips = 0;
+var shotsHitAliens = 0;
+var shotsHitParachutes = 0;
 
 var shotList = [];
 

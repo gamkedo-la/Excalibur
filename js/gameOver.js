@@ -51,14 +51,17 @@ function gameOverSequence() {
         if(framesSinceGameOverShown<0) {
           drawRect(50, 50, canvas.width - 100, canvas.height - 100, "rgba(50, 50, 50, 0.8)")
             
-          drawStroked("GAME OVER!!", canvas.width / 2, canvas.height / 4 - 20, "red", "70px Sans-serif", "center")
-          drawStroked("Final Score :" + numberWithCommas(score), canvas.width / 2, canvas.height / 4 + 100, "white", "45px Sans-serif", "center");
+          drawStroked("GAME OVER!!", canvas.width / 2, canvas.height / 4 - 60, "red", "50px Sans-serif", "center")
+          drawStroked("Final Score :" + numberWithCommas(score), canvas.width / 2, canvas.height / 4 + 10, "white", "45px Sans-serif", "center");
 
-          drawStroked("Shots Fired: "+ shotsFired, canvas.width / 2, canvas.height / 4 + 180, "white", "30px Sans-serif", "center");
-          drawStroked("Number Of Hits: "+ shotsHit, canvas.width / 2, canvas.height / 4 + 220, "white", "30px Sans-serif", "center");
-          drawStroked("Hit-Miss Ratio: "+ (shotsHit / shotsFired * 100).toFixed(1) + "%", canvas.width / 2, canvas.height / 4 + 260, "white", "30px Sans-serif", "center");
-            
-          drawStroked("[ PRESS  ENTER  or  CLICK  MOUSE ]", canvas.width / 2, canvas.height / 4 + 360, "white", "35px arial", "center");
+          drawStroked("Shots Fired: " + shotsFired, canvas.width / 2, canvas.height / 4 + 80, "white", "30px Sans-serif", "center");
+          drawStroked("Number Of Hits: " + shotsHit, canvas.width / 2, canvas.height / 4 + 120, "white", "30px Sans-serif", "center");
+          drawStroked("Hit-Miss Ratio: " + (shotsHit / shotsFired * 100).toFixed(1) + "%", canvas.width / 2, canvas.height / 4 + 160, "white", "30px Sans-serif", "center");
+
+          drawStroked("Ships Destroyed: " + shotsHitShips, canvas.width / 2, canvas.height / 4 + 220, "white", "30px Sans-serif", "center");
+          drawStroked("Aliens Killed (Parachute): " + (shotsHitAliens + shotsHitParachutes) + " (" + shotsHitParachutes + ")", canvas.width / 2, canvas.height / 4 + 260, "white", "30px Sans-serif", "center");
+
+          drawStroked("[ PRESS  ENTER  or  CLICK  MOUSE ]", canvas.width / 2, canvas.height / 4 + 380, "white", "35px arial", "center");
 
           framesSinceGameOverShown = framesShowingGameOverTextBeforeReset;
         } /*else if(framesSinceGameOverShown-- == 0) {

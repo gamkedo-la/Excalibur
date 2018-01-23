@@ -57,6 +57,7 @@ function EnemyClass(width, height, speed, angle, health) {
 			this.health--;
 			score += this.score;
 			shotsHit++;
+			shotsHitShips++;
 			
 			if (canSpawnPowerUp()) {
 				spawnPowerUp(this);

@@ -158,6 +158,7 @@ alienClass.prototype.checkLineCollision = function (lineSegment, projectileLocat
 		alienHitExplosion(this.position.x,this.position.y);
 		score += scoreForAlienShot;
 		shotsHit++;
+		shotsHitAliens++;
 		this.removeMe = true;
 		
 		return true;
@@ -166,6 +167,7 @@ alienClass.prototype.checkLineCollision = function (lineSegment, projectileLocat
 	) {
 		score += scoreForParachuteShot;
 		shotsHit++;
+		shotsHitParachutes++;
 		this.state = this.states.noChute;
 	}
 	
