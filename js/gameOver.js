@@ -52,7 +52,7 @@ function gameOverSequence() {
           drawRect(50, 50, canvas.width - 100, canvas.height - 100, "rgba(50, 50, 50, 0.8)")
             
           drawStroked("GAME OVER!!", canvas.width / 2, canvas.height / 4 - 20, "red", "70px Sans-serif", "center")
-          drawStroked("Final Score :" + score, canvas.width / 2, canvas.height / 4 + 100, "white", "45px Sans-serif", "center");
+          drawStroked("Final Score :" + numberWithCommas(score), canvas.width / 2, canvas.height / 4 + 100, "white", "45px Sans-serif", "center");
 
           drawStroked("Shots Fired: "+ shotsFired, canvas.width / 2, canvas.height / 4 + 180, "white", "30px Sans-serif", "center");
           drawStroked("Number Of Hits: "+ shotsHit, canvas.width / 2, canvas.height / 4 + 220, "white", "30px Sans-serif", "center");

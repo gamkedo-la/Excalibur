@@ -92,17 +92,18 @@ function update() {
 		else if(windowState.help){
 			drawSkyGradient();  
 			canvasContext.drawImage(backgroundFarPic,0,0);
-			colorText('How To Play',canvas.width/2 ,130,"white","30px Tahoma","center",opacity);
-			colorText("1) A/D keys or Left/Right arrow keys for movement",250 ,250 ,"white","15px Tahoma","left",opacity);
-			colorText("2) Mouse button for shooting",250,280 ,"white","15px Tahoma","left",opacity);
-			colorText("3) Pick-up power-ups using tank",250,310 ,"white","15px Tahoma","left",opacity);
-			colorText("4) P to pause and resume game",250,340 ,"white","15px Tahoma","left",opacity);
-			colorText("5) Tab to skip levels",250,370 ,"white","15px Tahoma","left",opacity); // TODO: remove for release
-			canvasContext.drawImage(firemodePowerUpPic, 470, 295);
-			canvasContext.drawImage(shieldPowerUpPic, 505, 300);
-			canvasContext.drawImage(healthPowerUpPic, 532, 300);
-			canvasContext.drawImage(maxHealthPowerUpPic, 559, 300);
-			colorText('Press (Enter) to Start game',canvas.width/2 ,canvas.height/2 + 120,"white","20px Tahoma","center",opacity);
+			colorText('How To Play',canvas.width/2 ,100,"white","30px Tahoma","center",opacity);
+			colorText("1) Press 4 to switch between input options:",250,150 ,"white","15px Tahoma","left",opacity);
+			colorText(" Default Inputs: A/D or arrows for left/right, mouse to aim tank cannon, mouse click or spacebar for shooting",70,180 ,"white","15px Tahoma","left",opacity);
+			colorText(" Optional Inputs: Arrows for left/right, A/D for moving cannon left/right, spacebar for shooting",70,210 ,"white","15px Tahoma","left",opacity);
+			colorText("2) Pick-up power-ups using tank",250,240 ,"white","15px Tahoma","left",opacity);
+			canvasContext.drawImage(firemodePowerUpPic, 470, 223);
+			canvasContext.drawImage(shieldPowerUpPic, 505, 227);
+			canvasContext.drawImage(healthPowerUpPic, 532, 227);
+			canvasContext.drawImage(maxHealthPowerUpPic, 559, 227);
+			colorText("3) P to pause and resume game",250,270 ,"white","15px Tahoma","left",opacity);
+			colorText("4) Tab to skip levels",250,300 ,"white","15px Tahoma","left",opacity); // TODO: remove for release
+			colorText('Press [Enter] to Start game',canvas.width/2 , 500,"white","30px Tahoma","center",opacity);
 			opacity = opacity + 0.009;
 		}
 		else {
@@ -199,8 +200,8 @@ function drawScore() {
 	}
 }
 
-function numberWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+function numberWithCommas(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function drawLives() {
