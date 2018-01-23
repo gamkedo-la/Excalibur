@@ -20,7 +20,6 @@ function LaserShotClass(x, y, angle) {
 	
 	this.colliderLineSegLaserLeft = new lineSegment();
 //this.laserStartLife = this.laserLife = cannonReloadLeft * (0.1+playerUpgradeROF*0.2);  //??
-<<<<<<< HEAD
 	this.colliderLineSegLaserRight = new lineSegment();
 
 	this.draw = function () {
