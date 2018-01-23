@@ -3,7 +3,7 @@ const shotHeight = 4;
 var shotList = [];
 
 var shotsFired = 0;
-
+var shotsHit = 0;
 
 function shotClass(x, y, angle, speed) {
     this.width = shotWidth;
@@ -63,6 +63,7 @@ function shotClass(x, y, angle, speed) {
         for (var i = 0; i < list.length; i++) {
             if(list[i].checkLineCollision(this.colliderLineSeg, this.position)){
                 this.removeMe = true;
+                shotsHit++;
             }
         }
     };

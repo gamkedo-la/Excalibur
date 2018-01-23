@@ -173,6 +173,7 @@ function drawScore() {
 			 colorText("Frame Rate: " + (frameCount / timeElapsedInSeconds).toFixed(1), canvas.width - 10, 90, "white", "20px Arial", "right");
 
 			 colorText("Shots Fired: " + shotsFired, canvas.width - 10, 110, "white", "20px Arial", "right");
+			 colorText("Number Of Hits: " + shotsHit, canvas.width - 10, 130, "white", "20px Arial", "right");
 
 			 colorText("[1] for Paradropper",130,50,"white","15px Arial","right");
 			 colorText("[2] for Gunship",97,70,"white","15px Arial","right");
@@ -269,6 +270,7 @@ function startGame() {
 	timeElapsedInSeconds = 0;
 	frameCount = 0;
 	shotsFired = 0;
+	shotsHit = 0;
 }
 
 function openHelp() {
