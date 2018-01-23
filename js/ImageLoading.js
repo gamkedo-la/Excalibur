@@ -36,6 +36,7 @@ var tankBodyPic = document.createElement("img");
 var tankCannonPic = document.createElement("img");
 
 var heartPic = document.createElement("img");
+var heartlessPic = document.createElement("img");
 
 // used for gameOver.js sequence:
 var singleAlienGameOver = document.createElement("img");
@@ -98,6 +99,7 @@ function loadImages() {
         { varName: tripleAliensGameOver, theFile: "alien-anim.png" },
         { varName: timeOfDayGradient, theFile: "time-of-day-gradient.png" },
         { varName: heartPic, theFile: "heart.png" },
+        { varName: heartlessPic, theFile: "heartEmpty.png" },
         { varName: targetReticlePic, theFile: "targetReticle.png" }
 
     ];

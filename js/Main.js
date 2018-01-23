@@ -206,10 +206,11 @@ function drawLives() {
     var gap = 5;
     var cornerX = 30;
     var cornerY = 15;
-    var maxHeartsToShow = 7;
-    var heartsToShow = Math.min(playerHP, maxHeartsToShow);
-    for(var i = 0; i < heartsToShow; i++) {
-        canvasContext.drawImage(heartPic, cornerX + i * (heartPic.width + gap), cornerY);
+    var maxHeartsToShow = startHitpoints+playerUpgradeHealth;
+    for(var i = 0; i < maxHeartsToShow; i++) {
+        canvasContext.drawImage(
+        	(i < playerHP ? heartPic : heartlessPic)
+        	, cornerX + i * (heartPic.width + gap), cornerY);
     }
 }
 
