@@ -13,13 +13,13 @@ function LaserShotClass(x, y, angle) {
 	this.frames = 2;
 	this.frameOffset = 0;
 	
-	this.duration = 54;
-	this.thickLaserRatio = 3/5;
+	this.duration = 5;
+	this.thickLaserRatio = 1/2;
 	
 	this.sprite = new SpriteSheetClass(laserPic, this.width, this.height);
 	
 	this.colliderLineSegLaserLeft = new lineSegment();
-//this.laserStartLife = this.laserLife = cannonReloadLeft * (0.1+playerUpgradeROF*0.2);  //??
+//this.laserStartLife = this.laserLife = cannonReloadLeft * (5.4+playerUpgradeROF*10.8);  //??
 	this.colliderLineSegLaserRight = new lineSegment();
 
 	this.draw = function () {
