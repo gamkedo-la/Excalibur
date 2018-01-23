@@ -30,6 +30,7 @@ var canvas, canvasContext;
 currentBackgroundMusic.loopSong(menuMusic);
 
 var timeStarted;
+var timeStartedActive;
 var timeElapsedInSeconds = 0;
 var frameCount = 0;
 
@@ -217,7 +218,8 @@ function tintScreen(){
     canvasContext.fillStyle = "black";
     canvasContext.globalAlpha = 0.2;
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-    canvasContext.globalAlpha = 1.0;
+	canvasContext.globalAlpha = 1.0;
+	timeStartedActive = new Date().getTime(); // TODO: make a centralised variable reset
 }
 
 function showPausedScreen() {
@@ -267,6 +269,7 @@ function startGame() {
 	changeBackground(currentStageIndex);
 
 	timeStarted = new Date().getTime();
+	timeStartedActive = timeStarted;
 	timeElapsedInSeconds = 0;
 	frameCount = 0;
 	shotsFired = 0;
@@ -301,8 +304,8 @@ function togglePause(){
         pauseSound.play();
         clearInterval(gameUpdate);
     } else {
-        gameUpdate = setInterval(update, 1000/30);
-        if (assaultMode){
+		gameUpdate = setInterval(update, 1000/30);
+		if (assaultMode){
 			gameDropshipSpawn = setInterval(dropshipSpawn, 500);
 			gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
 			gameMissileSpawn = setInterval(missileSpawn, 2000);
@@ -312,6 +315,7 @@ function togglePause(){
 			gameMissileSpawn = setInterval(missileSpawn, 500);
 		}
         resumeSound.play();
+		timeStartedActive = new Date().getTime();
     }
 }
 
@@ -340,6 +344,7 @@ function windowOnFocus() {
 		if (waveStarted && !gameOverManager.gameOverPlaying) {
 			resumeSound.play();
 		}
+		timeStartedActive = new Date().getTime();
 	}
 }
 
