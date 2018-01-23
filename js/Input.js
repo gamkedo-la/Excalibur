@@ -80,6 +80,7 @@ function handleInput() {
 					var newShot = new shotClass(cannonEndX, cannonEndY, cannonAngle, cannonShotSpeed);
 					shotList.push(newShot);
 					regularShotSound.play();
+					shotsFired++;
 					gunfireExplosion(cannonEndX,cannonEndY);
 					cannonReloadLeft = cannonReloadFrames-playerUpgradeROF;
 				}
@@ -95,6 +96,7 @@ function handleInput() {
 												cannonEndY+shotStartOffsetY, cannonAngle, cannonShotSpeed);
 					shotList.push(newShot);
 					regularShotSound.play();
+					shotsFired++;
 					gunfireExplosion(cannonEndX,cannonEndY);
 					cannonReloadLeft = cannonReloadFrames-playerUpgradeROF;
 				}
@@ -112,6 +114,7 @@ function handleInput() {
 						cannonAngle, cannonShotSpeed);
 					shotList.push(newShot);
 					regularShotSound.play();
+					shotsFired++;
 					gunfireExplosion(cannonEndX,cannonEndY);
 					cannonReloadLeft = cannonReloadFrames-playerUpgradeROF;
 				}
@@ -121,6 +124,7 @@ function handleInput() {
 					var newShot = new waveShotClass(cannonEndX, cannonEndY, cannonAngle, cannonWaveShotSpeed);
 					shotList.push(newShot);
 					waveShotSound.play();
+					shotsFired++;
 					secondaryGunfireExplosion(cannonEndX,cannonEndY);
 					cannonReloadLeft = cannonWaveReloadFrames * (1.0-(playerUpgradeROF/(MAX_UPGRADES_PER_KIND+1)));
 				}
@@ -132,6 +136,7 @@ function handleInput() {
 					var newShot = new laserShotClass(cannonEndX, cannonEndY, cannonAngle, 0);
 					shotList.push(newShot);
 					waveShotSound.play();
+					shotsFired++;
 					secondaryGunfireExplosion(cannonEndX,cannonEndY);
 				}
 				break;
@@ -139,7 +144,6 @@ function handleInput() {
 				console.log("fire mode not yet implemented: " + fireMode);
 				break;
 		}
-
 	}
 	if(cannonReloadLeft>0) {
 		cannonReloadLeft--;

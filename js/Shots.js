@@ -2,6 +2,9 @@ const shotWidth = 4;
 const shotHeight = 4;
 var shotList = [];
 
+var shotsFired = 0;
+
+
 function shotClass(x, y, angle, speed) {
     this.width = shotWidth;
     this.height = shotHeight;
