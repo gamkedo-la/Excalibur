@@ -77,63 +77,67 @@ function handleInput() {
 		switch(fireMode) {
 			case FIREMODE_SINGLE:
 				if(cannonReloadLeft <= 0) {
-					var newShot = new shotClass(cannonEndX, cannonEndY, cannonAngle, cannonShotSpeed);
+					cannonReloadLeft = CannonShotClass.reloadTime - playerUpgradeROF;
+					
+					var newShot = new CannonShotClass(cannonEndX, cannonEndY, cannonAngle);
 					shotList.push(newShot);
 					regularShotSound.play();
 					shotsFired++;
 					gunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = cannonReloadFrames-playerUpgradeROF;
 				}
 				break;
 			case FIREMODE_TWIN:
 				if(cannonReloadLeft <= 0) {
+					cannonReloadLeft = CannonShotClass.reloadTime - playerUpgradeROF;
+					
 					var shotStartOffsetX = Math.cos(cannonAngle+Math.PI/2) * 7;
 					var shotStartOffsetY = Math.sin(cannonAngle+Math.PI/2) * 7;
-					var newShot = new shotClass(cannonEndX-shotStartOffsetX,
-												cannonEndY-shotStartOffsetY, cannonAngle, cannonShotSpeed);
+					var newShot = new CannonShotClass(cannonEndX-shotStartOffsetX,
+												cannonEndY-shotStartOffsetY, cannonAngle);
 					shotList.push(newShot);
-					newShot = new shotClass(cannonEndX+shotStartOffsetX,
-												cannonEndY+shotStartOffsetY, cannonAngle, cannonShotSpeed);
+					newShot = new CannonShotClass(cannonEndX+shotStartOffsetX,
+												cannonEndY+shotStartOffsetY, cannonAngle);
 					shotList.push(newShot);
 					regularShotSound.play();
 					shotsFired++;
 					gunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = cannonReloadFrames-playerUpgradeROF;
 				}
 				break;
 			case FIREMODE_SPLIT:
 				if(cannonReloadLeft <= 0) {
+					cannonReloadLeft = CannonShotClass.reloadTime - playerUpgradeROF;
+					
 					var forkAmtInRadians = 0.18;
-					var newShot = new shotClass(cannonEndX, cannonEndY,
-						cannonAngle-forkAmtInRadians, cannonShotSpeed);
+					var newShot = new CannonShotClass(cannonEndX, cannonEndY,
+						cannonAngle-forkAmtInRadians);
 					shotList.push(newShot);
-					newShot = new shotClass(cannonEndX, cannonEndY,
-						cannonAngle+forkAmtInRadians, cannonShotSpeed);
+					newShot = new CannonShotClass(cannonEndX, cannonEndY,
+						cannonAngle+forkAmtInRadians);
 					shotList.push(newShot);
-					newShot = new shotClass(cannonEndX, cannonEndY,
-						cannonAngle, cannonShotSpeed);
+					newShot = new CannonShotClass(cannonEndX, cannonEndY,
+						cannonAngle);
 					shotList.push(newShot);
 					regularShotSound.play();
 					shotsFired++;
 					gunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = cannonReloadFrames-playerUpgradeROF;
 				}
 				break;			break;
 			case FIREMODE_WAVE:
 				if(cannonReloadLeft <= 0) {
-					var newShot = new waveShotClass(cannonEndX, cannonEndY, cannonAngle, cannonWaveShotSpeed);
+					cannonReloadLeft = WaveShotClass.reloadTime * (1.0-(playerUpgradeROF/(MAX_UPGRADES_PER_KIND+1)));
+					
+					var newShot = new WaveShotClass(cannonEndX, cannonEndY, cannonAngle);
 					shotList.push(newShot);
 					waveShotSound.play();
 					shotsFired++;
 					secondaryGunfireExplosion(cannonEndX,cannonEndY);
-					cannonReloadLeft = cannonWaveReloadFrames * (1.0-(playerUpgradeROF/(MAX_UPGRADES_PER_KIND+1)));
 				}
 				break;
 			case FIREMODE_LASER:
 				if(cannonReloadLeft <= 0) {
-					cannonReloadLeft = cannonLaserReloadFrames * (1.0-(playerUpgradeROF/(MAX_UPGRADES_PER_KIND+1)));
+					cannonReloadLeft = LaserShotClass.reloadTime * (1.0-(playerUpgradeROF/(MAX_UPGRADES_PER_KIND+1)));
 					// NOTE: compute cannonReloadLeft prior to laserShotClass, bases lifetime on it
-					var newShot = new laserShotClass(cannonEndX, cannonEndY, cannonAngle, 0);
+					var newShot = new LaserShotClass(cannonEndX, cannonEndY, cannonAngle);
 					shotList.push(newShot);
 					waveShotSound.play();
 					shotsFired++;
@@ -168,7 +172,7 @@ function handleInput() {
 			break;
 	}
 	
-	// This could likely be done without the magic number using some kind of modulo angle formula
+	// This could likely be done using some kind of modulo angle formula
 	if (cannonAngle < defaultCannonAng - cannonAngLimit || cannonAngle > Math.PI/2) {
 		cannonAngle = defaultCannonAng - cannonAngLimit;
 	} else 	if (cannonAngle > defaultCannonAng + cannonAngLimit) {

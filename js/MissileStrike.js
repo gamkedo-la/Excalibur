@@ -3,8 +3,8 @@ var delayInMilliseconds = 150;
 var explosionScale = 3; // 3 because of scaling from missileCollisionExplosion() in Explosions.js 
 
 function MissileClass() {
-  var screenEdgeBuffer = 20;
-  this.position = vec2.create(Math.random() * (canvas.width - screenEdgeBuffer * 2) + screenEdgeBuffer,
+	var screenEdgeBuffer = 20;
+	this.position = vec2.create(Math.random() * (canvas.width - screenEdgeBuffer * 2) + screenEdgeBuffer,
 	                            -60);
 	
 	//EnemyClass(width, height, speed, angle, health)
@@ -27,6 +27,7 @@ function MissileClass() {
 
 	this.parentMove = this.move;
 	this.move = function() {
+		this.incrementTick();
 		damageSmokeExplosion(this.position.x,this.position.y);
 		this.parentMove();
 	};
@@ -56,57 +57,55 @@ function MissileClass() {
 }
 
 function missileExplosionClass(initPos) {
-    this.position = initPos;
-    this.missileExplosionLowerRight = vec2.create(this.position.x + (explosion_w/2) * explosionScale,
-                            this.position.y + (explosion_h/2) * explosionScale);
-    this.missileExplosionTopLeft = vec2.create(this.position.x - (explosion_w/2) * explosionScale,
-                          this.position.y - (explosion_h * explosionScale));
-    this.colliderAABB = new aabb(explosion_w / 2, explosion_h / 2);
-    this.removeMe = false;
+	this.position = initPos;
+	this.lowerRight = vec2.create(this.position.x + (explosion_w/2) * explosionScale,
+	                              this.position.y + (explosion_h/2) * explosionScale);
+	this.topLeft = vec2.create(this.position.x - (explosion_w/2) * explosionScale,
+	                           this.position.y - (explosion_h * explosionScale));
+	this.colliderAABB = new aabb(explosion_w / 2, explosion_h / 2);
+	this.removeMe = false;
 
-    this.draw = function() {
-        missileCollisionExplosion(this.position.x,this.position.y);
-        explosionSound.play();
-    };
+	this.draw = function() {
+		missileCollisionExplosion(this.position.x,this.position.y);
+		explosionSound.play();
+	};
 
-    this.move = function() {
-       if (!boundariesNotOverlapping(playerTopLeft, playerLowerRight,
-                                     this.missileExplosionTopLeft,this.missileExplosionLowerRight) 
-           && !shieldActive) {
-            setTimeout(function() {
-                hitPlayer();
-            }, delayInMilliseconds);
-       }
-			 this.edgeOfScreenDetection();
-    };
+	this.move = function() {
+		var overlap = boundariesOverlapping(playerTopLeft, playerLowerRight, this.topLeft,this.lowerRight);
+		if (overlap && !shieldActive) {
+			setTimeout(function() {
+				hitPlayer();
+			}, delayInMilliseconds);
+		}
+		this.edgeOfScreenDetection();
+	};
 
-    this.edgeOfScreenDetection = function() {
-        if (!missileCollisionExplosion()) {
-            this.removeMe = true;
-				}
-    };
-		
-		// TODO maybe take explosions off the missile list so this function isn't needed
-    this.checkLineCollision = function(lineSegment, projectilePos) {};
+	this.edgeOfScreenDetection = function() {
+		if (!missileCollisionExplosion()) {
+			this.removeMe = true;
+		}
+	};
+
+	// TODO maybe take explosions off the missile list so this function isn't needed
+	this.checkLineCollision = function(lineSegment, projectilePos) {};
 }
 
 function drawAndRemoveMissiles() {
-    for(var i=0;i<missileList.length;i++) {
-        missileList[i].draw();
-    }
-    for(var i=missileList.length-1;i>=0;i--) {
-        if(missileList[i].removeMe) {
-            missileList.splice(i,1);
-        }
-    }
+	var i = missileList.length;
+	while(i--) {
+		missileList[i].draw();
+		if(missileList[i].removeMe) {
+			missileList.splice(i, 1);
+		}
+	}
 }
 
 function moveMissiles() {
-    for(var i=0;i<missileList.length;i++) {
-        missileList[i].move();
-    }
+	for(var i=0;i<missileList.length;i++) {
+		missileList[i].move();
+	}
 }
 
 function missileSpawn() {
-    missileList.push(new MissileClass());
+	missileList.push(new MissileClass());
 }

@@ -98,11 +98,11 @@ function SpriteSheetClass(sheetIn, widthIn, heightIn){
   var width = widthIn;
   var height = heightIn;
   
-  this.draw = function(col, row, atX, atY, withAngle, flipped) {
+  this.draw = function(col, row, atX, atY, withAngle, flippedX = false) {
     canvasContext.save();
     canvasContext.translate(atX, atY);
-    canvasContext.scale(flipped ? -1 : 1, 1);
     canvasContext.rotate(withAngle);
+    canvasContext.scale(flippedX ? -1 : 1);
     canvasContext.drawImage(sheet,
                             col * width, row * height,
                             width, height,

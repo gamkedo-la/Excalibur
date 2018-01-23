@@ -254,15 +254,15 @@ function increaseFirePower(powerUp) {
 }
 
 function restoreHealth(powerUp) {
-    if (playerHP === startHitpoints) return;
+    if (playerHP >= startHitpoints+playerUpgradeHealth) return;
     playerHP++;
     powerUp.isActive = false;
     powerUp.canDestroy = true;
 }
 
 function restoreMaxHealth(powerUp) {
-    if (playerHP === startHitpoints) return;
-    playerHP = startHitpoints;
+    if (playerHP >= startHitpoints+playerUpgradeHealth) return;
+    playerHP = startHitpoints+playerUpgradeHealth;
     powerUp.isActive = false;
     powerUp.canDestroy = true;
 }
