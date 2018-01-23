@@ -49,13 +49,16 @@ function gameOverSequence() {
 
       if (artHeightTopNow >= canvas.height) {
         if(framesSinceGameOverShown<0) {
-          drawStroked("GAME OVER!!", canvas.width / 6, canvas.height / 4, "red", "80px Sans-serif")
-          drawStroked("Final Score :" + score, canvas.width / 2, canvas.height / 4 + 80, "white", "60px Sans-serif", "center");
-          drawStroked("[ P R E S S  E N T E R  or  C L I C K  M O U S E ]", canvas.width / 2, canvas.height / 4 + 140, "white", "30px arial", "center");
+          drawRect(50, 50, canvas.width - 100, canvas.height - 100, "rgba(50, 50, 50, 0.8)")
+            
+          drawStroked("GAME OVER!!", canvas.width / 2, canvas.height / 4 - 20, "red", "70px Sans-serif", "center")
+          drawStroked("Final Score :" + score, canvas.width / 2, canvas.height / 4 + 100, "white", "45px Sans-serif", "center");
 
-          drawStroked("Shots Fired: "+ shotsFired, canvas.width / 2, canvas.height / 4 + 260, "white", "30px Sans-serif", "center");
-          drawStroked("Number Of Hits: "+ shotsHit, canvas.width / 2, canvas.height / 4 + 320, "white", "30px Sans-serif", "center");
-          drawStroked("Hit-Miss Ratio: "+ (shotsHit / shotsFired * 100).toFixed(1) + "%", canvas.width / 2, canvas.height / 4 + 380, "white", "30px Sans-serif", "center");
+          drawStroked("Shots Fired: "+ shotsFired, canvas.width / 2, canvas.height / 4 + 180, "white", "30px Sans-serif", "center");
+          drawStroked("Number Of Hits: "+ shotsHit, canvas.width / 2, canvas.height / 4 + 220, "white", "30px Sans-serif", "center");
+          drawStroked("Hit-Miss Ratio: "+ (shotsHit / shotsFired * 100).toFixed(1) + "%", canvas.width / 2, canvas.height / 4 + 260, "white", "30px Sans-serif", "center");
+            
+          drawStroked("[ PRESS  ENTER  or  CLICK  MOUSE ]", canvas.width / 2, canvas.height / 4 + 360, "white", "35px arial", "center");
 
           framesSinceGameOverShown = framesShowingGameOverTextBeforeReset;
         } /*else if(framesSinceGameOverShown-- == 0) {
