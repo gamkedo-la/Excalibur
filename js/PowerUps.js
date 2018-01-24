@@ -41,7 +41,7 @@ function powerUp(fromShip) {
     this.type;
     this.properties;
     this.activeDuration;
-    this.position = vec2.create(fromShip.position.v[0], fromShip.position.v[1] + fromShip.height/2);
+    this.position = vec2.create(fromShip.position.v[0], fromShip.position.v[1] + fromShip.height / 2);
     this.canDestroy = false;
     this.isActive = false;
     this.colliderAABB = new aabb(powerUpWidth, powerUpHeight);
@@ -105,9 +105,9 @@ function powerUp(fromShip) {
         if (isCollidingWithPlayer) {
             //this.setActive();
 
-            powerupExplosion(this.position.x,this.position.y);
+            powerupExplosion(this.position.x, this.position.y);
             shieldPowerUpSound.play();
-            
+
             var useMaxDuration = true;
             this.setActive(useMaxDuration);
             this.removeMe = true;
@@ -142,21 +142,31 @@ function spawnPowerUp(fromShip) {
 
 function getRandomPowerUpType() {
     this.powerUpTypes = powerUpTypes.slice();
+    var powerUpTypesToFilter = [];
 
-    // filter out health power ups if the player has full health
-    if (playerHP === startHitpoints+playerUpgradeHealth) {
-        this.powerUpTypes = [];
-        for (var i = 0; i < powerUpTypes.length; i++) {
-            if (powerUpTypes[i].toLowerCase().indexOf('health') < 0) {
-                this.powerUpTypes.push(powerUpTypes[i]);
-            }
-        }
+    if (playerHP === startHitpoints + playerUpgradeHealth) {
+        powerUpTypesToFilter.push('health');
     }
 
-    if(fireMode >= MAX_FIREMODE) {
+    if (fireMode >= MAX_FIREMODE) {
+        powerUpTypesToFilter.push('firemode');
+    }
+
+    // filter out health power ups if the player has full health
+    // or firemode upgrades if it's maxed
+    if (powerUpTypesToFilter.length > 0) {
         this.powerUpTypes = [];
         for (var i = 0; i < powerUpTypes.length; i++) {
-            if (powerUpTypes[i].toLowerCase().indexOf('firemode') < 0) {
+            var canSpawn = true;
+
+            for (var j = 0; j < powerUpTypesToFilter.length; j++) {
+                if (canSpawn) {
+                    var powerUpToFilter = powerUpTypesToFilter[j];
+                    canSpawn = (powerUpTypes[i].toLowerCase().indexOf(powerUpToFilter) < 0);
+                }
+            }
+
+            if (canSpawn) {
                 this.powerUpTypes.push(powerUpTypes[i]);
             }
         }
@@ -218,7 +228,7 @@ function updateShield(shield) {
 
     function checkShieldCollisions() {
 
-        for(var j = 0; j < enemyEntities.length; j++){
+        for (var j = 0; j < enemyEntities.length; j++) {
             var currentList = enemyEntities[j];
 
             for (var i = 0; i < currentList.length; i++) {
@@ -254,15 +264,15 @@ function increaseFirePower(powerUp) {
 }
 
 function restoreHealth(powerUp) {
-    if (playerHP >= startHitpoints+playerUpgradeHealth) return;
+    if (playerHP >= startHitpoints + playerUpgradeHealth) return;
     playerHP++;
     powerUp.isActive = false;
     powerUp.canDestroy = true;
 }
 
 function restoreMaxHealth(powerUp) {
-    if (playerHP >= startHitpoints+playerUpgradeHealth) return;
-    playerHP = startHitpoints+playerUpgradeHealth;
+    if (playerHP >= startHitpoints + playerUpgradeHealth) return;
+    playerHP = startHitpoints + playerUpgradeHealth;
     powerUp.isActive = false;
     powerUp.canDestroy = true;
 }
