@@ -13,6 +13,8 @@ var menuMusic = "./audio/beeblebrox";
 //game over music
 var gameOverMusic = "./audio/GameOverMusic";
 var gameOverCompMusic = "./audio/GameOverCompLvlMusic";
+var gameOverCrystallineCoastMusic = "./audio/GameOverCrystallineCoastLvl";
+var gameOverFantasyMusic = "./audio/GameOverFantasyTheme";
 
 var currentBackgroundMusic = new backgroundMusicClass();
 

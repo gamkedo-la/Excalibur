@@ -26,7 +26,9 @@ function gameOverSequence() {
         } else if (currentBackground == COMPUTER_BACKGROUND){
         currentBackgroundMusic.loopSong(gameOverCompMusic);
         } else if (currentBackground == BEACH_BACKGROUND){
-        currentBackgroundMusic.loopSong(gameOverMusic);
+        currentBackgroundMusic.loopSong(gameOverCrystallineCoastMusic);
+        } else if (currentBackground == FANTASY_BACKGROUND){
+        currentBackgroundMusic.loopSong(gameOverFantasyMusic);
         } else if (assaultMode) {
         currentBackgroundMusic.loopSong(gameOverMusic);
         }
