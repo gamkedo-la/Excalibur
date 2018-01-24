@@ -1,6 +1,6 @@
 function DropshipClass() {
 	//EnemyShipClass(width, height, speed, angle, health)
-	EnemyShipClass.call(this, 100, 32, 4, 0, 1);
+	EnemyShipClass.call(this, 100, 34, 4, 0, 1);
 	
 	this.sprite = new SpriteSheetClass(dropshipPic, this.width, this.height);
 	this.spriteRows = {

@@ -1,6 +1,6 @@
 function GunshipClass() {
 	//EnemyShipClass(width, height, speed, angle, health)
-	EnemyShipClass.call(this, 75, 24, 4, 0, 1);
+	EnemyShipClass.call(this, 79, 26, 4, 0, 1);
 	
 	this.cannonOffsetX = -5.5;
 	this.cannonOffsetY = this.height / 2;

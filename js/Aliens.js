@@ -31,8 +31,8 @@ var alienClass = function() {
 	this.launchY = 0;
 	this.typeOfAlien = 'normal';
 	this.img = alienPic;
-	this.animPicWidth = 43;
-	this.animPicHeight = 27;
+	this.animPicWidth = 47;
+	this.animPicHeight = 29;
 	
 	//TODO make removeMe a state
 	this.states = {
@@ -178,8 +178,8 @@ alienClass.prototype.checkLineCollision = function (lineSegment, projectileLocat
 function devilAlienClass() {
 	this.typeOfAlien = 'devil',
 	this.img = devilAlienPic;
-	this.animPicWidth = 29;
-	this.animPicHeight = 24;
+	this.animPicWidth = 31;
+	this.animPicHeight = 26;
 	this.colliderAlienAABB = new aabb(this.animPicWidth/2, this.animPicHeight/2);
 	this.colliderChuteAABB = new aabb(parachuteW/2, parachuteH/2);
 }

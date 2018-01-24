@@ -6,7 +6,7 @@ function CannonShotClass(x, y, angle) {
 	// ShotClass(x, y, angle, speed)
 	ShotClass.call(this, x, y, angle, 15);
 	
-	this.sprite = new SpriteSheetClass(shotPic, 8, 8);
+	this.sprite = new SpriteSheetClass(shotPic, 10, 10);
 	
 	this.colliderLineSeg = new lineSegment();
 	
