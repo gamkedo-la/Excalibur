@@ -144,7 +144,7 @@ function getRandomPowerUpType() {
     this.powerUpTypes = powerUpTypes.slice();
 
     // filter out health power ups if the player has full health
-    if (playerHP === startHitpoints) {
+    if (playerHP === startHitpoints+playerUpgradeHealth) {
         this.powerUpTypes = [];
         for (var i = 0; i < powerUpTypes.length; i++) {
             if (powerUpTypes[i].toLowerCase().indexOf('health') < 0) {
