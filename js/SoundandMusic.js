@@ -7,7 +7,7 @@ var pauseSound = new SoundOverlapsClass("./audio/PauseSound");
 var resumeSound = new SoundOverlapsClass("./audio/ResumeSound");
 var explosionSound = new SoundOverlapsClass("./audio/LoudExplosion");
 var zebesBackgroundMusic = "./audio/dew-drops";
-var computerBackgroundMusic = "./audio/suspain"
+var computerBackgroundMusic = "./audio/suspain";
 var menuMusic = "./audio/beeblebrox";
 
 //game over music

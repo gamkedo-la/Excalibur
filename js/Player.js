@@ -111,8 +111,13 @@ function movePlayer() {
     if(holdLeft) {
       if (playerX - playerWidth/2 > 0) {
         if (playerIceMoveSpeedLeft < 2) {
-          playerIceMoveSpeedLeft -= playerIceMoveSpeedRight;
-          playerIceMoveSpeedRight = 0;
+          if (playerX + playerWidth/2 < canvas.width) {
+            playerIceMoveSpeedLeft -= playerIceMoveSpeedRight;
+            playerIceMoveSpeedRight = 0;
+          } else {
+            playerX = canvas.width - playerWidth/2;
+            playerIceMoveSpeedRight = 0;
+          }
           playerIceMoveSpeedLeft += 0.2 + playerIceMoveUpgradeIncrement*playerUpgradeSpeed;
         } else if (playerIceMoveSpeedLeft < 4) {
           playerIceMoveSpeedLeft += 0.5 + playerIceMoveUpgradeIncrement*playerUpgradeSpeed;
@@ -120,20 +125,29 @@ function movePlayer() {
         playerX -= playerIceMoveSpeedLeft;
       } else {
         playerX = playerWidth/2;
+        playerIceMoveSpeedRight = 0;
+        playerIceMoveSpeedLeft = 0;
       }
-    } else if (!holdLeft && playerIceMoveSpeedLeft > 0 && playerX - playerWidth/2 < canvas.width) {
-      playerIceMoveSpeedLeft -= 0.08 + 0.25*playerIceMoveUpgradeIncrement*playerUpgradeSpeed;
-      playerX -= playerIceMoveSpeedLeft;
-      if (playerX - playerWidth/2 < 0) {
-      playerX = playerWidth/2;
-      playerIceMoveSpeedLeft = 0;
-      }  
-    } 
+    } else if (!holdLeft && playerIceMoveSpeedLeft > 0) {
+      if (playerX - playerWidth/2 > 0) {
+        playerIceMoveSpeedLeft -= 0.08 + 0.25*playerIceMoveUpgradeIncrement*playerUpgradeSpeed;
+        playerX -= playerIceMoveSpeedLeft;
+      } else {
+        playerX = playerWidth/2;
+        playerIceMoveSpeedRight = 0;
+        playerIceMoveSpeedLeft = 0;
+      }
+    }
     if(holdRight) {
       if (playerX + playerWidth/2 < canvas.width) {
         if (playerIceMoveSpeedRight < 2) {
-          playerIceMoveSpeedRight -= playerIceMoveSpeedLeft;
-          playerIceMoveSpeedLeft = 0;
+          if (playerX - playerWidth/2 > 0) {
+            playerIceMoveSpeedRight -= playerIceMoveSpeedLeft;
+            playerIceMoveSpeedLeft = 0;
+          } else {
+            playerX = playerWidth/2;
+            playerIceMoveSpeedLeft = 0;
+          }
           playerIceMoveSpeedRight += 0.2 + playerIceMoveUpgradeIncrement*playerUpgradeSpeed;
         } else if (playerIceMoveSpeedRight < 4) {
           playerIceMoveSpeedRight += 0.5 + playerIceMoveUpgradeIncrement*playerUpgradeSpeed;
@@ -141,13 +155,17 @@ function movePlayer() {
         playerX += playerIceMoveSpeedRight;
       } else {
         playerX = canvas.width - playerWidth/2;
+        playerIceMoveSpeedRight = 0;
+        playerIceMoveSpeedLeft = 0;
       }
-    } else if (!holdRight && playerIceMoveSpeedRight > 0 && playerX + playerWidth/2 < canvas.width) {
-      playerIceMoveSpeedRight -= 0.08 + 0.25*playerIceMoveUpgradeIncrement*playerUpgradeSpeed;
-      playerX += playerIceMoveSpeedRight;
-      if (playerX + playerWidth/2 > canvas.width) {
+    } else if (!holdRight && playerIceMoveSpeedRight > 0) {
+      if (playerX + playerWidth/2 < canvas.width) {
+        playerIceMoveSpeedRight -= 0.08 + 0.25*playerIceMoveUpgradeIncrement*playerUpgradeSpeed;
+        playerX += playerIceMoveSpeedRight;
+      } else {
         playerX = canvas.width - playerWidth/2;
         playerIceMoveSpeedRight = 0;
+        playerIceMoveSpeedLeft = 0;
       } 
     } 
   } // end of else (beach ice control)
