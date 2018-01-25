@@ -29,7 +29,7 @@ mainMenu = {
 				onClick: startGame,
 			},
 			{
-				txt : "[O] for Orchestrator Mode",
+				txt : "[T] for Two Player Mode",
 				onClick : startOrchestratorMode,
 			},
 		];

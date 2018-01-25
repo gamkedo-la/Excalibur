@@ -1,4 +1,5 @@
 var orchestratorMode = false;
+var twoPlayerMode = false;
 
 var createNewWave = [];
 

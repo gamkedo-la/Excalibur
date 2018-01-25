@@ -124,11 +124,11 @@ function update() {
 				}
 				smartBombActive = false;
 			}
-			if (!orchestratorMode && !carnageMode) {
+			if (!twoPlayerMode && !carnageMode) {
 				checkFrameCount();
-			} else if (orchestratorMode && !carnageMode) {
+			} else if (twoPlayerMode) {
 				orchestratorFrameCount();
-			} else if (!orchestratorMode && carnageMode) {
+			} else if (carnageMode) {
 				carnageModeController();
 				cannonReloadFrames = 3;
 				cannonWaveReloadFrames = 5;
@@ -164,28 +164,27 @@ function moveAll() {
 }
 
 function drawScore() {
-	if (!orchestratorMode || carnageMode) {
+	if (!orchestratorMode) {
 			 colorText("Score: " + numberWithCommas(score),canvas.width-20,30,"white","20px Arial","right");
+	}
+	if (twoPlayerMode) {
+		colorText("[1] for Paradropper",130,50,"white","15px Arial","right");
+		colorText("[2] for Gunship",97,70,"white","15px Arial","right");
+		colorText("[M] for Missile Strike",136,90,"white","15px Arial","right");
+		colorText("[C] to copy new Wave",148,110,"white","15px Arial","right");
+		if (orchestratorMode) {			
+			colorText("spawnFrameCount: " + orchestratorSpawnFrameCount,canvas.width - 10, 30,"white","20px Arial","right");
 
-	} else if (orchestratorMode && !carnageMode) {
-			
-			 colorText("spawnFrameCount: " + orchestratorSpawnFrameCount,canvas.width - 10, 30,"white","20px Arial","right");
+			colorText("frameCount: " + frameCount, canvas.width - 10, 50, "white", "20px Arial", "right");
+			colorText("Time Elapsed: " + timeElapsedInSeconds.toFixed(1), canvas.width - 10, 70, "white", "20px Arial", "right");
+			colorText("Frame Rate: " + (frameCount / timeElapsedInSeconds).toFixed(1), canvas.width - 10, 90, "white", "20px Arial", "right");
 
-			 colorText("frameCount: " + frameCount, canvas.width - 10, 50, "white", "20px Arial", "right");
-			 colorText("Time Elapsed: " + timeElapsedInSeconds.toFixed(1), canvas.width - 10, 70, "white", "20px Arial", "right");
-			 colorText("Frame Rate: " + (frameCount / timeElapsedInSeconds).toFixed(1), canvas.width - 10, 90, "white", "20px Arial", "right");
-
-			 colorText("Shots Fired: " + shotsFired, canvas.width - 10, 110, "white", "20px Arial", "right");
-			 colorText("Number Of Hits: " + shotsHit, canvas.width - 10, 130, "white", "20px Arial", "right");
-			 colorText("Ships Hit: " + shotsHitShips, canvas.width - 10, 150, "white", "20px Arial", "right");
-			 colorText("Aliens Hit: " + shotsHitAliens, canvas.width - 10, 170, "white", "20px Arial", "right");
-			 colorText("Parachutes Hit: " + shotsHitParachutes, canvas.width - 10, 190, "white", "20px Arial", "right");
-
-			 colorText("[1] for Paradropper",130,50,"white","15px Arial","right");
-			 colorText("[2] for Gunship",97,70,"white","15px Arial","right");
-			 colorText("[M] for Missile Strike",136,90,"white","15px Arial","right");
-			 colorText("[C] to copy new Wave",148,110,"white","15px Arial","right");
-
+			colorText("Shots Fired: " + shotsFired, canvas.width - 10, 110, "white", "20px Arial", "right");
+			colorText("Number Of Hits: " + shotsHit, canvas.width - 10, 130, "white", "20px Arial", "right");
+			colorText("Ships Hit: " + shotsHitShips, canvas.width - 10, 150, "white", "20px Arial", "right");
+			colorText("Aliens Hit: " + shotsHitAliens, canvas.width - 10, 170, "white", "20px Arial", "right");
+			colorText("Parachutes Hit: " + shotsHitParachutes, canvas.width - 10, 190, "white", "20px Arial", "right");
+		}
 	}
 
 	if (debug) {
@@ -211,7 +210,7 @@ function drawLives() {
     //colorText("lives: " + playerHP,canvas.width-780,30,"white","20px Arial","left");
     var gap = 5;
     var cornerX = 30;
-    var cornerY = 15;
+    var cornerY = 10;
     var maxHeartsToShow = startHitpoints+playerUpgradeHealth;
     for(var i = 0; i < maxHeartsToShow; i++) {
         canvasContext.drawImage(
@@ -292,9 +291,9 @@ function openHelp() {
 }
 
 function togglePause(){
-    var levelIsInPlay = assaultMode || waveStarted || carnageStarted;
+    var levelIsInPlay = assaultMode || waveStarted || carnageStarted || twoPlayerMode;
     if((!levelIsInPlay || windowState.help) && !orchestratorMode){
-		console.log(waveStarted, windowState.help, orchestratorMode);	
+		console.log(waveStarted, windowState.help, orchestratorMode, twoPlayerMode);	
         console.log("no pause");
         return;
     }
@@ -328,7 +327,7 @@ function togglePause(){
 function startOrchestratorMode() {
 	if(windowState.mainMenu){
 		startGame();
-		orchestratorMode = true;
+		twoPlayerMode = true;
 	}
 }
 

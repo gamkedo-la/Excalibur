@@ -13,6 +13,7 @@ function resetGame() {
 	windowState.mainMenu = true;
 	windowState.help = false;
 	orchestratorMode = false;
+	twoPlayerMode = false;
 	assaultMode = false;
 	carnageMode = false;
 	

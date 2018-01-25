@@ -28,6 +28,7 @@ const KEY_H = 72;
 const KEY_M = 77;
 const KEY_O = 79;
 const KEY_P = 80; 
+const KEY_T = 84;
 
 //for debugging
 const KEY_K = 75;
@@ -216,10 +217,13 @@ function keyPress(evt) {
             }
             break;
 		case KEY_O:
+			orchestratorMode = !orchestratorMode;
+			break;
+		case KEY_T:
 			startOrchestratorMode();
 			break;
 		case DIGIT_1:
-			if(orchestratorMode) {
+			if(twoPlayerMode) {
 				orchestratorCurrentSpawnType = PLANE_PARADROPPER;
 				enemyData.spawnType = orchestratorCurrentSpawnType;
 				enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
@@ -235,7 +239,7 @@ function keyPress(evt) {
 			}
 			break;
 		case DIGIT_2:
-			if(orchestratorMode) {
+			if(twoPlayerMode) {
 				orchestratorCurrentSpawnType = PLANE_GUNSHIP;
 				enemyData.spawnType = orchestratorCurrentSpawnType;
 				enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
@@ -275,7 +279,7 @@ function keyPress(evt) {
 			fireMode);
 			break;
 		case KEY_M:
-			if(orchestratorMode) {
+			if(twoPlayerMode) {
 				orchestratorCurrentSpawnType = MISSILE_STRIKE;
 				enemyData.spawnType = orchestratorCurrentSpawnType;
 				enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
