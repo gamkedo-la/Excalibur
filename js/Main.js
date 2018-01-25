@@ -168,11 +168,13 @@ function drawScore() {
 			 colorText("Score: " + numberWithCommas(score),canvas.width-20,30,"white","20px Arial","right");
 	}
 	if (twoPlayerMode) {
-		colorText("[1] for Paradropper",130,50,"white","15px Arial","right");
-		colorText("[2] for Gunship",97,70,"white","15px Arial","right");
+		colorText("[1] for Paradropper",127,50,"white","15px Arial","right");
+		colorText("[2] for Gunship",100,70,"white","15px Arial","right");
 		colorText("[M] for Missile Strike",136,90,"white","15px Arial","right");
-		colorText("[C] to copy new Wave",148,110,"white","15px Arial","right");
-		if (orchestratorMode) {			
+		colorText("[ESC] to return to Main Menu",195,110,"white","15px Arial","right");
+		if (orchestratorMode) {	
+			colorText("[C] to copy new Wave",148,130,"fuchsia","15px Arial","right");
+				
 			colorText("spawnFrameCount: " + orchestratorSpawnFrameCount,canvas.width - 10, 30,"white","20px Arial","right");
 
 			colorText("frameCount: " + frameCount, canvas.width - 10, 50, "white", "20px Arial", "right");
@@ -209,8 +211,8 @@ function numberWithCommas(number) {
 function drawLives() {
     //colorText("lives: " + playerHP,canvas.width-780,30,"white","20px Arial","left");
     var gap = 5;
-    var cornerX = 30;
-    var cornerY = 10;
+    var cornerX = 10;
+    var cornerY = 8;
     var maxHeartsToShow = startHitpoints+playerUpgradeHealth;
     for(var i = 0; i < maxHeartsToShow; i++) {
         canvasContext.drawImage(
@@ -279,6 +281,9 @@ function startGame() {
 	frameCount = 0;
 	shotsFired = 0;
 	shotsHit = 0;
+	shotsHitShips = 0;
+	shotsHitAliens = 0;
+	shotsHitParachutes = 0;
 }
 
 function openHelp() {

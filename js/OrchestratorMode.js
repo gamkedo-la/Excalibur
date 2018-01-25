@@ -1,10 +1,14 @@
 var orchestratorMode = false;
 var twoPlayerMode = false;
+var orchestratorWins = false;
+var excaliburWins = false;
+var scoreReached = false;
 
 var createNewWave = [];
 
 var orchestratorCurrentSpawnType = 0;
 var orchestratorSpawnFrameCount = 0;
+var scoreToReach = 10000; //not final number, testing
 
 var enemyData = { 
 	spawnType: null, 
@@ -14,6 +18,12 @@ var enemyData = {
 function orchestratorFrameCount() {
     orchestratorSpawnFrameCount++;
     frameCount++;
+    if (score >= scoreToReach && !scoreReached) {
+      scoreReached = true;
+      excaliburWins = true;
+      gameOverManager.startGameOverSequence();
+      return;
+    }
     timeElapsedInSeconds = timeElapsedInSeconds + (new Date().getTime() - timeStartedActive) / 1000;
     timeStartedActive = new Date().getTime();
 }

@@ -18,8 +18,6 @@ function gameOverSequence() {
     };
 
     this.startGameOverSequence = function() {
-        // reset fireMode
-        fireMode = FIREMODE_SINGLE;
         waveStarted = false;
         if(currentBackground == ZEBES_BACKGROUND){
         currentBackgroundMusic.loopSong(gameOverMusic);
@@ -49,14 +47,19 @@ function gameOverSequence() {
       }
 
       if (artHeightTopNow >= canvas.height) {
+          var gameOverHeadline = ""
+          if (orchestratorWins) {
+            gameOverHeadline = "ORCHESTRATOR WINS!!!"
+          } else if (excaliburWins) {
+            gameOverHeadline = "EXCALIBUR WINS!!!"
+          } else if (waveStarted) {
+            gameOverHeadline = "GAME OVER!!!"
+          }
           if(framesSinceGameOverShown<0) {
             drawRect(50, 50, canvas.width - 100, canvas.height - 100, "rgba(50, 50, 50, 0.8)")
-            if (twoPlayerMode) {
-              colorText("ORCHESTRATOR WINS!!!", canvas.width / 2, canvas.height / 4 - 60, "red", "50px Sans-serif", "center");
-            } else {
-              colorText("GAME OVER!!!", canvas.width / 2, canvas.height / 4 - 60, "red", "50px Sans-serif", "center");
-            }
-            colorText("Final Score :" + numberWithCommas(score), canvas.width / 2, canvas.height / 4 + 10, "white", "45px Sans-serif", "center");
+
+            colorText(gameOverHeadline, canvas.width / 2, canvas.height / 4 - 60, "red", "50px Sans-serif", "center");
+            colorText("Final Score: " + numberWithCommas(score), canvas.width / 2, canvas.height / 4 + 10, "white", "45px Sans-serif", "center");
 
             colorText("Shots Fired: " + shotsFired, canvas.width / 2, canvas.height / 4 + 80, "white", "30px Sans-serif", "center");
             colorText("Number Of Hits: " + shotsHit, canvas.width / 2, canvas.height / 4 + 120, "white", "30px Sans-serif", "center");

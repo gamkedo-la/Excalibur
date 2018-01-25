@@ -218,6 +218,13 @@ function keyPress(evt) {
             break;
 		case KEY_O:
 			orchestratorMode = !orchestratorMode;
+				startGame();
+			if (!orchestratorMode) {
+				score = 0;
+			} else {
+				orchestratorSpawnFrameCount = 0;
+				shotsFired = 0;
+			}
 			break;
 		case KEY_T:
 			startOrchestratorMode();
@@ -225,12 +232,14 @@ function keyPress(evt) {
 		case DIGIT_1:
 			if(twoPlayerMode) {
 				orchestratorCurrentSpawnType = PLANE_PARADROPPER;
-				enemyData.spawnType = orchestratorCurrentSpawnType;
-				enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
-				createNewWave.push(enemyData);
-				enemyData = { 
-					spawnType: null, 
-					framesUntilSpawn: null 
+				if (orchestratorMode) {
+					enemyData.spawnType = orchestratorCurrentSpawnType;
+					enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
+					createNewWave.push(enemyData);
+					enemyData = { 
+						spawnType: null, 
+						framesUntilSpawn: null 
+					}
 				}
 				orchestratorSpawnEnemy();
 			} else if(isUpgradeTime && playerUpgradeSpeed<MAX_UPGRADES_PER_KIND) {
@@ -241,12 +250,14 @@ function keyPress(evt) {
 		case DIGIT_2:
 			if(twoPlayerMode) {
 				orchestratorCurrentSpawnType = PLANE_GUNSHIP;
-				enemyData.spawnType = orchestratorCurrentSpawnType;
-				enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
-				createNewWave.push(enemyData);
-				enemyData = { 
-					spawnType: null, 
-					framesUntilSpawn: null 
+				if (orchestratorMode) {
+					enemyData.spawnType = orchestratorCurrentSpawnType;
+					enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
+					createNewWave.push(enemyData);
+					enemyData = { 
+						spawnType: null, 
+						framesUntilSpawn: null 
+					}
 				}
 				orchestratorSpawnEnemy();
 			} else if(isUpgradeTime && playerUpgradeROF<MAX_UPGRADES_PER_KIND) {
@@ -281,12 +292,14 @@ function keyPress(evt) {
 		case KEY_M:
 			if(twoPlayerMode) {
 				orchestratorCurrentSpawnType = MISSILE_STRIKE;
-				enemyData.spawnType = orchestratorCurrentSpawnType;
-				enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
-				createNewWave.push(enemyData);
-				enemyData = { 
-					spawnType: null, 
-					framesUntilSpawn: null 
+				if (orchestratorMode) {
+					enemyData.spawnType = orchestratorCurrentSpawnType;
+					enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
+					createNewWave.push(enemyData);
+					enemyData = { 
+						spawnType: null, 
+						framesUntilSpawn: null 
+					}
 				}
 				orchestratorSpawnEnemy();
 			}

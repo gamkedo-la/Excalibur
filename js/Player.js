@@ -188,6 +188,9 @@ function hitPlayer() {
     explosionSound.play();
   }
   if (playerHP <= 0) {
+    if (twoPlayerMode) {
+      orchestratorWins = true;
+    }
     gameOverManager.startGameOverSequence();
   }
 }

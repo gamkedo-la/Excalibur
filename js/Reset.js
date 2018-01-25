@@ -25,13 +25,19 @@ function resetGame() {
 	enableIntermission = false;
 	carnageStarted = false;
 	toggleCarnageModeSpawning = false;
+	orchestratorWins = false;
+	excaliburWins = false;
+	scoreReached = false;
 	
 	currentSpawnType = 0;
 	spawnFrameCount = 0;
 	currentEnemyIndex = 0;
 	currentStageIndex = 0;
 	currentWaveIndex = 0;
-	currentWave = currentWaveIndex + 1; 
+
+	currentWave = currentWaveIndex + 1;
+	fireMode = FIREMODE_SINGLE;
+
 	wave = [];
 	createNewWave = [];
 	
