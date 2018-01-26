@@ -34,6 +34,7 @@ function resetGame() {
 	currentEnemyIndex = 0;
 	currentStageIndex = 0;
 	currentWaveIndex = 0;
+	masterFrameDelayTick = 0;
 
 	currentWave = currentWaveIndex + 1;
 	fireMode = FIREMODE_SINGLE;

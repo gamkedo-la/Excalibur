@@ -217,20 +217,28 @@ function keyPress(evt) {
             }
             break;
 		case KEY_O:
-			orchestratorMode = !orchestratorMode;
-				startGame();
-			if (!orchestratorMode) {
-				score = 0;
-			} else {
-				orchestratorSpawnFrameCount = 0;
-				shotsFired = 0;
+			if (twoPlayerMode && !isPaused) {
+				orchestratorMode = !orchestratorMode;
+					startGame();
+				if (!orchestratorMode) {
+					score = 0;
+				} else {
+					orchestratorSpawnFrameCount = 0;
+					shotsFired = 0;
+				}
 			}
 			break;
 		case KEY_T:
-			startOrchestratorMode();
+			if (windowState.mainMenu) {
+				windowState.mainMenu = false;
+				windowState.twoPlayerHelp = true;
+			} else if (windowState.twoPlayerHelp)  {
+				startOrchestratorMode();
+				windowState.twoPlayerHelp = false;	
+			}
 			break;
 		case DIGIT_1:
-			if(twoPlayerMode) {
+			if(twoPlayerMode && !isPaused) {
 				orchestratorCurrentSpawnType = PLANE_PARADROPPER;
 				if (orchestratorMode) {
 					enemyData.spawnType = orchestratorCurrentSpawnType;
@@ -248,7 +256,7 @@ function keyPress(evt) {
 			}
 			break;
 		case DIGIT_2:
-			if(twoPlayerMode) {
+			if(twoPlayerMode && !isPaused) {
 				orchestratorCurrentSpawnType = PLANE_GUNSHIP;
 				if (orchestratorMode) {
 					enemyData.spawnType = orchestratorCurrentSpawnType;
@@ -290,7 +298,7 @@ function keyPress(evt) {
 			fireMode);
 			break;
 		case KEY_M:
-			if(twoPlayerMode) {
+			if(twoPlayerMode && !isPaused) {
 				orchestratorCurrentSpawnType = MISSILE_STRIKE;
 				if (orchestratorMode) {
 					enemyData.spawnType = orchestratorCurrentSpawnType;

@@ -15,6 +15,7 @@ var isPaused = false;
 var windowState = {
 	inFocus : true, 
 	help : false,
+	twoPlayerHelp : false,
 	mainMenu : true, 
 };
 
@@ -39,16 +40,17 @@ window.onload = function () {
  	window.addEventListener("blur", windowOnBlur);
 	
 	canvas = document.createElement("canvas");
+	canvasContext = canvas.getContext("2d");
+	document.body.appendChild(canvas);
 	canvas.width = 800;
 	canvas.height = 600;
+	drawRect(0,0,canvas.width, canvas.height, "black");
+	colorText('LOADING...',canvas.width/2 , canvas.height/2,"white","30px Tahoma","center", 1);
 	
 	TitleTextX = canvas.width;
 	subTitleTextX = 0;
 	opacity = 0;
-	
-	document.body.appendChild(canvas);
-	canvasContext = canvas.getContext("2d");
-	
+		
 	playerX = canvas.width/2;
 	playerY = canvas.height-playerHeight/2;
 	playerY + playerHeight/2;
@@ -90,21 +92,38 @@ function update() {
 			}
 		}
 		else if(windowState.help){
-			drawSkyGradient();  
-			canvasContext.drawImage(backgroundFarPic,0,0);
+			opacity = 1;
+			drawSkyGradient(); 
+			canvasContext.drawImage(currentBackgroundFar,0,0);
 			colorText('How To Play',canvas.width/2 ,100,"white","30px Tahoma","center",opacity);
 			colorText("1) Press 4 to switch between input options:",250,150 ,"white","15px Tahoma","left",opacity);
 			colorText(" Default Inputs: A/D or arrows for left/right, mouse to aim tank cannon, mouse click or spacebar for shooting",70,180 ,"white","15px Tahoma","left",opacity);
 			colorText(" Optional Inputs: Arrows for left/right, A/D for moving cannon left/right, spacebar for shooting",70,210 ,"white","15px Tahoma","left",opacity);
-			colorText("2) Pick-up power-ups using tank",250,240 ,"white","15px Tahoma","left",opacity);
-			canvasContext.drawImage(firemodePowerUpPic, 470, 223);
-			canvasContext.drawImage(shieldPowerUpPic, 505, 227);
-			canvasContext.drawImage(healthPowerUpPic, 532, 227);
-			canvasContext.drawImage(maxHealthPowerUpPic, 559, 227);
+			colorText("2) Pick-up power-ups using Excalibur",250,240 ,"white","15px Tahoma","left",opacity);
+			canvasContext.drawImage(firemodePowerUpPic, 500, 223);
+			canvasContext.drawImage(shieldPowerUpPic, 535, 227);
+			canvasContext.drawImage(healthPowerUpPic, 562, 227);
+			canvasContext.drawImage(maxHealthPowerUpPic, 590, 227);
 			colorText("3) P to pause and resume game",250,270 ,"white","15px Tahoma","left",opacity);
 			colorText("4) Tab to skip levels",250,300 ,"white","15px Tahoma","left",opacity); // TODO: remove for release
 			colorText('Press [Enter] to Start game',canvas.width/2 , 500,"white","30px Tahoma","center",opacity);
-			opacity = opacity + 0.009;
+		}
+		else if (windowState.twoPlayerHelp) {
+			opacity = 1;
+			drawSkyGradient(); 
+			canvasContext.drawImage(currentBackgroundFar,0,0);
+			colorText('How To Play',canvas.width/2 ,100,"white","30px Tahoma","center",opacity);
+			colorText("Excalibur Controls: ",70,150 ,"Chartreuse","15px Tahoma","left",opacity);
+			colorText("Arrows for left/right, Mouse to aim cannon, mouse click or spacebar for shooting",70,180 ,"white","15px Tahoma","left",opacity);
+			colorText("Orchestrator Controls: ",70,210 ,"Chartreuse","15px Tahoma","left",opacity);
+			colorText("Spawn Enemies using 1,2 and M ",70,240 ,"white","15px Tahoma","left",opacity);
+			colorText("Pick-up power-ups using Excalibur",250,270 ,"white","15px Tahoma","left",opacity);
+			canvasContext.drawImage(firemodePowerUpPic, 478, 253);
+			canvasContext.drawImage(shieldPowerUpPic, 513, 257);
+			canvasContext.drawImage(healthPowerUpPic, 540, 257);
+			canvasContext.drawImage(maxHealthPowerUpPic, 567, 257);
+			colorText("P to pause and resume game",250,300 ,"white","15px Tahoma","left",opacity);
+			colorText('Press [T] to Duel!',canvas.width/2 , 500,"white","30px Tahoma","center",opacity);
 		}
 		else {
 			if(!gameOverManager.gameOverPlaying) {
@@ -290,7 +309,6 @@ function openHelp() {
 	if(isPaused) {
 		return;
 	}
-	
 	windowState.mainMenu = false;
 	windowState.help = true;
 }
@@ -330,7 +348,7 @@ function togglePause(){
 }
 
 function startOrchestratorMode() {
-	if(windowState.mainMenu){
+	if(windowState.twoPlayerHelp){
 		startGame();
 		twoPlayerMode = true;
 	}
