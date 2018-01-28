@@ -36,35 +36,40 @@ var isUpgradeTime = false;
 
 function checkFrameCount() {
 	if(isUpgradeTime) {
-		var canUpSpeed = playerUpgradeSpeed<MAX_UPGRADES_PER_KIND,
-			canUpROF=playerUpgradeROF<MAX_UPGRADES_PER_KIND,
-			canUpHealth=playerUpgradeHealth<MAX_UPGRADES_PER_KIND;
-		if(canUpHealth == false && canUpROF == false && canUpSpeed == false) {
+		if(gameOverManager.gameOverPlaying) {
 			isUpgradeTime = false;
 		} else {
-			canvasContext.font = "40px Tahoma";
-			canvasContext.textAlign = "center";
-			canvasContext.fillStyle = "white";
-			var textLineSkip = 40;
-			var textLineY = canvas.height/2 - textLineSkip *3;
-			canvasContext.fillText("Time for an upgrade!",canvas.width/2,textLineY);
-			textLineY+= textLineSkip * 2;
-			if(canUpSpeed) {
-				canvasContext.fillText("1. Dodge Speed ("+playerUpgradeSpeed+"/"+MAX_UPGRADES_PER_KIND+")",canvas.width/2,textLineY);
+			var canUpSpeed = playerUpgradeSpeed<MAX_UPGRADES_PER_KIND,
+				canUpROF=playerUpgradeROF<MAX_UPGRADES_PER_KIND,
+				canUpHealth=playerUpgradeHealth<MAX_UPGRADES_PER_KIND;
+			if(canUpHealth == false && canUpROF == false && canUpSpeed == false) {
+				isUpgradeTime = false;
+			} else {
+				canvasContext.font = "40px Tahoma";
+				canvasContext.textAlign = "center";
+				canvasContext.fillStyle = "white";
+				var textLineSkip = 40;
+				var textLineY = canvas.height/2 - textLineSkip *3;
+				canvasContext.fillText("Time for an upgrade!",canvas.width/2,textLineY);
+				textLineY+= textLineSkip * 2;
+				if(canUpSpeed) {
+					canvasContext.fillText("1. Dodge Speed ("+playerUpgradeSpeed+"/"+MAX_UPGRADES_PER_KIND+")",canvas.width/2,textLineY);
+				}
+				textLineY+= textLineSkip;
+				if(canUpROF) {
+					canvasContext.fillText("2. Rate of Fire ("+playerUpgradeROF+"/"+MAX_UPGRADES_PER_KIND+")" ,canvas.width/2,textLineY);
+				}
+				textLineY+= textLineSkip;
+				if(canUpHealth) {
+					canvasContext.fillText("3. Extra Health ("+playerUpgradeHealth+"/"+MAX_UPGRADES_PER_KIND+")" ,canvas.width/2,textLineY);
+				}
+				textLineY+= textLineSkip*2;
+				canvasContext.fillText('Type '+(canUpSpeed ? '1 ' : "")+(canUpROF ? '2 ' : "")+(canUpHealth ? '3 ' : "")+'to choose...',canvas.width/2 ,textLineY);
+				return;
 			}
-			textLineY+= textLineSkip;
-			if(canUpROF) {
-				canvasContext.fillText("2. Rate of Fire ("+playerUpgradeROF+"/"+MAX_UPGRADES_PER_KIND+")" ,canvas.width/2,textLineY);
-			}
-			textLineY+= textLineSkip;
-			if(canUpHealth) {
-				canvasContext.fillText("3. Extra Health ("+playerUpgradeHealth+"/"+MAX_UPGRADES_PER_KIND+")" ,canvas.width/2,textLineY);
-			}
-			textLineY+= textLineSkip*2;
-			canvasContext.fillText('Type '+(canUpSpeed ? '1 ' : "")+(canUpROF ? '2 ' : "")+(canUpHealth ? '3 ' : "")+'to choose...',canvas.width/2 ,textLineY);
-			return;
-		}
-	}
+		} // end of else (wasn't in game over)
+	} // showing upgrade offer
+
 	spawnFrameCount++;
     if (wave.length < 1) {
     	if (!isSpawningWave) {
