@@ -16,6 +16,7 @@ function resetGame() {
 	twoPlayerMode = false;
 	assaultMode = false;
 	carnageMode = false;
+	gameRunning = false;
 	
 	isSpawningWave = false;
 	waveCompleted = false;

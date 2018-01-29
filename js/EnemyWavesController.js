@@ -34,7 +34,7 @@ var allStages = [stage1,stage2, stage3, stage4, stage5];
 
 var isUpgradeTime = false;
 
-function checkFrameCount() {
+function waveControllerStart() {
 	if(isUpgradeTime) {
 		if(gameOverManager.gameOverPlaying) {
 			isUpgradeTime = false;

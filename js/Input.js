@@ -201,10 +201,12 @@ function keyPress(evt) {
 					return;
 				} else {
 					startGame();
+					gameRunning = true;
 				}
 			}
 			if(windowState.help){
 				startGame();
+				gameRunning = true;
 			}
 			if(gameOverManager.gameOverPlaying) {
 				gameOverManager.gameOverPlaying = false;
@@ -234,7 +236,9 @@ function keyPress(evt) {
 				windowState.twoPlayerHelp = true;
 			} else if (windowState.twoPlayerHelp)  {
 				startOrchestratorMode();
-				windowState.twoPlayerHelp = false;	
+				//chooseBackground();
+				windowState.twoPlayerHelp = false;
+				gameRunning = true;	
 			}
 			break;
 		case DIGIT_1:
@@ -426,6 +430,7 @@ function keyRelease(evt) {
 	        	copyTextToClipboard(waveString);
 	       	} else if (windowState.mainMenu) {
 	       		carnageMode = true;
+	       		gameRunning = true;
 	       		startGame();
 	       	}
 	    	break;
