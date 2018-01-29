@@ -57,7 +57,7 @@ function mainMenuStates() {
 		colorText("Excalibur Controls: ",70,150 ,"Chartreuse","15px Tahoma","left",opacity);
 		colorText("Arrows for left/right, Mouse to aim cannon, mouse click or spacebar for shooting",70,180 ,"white","15px Tahoma","left",opacity);
 		colorText("Orchestrator Controls: ",70,210 ,"Chartreuse","15px Tahoma","left",opacity);
-		colorText("Spawn Enemies using 1,2 and M ",70,240 ,"white","15px Tahoma","left",opacity);
+		colorText("Spawn Enemies using 1,Q and A ",70,240 ,"white","15px Tahoma","left",opacity);
 		colorText("Pick-up power-ups using Excalibur",250,270 ,"white","15px Tahoma","left",opacity);
 		canvasContext.drawImage(firemodePowerUpPic, 478, 253);
 		canvasContext.drawImage(shieldPowerUpPic, 513, 257);
@@ -71,6 +71,8 @@ function mainMenuStates() {
 		canvasContext.drawImage(currentBackgroundFar,0,0);
 		canvasContext.drawImage(currentBackgroundMed,0,0);
 		canvasContext.drawImage(currentBackgroundNear,0,0);
+		tintScreen();
+		tintScreen();
 		colorText("Select Background: ",canvas.width/2 ,100,"white","30px Tahoma","center",opacity);
 		colorText(stageNames[currentStageIndex],canvas.width/2 ,150,"white","30px Tahoma","center",opacity);
 		colorText("[1] for Planet Zebes",30,200 ,"white","15px Tahoma","left",opacity);

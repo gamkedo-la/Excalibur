@@ -12,6 +12,8 @@ function resetGame() {
 	
 	windowState.mainMenu = true;
 	windowState.help = false;
+	windowState.twoPlayerHelp = false;
+	windowState.backgroundSelect = false;
 	orchestratorMode = false;
 	twoPlayerMode = false;
 	assaultMode = false;
