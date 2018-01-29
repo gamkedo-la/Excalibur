@@ -4,6 +4,7 @@ var windowState = {
 	inFocus : true, 
 	help : false,
 	twoPlayerHelp : false,
+	backgroundSelect : false,
 	mainMenu : true, 
 };
 var TitleTextX, subTitleTextX,opacity;
@@ -63,6 +64,20 @@ function mainMenuStates() {
 		canvasContext.drawImage(healthPowerUpPic, 540, 257);
 		canvasContext.drawImage(maxHealthPowerUpPic, 567, 257);
 		colorText("P to pause and resume game",250,300 ,"white","15px Tahoma","left",opacity);
+		colorText('Press [T] to Proceed',canvas.width/2 , 500,"white","30px Tahoma","center",opacity);
+	}
+	else if (windowState.backgroundSelect) {
+		drawSkyGradient();
+		canvasContext.drawImage(currentBackgroundFar,0,0);
+		canvasContext.drawImage(currentBackgroundMed,0,0);
+		canvasContext.drawImage(currentBackgroundNear,0,0);
+		colorText("Select Background: ",canvas.width/2 ,100,"white","30px Tahoma","center",opacity);
+		colorText(stageNames[currentStageIndex],canvas.width/2 ,150,"white","30px Tahoma","center",opacity);
+		colorText("[1] for Planet Zebes",30,200 ,"white","15px Tahoma","left",opacity);
+		colorText("[2] for Inside Super Computer",30,230 ,"white","15px Tahoma","left",opacity);
+		colorText("[3] for Crystalline Coast",30,260 ,"white","15px Tahoma","left",opacity);
+		colorText("[4] for Fantasy Zone",30,290 ,"white","15px Tahoma","left",opacity);
+		colorText("[5] for Starfield",30,320 ,"white","15px Tahoma","left",opacity);
 		colorText('Press [T] to Duel!',canvas.width/2 , 500,"white","30px Tahoma","center",opacity);
 	}
 }

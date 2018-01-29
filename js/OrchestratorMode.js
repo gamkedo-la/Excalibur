@@ -40,12 +40,8 @@ function orchestratorSpawnEnemy() {
     orchestratorSpawnFrameCount = 0;
 }
 
-function chooseBackground() {
-  startGame();
-}
-
 function startOrchestratorMode() {
-  if(windowState.twoPlayerHelp){
+  if(windowState.backgroundSelect){
     twoPlayerMode = true;
   }
 }

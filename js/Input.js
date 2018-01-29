@@ -235,14 +235,22 @@ function keyPress(evt) {
 				windowState.mainMenu = false;
 				windowState.twoPlayerHelp = true;
 			} else if (windowState.twoPlayerHelp)  {
-				startOrchestratorMode();
-				//chooseBackground();
+				windowState.backgroundSelect = true;
 				windowState.twoPlayerHelp = false;
+				currentBackgroundMed = backgroundMedPic;
+				currentBackgroundMusic.loopSong(zebesBackgroundMusic);
+			} else if (windowState.backgroundSelect) {
+				windowState.backgroundSelect = false;
+				twoPlayerMode = true;
+				startOrchestratorMode();
 				gameRunning = true;	
 			}
 			break;
 		case DIGIT_1:
-			if(twoPlayerMode && !isPaused) {
+			if (windowState.backgroundSelect) {
+				currentStageIndex = 0;
+				changeBackground(currentStageIndex);
+			} else if(twoPlayerMode && !isPaused) {
 				orchestratorCurrentSpawnType = PLANE_PARADROPPER;
 				if (orchestratorMode) {
 					enemyData.spawnType = orchestratorCurrentSpawnType;
@@ -260,7 +268,10 @@ function keyPress(evt) {
 			}
 			break;
 		case DIGIT_2:
-			if(twoPlayerMode && !isPaused) {
+			if (windowState.backgroundSelect) {
+				currentStageIndex = 1;
+				changeBackground(currentStageIndex);
+			} else if(twoPlayerMode && !isPaused) {
 				orchestratorCurrentSpawnType = PLANE_GUNSHIP;
 				if (orchestratorMode) {
 					enemyData.spawnType = orchestratorCurrentSpawnType;
@@ -278,7 +289,10 @@ function keyPress(evt) {
 			}
 			break;
 		case DIGIT_3:
-		 	if(isUpgradeTime && playerUpgradeHealth<MAX_UPGRADES_PER_KIND) {
+			if (windowState.backgroundSelect) {
+				currentStageIndex = 2;
+				changeBackground(currentStageIndex);
+			} else if(isUpgradeTime && playerUpgradeHealth<MAX_UPGRADES_PER_KIND) {
 		 		playerHP++;
 		 		playerUpgradeHealth++;
 				isUpgradeTime = false;
@@ -288,13 +302,25 @@ function keyPress(evt) {
 			isUpgradeTime = true;
 			break;*/
 		case DIGIT_4: // testing key
-			if (controlScheme == CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING) {
+			if (windowState.backgroundSelect) {
+				currentStageIndex = 3;
+				changeBackground(currentStageIndex);
+			} else if (controlScheme == CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING) {
 				controlScheme = CONTROL_SCHEME_KEYS_STATIONARY;
 			} else {
 				controlScheme = CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING;
 			}
 			break;
 		case DIGIT_5:
+			if (windowState.backgroundSelect) {
+				currentStageIndex = 4;
+				changeBackground(currentStageIndex);
+			} else if (!windowState.backgroundSelect) {
+				fireMode = (evt.keyCode - DIGIT_3);
+				console.log("weapon mode change to: " +
+				fireMode);
+			}
+			break;
 		case DIGIT_6:
 		case DIGIT_7:
 			fireMode = (evt.keyCode - DIGIT_3);
