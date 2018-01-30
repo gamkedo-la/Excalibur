@@ -84,8 +84,6 @@ function update() {
 			orchestratorFrameCount();
 		} else if (carnageMode) {
 			carnageModeController();
-			cannonReloadFrames = 3;
-			cannonWaveReloadFrames = 5;
 		}
 	}		
 }
@@ -103,7 +101,11 @@ function drawAll() {
 	drawPlayer();
 	drawAndRemovePowerUps();
 	drawScore();
-	drawLives()
+	if (carnageMode || orchestratorMode) {
+		return;
+	} else {
+		drawLives();
+	}
 	drawExplosions();
 }
 

@@ -98,6 +98,8 @@ function startCarnage() {
 	}
 	windowState.mainMenu = false;
 	carnageMode = true;
+	playerUpgradeSpeed = 3;
+	playerUpgradeROF = 3;
 	startGame();
 }
 

@@ -47,7 +47,6 @@ function numberWithCommas(number) {
 }
 
 function drawLives() {
-    //colorText("lives: " + playerHP,canvas.width-780,30,"white","20px Arial","left");
     var gap = 5;
     var cornerX = 10;
     var cornerY = 8;
