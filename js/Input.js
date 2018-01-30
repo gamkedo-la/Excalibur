@@ -202,12 +202,10 @@ function keyPress(evt) {
 					return;
 				} else {
 					startGame();
-					gameRunning = true;
 				}
 			}
 			if(windowState.help){
 				startGame();
-				gameRunning = true;
 			}
 			if(gameOverManager.gameOverPlaying) {
 				gameOverManager.gameOverPlaying = false;
@@ -233,8 +231,7 @@ function keyPress(evt) {
 			break;
 		case KEY_T:
 			if (windowState.mainMenu) {
-				windowState.mainMenu = false;
-				windowState.twoPlayerHelp = true;
+				startTwoPlayerMode();
 			} else if (windowState.twoPlayerHelp)  {
 				windowState.backgroundSelect = true;
 				windowState.twoPlayerHelp = false;
@@ -458,7 +455,6 @@ function keyRelease(evt) {
 	        	copyTextToClipboard(waveString);
 	       	} else if (windowState.mainMenu) {
 	       		carnageMode = true;
-	       		gameRunning = true;
 	       		startGame();
 	       	}
 	    	break;

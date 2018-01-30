@@ -30,7 +30,7 @@ mainMenu = {
 			},
 			{
 				txt : "[T] for Two Player Mode",
-				onClick : startOrchestratorMode,
+				onClick : startTwoPlayerMode,
 			},
 		];
 		
