@@ -123,7 +123,7 @@ function handleInput() {
 					shotsFired++;
 					gunfireExplosion(cannonEndX,cannonEndY);
 				}
-				break;			break;
+				break;
 			case FIREMODE_WAVE:
 				if(cannonReloadLeft <= 0) {
 					cannonReloadLeft = WaveShotClass.reloadTime * (1.0-(playerUpgradeROF/(MAX_UPGRADES_PER_KIND+1)));
