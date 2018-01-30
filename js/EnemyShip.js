@@ -1,8 +1,10 @@
 const shipGravity = vec2.create(0, 0.04);
 const shipSpawnBandThickness = 200;
 const shipSpawnBandMargin = 50;
-var shipList=[];
-var shipsTotal=0;
+var shipList = [];
+var shipsTotal = 0;
+var dropShipsTotal = 0;
+var gunShipsTotal = 0;
 
 function EnemyShipClass(width, height, speed, angle, health) {
 	//EnemyClass(width, height, speed, angle, health)

@@ -65,4 +65,5 @@ function GunshipClass() {
 function gunshipSpawn() {
 	shipList.push(new GunshipClass());
 	shipsTotal++;
+	gunShipsTotal++;
 }
