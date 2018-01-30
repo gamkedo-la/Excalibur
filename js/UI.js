@@ -1,3 +1,10 @@
+const debugFont = "16px Tahoma";
+const debugFontColor = "white";
+const debugRightMargin = 8;
+const debugLineHeight = 18;
+const debugLineHeightPadding = 2;
+const debugLineGap = 12;
+
 function drawScore() {
 	if (!orchestratorMode) {
 			 colorText("Score: " + numberWithCommas(score),canvas.width-20,30,"white","20px Arial","right");
@@ -13,23 +20,52 @@ function drawScore() {
 		colorText("[3] for Missile Strike",133,90,"white","15px Arial","right");
 		colorText("[ESC] to return to Main Menu",195,110,"white","15px Arial","right");
 		colorText("[C] to copy new Wave",148,130,"fuchsia","15px Arial","right");
-			
-		colorText("spawnFrameCount: " + orchestratorSpawnFrameCount,canvas.width - 10, 30,"white","20px Arial","right");
-		colorText("frameCount: " + frameCount, canvas.width - 10, 50, "white", "20px Arial", "right");
 
-		colorText("Ships Spawned: " + shipsTotal, canvas.width - 10, 90, "white", "20px Arial", "right");
-		colorText("Ships Active: " + shipList.length, canvas.width - 10, 110, "white", "20px Arial", "right");
-		colorText("Gunships Total: " + gunShipsTotal, canvas.width - 10, 130, "white", "20px Arial", "right");
-		colorText("Dropships Total: " + dropShipsTotal, canvas.width - 10, 150, "white", "20px Arial", "right");
+		var debugCurrentLinePos = debugLineHeight;
 
-		colorText("Shots Fired: " + shotsFired, canvas.width - 10, 190, "white", "20px Arial", "right");
-		colorText("Number Of Hits: " + shotsHit, canvas.width - 10, 210, "white", "20px Arial", "right");
-		colorText("Ships Hit: " + shotsHitShips, canvas.width - 10, 230, "white", "20px Arial", "right");
-		colorText("Aliens Hit: " + shotsHitAliens, canvas.width - 10, 250, "white", "20px Arial", "right");
-		colorText("Parachutes Hit: " + shotsHitParachutes, canvas.width - 10, 270, "white", "20px Arial", "right");
+		colorText("spawnFrameCount: " + orchestratorSpawnFrameCount, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
+		debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
 
-		colorText("Time Elapsed: " + timeElapsedInSeconds.toFixed(1), canvas.width - 10, 310, "white", "20px Arial", "right");
-		colorText("Frame Rate: " + (frameCount / timeElapsedInSeconds).toFixed(1), canvas.width - 10, 330, "white", "20px Arial", "right");
+		colorText("frameCount: " + frameCount, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
+		debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
+
+		debugCurrentLinePos = debugCurrentLinePos + debugLineGap;
+
+		colorText("Ships Spawned: " + shipsTotal, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
+		debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
+
+		colorText("Ships Active: " + shipList.length, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
+		debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
+
+		colorText("Gunships Total: " + gunShipsTotal, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
+		debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
+
+		colorText("Dropships Total: " + dropShipsTotal, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
+		debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
+
+		debugCurrentLinePos = debugCurrentLinePos + debugLineGap;
+
+		colorText("Shots Fired: " + shotsFired, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
+		debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
+
+		colorText("Number Of Hits: " + shotsHit, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
+		debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
+
+		colorText("Ships Hit: " + shotsHitShips, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
+		debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
+
+		colorText("Aliens Hit: " + shotsHitAliens, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
+		debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
+
+		colorText("Parachutes Hit: " + shotsHitParachutes, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
+		debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
+
+		debugCurrentLinePos = debugCurrentLinePos + debugLineGap;
+
+		colorText("Time Elapsed: " + timeElapsedInSeconds.toFixed(1), canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
+		debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
+
+		colorText("Frame Rate: " + (frameCount / timeElapsedInSeconds).toFixed(1), canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
 
 	}
 
