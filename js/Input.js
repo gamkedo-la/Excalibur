@@ -27,7 +27,8 @@ const KEY_D = 68;
 const KEY_H = 72;
 const KEY_M = 77;
 const KEY_O = 79;
-const KEY_P = 80; 
+const KEY_P = 80;
+const KEY_Q = 81;  
 const KEY_T = 84;
 
 //for debugging
@@ -217,20 +218,37 @@ function keyPress(evt) {
             }
             break;
 		case KEY_O:
-			orchestratorMode = !orchestratorMode;
-				startGame();
-			if (!orchestratorMode) {
-				score = 0;
-			} else {
-				orchestratorSpawnFrameCount = 0;
-				shotsFired = 0;
+			if (twoPlayerMode && !isPaused) {
+				orchestratorMode = !orchestratorMode;
+					startGame();
+				if (!orchestratorMode) {
+					score = 0;
+				} else {
+					orchestratorSpawnFrameCount = 0;
+					shotsFired = 0;
+				}
 			}
 			break;
 		case KEY_T:
-			startOrchestratorMode();
+			if (windowState.mainMenu) {
+				startTwoPlayerMode();
+			} else if (windowState.twoPlayerHelp)  {
+				windowState.backgroundSelect = true;
+				windowState.twoPlayerHelp = false;
+				currentBackgroundMed = backgroundMedPic;
+				currentBackgroundMusic.loopSong(zebesBackgroundMusic);
+			} else if (windowState.backgroundSelect) {
+				windowState.backgroundSelect = false;
+				twoPlayerMode = true;
+				startOrchestratorMode();
+				gameRunning = true;	
+			}
 			break;
 		case DIGIT_1:
-			if(twoPlayerMode) {
+			if (windowState.backgroundSelect) {
+				currentStageIndex = 0;
+				changeBackground(currentStageIndex);
+			} else if(twoPlayerMode && !isPaused) {
 				orchestratorCurrentSpawnType = PLANE_PARADROPPER;
 				if (orchestratorMode) {
 					enemyData.spawnType = orchestratorCurrentSpawnType;
@@ -248,16 +266,17 @@ function keyPress(evt) {
 			}
 			break;
 		case DIGIT_2:
-			if(twoPlayerMode) {
+			if (windowState.backgroundSelect) {
+				currentStageIndex = 1;
+				changeBackground(currentStageIndex);
+			} else if (orchestratorMode) {
 				orchestratorCurrentSpawnType = PLANE_GUNSHIP;
-				if (orchestratorMode) {
-					enemyData.spawnType = orchestratorCurrentSpawnType;
-					enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
-					createNewWave.push(enemyData);
-					enemyData = { 
-						spawnType: null, 
-						framesUntilSpawn: null 
-					}
+				enemyData.spawnType = orchestratorCurrentSpawnType;
+				enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
+				createNewWave.push(enemyData);
+				enemyData = { 
+					spawnType: null, 
+					framesUntilSpawn: null 
 				}
 				orchestratorSpawnEnemy();
 			} else if(isUpgradeTime && playerUpgradeROF<MAX_UPGRADES_PER_KIND) {
@@ -266,23 +285,45 @@ function keyPress(evt) {
 			}
 			break;
 		case DIGIT_3:
-		 	if(isUpgradeTime && playerUpgradeHealth<MAX_UPGRADES_PER_KIND) {
+			if(orchestratorMode) {
+				orchestratorCurrentSpawnType = MISSILE_STRIKE;
+				enemyData.spawnType = orchestratorCurrentSpawnType;
+				enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
+				createNewWave.push(enemyData);
+				enemyData = { 
+					spawnType: null, 
+					framesUntilSpawn: null 
+				}
+				orchestratorSpawnEnemy();
+			} else if (windowState.backgroundSelect) {
+				currentStageIndex = 2;
+				changeBackground(currentStageIndex);
+			} else if(isUpgradeTime && playerUpgradeHealth<MAX_UPGRADES_PER_KIND) {
 		 		playerHP++;
 		 		playerUpgradeHealth++;
 				isUpgradeTime = false;
 			}
 			break;
-		/*case DIGIT_4: // testing key
-			isUpgradeTime = true;
-			break;*/
 		case DIGIT_4: // testing key
-			if (controlScheme == CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING) {
+			if (windowState.backgroundSelect) {
+				currentStageIndex = 3;
+				changeBackground(currentStageIndex);
+			} else if (controlScheme == CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING && !twoPlayerMode) {
 				controlScheme = CONTROL_SCHEME_KEYS_STATIONARY;
 			} else {
 				controlScheme = CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING;
 			}
 			break;
 		case DIGIT_5:
+			if (windowState.backgroundSelect) {
+				currentStageIndex = 4;
+				changeBackground(currentStageIndex);
+			} else if (!windowState.backgroundSelect) {
+				fireMode = (evt.keyCode - DIGIT_3);
+				console.log("weapon mode change to: " +
+				fireMode);
+			}
+			break;
 		case DIGIT_6:
 		case DIGIT_7:
 			fireMode = (evt.keyCode - DIGIT_3);
@@ -290,19 +331,6 @@ function keyPress(evt) {
 			fireMode);
 			break;
 		case KEY_M:
-			if(twoPlayerMode) {
-				orchestratorCurrentSpawnType = MISSILE_STRIKE;
-				if (orchestratorMode) {
-					enemyData.spawnType = orchestratorCurrentSpawnType;
-					enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
-					createNewWave.push(enemyData);
-					enemyData = { 
-						spawnType: null, 
-						framesUntilSpawn: null 
-					}
-				}
-				orchestratorSpawnEnemy();
-			}
 			break;
 		case KEY_H:
             if(!gameOverManager.gameOverPlaying){
@@ -328,20 +356,29 @@ function keyPress(evt) {
 			holdLeft = true;
 			break;
 		case KEY_A:
-			if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY) {
+			if (twoPlayerMode && !isPaused && !orchestratorMode) {
+				orchestratorCurrentSpawnType = MISSILE_STRIKE;
+				orchestratorSpawnEnemy();
+			} else if(controlScheme == CONTROL_SCHEME_KEYS_STATIONARY && (!twoPlayerMode || orchestratorMode)) {
 				rotateLeft = true;
-			} else {
-			holdLeft = true;
+			} else if(controlScheme == CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING && (!twoPlayerMode || orchestratorMode)) {
+				holdLeft = true;
+			}
+			break;
+		case KEY_Q:
+			if (twoPlayerMode && !isPaused && !orchestratorMode) {
+				orchestratorCurrentSpawnType = PLANE_GUNSHIP;
+				orchestratorSpawnEnemy();
 			}
 			break;
 		case KEY_RIGHT:
 			holdRight = true;
 			break;
 		case KEY_D:
-			if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY) {
+			if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY && (!twoPlayerMode || orchestratorMode)) {
 				rotateRight = true;
-			} else {
-			holdRight = true;
+			} else if (controlScheme == CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING && (!twoPlayerMode || orchestratorMode)) {
+				holdRight = true;
 			}
 			break;
 		case DIGIT_0:
@@ -367,9 +404,9 @@ function keyRelease(evt) {
 			holdLeft = false;
 			break;
 		case KEY_A:
-			if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY) {
+			if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY && (!twoPlayerMode || orchestratorMode)) {
 				rotateLeft = false;
-			} else {
+			} else if (!twoPlayerMode || orchestratorMode) {
 				holdLeft = false;
 			}
 			break;
@@ -380,9 +417,9 @@ function keyRelease(evt) {
 			holdRight = false;
 			break;
 		case KEY_D:
-			if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY) {
+			if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY && (!twoPlayerMode || orchestratorMode)) {
 				rotateRight = false;
-			} else {
+			} else if (!twoPlayerMode || orchestratorMode) {
 				holdRight = false;
 			}
 			break;

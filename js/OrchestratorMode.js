@@ -18,7 +18,7 @@ var enemyData = {
 function orchestratorFrameCount() {
     orchestratorSpawnFrameCount++;
     frameCount++;
-    if (score >= scoreToReach && !scoreReached) {
+    if (score >= scoreToReach && !scoreReached && !orchestratorMode) {
       scoreReached = true;
       excaliburWins = true;
       gameOverManager.startGameOverSequence();
@@ -38,6 +38,12 @@ function orchestratorSpawnEnemy() {
     }
     orchestratorCurrentSpawnType = 0;
     orchestratorSpawnFrameCount = 0;
+}
+
+function startOrchestratorMode() {
+  if(windowState.backgroundSelect){
+    twoPlayerMode = true;
+  }
 }
 
 function copyTextToClipboard(text) {

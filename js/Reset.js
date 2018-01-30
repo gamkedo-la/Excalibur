@@ -12,10 +12,13 @@ function resetGame() {
 	
 	windowState.mainMenu = true;
 	windowState.help = false;
+	windowState.twoPlayerHelp = false;
+	windowState.backgroundSelect = false;
 	orchestratorMode = false;
 	twoPlayerMode = false;
 	assaultMode = false;
 	carnageMode = false;
+	gameRunning = false;
 	
 	isSpawningWave = false;
 	waveCompleted = false;
@@ -34,6 +37,7 @@ function resetGame() {
 	currentEnemyIndex = 0;
 	currentStageIndex = 0;
 	currentWaveIndex = 0;
+	masterFrameDelayTick = 0;
 
 	currentWave = currentWaveIndex + 1;
 	fireMode = FIREMODE_SINGLE;
