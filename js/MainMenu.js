@@ -35,54 +35,25 @@ mainMenu = {
 		];
 		
 		this.sliders = [
-			new function(){
-				this.txt = "Music Volume";
-				this.spacing = 5;
-				
-				this.width = 200;
-				this.height = 10;
-				this.x = canvas.width/2  - 5 - this.width/2;
-				this.y = canvas.height/2  + 180 - this.height/2;
-				
-				this.handleWidth = 30;
-				this.handleHeight = 30;
-				this.handlePosition = musicVolume;
-				this.handleY = this.y - this.handleHeight/2 + this.height/2;
-				this.getHandleX = function() {
-					return this.x + this.handlePosition * (this.width - this.handleWidth);
-				};
-				
-				this.active = false;
-				this.onSlide = function(volume){
+			{
+				txt : "Music Volume",
+				handlePosition : musicVolume,
+				onSlide : function(volume){
 					setMusicVolume(volume);
 					localStorage.setItem("musicVolume", musicVolume);
-				}
+				},
 			},
-			new function(){
-				this.txt = "Effects Volume";
-				this.spacing = 5;
-				
-				this.width = 200;
-				this.height = 10;
-				this.x = canvas.width/2  - 5 - this.width/2;
-				this.y = canvas.height/2  + 240 - this.height/2;
-				
-				this.handleWidth = 30;
-				this.handleHeight = 30;
-				this.handlePosition = effectsVolume;
-				this.handleY = this.y - this.handleHeight/2 + this.height/2;
-				this.getHandleX = function() {
-					return this.x + this.handlePosition * (this.width - this.handleWidth);
-				};
-				
-				this.active = false;
-				this.onSlide = function(volume){
+			{
+				txt : "Effects Volume",
+				handlePosition : effectsVolume,
+				onSlide : function(volume){
 					setEffectsVolume(volume);
 					localStorage.setItem("effectsVolume", effectsVolume);
-				}
+				},
 			},
 		]
 		this.setButtonBounds();
+		this.setupSliders();
 	},
 	
 	// Size the buttons based on the text length and font size
@@ -100,6 +71,28 @@ mainMenu = {
 			bounds.y = prop.anchorY - (height * this.fontOverhangRatio) + ((height + prop.verticalSpacing) * i);
 			
 			this.buttons[i].bounds = bounds;
+		}
+	},
+	
+	//Slider variables live here
+	setupSliders: function(){
+		var sliderSpacing = 60;
+		
+		for(var i = 0; i < this.sliders.length; i++){
+			this.sliders[i].spacing = 5;
+			this.sliders[i].width = 200;
+			this.sliders[i].height = 10;
+			this.sliders[i].x = canvas.width/2  - 5 - this.sliders[i].width/2;
+			this.sliders[i].y = canvas.height/2  + 180 - this.sliders[i].height/2 + i * sliderSpacing;
+				
+			this.sliders[i].handleWidth = 30;
+			this.sliders[i].handleHeight = 30;
+			this.sliders[i].handleY = this.sliders[i].y - this.sliders[i].handleHeight/2 + this.sliders[i].height/2;
+			this.sliders[i].getHandleX = function() {
+				return this.x + this.handlePosition * (this.width - this.handleWidth);
+			};
+			
+			this.sliders[i].active = false;
 		}
 	},
 	
