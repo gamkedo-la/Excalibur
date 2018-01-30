@@ -456,8 +456,7 @@ function keyRelease(evt) {
 							"\n//EnemyWavesController - Terrence";
 	        	copyTextToClipboard(waveString);
 	       	} else if (windowState.mainMenu) {
-	       		carnageMode = true;
-	       		startGame();
+	       		startCarnage();
 	       	}
 	    	break;
 	}
