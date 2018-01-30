@@ -15,16 +15,19 @@ function drawScore() {
 		colorText("[C] to copy new Wave",148,130,"fuchsia","15px Arial","right");
 			
 		colorText("spawnFrameCount: " + orchestratorSpawnFrameCount,canvas.width - 10, 30,"white","20px Arial","right");
-
 		colorText("frameCount: " + frameCount, canvas.width - 10, 50, "white", "20px Arial", "right");
-		colorText("Time Elapsed: " + timeElapsedInSeconds.toFixed(1), canvas.width - 10, 70, "white", "20px Arial", "right");
-		colorText("Frame Rate: " + (frameCount / timeElapsedInSeconds).toFixed(1), canvas.width - 10, 90, "white", "20px Arial", "right");
 
-		colorText("Shots Fired: " + shotsFired, canvas.width - 10, 110, "white", "20px Arial", "right");
-		colorText("Number Of Hits: " + shotsHit, canvas.width - 10, 130, "white", "20px Arial", "right");
-		colorText("Ships Hit: " + shotsHitShips, canvas.width - 10, 150, "white", "20px Arial", "right");
-		colorText("Aliens Hit: " + shotsHitAliens, canvas.width - 10, 170, "white", "20px Arial", "right");
-		colorText("Parachutes Hit: " + shotsHitParachutes, canvas.width - 10, 190, "white", "20px Arial", "right");
+		colorText("Ships Active: " + shipList.length, canvas.width - 10, 90, "white", "20px Arial", "right");
+
+		colorText("Shots Fired: " + shotsFired, canvas.width - 10, 130, "white", "20px Arial", "right");
+		colorText("Number Of Hits: " + shotsHit, canvas.width - 10, 150, "white", "20px Arial", "right");
+		colorText("Ships Hit: " + shotsHitShips, canvas.width - 10, 170, "white", "20px Arial", "right");
+		colorText("Aliens Hit: " + shotsHitAliens, canvas.width - 10, 190, "white", "20px Arial", "right");
+		colorText("Parachutes Hit: " + shotsHitParachutes, canvas.width - 10, 210, "white", "20px Arial", "right");
+
+		colorText("Time Elapsed: " + timeElapsedInSeconds.toFixed(1), canvas.width - 10, 250, "white", "20px Arial", "right");
+		colorText("Frame Rate: " + (frameCount / timeElapsedInSeconds).toFixed(1), canvas.width - 10, 270, "white", "20px Arial", "right");
+
 	}
 
 	if (debug) {
