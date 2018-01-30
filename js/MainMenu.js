@@ -83,8 +83,8 @@ mainMenu = {
 			this.sliders[i].width = 200;
 			this.sliders[i].height = 10;
 			this.sliders[i].x = canvas.width/2  - 5 - this.sliders[i].width/2;
-			this.sliders[i].y = canvas.height/2  + 180 - this.sliders[i].height/2 + i * sliderSpacing;
-				
+			this.sliders[i].y = this.buttons[this.buttons.length - 1].bounds.y + 10 + (i + 1) * sliderSpacing;
+			
 			this.sliders[i].handleWidth = 30;
 			this.sliders[i].handleHeight = 30;
 			this.sliders[i].handleY = this.sliders[i].y - this.sliders[i].handleHeight/2 + this.sliders[i].height/2;
