@@ -207,8 +207,10 @@ function keyPress(evt) {
 			if(windowState.help){
 				startGame();
 			}
-			if(gameOverManager.gameOverPlaying) {
+			if(gameOverManager.gameOverPlaying && gameOverManager.gameOverSummaryRendered) {
 				gameOverManager.gameOverPlaying = false;
+				gameOverManager.gameOverSummaryRendered = false;
+				// TODO: put this stuff into the resetGame bit
 				resetGame();
 			}
 			break;
@@ -477,8 +479,9 @@ function onMouseDown(evt) {
 			
 			if(windowState.mainMenu) {
 				mainMenu.checkButtons();
-			} else if (gameOverManager.gameOverPlaying) {
+			} else if (gameOverManager.gameOverPlaying && gameOverManager.gameOverSummaryRendered) {
 				gameOverManager.gameOverPlaying = false;
+				gameOverManager.gameOverSummaryRendered = false;
 				resetGame();
 			}
 			break;

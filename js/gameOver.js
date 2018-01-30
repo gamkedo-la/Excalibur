@@ -3,6 +3,7 @@ function gameOverSequence() {
     const ENEMY_PADDING = 2
 
     this.gameOverPlaying = false;
+    this.gameOverSummaryRendered = false;
 
     this.gameOverImages; // array set in startGameOverSequence so after load
     var endScreenFrame = 0;
@@ -71,6 +72,8 @@ function gameOverSequence() {
             colorText("[ PRESS  ENTER  or  CLICK  MOUSE ]", canvas.width / 2, canvas.height / 4 + 380, "white", "35px arial", "center");
 
             framesSinceGameOverShown = framesShowingGameOverTextBeforeReset; 
+
+            this.gameOverSummaryRendered = true;
           }
       } else {
         var chosenEnemy = this.randomGameOverImage();
