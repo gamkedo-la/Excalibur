@@ -14,8 +14,8 @@ function mainMenuStates() {
 		drawSkyGradient(); 
 		canvasContext.drawImage(currentBackgroundFar,0,0);
 		canvasContext.drawImage(currentBackgroundMed,0,0);
-		colorText('Excalibur',TitleTextX,canvas.height/2-100 ,"white",mainMenu.titleFont,"center");
-		colorText('Space Defence System',subTitleTextX ,canvas.height/2-60,"white",mainMenu.titleFont,"center");
+		colorText('Excalibur',TitleTextX,canvas.height/2-40 ,"white",mainMenu.titleFont,"center");
+		colorText('Space Defence System',subTitleTextX ,canvas.height/2,"white",mainMenu.titleFont,"center");
 		
 		mainMenu.handleSliders();
 		mainMenu.drawButtons(opacity);
@@ -98,6 +98,7 @@ function startCarnage() {
 	}
 	windowState.mainMenu = false;
 	carnageMode = true;
+	startGame();
 }
 
 function startTwoPlayerMode() {
