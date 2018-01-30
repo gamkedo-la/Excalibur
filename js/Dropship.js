@@ -28,4 +28,5 @@ function DropshipClass() {
 
 function dropshipSpawn() {
 	shipList.push(new DropshipClass());
+	shipsTotal++;
 }
