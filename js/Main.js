@@ -108,6 +108,8 @@ function drawAll() {
 		drawLives();
 	}
 	drawExplosions();
+
+	frameCount++;
 }
 
 function moveAll() {
