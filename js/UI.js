@@ -7,7 +7,11 @@ const debugLineGap = 12;
 
 function drawScore() {
 	if (!orchestratorMode) {
-			 colorText("Score: " + numberWithCommas(score),canvas.width-20,30,"white","20px Arial","right");
+		colorText("Score: " + numberWithCommas(score),canvas.width-10,20,"white","20px Arial","right");
+		if (!carnageMode && !twoPlayerMode) {
+			drawRect(canvas.width-110,29,100,13,'black');
+			drawRect(canvas.width-110,29,waveProgress,13,'orange');
+		}
 	}
 
 	if (twoPlayerMode) {
@@ -22,9 +26,8 @@ function drawScore() {
 
 		var debugCurrentLinePos = 40;
 
-		// TODO: I don't know what this is for any more - delete if unnecessary
-		//colorText("spawnFrameCount: " + orchestratorSpawnFrameCount, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
-		//debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
+		colorText("spawnFrameCount: " + orchestratorSpawnFrameCount, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
+		debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
 
 		colorText("frameCount: " + frameCount, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
 		debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;

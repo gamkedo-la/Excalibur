@@ -9,6 +9,8 @@ var timeForText = 85; // time in frames (30 frames/second)
 var spawnFrameCount = 0;
 var currentSpawnType = 0;
 var currentEnemyIndex = 0;
+var waveProgress = 0;
+var enemiesSpawned = 0;
 
 var isSpawningWave = false;
 var waveCompleted = false;
@@ -94,6 +96,8 @@ function waveControllerStart() {
         spawnEnemy();
         spawnFrameCount = 0;
         currentEnemyIndex++;
+        enemiesSpawned++
+        waveProgress = (enemiesSpawned/wave.length) * 100;
         waveStarted = true;
         if (currentEnemyIndex >= wave.length) {
             currentEnemyIndex = 0;
@@ -175,6 +179,8 @@ function waveEnd() {
 
 function intermission() {
 	if (spawnFrameCount > timeBetweenWaves) {
+		waveProgress = 0;
+	 	enemiesSpawned = 0;
 		currentWaveIndex++;
 		currentWave++;
 		spawnFrameCount = 0;
