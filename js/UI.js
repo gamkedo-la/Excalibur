@@ -9,22 +9,22 @@ function drawScore() {
 	if (!orchestratorMode) {
 			 colorText("Score: " + numberWithCommas(score),canvas.width-20,30,"white","20px Arial","right");
 	}
-	if (twoPlayerMode && !orchestratorMode) {
+
+	if (twoPlayerMode) {
 		colorText("[1] for Paradropper",127,50,"white","15px Arial","right");
 		colorText("[Q] for Gunship",102,70,"white","15px Arial","right");
 		colorText("[A] for Missile Strike",134,90,"white","15px Arial","right");
 		colorText("[ESC] to return to Main Menu",195,110,"white","15px Arial","right");
-	} else if(orchestratorMode) {	
-		colorText("[1] for Paradropper",127,50,"white","15px Arial","right");
-		colorText("[2] for Gunship",100,70,"white","15px Arial","right");
-		colorText("[3] for Missile Strike",133,90,"white","15px Arial","right");
-		colorText("[ESC] to return to Main Menu",195,110,"white","15px Arial","right");
-		colorText("[C] to copy new Wave",148,130,"fuchsia","15px Arial","right");
+	}
 
-		var debugCurrentLinePos = debugLineHeight;
 
-		colorText("spawnFrameCount: " + orchestratorSpawnFrameCount, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
-		debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
+	if (debug) {
+
+		var debugCurrentLinePos = 40;
+
+		// TODO: I don't know what this is for any more - delete if unnecessary
+		//colorText("spawnFrameCount: " + orchestratorSpawnFrameCount, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
+		//debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
 
 		colorText("frameCount: " + frameCount, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
 		debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
@@ -43,6 +43,7 @@ function drawScore() {
 		colorText("Dropships Total: " + dropShipsTotal, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
 		debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
 
+		// extra line gap
 		debugCurrentLinePos = debugCurrentLinePos + debugLineGap;
 
 		colorText("Shots Fired: " + shotsFired, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
@@ -60,6 +61,7 @@ function drawScore() {
 		colorText("Parachutes Hit: " + shotsHitParachutes, canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
 		debugCurrentLinePos = debugCurrentLinePos + debugLineHeight + debugLineHeightPadding;
 
+		// extra line gap
 		debugCurrentLinePos = debugCurrentLinePos + debugLineGap;
 
 		colorText("Time Elapsed: " + timeElapsedInSeconds.toFixed(1), canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
@@ -67,19 +69,6 @@ function drawScore() {
 
 		colorText("Frame Rate: " + (frameCount / timeElapsedInSeconds).toFixed(1), canvas.width - debugRightMargin, debugCurrentLinePos + debugLineHeight, debugFontColor, debugFont, "right");
 
-	}
-
-	if (debug) {
-			
-			var lineHeight = 15;
-			var drawTextOutY = 100;
-			colorText("hitpoints: " + playerHP,100,drawTextOutY,"cyan","15px Arial");
-			drawTextOutY+=lineHeight;
-			colorText("shots: " + shotList.length,100,drawTextOutY,"cyan","15px Arial");
-			drawTextOutY+=lineHeight;
-			colorText("ships: " + shipList.length,100,drawTextOutY,"cyan","15px Arial");
-			drawTextOutY+=lineHeight;
-			colorText("aliens: " + alienList.length,100,drawTextOutY,"cyan","15px Arial");
 
 	}
 }

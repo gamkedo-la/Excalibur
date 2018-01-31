@@ -34,6 +34,7 @@ const KEY_T = 84;
 //for debugging
 const KEY_K = 75;
 const KEY_BACKSPACE = 8;
+const KEY_TILDE = 192; // TODO: is the canon tilde or backtick
 
 var holdFire, holdLeft, holdRight = false;
 var rotateLeft, rotateRight = false;
@@ -384,6 +385,9 @@ function keyPress(evt) {
 			}
 			break;
 		case DIGIT_0:
+			debug = !debug;
+			break;
+		case KEY_TILDE:
 			debug = !debug;
 			break;
 		case DIGIT_9:
