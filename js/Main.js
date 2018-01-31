@@ -172,5 +172,8 @@ function startGame() {
 	shotsHitShips = 0;
 	shotsHitAliens = 0;
 	shotsHitParachutes = 0;
+	shipsTotal = 0;
+	gunShipsTotal = 0;
+	dropShipsTotal = 0;
 	gameRunning = true;
 }
