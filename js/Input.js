@@ -486,6 +486,8 @@ function onMouseDown(evt) {
 				gameOverManager.gameOverPlaying = false;
 				gameOverManager.gameOverSummaryRendered = false;
 				resetGame();
+			} else if (windowState.help) {
+				resetGame();
 			}
 			break;
 	}

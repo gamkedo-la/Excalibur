@@ -47,6 +47,7 @@ function mainMenuStates() {
 		canvasContext.drawImage(maxHealthPowerUpPic, 590, 227);
 		colorText("3) [P] to pause and resume game",250,270 ,"white","15px Tahoma","left",opacity);
 		colorText("4) Tab to skip levels",250,300 ,"white","15px Tahoma","left",opacity); // TODO: remove for release
+		colorText('Devs: [`] (backtick/tilde) for debug info', canvas.width/2, 400, "white", "15px Tahoma", "center",opacity); // TODO: remove for release
 		colorText('Press [Enter] to Start game',canvas.width/2 , 500,"white","30px Tahoma","center",opacity);
 	}
 	else if (windowState.twoPlayerHelp) {
