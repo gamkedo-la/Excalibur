@@ -12,6 +12,7 @@ function gameOverSequence() {
     var artHeightTopNow = 0; // top y of next row to draw
     var framesSinceGameOverShown = -1;
 
+    var highScore = 0;
 
     this.randomGameOverImage = function() {
       var randPicIndex = Math.floor(Math.random()*this.gameOverImages.length);
@@ -56,10 +57,12 @@ function gameOverSequence() {
           } else if (gameRunning) {
             gameOverHeadline = "GAME OVER!!!"
           }
+
           if(framesSinceGameOverShown<0) {
             drawRect(50, 50, canvas.width - 100, canvas.height - 100, "rgba(50, 50, 50, 0.8)")
 
             colorText(gameOverHeadline, canvas.width / 2, canvas.height / 4 - 60, "red", "50px Sans-serif", "center");
+
             colorText("Final Score: " + numberWithCommas(score), canvas.width / 2, canvas.height / 4 + 10, "white", "45px Sans-serif", "center");
 
             colorText("Shots Fired: " + shotsFired, canvas.width / 2, canvas.height / 4 + 80, "white", "30px Sans-serif", "center");
@@ -68,6 +71,19 @@ function gameOverSequence() {
 
             colorText("Ships Destroyed: " + shotsHitShips, canvas.width / 2, canvas.height / 4 + 220, "white", "30px Sans-serif", "center");
             colorText("Aliens Killed (Parachute): " + (shotsHitAliens + shotsHitParachutes) + " (" + shotsHitParachutes + ")", canvas.width / 2, canvas.height / 4 + 260, "white", "30px Sans-serif", "center");
+
+            if (localStorage.getItem("highScore") === "null") {
+              localStorage.setItem("highScore", 0);
+            }
+
+            highScore = parseInt(localStorage.getItem("highScore"));
+
+            if (score > highScore) {
+              localStorage.setItem("highScore", score);
+              highScore = score;
+            }
+
+            colorText("High Score: " + highScore, canvas.width / 2, canvas.height / 4 + 320, "white", "30px Sans-serif", "center");
 
             colorText("[ PRESS  ENTER  or  CLICK  MOUSE ]", canvas.width / 2, canvas.height / 4 + 380, "white", "35px arial", "center");
 
