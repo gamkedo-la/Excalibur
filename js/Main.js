@@ -99,6 +99,7 @@ function drawAll() {
 	drawAndRemoveAliens();
 	drawAndRemoveShots();
 	drawPlayer();
+	drawAndRemoveParticles();
 	drawAndRemovePowerUps();
 	drawScore();
 	if (carnageMode || orchestratorMode) {
@@ -114,6 +115,7 @@ function moveAll() {
 	moveMissiles();
 	moveAliens();
 	moveShots();
+	moveParticles();
 	movePowerUps();
 	updateExplosions();
 }

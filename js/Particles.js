@@ -2,24 +2,21 @@ var particleList = [];
 
 function ParticleClass(x, y, image) {
 	this.height = this.width = 3;
-
-	this.posOrNeg = 0;
-	this.sign = function() {
-		this.signCheck = Math.random();
-		this.signCheck < 0.5 ? this.posOrNeg = -1; : this.posOrNeg = 1;
-	}
-
-	this.x = (x + Math.random() * (posOrNeg)9);
+	this.pixelOffset = 5;
+	this.posOrNeg = Math.random() < 0.5 ? -1 : 1;
+	this.x = (x + (Math.random() * (this.posOrNeg*this.pixelOffset)));
 	this.y = y;
 	this.moveTimer = 0;
 	this.removeMe = false;
 	this.color = image;
 
-	const FLOATING_FACTOR = 0.01;
+	const FLOATING_FACTOR = 0.09;
 
 	this.draw = function() {
-		drawImage(this.color, image.width/2, image.height/2, 1,1, 
-				  	  this.x,this.y, this.width, this.height);
+		canvasContext.drawImage(
+			this.color, 
+			Math.floor(image.width/2+1), Math.floor((image.height/2)-2), 1,1, 
+			this.x,this.y, this.width, this.height);
 	}
 
 	this.move = function() {
@@ -48,6 +45,6 @@ function moveParticles() {
 	}	
 }
 
-function missileSpawn() {
-	particleList.push(new ParticleClass());
+function particleSpawn(x, y, image) {
+	particleList.push(new ParticleClass(x, y, image));
 }

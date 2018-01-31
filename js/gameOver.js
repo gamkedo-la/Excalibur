@@ -53,7 +53,7 @@ function gameOverSequence() {
             gameOverHeadline = "ORCHESTRATOR WINS!!!"
           } else if (excaliburWins) {
             gameOverHeadline = "EXCALIBUR WINS!!!"
-          } else if (waveStarted) {
+          } else if (gameRunning) {
             gameOverHeadline = "GAME OVER!!!"
           }
           if(framesSinceGameOverShown<0) {

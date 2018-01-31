@@ -57,6 +57,7 @@ function powerUp(fromShip) {
                 powerUpWidth,
                 powerUpHeight
             );
+            particleSpawn(this.position.x, this.position.y, this.properties.image);
         }
 
         // The power up has been picked up, so draw any affects if it has any
