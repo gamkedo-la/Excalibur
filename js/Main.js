@@ -110,6 +110,9 @@ function drawAll() {
 	drawExplosions();
 
 	frameCount++;
+	
+	timeElapsedInSeconds = timeElapsedInSeconds + (new Date().getTime() - timeStartedActive) / 1000;
+    timeStartedActive = new Date().getTime();
 }
 
 function moveAll() {
