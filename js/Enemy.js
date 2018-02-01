@@ -51,7 +51,7 @@ function EnemyClass(width, height, speed, angle, health) {
 	
 	this.checkLineCollision = function(lineSegment, projectilePos) {
 		if(this.health <= 0 || this.removeMe) {
-			return;
+			return false;
 		}
 		
 		if(isColliding_AABB_LineSeg(this.colliderAABB, lineSegment)) {
