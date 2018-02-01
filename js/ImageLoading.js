@@ -27,6 +27,13 @@ var starryBackgroundFarPic = document.createElement("img");
 var starryBackgroundMidPic = document.createElement("img");
 var starryBackgroundNearPic = document.createElement("img");
 
+var blackHoleBaseBG = document.createElement("img");
+var blackHoleRotatingBG = document.createElement("img");
+var blackHoleDebris1 = document.createElement("img");
+var blackHoleDebris2 = document.createElement("img");
+var blackHoleDebris3 = document.createElement("img");
+var blackHoleDebris4 = document.createElement("img");
+
 var shieldPowerUpPic = document.createElement("img");
 var healthPowerUpPic = document.createElement("img");
 var maxHealthPowerUpPic = document.createElement("img");
@@ -37,6 +44,8 @@ var tankCannonPic = document.createElement("img");
 
 var heartPic = document.createElement("img");
 var heartlessPic = document.createElement("img");
+
+var emptyImageElement = document.createElement("img");
 
 // used for gameOver.js sequence:
 var singleAlienGameOver = document.createElement("img");
@@ -64,36 +73,58 @@ function beginLoadingImage(imgVar, fileName) {
 
 function loadImages() {
     var imageList = [
+
+        // enemies
         { varName: alienPic, theFile: "alien-anim.png" },
         { varName: devilAlienPic, theFile: "devilAlien-anim.png" },
         { varName: dropshipPic, theFile: "spaceship-anim.png" },
         { varName: gunshipPic, theFile: "gunship.png" },
         { varName: missilePic, theFile: "missile.png" },
+
+        // backgrounds
         { varName: backgroundTitlePic, theFile: "backgroundTitle.png" },
+
         { varName: backgroundFarPic, theFile: "SpaceBackground.png" },
         { varName: backgroundMedPic, theFile: "SpaceMidground.png" },
         { varName: backgroundNearPic, theFile: "SpaceForeground.png" },
+
 		{ varName: starryBackgroundFarPic, theFile: "StarryBG.png" },
 		{ varName: starryBackgroundMidPic, theFile: "StarryBGMid.png" },
 		{ varName: starryBackgroundNearPic, theFile: "StarryBGNear.png" },
+
         { varName: fantasyFarPic, theFile: "FantasyBackground.png" },
         { varName: fantasyMedPic, theFile: "FantasyMidground.png" },
         { varName: fantasyNearPic, theFile: "FantasyForeground.png" },
+
         { varName: computerBackgroundFarPic, theFile: "computerBackground.png" },
         { varName: computerBackgroundNearPic, theFile: "computerForeground.png" },
+
         { varName: beachBackgroundFarPic, theFile: "BeachBackground.png" },
         { varName: beachBackgroundMedPic, theFile: "BeachMidground.png" },
         { varName: beachBackgroundNearPic, theFile: "BeachForeground.png" },
+
+        { varName: blackHoleBaseBG, theFile: "BlackholeBaseBG.png"},
+        { varName: blackHoleRotatingBG, theFile: "BlackholeRotatingBG.png"},
+        { varName: blackHoleDebris1, theFile: "BlackholeDebris1.png"},
+        { varName: blackHoleDebris2, theFile: "BlackholeDebris2.png"},
+        { varName: blackHoleDebris3, theFile: "BlackholeDebris3.png"},
+        { varName: blackHoleDebris4, theFile: "BlackholeDebris4.png"},
+
+        // power ups
         { varName: shieldPowerUpPic, theFile: "shieldPowerUp.png" },
         { varName: healthPowerUpPic, theFile: "healthPowerUp.png" },
         { varName: maxHealthPowerUpPic, theFile: "maxHealthPowerUp.png" },
         { varName: firemodePowerUpPic, theFile: "firemodePowerUp.png" },
         { varName: waveShotPic, theFile: "waveShot.png" },
+
+        // player related
         { varName: laserPic, theFile: "LaserVisual.png" },
         //{ varName: laserPicEnding, theFile: "LaserVisualEnding.png" },
         { varName: shotPic, theFile: "ShotVisual.png" },
         { varName: tankBodyPic, theFile: "tank-body.png" },
         { varName: tankCannonPic, theFile: "tank-cannon.png" },
+
+        // UI
         { varName: singleAlienGameOver, theFile: "alien.png" },
         { varName: tripleAliensGameOver, theFile: "alien-anim.png" },
         { varName: timeOfDayGradient, theFile: "time-of-day-gradient.png" },

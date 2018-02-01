@@ -328,6 +328,15 @@ function keyPress(evt) {
 			}
 			break;
 		case DIGIT_6:
+			// if (windowState.backgroundSelect) {
+			// 	currentStageIndex = 5;
+			// 	changeBackground(currentStageIndex);
+			// } else if (!windowState.backgroundSelect) {
+			// 	fireMode = (evt.keyCode - DIGIT_3);
+			// 	console.log("weapon mode change to: " +
+			// 	fireMode);
+			// }
+			// break;
 		case DIGIT_7:
 			fireMode = (evt.keyCode - DIGIT_3);
 			console.log("weapon mode change to: " +

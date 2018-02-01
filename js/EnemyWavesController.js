@@ -24,6 +24,7 @@ const COMPUTER_BACKGROUND = 1;
 const BEACH_BACKGROUND = 2;
 const FANTASY_BACKGROUND = 3;
 const STARS_BACKGROUND = 4;
+const BLACK_HOLE_BACKGROUND = 5;
 
 var currentBackground = ZEBES_BACKGROUND;
 
@@ -32,6 +33,7 @@ var stage2 = [stage2WaveNumber1]
 var stage3 = [stage3WaveNumber1]
 var stage4 = [stage1WaveNumber3]
 var stage5 = [stage1WaveNumber2]
+// var stage6 = [stage1WaveNumber2]
 var allStages = [stage1,stage2, stage3, stage4, stage5];
 
 var isUpgradeTime = false;
@@ -229,6 +231,13 @@ function changeBackground(stage) {
 				currentBackgroundFar = starryBackgroundFarPic;
 				currentBackgroundMed = starryBackgroundMidPic;
 				currentBackgroundNear = starryBackgroundNearPic;
+        		break;
+        	case BLACK_HOLE_BACKGROUND:
+				currentBackgroundMusic.loopSong(computerBackgroundMusic);
+				currentBackgroundFar = blackHoleBaseBG;
+				currentBackgroundMed = blackHoleRotatingBG;
+				currentBackgroundNear = emptyImageElement;
+				currentBackgroundObjects = []
         		break;
 		}
 	}
