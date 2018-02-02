@@ -8,6 +8,8 @@ function initializeEnemyClasses() {
 	GunshipClass.prototype.constructor = GunshipClass;
 	DropshipClass.prototype = new EnemyShipClass();
 	DropshipClass.prototype.constructor = DropshipClass;
+	ProtectionShipClass.prototype = new EnemyShipClass();
+	ProtectionShipClass.prototype.constructor = ProtectionShipClass;
 }
 
 function EnemyClass(width, height, speed, angle, health) {

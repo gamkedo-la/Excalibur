@@ -251,5 +251,7 @@ function spawnEnemy() {
         gunshipSpawn();
     } else if (currentSpawnType == MISSILE_STRIKE) {
         missileSpawn();
+    } else if (currentSpawnType == PLANE_PROTECT) {
+        protectionShipSpawn();
     }
 }

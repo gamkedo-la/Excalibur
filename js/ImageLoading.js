@@ -3,6 +3,7 @@ var devilAlienPic = document.createElement("img");
 
 var dropshipPic = document.createElement("img");
 var gunshipPic = document.createElement("img");
+var protectionShipPic = document.createElement("img");
 
 var missilePic = document.createElement("img");
 
@@ -78,6 +79,7 @@ function loadImages() {
         { varName: alienPic, theFile: "alien-anim.png" },
         { varName: devilAlienPic, theFile: "devilAlien-anim.png" },
         { varName: dropshipPic, theFile: "spaceship-anim.png" },
+        { varName: protectionShipPic, theFile: "protectionship-anim.png" },
         { varName: gunshipPic, theFile: "gunship.png" },
         { varName: missilePic, theFile: "missile.png" },
 

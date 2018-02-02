@@ -1,13 +1,14 @@
 const PLANE_PARADROPPER = 1;
 const PLANE_GUNSHIP = 2;
 const MISSILE_STRIKE = 3;
+const PLANE_PROTECT = 4;
 
 // STAGE 1 \\
 
 var stage1WaveNumber1 = [
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 30 },
-    { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 5 },
-    { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 5 },
+    { spawnType: PLANE_PROTECT, framesUntilSpawn: 5 },
+    { spawnType: PLANE_PROTECT, framesUntilSpawn: 5 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 5 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 30 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 5 },

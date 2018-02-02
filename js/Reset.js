@@ -37,6 +37,8 @@ function resetGame() {
 	currentEnemyIndex = 0;
 	currentStageIndex = 0;
 	currentWaveIndex = 0;
+	waveProgress = 0;
+	enemiesSpawned = 0;
 	masterFrameDelayTick = 0;
 
 	currentWave = currentWaveIndex + 1;
