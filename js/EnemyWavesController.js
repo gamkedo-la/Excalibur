@@ -3,7 +3,7 @@ var currentWaveIndex = 0;
 var currentWave = currentWaveIndex + 1;
 var currentStageIndex = 0; 
 var currentStage = currentStageIndex + 1;
-var stageNames = ["Planet Zebes", "Inside Super Computer", "Crystalline Coast", "Fantasy Zone", "Starfield"];
+var stageNames = ["Planet Zebes", "Inside Super Computer", "Crystalline Coast", "Fantasy Zone", "Starfield", "Black Hole"];
 var timeBetweenWaves = 25; // time in frames (30 frames/second)
 var timeForText = 85; // time in frames (30 frames/second)
 var spawnFrameCount = 0;
@@ -34,7 +34,7 @@ var stage3 = [stage3WaveNumber1]
 var stage4 = [stage1WaveNumber3]
 var stage5 = [stage1WaveNumber2]
 var stage6 = [stage1WaveNumber2]
-var allStages = [stage1,stage2, stage3, stage4, stage5];
+var allStages = [stage1,stage2, stage3, stage4, stage5, stage6];
 
 var isUpgradeTime = false;
 

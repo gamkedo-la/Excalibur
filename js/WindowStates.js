@@ -81,7 +81,7 @@ function mainMenuStates() {
 		colorText("[3] for Crystalline Coast",30,260 ,"white","15px Tahoma","left",opacity);
 		colorText("[4] for Fantasy Zone",30,290 ,"white","15px Tahoma","left",opacity);
 		colorText("[5] for Starfield",30,320 ,"white","15px Tahoma","left",opacity);
-		// colorText("[6] for Black Hole",30,350 ,"white","15px Tahoma","left",opacity);
+		colorText("[6] for Black Hole",30,350 ,"white","15px Tahoma","left",opacity);
 		colorText('Press [T] to Duel!',canvas.width/2 , 500,"white","30px Tahoma","center",opacity);
 	}
 }

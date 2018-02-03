@@ -150,42 +150,6 @@ function drawSkyGradient() {
         0, 0, 800, 600); // dest x,y,w,d (scale one pixel worth of the gradient to fill entire screen)
 }
 
-// function rotateBlackHole() {
-//     const TURN_RATE = 0.004;
-//     blackHoleAngle += TURN_RATE;
-
-//     canvasContext.save();
-//     canvasContext.translate(canvas.width / 2, canvas.height / 2);
-//     canvasContext.rotate(blackHoleAngle + Math.PI / 2);
-//     canvasContext.drawImage(blackHoleRotatingBG, -canvas.width / 2, -canvas.height / 2);
-//     canvasContext.restore();
-// }
-
-// const debris = {
-// 	ship: blackHoleDebris1,
-// 	bigRock: blackHoleDebris2,
-// 	mediumRock: blackHoleDebris3,
-// 	smallRock: blackHoleDebris4
-// };
-// const debrisTypes = Object.keys(debris);
-// const MAX_DEBRIS_ON_SCREEN = 8;
-
-// function createDebrisOffScreen() {
-// 	var debrisList = [];
-// 	while(debrisList.length > MAX_DEBRIS_ON_SCREEN) {
-
-// 	}
-// }
-
-// function moveDebrisTowardBlackHole() {
-
-// }
-
-// function drawDebris() {
-
-// }
-
-// var blackHoleAngle = 0;
 function drawScrollingBackground() {
 
     drawSkyGradient();
@@ -195,13 +159,14 @@ function drawScrollingBackground() {
     var backgroundNearOffset = 4.6;
 
     // don't move the background for now if we're dealing with the black hole
-    // if (currentBackground == BLACK_HOLE_BACKGROUND) {
-    //     backgroundFarOffset = 0;
-    //     backgroundMedOffset = 0;
-    //     backgroundNearOffset = 0;
-    // } else if (blackHoleAngle > 0) {
-    //     blackHoleAngle = 0;
-    // }
+    if (currentBackground == BLACK_HOLE_BACKGROUND) {
+        backgroundFarOffset = 0;
+        backgroundMedOffset = 0;
+        backgroundNearOffset = 0;
+    } else if (blackHoleIsActive) {
+    	blackHoleIsActive = false;
+		debrisList = []
+    }
 
     // background terrain
     wrappedDraw(currentBackgroundFar, masterFrameDelayTick * backgroundFarOffset);
@@ -210,12 +175,9 @@ function drawScrollingBackground() {
 
     // checked again so that the other items for 
     // the black hole are drawn after the background
-    // if (currentBackground == BLACK_HOLE_BACKGROUND) {
-    //     rotateBlackHole();
-    //     createDebrisOffScreen();
-    //     moveDebrisTowardBlackHole();
-    //     drawDebris();
-    // }
+    if (currentBackground == BLACK_HOLE_BACKGROUND) {
+    	updateBlackHole();
+    }
 }
 
 function startGame() {
