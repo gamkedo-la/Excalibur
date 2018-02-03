@@ -6,13 +6,13 @@ const PLANE_PROTECT = 4;
 // STAGE 1 \\
 
 var stage1WaveNumber1 = [
-    { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 30 },
+    { spawnType: PLANE_PROTECT, framesUntilSpawn: 30 },
     { spawnType: PLANE_PROTECT, framesUntilSpawn: 5 },
     { spawnType: PLANE_PROTECT, framesUntilSpawn: 5 },
-    { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 5 },
-    { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 30 },
-    { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 5 },
-    { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 10 }
+    { spawnType: PLANE_PROTECT, framesUntilSpawn: 5 },
+    { spawnType: PLANE_PROTECT, framesUntilSpawn: 30 },
+    { spawnType: PLANE_PROTECT, framesUntilSpawn: 5 },
+    { spawnType: PLANE_PROTECT, framesUntilSpawn: 10 }
 ];
 
 var stage1WaveNumber2 = [

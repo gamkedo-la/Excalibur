@@ -16,6 +16,8 @@ function initializeShotClasses() {
 	
 	EnemyShotClass.prototype = new ShotClass();
 	EnemyShotClass.prototype.constructor = EnemyShotClass;
+	EnemyLaserShotClass.prototype = new ShotClass();
+	EnemyLaserShotClass.prototype.constructor = EnemyLaserShotClass;
 }
 
 function ShotClass(x, y, angle, speed) {
