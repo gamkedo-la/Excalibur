@@ -72,12 +72,13 @@ function gameOverSequence() {
             colorText("Ships Destroyed: " + shotsHitShips, canvas.width / 2, canvas.height / 4 + 220, "white", "30px Sans-serif", "center");
             colorText("Aliens Killed (Parachute): " + (shotsHitAliens + shotsHitParachutes) + " (" + shotsHitParachutes + ")", canvas.width / 2, canvas.height / 4 + 260, "white", "30px Sans-serif", "center");
 
-            if (localStorage.getItem("highScore") === "null") {
+			const oldHighScore = localStorage.getItem("highScore");
+            if ((oldHighScore === "null") || (oldHighScore == null)) {
               localStorage.setItem("highScore", 0);
             }
 
             highScore = parseInt(localStorage.getItem("highScore"));
-
+            
             if (score > highScore) {
               localStorage.setItem("highScore", score);
               highScore = score;
