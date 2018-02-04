@@ -356,9 +356,16 @@ function keyPress(evt) {
 			break;
 		case KEY_TAB:
 			if (!assaultMode) {
-				currentWaveIndex = (allStages[currentStageIndex].length) - 1;
+				console.log("level skipping");
+				if(allStages[currentStageIndex]) {
+					currentWaveIndex = (allStages[currentStageIndex].length) - 1;
+				}
 				enableIntermission = true; 
-				intermission()
+				spawnFrameCount = timeForText
+				waveEnd();
+				shipList = [];
+				wave = [];
+				//intermission(true);
 			}
 			break;
 		case KEY_SPACE:

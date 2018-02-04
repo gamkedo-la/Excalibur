@@ -179,8 +179,8 @@ function waveEnd() {
 	}
 }
 
-function intermission() {
-	if (spawnFrameCount > timeBetweenWaves) {
+function intermission(forceSkip) {
+	if (spawnFrameCount > timeBetweenWaves || forceSkip == true) {
 		waveProgress = 0;
 	 	enemiesSpawned = 0;
 		currentWaveIndex++;
