@@ -164,8 +164,8 @@ function drawScrollingBackground() {
         backgroundMedOffset = 0;
         backgroundNearOffset = 0;
     } else if (blackHoleIsActive) {
-    	blackHoleIsActive = false;
-		debrisList = []
+        blackHoleIsActive = false;
+        debrisList = [];
     }
 
     // background terrain
@@ -176,7 +176,7 @@ function drawScrollingBackground() {
     // checked again so that the other items for 
     // the black hole are drawn after the background
     if (currentBackground == BLACK_HOLE_BACKGROUND) {
-    	updateBlackHole();
+        updateBlackHole();
     }
 }
 

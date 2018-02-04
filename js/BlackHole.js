@@ -18,7 +18,7 @@ const debris = {
 };
 const debrisTypes = Object.keys(debris);
 const MAX_DEBRIS_ON_SCREEN = 7;
-const BLACK_HOLE_RADIUS = 80;
+const BLACK_HOLE_RADIUS = 100;
 
 var debrisList = [];
 var blackHoleAngle = 0;
@@ -121,14 +121,7 @@ function moveDebrisTowardBlackHole() {
             position.y += velocityY;
         }
 
-        // canvasContext.beginPath();
-        // canvasContext.fillStyle = 'yellow'
-        // canvasContext.arc(targetX, targetY, BLACK_HOLE_RADIUS, 0, 2 * Math.PI);
-        // canvasContext.stroke();
-
         if (distanceFromTarget <= BLACK_HOLE_RADIUS) {
-            // console.log("REMOVING", JSON.stringify(debrisList[i], null, 4))
-            // console.log("DISTANCE FROM TARGET", distanceFromTarget)
             debrisList[i].remove = true;
         }
     }
@@ -139,15 +132,18 @@ function drawAndRemoveDebris() {
 
     for (var i = 0; i < debrisList.length; i++) {
         var image = debrisList[i].image;
-        var x = debrisList[i].position.x - image.width / 2;
-        var y = debrisList[i].position.y - image.height / 2;
-        canvasContext.drawImage(image, x, y, image.width * imageSize, image.height * imageSize);
+        var width = image.width * imageSize;
+        var height = image.height * imageSize;
+        var x = debrisList[i].position.x - width/2;
+        var y = debrisList[i].position.y - height/2;
+
+        canvasContext.drawImage(image, x, y, width, height);
     }
 
-    var i = debrisList.length;
-    while (i--) {
-        if (debrisList[i].remove) {
-            debrisList.splice(i, 1);
+    var debrisToCheck = debrisList.length;
+    while (debrisToCheck--) {
+        if (debrisList[debrisToCheck].remove) {
+            debrisList.splice(debrisToCheck, 1);
         }
     }
 }
