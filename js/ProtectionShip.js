@@ -34,7 +34,7 @@ function ProtectionShipClass() {
 				                                  this.collectorPosition.y + this.collectorHeight/2, 
 				                                  0, 1, this.movingLeft);
 			shotList.push(newShot);
-			console.log("enemy laser fired!");
+			// console.log("enemy laser fired!");
 			this.collectorEnergy = 0;
 		}
 	};
