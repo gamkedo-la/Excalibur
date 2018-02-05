@@ -494,7 +494,6 @@ function onMouseDown(evt) {
 	evt.preventDefault();
 	switch (evt.button) { //switch in case more mouse buttons are added
 		case 0:
-			holdFire=true;
 			
 			if(windowState.mainMenu) {
 				mainMenu.checkButtons();
