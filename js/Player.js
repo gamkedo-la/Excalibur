@@ -44,6 +44,7 @@ function resetPlayer() {
   cannonReloadFrames = 5;
   cannonWaveReloadFrames = 17;
   resetPlayerUpgrades();
+
 }
 
 function drawPlayer() {
