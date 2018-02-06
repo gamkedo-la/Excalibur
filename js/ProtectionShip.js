@@ -28,8 +28,8 @@ function ProtectionShipClass() {
 			if (this.laser != null)
 				this.laser.removeMe = true;
 			this.laser = new EnemyLaserShotClass(this.collectorPosition.x - this.collectorWidth/4, 
-				                                  this.collectorPosition.y + this.collectorHeight/6, 
-				                                  0, this.speed, this.movingLeft);
+				                                 this.collectorPosition.y + this.collectorHeight/6, 
+				                                 0, this.speed, this.movingLeft);
 			shotList.push(this.laser);
 			// console.log("enemy laser fired!");
 			this.collectorEnergy = 0;
