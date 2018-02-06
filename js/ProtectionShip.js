@@ -18,6 +18,8 @@ function ProtectionShipClass() {
 	this.collectorEnergy = 0;
 	this.collectorCharged = 3;
 
+	this.laser = null;
+
 	this.parentDraw = this.draw;
 	this.draw = function() {
 		if (this.health > 0) {
@@ -30,10 +32,12 @@ function ProtectionShipClass() {
 		this.parentDraw();
 
 		if (this.collectorEnergy >= this.collectorCharged && this.health > 0) {
-			var newShot = new EnemyLaserShotClass(this.collectorPosition.x - this.collectorWidth/4, 
+			if (this.laser != null)
+				this.laser.removeMe = true;
+			this.laser = new EnemyLaserShotClass(this.collectorPosition.x - this.collectorWidth/4, 
 				                                  this.collectorPosition.y + this.collectorHeight/2, 
 				                                  0, 1, this.movingLeft);
-			shotList.push(newShot);
+			shotList.push(this.laser);
 			// console.log("enemy laser fired!");
 			this.collectorEnergy = 0;
 		}
