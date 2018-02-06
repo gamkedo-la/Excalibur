@@ -156,6 +156,13 @@ function tintScreen(){
 	timeStartedActive = new Date().getTime(); // TODO: make a centralised variable reset
 }
 
+function bombFlash() {
+        canvasContext.fillStyle = "white";
+        canvasContext.globalAlpha = 0.2;
+        canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+        canvasContext.globalAlpha = 1.0; 
+}
+
 function showPausedScreen() {
     tintScreen();
     colorText("- P A U S E D -", canvas.width/2, canvas.height/2, "white", "40px Arial", "center");

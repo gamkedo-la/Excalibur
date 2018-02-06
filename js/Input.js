@@ -444,7 +444,10 @@ function keyRelease(evt) {
 			}
 			break;
 		case KEY_B:
+            if(!gameOverManager.gameOverPlaying && !windowState.mainMenu && !windowState.help && !isPaused && !isUpgradeTime){
 			smartBombActive = true;
+            bombFlash();
+                }
 			break;
 		case KEY_RIGHT:
 			holdRight = false;
