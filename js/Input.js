@@ -57,6 +57,7 @@ var mouseY = 0;
 var mouseX = 0;
 var mouseCannonY, mouseCannonX;
 var mouseButtonHeld = false;
+const MOUSE_FIRE_BUTTON = 0;
 
 function initializeInput() {
 	document.addEventListener("keydown",keyPress);
@@ -506,7 +507,7 @@ function onMouseDown(evt) {
 		return;
 	}
 	switch (evt.button) { //switch in case more mouse buttons are added
-		case 0:
+		case MOUSE_FIRE_BUTTON:
 			if ((spawnFrameCount > 0) || (carnageStarted)) {
 				holdFire=true;
 			}
@@ -526,7 +527,7 @@ function onMouseDown(evt) {
 
 function onMouseUp(evt) {
 	switch (evt.button) {
-		case 0:
+		case MOUSE_FIRE_BUTTON:
 			holdFire=false;
 			
 			if(windowState.mainMenu) {
@@ -537,13 +538,13 @@ function onMouseUp(evt) {
 }
 
 function mouseButtonPressed(evt) {
-	if (evt.button == 0) {
+	if (evt.button == MOUSE_FIRE_BUTTON) {
 		mouseButtonHeld = true;
 	}
 }
 
 function mouseButtonReleased(evt) {
-	if (evt.button == 0) {
+	if (evt.button == MOUSE_FIRE_BUTTON) {
 		mouseButtonHeld = false;
 	}
 }
