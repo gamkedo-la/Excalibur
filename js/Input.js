@@ -56,10 +56,13 @@ var controlScheme = CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING;
 var mouseY = 0;
 var mouseX = 0;
 var mouseCannonY, mouseCannonX;
+var mouseButtonHeld = false;
 
 function initializeInput() {
 	document.addEventListener("keydown",keyPress);
 	document.addEventListener("keyup",keyRelease);
+	document.addEventListener("mousedown", mouseButtonPressed);
+	document.addEventListener("mouseup", mouseButtonReleased);
 
 	switch(controlScheme) {
 		case CONTROL_SCHEME_KEYS_STATIONARY:
@@ -70,6 +73,7 @@ function initializeInput() {
 			canvas.addEventListener('mousemove', calculateMousePos);
 			canvas.addEventListener('mousedown', onMouseDown);
 			canvas.addEventListener('mouseup', onMouseUp);
+			canvas.addEventListener('mouseenter', onMouseDown);
 			canvas.addEventListener ("mouseout", onMouseUp);
 			break;
 	}
@@ -498,6 +502,9 @@ function calculateMousePos(evt) {
 
 function onMouseDown(evt) {
 	evt.preventDefault();
+	if (evt.type == "mouseenter" && !mouseButtonHeld) {
+		return;
+	}
 	switch (evt.button) { //switch in case more mouse buttons are added
 		case 0:
 			if ((spawnFrameCount > 0) || (carnageStarted)) {
@@ -526,6 +533,18 @@ function onMouseUp(evt) {
 				mainMenu.releaseSliders();
 			}
 			break;
+	}
+}
+
+function mouseButtonPressed(evt) {
+	if (evt.button == 0) {
+		mouseButtonHeld = true;
+	}
+}
+
+function mouseButtonReleased(evt) {
+	if (evt.button == 0) {
+		mouseButtonHeld = false;
 	}
 }
 
