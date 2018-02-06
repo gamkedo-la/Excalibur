@@ -1,6 +1,6 @@
 function ProtectionShipClass() {
 	//EnemyShipClass(width, height, speed, angle, health)
-	EnemyShipClass.call(this, 100, 16, 1, 0, 1);
+	EnemyShipClass.call(this, 100, 42, 1.5, 0, 1);
 	
 	this.sprite = new SpriteSheetClass(protectionShipPic, this.width, this.height);
 	this.spriteRows = {
@@ -13,7 +13,7 @@ function ProtectionShipClass() {
 
 	this.collectorWidth = this.width;
 	this.collectorHeight = 26;
-	this.collectorPosition = vec2.create(this.position.x, this.position.y + this.height);
+	this.collectorPosition = vec2.create(this.position.x, this.position.y + 16);
 	this.colliderCollectorAABB = new aabb(this.collectorWidth / 2, this.collectorHeight / 2);
 	this.collectorEnergy = 0;
 	this.collectorCharged = 3;
@@ -22,21 +22,14 @@ function ProtectionShipClass() {
 
 	this.parentDraw = this.draw;
 	this.draw = function() {
-		if (this.health > 0) {
-			canvasContext.save();
-			canvasContext.translate(this.collectorPosition.x, this.collectorPosition.y);
-			drawRect(-this.collectorWidth/2,-this.collectorHeight/2,this.collectorWidth,this.collectorHeight,"pink");
-			canvasContext.restore();
-		}
-
 		this.parentDraw();
 
 		if (this.collectorEnergy >= this.collectorCharged && this.health > 0) {
 			if (this.laser != null)
 				this.laser.removeMe = true;
 			this.laser = new EnemyLaserShotClass(this.collectorPosition.x - this.collectorWidth/4, 
-				                                  this.collectorPosition.y + this.collectorHeight/2, 
-				                                  0, 1, this.movingLeft);
+				                                  this.collectorPosition.y + this.collectorHeight/6, 
+				                                  0, this.speed, this.movingLeft);
 			shotList.push(this.laser);
 			// console.log("enemy laser fired!");
 			this.collectorEnergy = 0;
