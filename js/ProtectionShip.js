@@ -41,6 +41,11 @@ function ProtectionShipClass() {
 			// console.log("enemy laser fired!");
 			this.collectorEnergy = 0;
 		}
+
+		if (this.health <= 0 && this.laser != null) {
+			this.laser.removeMe = true;
+			this.laser = null;
+		}
 	};
 
 	this.parentMove = this.move;
