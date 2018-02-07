@@ -5,7 +5,7 @@ const debugLineHeight = 18;
 const debugLineHeightPadding = 2;
 const debugLineGap = 12;
 
-function drawScore() {
+function drawScoreAndBombAmmo() {
 	if (!orchestratorMode) {
 		colorText("Score: " + numberWithCommas(score),canvas.width-10,20,"white","20px Arial","right");
 		if (!carnageMode && !twoPlayerMode) {
@@ -13,6 +13,8 @@ function drawScore() {
 			drawRect(canvas.width-110,29,waveProgress,13,'orange');
 		}
 	}
+
+	colorText("Bombs: " + bombAmmo,canvas.width/2,20,"white","20px Arial","center");
 
 	if (twoPlayerMode) {
 		colorText("[1] for Paradropper",127,50,"white","15px Arial","right");

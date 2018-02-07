@@ -101,7 +101,7 @@ function drawAll() {
     drawPlayer();
     drawAndRemoveParticles();
     drawAndRemovePowerUps();
-    drawScore();
+    drawScoreAndBombAmmo();
     if (carnageMode || orchestratorMode) {
         return;
     } else {

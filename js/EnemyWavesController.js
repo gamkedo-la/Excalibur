@@ -208,29 +208,40 @@ function changeBackground(stage) {
 				currentBackgroundFar = backgroundFarPic;
 				currentBackgroundMed = backgroundMedPic;
 				currentBackgroundNear = backgroundNearPic;
+				currentTankCannon = tankCannonPicZebes; // grey placeholder
+				 
 				break;
 			case COMPUTER_BACKGROUND:
 				currentBackgroundMusic.loopSong(computerBackgroundMusic);
 				currentBackgroundMed = computerBackgroundFarPic;
 				currentBackgroundNear = computerBackgroundNearPic;
+				currentTankCannon = tankCannonPicComputer; // green placeholder
+				 
 				break;
 			case BEACH_BACKGROUND:
 				currentBackgroundMusic.loopSong(zebesBackgroundMusic);
 				currentBackgroundFar = beachBackgroundFarPic;
 				currentBackgroundMed = beachBackgroundMedPic;
 				currentBackgroundNear = beachBackgroundNearPic;
+				currentTankCannon = tankCannonPicBeach; // red placeholder 
+				 
 				break;
+
 			case FANTASY_BACKGROUND:
 				currentBackgroundMusic.loopSong(computerBackgroundMusic);
 				currentBackgroundFar = fantasyFarPic;
 				currentBackgroundMed = fantasyMedPic;
 				currentBackgroundNear = fantasyNearPic;
+				currentTankCannon = tankCannonPicFantasy; // orange placeholder
+				 
         		break;
 			case STARS_BACKGROUND:
 				currentBackgroundMusic.loopSong(computerBackgroundMusic);
 				currentBackgroundFar = starryBackgroundFarPic;
 				currentBackgroundMed = starryBackgroundMidPic;
 				currentBackgroundNear = starryBackgroundNearPic;
+				currentTankCannon = tankCannonPicStars; //purple placeholder 
+				 
         		break;
         	case BLACK_HOLE_BACKGROUND:
 				currentBackgroundMusic.loopSong(computerBackgroundMusic);
@@ -238,6 +249,8 @@ function changeBackground(stage) {
 				currentBackgroundMed = emptyImageElement;
 				currentBackgroundNear = emptyImageElement;
 				currentBackgroundObjects = []
+				currentTankCannon = tankCannonBlackHole; //yellow placeholder
+				 
         		break;
 		}
 	}

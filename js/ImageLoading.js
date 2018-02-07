@@ -42,6 +42,12 @@ var firemodePowerUpPic = document.createElement("img");
 
 var tankBodyPic = document.createElement("img");
 var tankCannonPic = document.createElement("img");
+var tankCannonPicBeach = document.createElement("img");
+var tankCannonPicBlackHole = document.createElement("img");
+var tankCannonPicComputer = document.createElement("img");
+var tankCannonPicFantasy = document.createElement("img");
+var tankCannonPicStars = document.createElement("img");
+var tankCannonPicZebes = document.createElement("img");
 
 var heartPic = document.createElement("img");
 var heartlessPic = document.createElement("img");
@@ -125,6 +131,12 @@ function loadImages() {
         { varName: shotPic, theFile: "ShotVisual.png" },
         { varName: tankBodyPic, theFile: "tank-body.png" },
         { varName: tankCannonPic, theFile: "tank-cannon.png" },
+        { varName: tankCannonPicBeach, theFile: "tank-cannon-beach.png" },
+        { varName: tankCannonPicBlackHole, theFile: "tank-cannon-blackHole.png" },
+        { varName: tankCannonPicComputer, theFile: "tank-cannon-computer.png" },
+        { varName: tankCannonPicFantasy, theFile: "tank-cannon-fantasy.png" },
+        { varName: tankCannonPicStars, theFile: "tank-cannon-stars.png" },
+        { varName: tankCannonPicZebes, theFile: "tank-cannon-zebes.png" }, 
 
         // UI
         { varName: singleAlienGameOver, theFile: "alien.png" },
