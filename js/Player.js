@@ -5,6 +5,9 @@ var playerHP = startHitpoints;
 var playerInvulFrames = 35;
 var playerInvulTimer = 0;
 
+const BOMB_START_AMMO = 3;
+var bombAmmo = BOMB_START_AMMO;
+
 const playerWidth=40,playerHeight=40;
 
 var playerColliderAABB = new aabb(playerWidth/2, playerHeight/2);
@@ -44,7 +47,7 @@ function resetPlayer() {
   cannonReloadFrames = 5;
   cannonWaveReloadFrames = 17;
   resetPlayerUpgrades();
-
+  bombAmmo = BOMB_START_AMMO;
 }
 
 function drawPlayer() {
