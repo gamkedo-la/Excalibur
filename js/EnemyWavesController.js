@@ -249,7 +249,7 @@ function changeBackground(stage) {
 				currentBackgroundMed = emptyImageElement;
 				currentBackgroundNear = emptyImageElement;
 				currentBackgroundObjects = []
-				currentTankCannon = tankCannonBlackHole; //yellow placeholder
+				currentTankCannon = tankCannonPicBlackHole; //yellow placeholder
 				 
         		break;
 		}
