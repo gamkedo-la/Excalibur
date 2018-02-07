@@ -89,7 +89,7 @@ function drawPlayer() {
    canvasContext.save();
    canvasContext.translate(playerX ,playerY)
    canvasContext.rotate(cannonAngle + Math.PI/2);
-   canvasContext.drawImage(tankCannonPic, - cannonWidth/2, -cannonLength + cannonLength/4 );
+   canvasContext.drawImage(currentTankCannon, - cannonWidth/2, -cannonLength + cannonLength/4 );
    canvasContext.restore();
 }
 
