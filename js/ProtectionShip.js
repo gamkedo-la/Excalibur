@@ -1,6 +1,12 @@
 function ProtectionShipClass() {
 	//EnemyShipClass(width, height, speed, angle, health)
-	EnemyShipClass.call(this, 100, 42, 1.5, 0, 1);
+	this.height = 100;
+	this.width = 42;
+	this.speed = 1.5;
+	this.angle = 0;
+	this.health = 1;
+
+	EnemyShipClass.call(this, this.height, this.width, this.speed, this.angle, this.health);
 	
 	this.sprite = new SpriteSheetClass(protectionShipPic, this.width, this.height);
 	this.spriteRows = {
