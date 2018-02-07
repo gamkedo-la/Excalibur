@@ -10,7 +10,7 @@
  * they are CC0 public domain - enjoy
  *
  */
-
+// hello world test comment, practicing using git. Will remove -Chris
 var explosions = [];
 var explosions_enabled = true;
 var explosion_timestamp = (new Date()).getTime();
