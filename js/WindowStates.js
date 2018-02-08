@@ -157,11 +157,14 @@ function tintScreen(){
 }
 
 function bombFlash() {
+    for(var i = 0.002; i < 15; i++) {
         canvasContext.fillStyle = "white";
-        canvasContext.globalAlpha = 0.2;
+        canvasContext.globalAlpha = 0.2 * i;
         canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-        canvasContext.globalAlpha = 1.0; 
+        canvasContext.globalAlpha = 1.0;
+    }
 }
+
 
 function showPausedScreen() {
     tintScreen();
