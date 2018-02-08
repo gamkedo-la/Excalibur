@@ -1,4 +1,4 @@
-function EnemyLaserShotClass(x, y, angle, speed, direction) {
+function EnemyLaserShotClass(x, y, angle, speed, direction, fromShip) {
 	// ShotClass(x, y, angle, speed)
 	ShotClass.call(this, x, y, angle, speed);
 	this.movingLeft = direction;
@@ -44,6 +44,8 @@ function EnemyLaserShotClass(x, y, angle, speed, direction) {
 		if (this.tickCount >= this.duration) {
 			this.removeMe = true;
 			this.tickCount = 0;
+			fromShip.frameRow = fromShip.spriteRows.flying;
+			fromShip.collectorFiring = false;
 		}
 	};
 

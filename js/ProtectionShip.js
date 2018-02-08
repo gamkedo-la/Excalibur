@@ -12,10 +12,12 @@ function ProtectionShipClass() {
 	this.spriteRows = {
 		flying: 0,
 		damaged: 1,
+		charging: 2,
+		firing: 3,
 	};
 	this.frameRow = this.spriteRows.flying;
 	this.numFrames = 2;
-	this.ticksPerFrame = 40;
+	this.ticksPerFrame = 20;
 
 	this.collectorWidth = this.width;
 	this.collectorHeight = 26;
@@ -23,6 +25,7 @@ function ProtectionShipClass() {
 	this.colliderCollectorAABB = new aabb(this.collectorWidth / 2, this.collectorHeight / 2);
 	this.collectorEnergy = 0;
 	this.collectorCharged = 3;
+	this.collectorFiring = false;
 
 	this.laser = null;
 
@@ -30,15 +33,24 @@ function ProtectionShipClass() {
 	this.draw = function() {
 		this.parentDraw();
 
+		if (this.collectorEnergy < this.collectorCharged && this.collectorEnergy > 0) {
+			this.frameRow = this.spriteRows.charging;
+		}
+
 		if (this.collectorEnergy >= this.collectorCharged && this.health > 0) {
+			this.frameRow = this.spriteRows.firing;
 			if (this.laser != null)
 				this.laser.removeMe = true;
 			this.laser = new EnemyLaserShotClass(this.collectorPosition.x - this.collectorWidth/4, 
 				                                 this.collectorPosition.y + this.collectorHeight/6, 
-				                                 0, this.speed, this.movingLeft);
+				                                 0, this.speed, this.movingLeft, this);
 			shotList.push(this.laser);
-			// console.log("enemy laser fired!");
+			this.collectorFiring = true;
 			this.collectorEnergy = 0;
+		}
+
+		if (this.laser != null && this.laser.removeMe) {
+			this.frameRow = this.spriteRows.flying;
 		}
 
 		if (this.health <= 0 && this.laser != null) {
@@ -61,10 +73,17 @@ function ProtectionShipClass() {
 	this.parentCollision = this.checkLineCollision;
 	this.checkLineCollision = function(lineSegment, projectilePos) {
 		if(isColliding_AABB_LineSeg(this.colliderCollectorAABB, lineSegment) 
-		   && this.health > 0) {
+		   && this.health > 0 && !this.collectorFiring) {
 			this.collectorEnergy++;
 			return true;
 		}
+
+		if(isColliding_AABB_LineSeg(this.colliderCollectorAABB, lineSegment) 
+		   && this.health > 0 && this.collectorFiring) {
+		   	//do nothing
+			return true;
+		}
+
 		return this.parentCollision(lineSegment, projectilePos);
 	};
 };
