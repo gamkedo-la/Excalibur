@@ -58,7 +58,7 @@ function mainMenuStates() {
 		colorText("Excalibur Controls: ",70,150 ,"Chartreuse","15px Tahoma","left",opacity);
 		colorText("Arrows for left/right, Mouse to aim cannon, mouse click or spacebar for shooting",70,180 ,"white","15px Tahoma","left",opacity);
 		colorText("Orchestrator Controls: ",70,210 ,"Chartreuse","15px Tahoma","left",opacity);
-		colorText("Spawn Enemies using 1,Q, and A ",70,240 ,"white","15px Tahoma","left",opacity);
+		colorText("Spawn Enemies using 1,Q, A and Z ",70,240 ,"white","15px Tahoma","left",opacity);
 		colorText("Pick-up power-ups using Excalibur",250,270 ,"white","15px Tahoma","left",opacity);
 		canvasContext.drawImage(firemodePowerUpPic, 478, 253);
 		canvasContext.drawImage(shieldPowerUpPic, 513, 257);

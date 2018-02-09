@@ -20,7 +20,8 @@ function drawScoreAndBombAmmo() {
 		colorText("[1] for Paradropper",127,50,"white","15px Arial","right");
 		colorText("[Q] for Gunship",102,70,"white","15px Arial","right");
 		colorText("[A] for Missile Strike",134,90,"white","15px Arial","right");
-		colorText("[ESC] to return to Main Menu",195,110,"white","15px Arial","right");
+		colorText("[Z] for Protector",105,110,"white","15px Arial","right");
+		colorText("[ESC] to return to Main Menu",195,130,"white","15px Arial","right");
 	}
 
 
