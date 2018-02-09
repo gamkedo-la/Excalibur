@@ -74,7 +74,13 @@ function ProtectionShipClass() {
 	this.checkLineCollision = function(lineSegment, projectilePos) {
 		if(isColliding_AABB_LineSeg(this.colliderCollectorAABB, lineSegment) 
 		   && this.health > 0 && !this.collectorFiring) {
+			
 			this.collectorEnergy++;
+
+			if (this.collectorEnergy < this.collectorCharged) {
+				enemyLaserChargingSound.play();
+			}
+
 			return true;
 		}
 

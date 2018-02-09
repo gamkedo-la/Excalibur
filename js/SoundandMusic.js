@@ -2,6 +2,8 @@ var audioFormat;
 
 var regularShotSound = new SoundOverlapsClass("./audio/RegularShot");
 var waveShotSound = new SoundOverlapsClass("./audio/WaveShot");
+var enemyLaserChargingSound = new SoundOverlapsClass("./audio/EnemyLaserCharging");
+
 var shieldPowerUpSound = new SoundOverlapsClass("./audio/ShieldPowerUp");
 var pauseSound = new SoundOverlapsClass("./audio/PauseSound");
 var resumeSound = new SoundOverlapsClass("./audio/ResumeSound");
