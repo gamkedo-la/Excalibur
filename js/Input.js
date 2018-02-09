@@ -30,6 +30,7 @@ const KEY_O = 79;
 const KEY_P = 80;
 const KEY_Q = 81;  
 const KEY_T = 84;
+const KEY_Z = 90;
 
 //for debugging
 const KEY_K = 75;
@@ -239,6 +240,7 @@ function keyPress(evt) {
 			if (windowState.mainMenu) {
 				startTwoPlayerMode();
 			} else if (windowState.twoPlayerHelp)  {
+				currentTankCannon = tankCannonPicZebes;
 				windowState.backgroundSelect = true;
 				windowState.twoPlayerHelp = false;
 				currentBackgroundMed = backgroundMedPic;
@@ -310,13 +312,23 @@ function keyPress(evt) {
 				isUpgradeTime = false;
 			}
 			break;
-		case DIGIT_4: // testing key
+		case DIGIT_4:
 			if (windowState.backgroundSelect) {
 				currentStageIndex = 3;
 				changeBackground(currentStageIndex);
-			} else if (controlScheme == CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING && !twoPlayerMode) {
+			} else if (orchestratorMode) {
+				orchestratorCurrentSpawnType = PLANE_PROTECT;
+				enemyData.spawnType = orchestratorCurrentSpawnType;
+				enemyData.framesUntilSpawn = orchestratorSpawnFrameCount;
+				createNewWave.push(enemyData);
+				enemyData = { 
+					spawnType: null, 
+					framesUntilSpawn: null 
+				}
+				orchestratorSpawnEnemy();	
+			} else if (controlScheme == CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING && !twoPlayerMode && !orchestratorMode) {
 				controlScheme = CONTROL_SCHEME_KEYS_STATIONARY;
-			} else {
+			} else if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY && !twoPlayerMode && !orchestratorMode) {
 				controlScheme = CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING;
 			}
 			break;
@@ -390,6 +402,11 @@ function keyPress(evt) {
 		case KEY_Q:
 			if (twoPlayerMode && !isPaused && !orchestratorMode) {
 				orchestratorCurrentSpawnType = PLANE_GUNSHIP;
+				orchestratorSpawnEnemy();
+			}
+		case KEY_Z:
+			if (twoPlayerMode && !isPaused && !orchestratorMode) {
+				orchestratorCurrentSpawnType = PLANE_PROTECT;
 				orchestratorSpawnEnemy();
 			}
 			break;
@@ -514,7 +531,7 @@ function onMouseDown(evt) {
 	}
 	switch (evt.button) { //switch in case more mouse buttons are added
 		case MOUSE_FIRE_BUTTON:
-			if ((spawnFrameCount > 0) || (carnageStarted)) {
+			if ((spawnFrameCount > 0) || (carnageStarted) || twoPlayerMode || orchestratorMode) {
 				holdFire=true;
 			}
 			

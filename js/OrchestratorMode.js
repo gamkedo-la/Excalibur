@@ -35,6 +35,8 @@ function orchestratorSpawnEnemy() {
         gunshipSpawn();
     } else if (orchestratorCurrentSpawnType == MISSILE_STRIKE) {
         missileSpawn();
+    } else if (orchestratorCurrentSpawnType == PLANE_PROTECT) {
+        protectionShipSpawn();
     }
     orchestratorCurrentSpawnType = 0;
     orchestratorSpawnFrameCount = 0;

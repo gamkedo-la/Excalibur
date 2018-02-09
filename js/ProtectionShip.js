@@ -49,7 +49,7 @@ function ProtectionShipClass() {
 			this.collectorEnergy = 0;
 		}
 
-		if (this.laser != null && this.laser.removeMe) {
+		if (this.laser != null && this.laser.tickCount == 60) {
 			this.frameRow = this.spriteRows.flying;
 		}
 
