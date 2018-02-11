@@ -14,7 +14,7 @@ function drawScoreAndBombAmmo() {
 		}
 	}
 
-	colorText("Bombs: " + bombAmmo,canvas.width/2,20,"white","20px Arial","center");
+	colorText("Bombs (B): " + bombAmmo,canvas.width/2,20,"white","20px Arial","center");
 
 	if (twoPlayerMode) {
 		colorText("[1] for Paradropper",127,50,"white","15px Arial","right");
