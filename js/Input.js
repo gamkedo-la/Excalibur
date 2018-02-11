@@ -493,6 +493,8 @@ function keyRelease(evt) {
       					enemyType = "PLANE_GUNSHIP";
       				} else if (createNewWave[i].spawnType == MISSILE_STRIKE) {
       					enemyType = "MISSILE_STRIKE";
+      				} else if (createNewWave[i].spawnType == PLANE_PROTECT) {
+      					enemyType = "PLANE_PROTECT";
       				}
     				if (i == (createNewWave.length) - 1) {
       					waveString += "    { spawnType: " + enemyType + ", framesUntilSpawn: " +
