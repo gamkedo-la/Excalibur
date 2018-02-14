@@ -16,6 +16,7 @@ var isSpawningWave = false;
 var waveCompleted = false;
 var waveEndExcuted = false;
 var waveStarted = false;
+var spawningFinished = false;
 var enableIntermission = false;
 var assaultMode = false;
 
@@ -29,11 +30,11 @@ const BLACK_HOLE_BACKGROUND = 5;
 var currentBackground = ZEBES_BACKGROUND;
 
 var stage1 = [easyLevel,stage1WaveNumber2,];
-var stage2 = [protectorIntro,stage1WaveNumber3]
-var stage3 = [stage2WaveNumber1,stage3WaveNumber1]
-var stage4 = [easyMedMostlyGunshipsMixedLevel,mediumHardPlanesMix]
-var stage5 = [lateStageToughMixLevel,missileFlurryLevel]
-var stage6 = [longBusyAirdropProtectorsLate]
+var stage2 = [protectorIntro,stage1WaveNumber3];
+var stage3 = [stage2WaveNumber1,stage3WaveNumber1];
+var stage4 = [easyMedMostlyGunshipsMixedLevel,mediumHardPlanesMix];
+var stage5 = [lateStageToughMixLevel,missileFlurryLevel];
+var stage6 = [longBusyAirdropProtectorsLate];
 var allStages = [stage1,stage2, stage3, stage4, stage5, stage6];
 
 var isUpgradeTime = false;
@@ -85,13 +86,16 @@ function waveControllerStart() {
     		intermission();
     	}
     }
-    if (waveStarted && shipList.length == 0 && alienList.length == 0
+    if (spawningFinished && shipList.length == 0 && alienList.length == 0
     	&& missileList.length == 0) {
     	shotList.length = 0;
 		waveCompleted = true;
     }
     if (wave[currentEnemyIndex] == undefined) { // this is probably bad form - Terrence
     	return;
+    }
+    if (wave[currentEnemyIndex].framesUntilSpawn <= 0) {
+    	console.log('not a possible framesUntilSpawn interger')
     }
     if (spawnFrameCount === wave[currentEnemyIndex].framesUntilSpawn) {
         currentSpawnType = wave[currentEnemyIndex].spawnType;
@@ -100,6 +104,9 @@ function waveControllerStart() {
         currentEnemyIndex++;
         enemiesSpawned++
         waveProgress = (enemiesSpawned/wave.length) * 100;
+        if (enemiesSpawned/wave.length == 1) {
+        	spawningFinished = true;
+        }
         waveStarted = true;
         if (currentEnemyIndex >= wave.length) {
             currentEnemyIndex = 0;
@@ -168,12 +175,13 @@ function waveEnd() {
 		canvasContext.textAlign = "center";
 		canvasContext.fillStyle = "white";
 		canvasContext.fillText(stageNames[currentStageIndex],canvas.width/2,canvas.height/2 -80);
-		canvasContext.fillText('Wave ' + currentWave + " Complete!" ,canvas.width/2,canvas.height/2 -40);
+		canvasContext.fillText("Wave " + currentWave + " Complete!" ,canvas.width/2,canvas.height/2 -40);
 		canvasContext.font = "30px Tahoma";
 		canvasContext.fillText('Alien Invasion Repelled!',canvas.width/2 ,canvas.height/2);
 	} else if (spawnFrameCount > timeForText) {
 		spawnFrameCount = 0;
 		waveCompleted = false;
+		spawningFinished = false;
 		isUpgradeTime = true;
 		enableIntermission = true;
 	}
@@ -248,7 +256,7 @@ function changeBackground(stage) {
 				currentBackgroundFar = blackHoleBaseBG;
 				currentBackgroundMed = emptyImageElement;
 				currentBackgroundNear = emptyImageElement;
-				currentBackgroundObjects = []
+				currentBackgroundObjects = [];
 				currentTankCannon = tankCannonPicBlackHole; //yellow placeholder
 				 
         		break;

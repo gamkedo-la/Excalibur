@@ -294,7 +294,7 @@ var lateStageToughMixLevel = [
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 15 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 17 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 16 },
-    { spawnType: PLANE_GUNSHIP, framesUntilSpawn: 0 },
+    { spawnType: PLANE_GUNSHIP, framesUntilSpawn: 1 },
     { spawnType: MISSILE_STRIKE, framesUntilSpawn: 22 },
     { spawnType: PLANE_GUNSHIP, framesUntilSpawn: 26 },
     { spawnType: MISSILE_STRIKE, framesUntilSpawn: 16 },
@@ -696,7 +696,3 @@ var easyMedMostlyGunshipsMixedLevel = [
     { spawnType: MISSILE_STRIKE, framesUntilSpawn: 31 },
     { spawnType: MISSILE_STRIKE, framesUntilSpawn: 64 }
 ];
-//Wave arrays are in AllWaves.js
-//Don't forget to change this wave's var name so that all # are numbers
-//and to add this wave into the proper stage array in
-//EnemyWavesController - Terrence
