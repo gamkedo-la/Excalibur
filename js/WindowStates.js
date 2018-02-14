@@ -27,6 +27,7 @@ function mainMenuStates() {
 			},)
 			carnageModeUnlocked = true;
 			mainMenu.setButtonBounds();
+			mainMenu.setupSliders();
 		}
 		
 		mainMenu.handleSliders();
