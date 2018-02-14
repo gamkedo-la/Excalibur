@@ -32,10 +32,6 @@ mainMenu = {
 				txt : "[T] for Two Player Mode",
 				onClick : startTwoPlayerMode,
 			},
-			{
-				txt : "[C] for Carnage Mode",
-				onClick : startCarnage,
-			},
 		];
 		
 		this.sliders = [

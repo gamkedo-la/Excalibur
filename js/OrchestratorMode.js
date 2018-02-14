@@ -2,7 +2,7 @@ var orchestratorMode = false;
 var twoPlayerMode = false;
 var orchestratorWins = false;
 var excaliburWins = false;
-var scoreReached = false;
+var multiplayerScoreReached = false;
 
 var createNewWave = [];
 
@@ -18,8 +18,8 @@ var enemyData = {
 function orchestratorFrameCount() {
     orchestratorSpawnFrameCount++;
     frameCount++;
-    if (score >= scoreToReach && !scoreReached && !orchestratorMode) {
-      scoreReached = true;
+    if (score >= scoreToReach && !multiplayerScoreReached && !orchestratorMode) {
+      multiplayerScoreReached = true;
       excaliburWins = true;
       gameOverManager.startGameOverSequence();
       return;

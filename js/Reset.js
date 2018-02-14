@@ -24,13 +24,14 @@ function resetGame() {
 	waveCompleted = false;
 	waveEndExcuted = false;
 	waveStarted = false;
+	isUpgradeTime = false;
 	isPaused = false;
 	enableIntermission = false;
 	carnageStarted = false;
 	toggleCarnageModeSpawning = false;
 	orchestratorWins = false;
 	excaliburWins = false;
-	scoreReached = false;
+	multiplayerScoreReached = false;
 	
 	currentSpawnType = 0;
 	spawnFrameCount = 0;

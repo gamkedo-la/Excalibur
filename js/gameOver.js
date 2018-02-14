@@ -1,3 +1,5 @@
+var highScore = 0;
+
 function gameOverSequence() {
     const ALIEN_COUNT = 50
     const ENEMY_PADDING = 2
@@ -11,8 +13,6 @@ function gameOverSequence() {
     var framesShowingGameOverTextBeforeReset = /*14*/ 83;
     var artHeightTopNow = 0; // top y of next row to draw
     var framesSinceGameOverShown = -1;
-
-    var highScore = 0;
 
     this.randomGameOverImage = function() {
         var randPicIndex = Math.floor(Math.random() * this.gameOverImages.length);
@@ -85,7 +85,7 @@ function gameOverSequence() {
                     highScore = score;
                 }
 
-                colorText("High Score: " + highScore, canvas.width / 2, canvas.height / 4 + 320, "white", "30px Sans-serif", "center");
+                colorText("High Score: " + numberWithCommas(highScore), canvas.width / 2, canvas.height / 4 + 320, "white", "30px Sans-serif", "center");
 
                 colorText("[ PRESS  ENTER  or  CLICK  MOUSE ]", canvas.width / 2, canvas.height / 4 + 380, "white", "35px arial", "center");
 

@@ -9,6 +9,10 @@ var windowState = {
 };
 var TitleTextX, subTitleTextX,opacity;
 
+var carnageModeUnlocked = false;
+
+const SCORE_TO_UNLOCK_CARNAGE = 20000;
+
 function mainMenuStates() {
 	if(windowState.mainMenu){
 		drawSkyGradient(); 
@@ -16,6 +20,14 @@ function mainMenuStates() {
 		canvasContext.drawImage(currentBackgroundMed,0,0);
 		colorText('Excalibur',TitleTextX,canvas.height/2-40 ,"white",mainMenu.titleFont,"center");
 		colorText('Space Defence System',subTitleTextX ,canvas.height/2,"white",mainMenu.titleFont,"center");
+		if (highScore >= SCORE_TO_UNLOCK_CARNAGE && !carnageModeUnlocked) {
+			mainMenu.buttons.push({
+				txt : "[C] for Carnage Mode",
+				onClick : startCarnage,
+			},)
+			carnageModeUnlocked = true;
+			mainMenu.setButtonBounds();
+		}
 		
 		mainMenu.handleSliders();
 		mainMenu.drawButtons(opacity);
