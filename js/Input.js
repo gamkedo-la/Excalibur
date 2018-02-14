@@ -466,6 +466,7 @@ function keyRelease(evt) {
             		bombAmmo--;
 					smartBombActive = true;
 		            bombFlash();
+                    smartBombSound.play();
 		        }
             }
 			break;

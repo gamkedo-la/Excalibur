@@ -8,6 +8,7 @@ var shieldPowerUpSound = new SoundOverlapsClass("./audio/ShieldPowerUp");
 var pauseSound = new SoundOverlapsClass("./audio/PauseSound");
 var resumeSound = new SoundOverlapsClass("./audio/ResumeSound");
 var explosionSound = new SoundOverlapsClass("./audio/LoudExplosion");
+var smartBombSound = new SoundOverlapsClass("./audio/SmartBombSound");
 var zebesBackgroundMusic = "./audio/dew-drops";
 var computerBackgroundMusic = "./audio/suspain";
 var menuMusic = "./audio/beeblebrox";
