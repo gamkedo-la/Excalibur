@@ -325,12 +325,8 @@ function keyPress(evt) {
 					spawnType: null, 
 					framesUntilSpawn: null 
 				}
-				orchestratorSpawnEnemy();	
-			} else if (controlScheme == CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING && !twoPlayerMode && !orchestratorMode) {
-				controlScheme = CONTROL_SCHEME_KEYS_STATIONARY;
-			} else if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY && !twoPlayerMode && !orchestratorMode) {
-				controlScheme = CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING;
-			}
+				orchestratorSpawnEnemy();
+			}	
 			break;
 		case DIGIT_5:
 			if (windowState.backgroundSelect) {
@@ -514,8 +510,14 @@ function keyRelease(evt) {
 							"\n//EnemyWavesController - Terrence";
 	        	copyTextToClipboard(waveString);
 	       	} else if (windowState.mainMenu && highScore >= SCORE_TO_UNLOCK_CARNAGE /*highScore == 0*/) {
-	       		startCarnage();
-	       	}
+	       		startCarnage(); 
+	       	} else if (controlScheme == CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING && !twoPlayerMode && !orchestratorMode) {
+				controlScheme = CONTROL_SCHEME_KEYS_STATIONARY;
+				console.log("Using control scheme: arrow/WASD keys only");
+			} else if (controlScheme == CONTROL_SCHEME_KEYS_STATIONARY && !twoPlayerMode && !orchestratorMode) {
+				controlScheme = CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING;
+				console.log("Using control scheme: arrow/WASD keys steer, mouse aims");
+			}
 	    	break;
 	}
 }

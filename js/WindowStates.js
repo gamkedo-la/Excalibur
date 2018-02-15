@@ -50,7 +50,7 @@ function mainMenuStates() {
 		drawSkyGradient(); 
 		canvasContext.drawImage(currentBackgroundFar,0,0);
 		colorText('How To Play',canvas.width/2 ,100,"white","30px Tahoma","center",opacity);
-		colorText("1) Press [4] to switch between input options:",250,150 ,"white","15px Tahoma","left",opacity);
+		colorText("1) Press [C] to switch between input options:",250,150 ,"white","15px Tahoma","left",opacity);
 		colorText(" Default Inputs: A/D or arrows for left/right, mouse to aim tank cannon, mouse click or spacebar for shooting",70,180 ,"white","15px Tahoma","left",opacity);
 		colorText(" Optional Inputs: Arrows for left/right, A/D for moving cannon left/right, spacebar for shooting",70,210 ,"white","15px Tahoma","left",opacity);
 		colorText("2) Pick-up power-ups using Excalibur",250,240 ,"white","15px Tahoma","left",opacity);
