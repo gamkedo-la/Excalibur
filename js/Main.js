@@ -103,12 +103,12 @@ function drawAll() {
     drawAndRemoveParticles();
     drawAndRemovePowerUps();
     drawScoreAndBombAmmo();
+    drawExplosions();
     if (carnageMode || orchestratorMode) {
         return;
     } else {
         drawLives();
     }
-    drawExplosions();
 
     frameCount++;
 

@@ -340,6 +340,7 @@ function keyPress(evt) {
 				fireMode = (evt.keyCode - DIGIT_3);
 				console.log("weapon mode change to: " +
 				fireMode);
+				//score += 10000;
 			}
 			break;
 		case DIGIT_6:
@@ -512,7 +513,7 @@ function keyRelease(evt) {
 							"\n//and to add this wave into the proper stage array in" +
 							"\n//EnemyWavesController - Terrence";
 	        	copyTextToClipboard(waveString);
-	       	} else if (windowState.mainMenu && highScore >= SCORE_TO_UNLOCK_CARNAGE) {
+	       	} else if (windowState.mainMenu && highScore >= SCORE_TO_UNLOCK_CARNAGE /*highScore == 0*/) {
 	       		startCarnage();
 	       	}
 	    	break;

@@ -3,7 +3,7 @@ function EnemyLaserShotClass(x, y, angle, speed, direction, fromShip) {
 	ShotClass.call(this, x, y, angle, speed);
 	this.movingLeft = direction;
 
-	this.width = 50;
+	this.width = 51;
 	this.height = 600;
 	
 	this.tickCount = 0;
