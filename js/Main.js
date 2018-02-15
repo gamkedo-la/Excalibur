@@ -14,6 +14,7 @@ var gameOverManager = new gameOverSequence();
 var gameUpdate;
 var gameDropshipSpawn;
 var gameGunshipSpawn;
+var gameProtectorSpawn;
 var gameMissileSpawn;
 
 var masterFrameDelayTick = 0;

@@ -1,6 +1,7 @@
 function resetGame() {
 	clearInterval(gameDropshipSpawn);
 	clearInterval(gameGunshipSpawn);
+	clearInterval(gameProtectorSpawn);
 	clearInterval(gameMissileSpawn);
 	clearInterval(gameUpdate);
 
@@ -41,6 +42,12 @@ function resetGame() {
 	waveProgress = 0;
 	enemiesSpawned = 0;
 	masterFrameDelayTick = 0;
+
+	dropshipSpawnTimer = 150;
+	gunshipSpawnTimer = 250;
+	protectionShipSpawnTimer = 300;
+	missileSpawnTimer = 1000;
+	scoreThresholdToIncreaseSpawning = 20000;
 
 	currentWave = currentWaveIndex + 1;
 	fireMode = FIREMODE_SINGLE;

@@ -128,24 +128,27 @@ function waveControllerStart() {
 
 function waveStart() {
 	if (allStages[currentStageIndex] == undefined) {
-		assaultMode = true;
-		currentBackground = ZEBES_BACKGROUND
-		currentBackgroundFar = backgroundFarPic;
-		currentBackgroundMed = backgroundMedPic;
-		currentBackgroundNear = backgroundNearPic;
-		if (spawnFrameCount < timeForText && !gameOverManager.gameOverPlaying) {
-			canvasContext.font = "40px Tahoma";
-			canvasContext.textAlign = "center";
-			canvasContext.fillStyle = "white";
-			canvasContext.fillText("Aliens Incoming!" ,canvas.width/2,canvas.height/2 -40);
-			canvasContext.font = "30px Tahoma";
-			canvasContext.fillText('All Out Assault!',canvas.width/2 ,canvas.height/2);
-		} else if (spawnFrameCount > timeForText) {
-		    gameDropshipSpawn = setInterval(dropshipSpawn, 500);
-			gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
-			gameMissileSpawn = setInterval(missileSpawn, 2000);
-			isSpawningWave = true;
-		}
+		return;
+		// end game code goes here
+
+		// assaultMode = true;
+		// currentBackground = ZEBES_BACKGROUND
+		// currentBackgroundFar = backgroundFarPic;
+		// currentBackgroundMed = backgroundMedPic;
+		// currentBackgroundNear = backgroundNearPic;
+		// if (spawnFrameCount < timeForText && !gameOverManager.gameOverPlaying) {
+		// 	canvasContext.font = "40px Tahoma";
+		// 	canvasContext.textAlign = "center";
+		// 	canvasContext.fillStyle = "white";
+		// 	canvasContext.fillText("Aliens Incoming!" ,canvas.width/2,canvas.height/2 -40);
+		// 	canvasContext.font = "30px Tahoma";
+		// 	canvasContext.fillText('All Out Assault!',canvas.width/2 ,canvas.height/2);
+		// } else if (spawnFrameCount > timeForText) {
+		//     gameDropshipSpawn = setInterval(dropshipSpawn, 500);
+		// 	gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
+		// 	gameMissileSpawn = setInterval(missileSpawn, 2000);
+		// 	isSpawningWave = true;
+		// }
 	} else if (allStages[currentStageIndex][currentWaveIndex]) {
 		if (spawnFrameCount < timeForText && !gameOverManager.gameOverPlaying) {
 			canvasContext.font = "40px Tahoma";

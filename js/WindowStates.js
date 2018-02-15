@@ -139,6 +139,7 @@ function togglePause(){
     	if(assaultMode || carnageStarted) {
         clearInterval(gameDropshipSpawn);
         clearInterval(gameGunshipSpawn);
+        clearInterval(gameProtectorSpawn);
         clearInterval(gameMissileSpawn);
     	}
         showPausedScreen();
@@ -146,14 +147,15 @@ function togglePause(){
         clearInterval(gameUpdate);
     } else {
 		gameUpdate = setInterval(update, 1000/30);
-		if (assaultMode){
-			gameDropshipSpawn = setInterval(dropshipSpawn, 500);
-			gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
-			gameMissileSpawn = setInterval(missileSpawn, 2000);
-		} else if (carnageStarted) {
-			gameDropshipSpawn = setInterval(dropshipSpawn, 75);
-			gameGunshipSpawn = setInterval(gunshipSpawn, 75);
-			gameMissileSpawn = setInterval(missileSpawn, 500);
+		// if (assaultMode){
+		// 	gameDropshipSpawn = setInterval(dropshipSpawn, 500);
+		// 	gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
+		// 	gameMissileSpawn = setInterval(missileSpawn, 2000);
+		if (carnageStarted) {
+			gameDropshipSpawn = setInterval(dropshipSpawn, dropshipSpawnTimer);
+			gameGunshipSpawn = setInterval(gunshipSpawn, gunshipSpawnTimer);
+			gameProtectorSpawn = setInterval(protectionShipSpawn, protectionShipSpawnTimer);
+			gameMissileSpawn = setInterval(missileSpawn, missileSpawnTimer);
 		}
         resumeSound.play();
 		timeStartedActive = new Date().getTime();
@@ -190,14 +192,15 @@ function windowOnFocus() {
 		windowState.inFocus = true;
 		gameUpdate = setInterval(update, 1000/30);
 		
-		if (assaultMode){
-			gameDropshipSpawn = setInterval(dropshipSpawn, 500);
-			gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
-			gameMissileSpawn = setInterval(missileSpawn, 2000);
-		} else if (carnageStarted) {
-			gameDropshipSpawn = setInterval(dropshipSpawn, 75);
-			gameGunshipSpawn = setInterval(gunshipSpawn, 75);
-			gameMissileSpawn = setInterval(missileSpawn, 500);
+		// if (assaultMode){
+		// 	gameDropshipSpawn = setInterval(dropshipSpawn, 500);
+		// 	gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
+		// 	gameMissileSpawn = setInterval(missileSpawn, 2000);
+		if (carnageStarted) {
+			gameDropshipSpawn = setInterval(dropshipSpawn, dropshipSpawnTimer);
+			gameGunshipSpawn = setInterval(gunshipSpawn, gunshipSpawnTimer);
+			gameProtectorSpawn = setInterval(protectionShipSpawn, protectionShipSpawnTimer);
+			gameMissileSpawn = setInterval(missileSpawn, missileSpawnTimer);
 		}
 		if (waveStarted && !gameOverManager.gameOverPlaying) {
 			resumeSound.play();
@@ -213,6 +216,7 @@ function windowOnBlur() {
 		if (!isPaused && !windowState.help) {
 			clearInterval(gameDropshipSpawn);
 			clearInterval(gameGunshipSpawn);
+			clearInterval(gameProtectorSpawn);
 			clearInterval(gameMissileSpawn);
 			windowState.inFocus = false;
 			clearInterval(gameUpdate);
