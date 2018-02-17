@@ -8,7 +8,7 @@ var createNewWave = [];
 
 var orchestratorCurrentSpawnType = 0;
 var orchestratorSpawnFrameCount = 0;
-var scoreToReach = 10000; //not final number, testing
+var scoreToReach = 20000; //not final number, testing
 
 var enemyData = { 
 	spawnType: null, 

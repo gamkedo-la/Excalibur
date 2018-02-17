@@ -5,9 +5,11 @@ var windowState = {
 	help : false,
 	twoPlayerHelp : false,
 	backgroundSelect : false,
-	mainMenu : true, 
+	mainMenu : true,
+	endingScreen: false 
 };
 var TitleTextX, subTitleTextX,opacity;
+var endingScreenTextY = 630;
 
 function mainMenuStates() {
 	if(windowState.mainMenu){
@@ -37,7 +39,7 @@ function mainMenuStates() {
 		if(TitleTextX >= canvas.width/2 + 10){
 			TitleTextX-=15;
 		}
-		else if(!windowState.help){
+		else if(!windowState.help && opacity < 1) {
 			opacity = opacity + 0.009;
 		}
 	}
@@ -93,6 +95,16 @@ function mainMenuStates() {
 		colorText("[6] for Black Hole",30,350 ,"white",mainMenu.buttonFont,"left",opacity);
 		colorText('Press [T] to Duel!',canvas.width/2 , 500,"white","30px Tahoma","center",opacity);
 	}
+	else if (windowState.endingScreen) {
+		drawRect(0,0, canvas.width, canvas.height, "black")
+		colorText("Well... you did it",canvas.width/2 ,endingScreenTextY,"white","30px Tahoma","center",opacity);
+		colorText("Good Stuff!",canvas.width/2 ,endingScreenTextY + 30,"white","30px Tahoma","center",opacity);
+		colorText("See you next mission!",canvas.width/2,endingScreenTextY + 60 ,"white",mainMenu.buttonFont,"center",opacity);
+
+		if (endingScreenTextY + 60 > -30) {
+			endingScreenTextY -= 2;
+		}
+	}
 }
 
 function openHelp() {
@@ -143,10 +155,6 @@ function togglePause(){
         clearInterval(gameUpdate);
     } else {
 		gameUpdate = setInterval(update, 1000/30);
-		// if (assaultMode){
-		// 	gameDropshipSpawn = setInterval(dropshipSpawn, 500);
-		// 	gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
-		// 	gameMissileSpawn = setInterval(missileSpawn, 2000);
 		if (carnageStarted) {
 			gameDropshipSpawn = setInterval(dropshipSpawn, dropshipSpawnTimer);
 			gameGunshipSpawn = setInterval(gunshipSpawn, gunshipSpawnTimer);
@@ -187,11 +195,6 @@ function windowOnFocus() {
 	if(!windowState.inFocus) {
 		windowState.inFocus = true;
 		gameUpdate = setInterval(update, 1000/30);
-		
-		// if (assaultMode){
-		// 	gameDropshipSpawn = setInterval(dropshipSpawn, 500);
-		// 	gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
-		// 	gameMissileSpawn = setInterval(missileSpawn, 2000);
 		if (carnageStarted) {
 			gameDropshipSpawn = setInterval(dropshipSpawn, dropshipSpawnTimer);
 			gameGunshipSpawn = setInterval(gunshipSpawn, gunshipSpawnTimer);

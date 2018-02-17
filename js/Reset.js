@@ -15,11 +15,13 @@ function resetGame() {
 	windowState.help = false;
 	windowState.twoPlayerHelp = false;
 	windowState.backgroundSelect = false;
+	windowState.endingScreen = false;
 	orchestratorMode = false;
 	twoPlayerMode = false;
 	assaultMode = false;
 	carnageMode = false;
 	gameRunning = false;
+	endingEnabled = false;
 	
 	isSpawningWave = false;
 	waveCompleted = false;

@@ -82,7 +82,7 @@ function initializeInput() {
 }
 
 function handleInput() {
-	if(holdFire) {
+	if(holdFire && !endingEnabled) {
 		switch(fireMode) {
 			case FIREMODE_SINGLE:
 				if(cannonReloadLeft <= 0) {
@@ -381,7 +381,9 @@ function keyPress(evt) {
 			}
 			break;
 		case KEY_SPACE:
-			holdFire = true;
+			if (endingEnabled == false) {
+				holdFire = true;
+			}
 			break;
 		case KEY_LEFT:
 			holdLeft = true;
@@ -458,7 +460,8 @@ function keyRelease(evt) {
 			}
 			break;
 		case KEY_B:
-            if(!gameOverManager.gameOverPlaying && !windowState.mainMenu && !windowState.help && !isPaused && !isUpgradeTime){
+            if(!gameOverManager.gameOverPlaying && !windowState.mainMenu && !windowState.help 
+            	&& !isPaused && !isUpgradeTime && !windowState.endingScreen){
             	if(bombAmmo > 0) {
             		bombAmmo--;
 					smartBombActive = true;
@@ -537,8 +540,9 @@ function onMouseDown(evt) {
 	}
 	switch (evt.button) { //switch in case more mouse buttons are added
 		case MOUSE_FIRE_BUTTON:
-			if ((spawnFrameCount > 0) || (carnageStarted) || twoPlayerMode || orchestratorMode) {
-				holdFire=true;
+			if ((spawnFrameCount > 0) || (carnageStarted) || twoPlayerMode || orchestratorMode 
+				&& endingEnabled == false) {
+				holdFire = true;
 			}
 			
 			if(windowState.mainMenu) {

@@ -1,7 +1,7 @@
 var wave = [];
 var currentWaveIndex = 0;
 var currentWave = currentWaveIndex + 1;
-var currentStageIndex = 0; 
+var currentStageIndex = 5; // for debugging ending
 var currentStage = currentStageIndex + 1;
 var stageNames = ["Planet Zebes", "Inside Super Computer", "Crystalline Coast", "Fantasy Zone", "Starfield", "Black Hole"];
 var timeBetweenWaves = 25; // time in frames (30 frames/second)
@@ -19,6 +19,7 @@ var waveStarted = false;
 var spawningFinished = false;
 var enableIntermission = false;
 var assaultMode = false;
+var endingEnabled = false;
 
 const ZEBES_BACKGROUND = 0;
 const COMPUTER_BACKGROUND = 1;
@@ -26,6 +27,7 @@ const BEACH_BACKGROUND = 2;
 const FANTASY_BACKGROUND = 3;
 const STARS_BACKGROUND = 4;
 const BLACK_HOLE_BACKGROUND = 5;
+const ENDING = 6;
 
 var currentBackground = ZEBES_BACKGROUND;
 
@@ -127,28 +129,21 @@ function waveControllerStart() {
 }
 
 function waveStart() {
-	if (allStages[currentStageIndex] == undefined) {
-		return;
+	if (currentStageIndex == ENDING) {
+		endingEnabled = true;
+		//return;
 		// end game code goes here
-
-		// assaultMode = true;
-		// currentBackground = ZEBES_BACKGROUND
-		// currentBackgroundFar = backgroundFarPic;
-		// currentBackgroundMed = backgroundMedPic;
-		// currentBackgroundNear = backgroundNearPic;
-		// if (spawnFrameCount < timeForText && !gameOverManager.gameOverPlaying) {
-		// 	canvasContext.font = "40px Tahoma";
-		// 	canvasContext.textAlign = "center";
-		// 	canvasContext.fillStyle = "white";
-		// 	canvasContext.fillText("Aliens Incoming!" ,canvas.width/2,canvas.height/2 -40);
-		// 	canvasContext.font = "30px Tahoma";
-		// 	canvasContext.fillText('All Out Assault!',canvas.width/2 ,canvas.height/2);
-		// } else if (spawnFrameCount > timeForText) {
-		//     gameDropshipSpawn = setInterval(dropshipSpawn, 500);
-		// 	gameGunshipSpawn = setInterval(gunshipSpawn, 1500);
-		// 	gameMissileSpawn = setInterval(missileSpawn, 2000);
-		// 	isSpawningWave = true;
-		// }
+		if (opacity > 1) {
+			windowState.endingScreen = true;
+			gameRunning = false;
+			currentBackgroundMusic.loopSong(gameOverMusic);
+		}
+		if (spawnFrameCount > 5 && windowState.endingScreen == false) {
+			canvasContext.globalAlpha = opacity;
+    		drawRect(0,0, canvas.width, canvas.height, "black");
+    		opacity += 0.09;
+    		spawnFrameCount = 0
+    	}
 	} else if (allStages[currentStageIndex][currentWaveIndex]) {
 		if (spawnFrameCount < timeForText && !gameOverManager.gameOverPlaying) {
 			canvasContext.font = "40px Tahoma";
@@ -185,7 +180,9 @@ function waveEnd() {
 		spawnFrameCount = 0;
 		waveCompleted = false;
 		spawningFinished = false;
+		if (currentStageIndex != 5) {
 		isUpgradeTime = true;
+		}
 		enableIntermission = true;
 	}
 }
@@ -196,16 +193,23 @@ function intermission(forceSkip) {
 	 	enemiesSpawned = 0;
 		currentWaveIndex++;
 		currentWave++;
-		spawnFrameCount = 0;
 		enableIntermission = false;		
 		waveEndExcuted = false;
 		isSpawningWave = false;
 		if (currentWaveIndex == allStages[currentStageIndex].length){
+			if (currentStageIndex == BLACK_HOLE_BACKGROUND) {
+				currentStageIndex++;
+				opacity = 0;
+				return;
+			}
 			currentStageIndex++;
 			currentStage++;
 			changeBackground(currentStageIndex);
 			currentWaveIndex = 0;
 			currentWave = currentWaveIndex + 1;
+			spawnFrameCount = 0;
+		} else {
+			return;
 		}
 	}
 }

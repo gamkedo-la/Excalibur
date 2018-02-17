@@ -63,11 +63,15 @@ function update() {
         mainMenuStates();
     } else {
         if (!gameOverManager.gameOverPlaying) {
-            drawScrollingBackground();
+            if (!endingEnabled) {
+                moveAll();
+                drawScrollingBackground();
+            }
             handleInput();
-            moveAll();
         }
-        drawAll();
+        if (!endingEnabled) {
+            drawAll(); 
+        }
         if (smartBombActive) {
             //Destroy all ships
             for (var ship of shipList) {
@@ -85,7 +89,7 @@ function update() {
             orchestratorFrameCount();
         } else if (carnageMode) {
             carnageModeController();
-        }
+        } // put ending enabled stuff here
     }
 }
 
@@ -176,7 +180,7 @@ function drawScrollingBackground() {
 
     // checked again so that the other items for 
     // the black hole are drawn after the background
-    if (currentBackground == BLACK_HOLE_BACKGROUND) {
+    if (currentBackground == BLACK_HOLE_BACKGROUND && !endingEnabled) {
         updateBlackHole();
     }
 }
