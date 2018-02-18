@@ -1,4 +1,5 @@
 var debug = false;
+var cheats = false;
 var gameRunning = false;
 
 const scoreForAlienShot = 50;

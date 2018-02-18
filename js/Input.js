@@ -220,8 +220,8 @@ function keyPress(evt) {
 			}
 			break;
         case KEY_K:
-            if(!gameOverManager.gameOverPlaying && !windowState.mainMenu && !windowState.help && !isPaused){
-             gameOverManager.startGameOverSequence();
+            if(cheats && !gameOverManager.gameOverPlaying && !windowState.mainMenu && !windowState.help && !isPaused){
+             	gameOverManager.startGameOverSequence();
             }
             break;
 		case KEY_O:
@@ -332,7 +332,7 @@ function keyPress(evt) {
 			if (windowState.backgroundSelect) {
 				currentStageIndex = 4;
 				changeBackground(currentStageIndex);
-			} else if (!windowState.backgroundSelect) {
+			} else if (cheats && !windowState.backgroundSelect) {
 				fireMode = (evt.keyCode - DIGIT_3);
 				console.log("weapon mode change to: " +
 				fireMode);
@@ -343,16 +343,18 @@ function keyPress(evt) {
 			if (windowState.backgroundSelect) {
 				currentStageIndex = 5;
 				changeBackground(currentStageIndex);
-			} else if (!windowState.backgroundSelect) {
+			} else if (cheats && !windowState.backgroundSelect) {
 				fireMode = (evt.keyCode - DIGIT_3);
 				console.log("weapon mode change to: " +
 				fireMode);
 			}
 			break;
 		case DIGIT_7:
-			fireMode = (evt.keyCode - DIGIT_3);
-			console.log("weapon mode change to: " +
-			fireMode);
+			if(cheats) {
+				fireMode = (evt.keyCode - DIGIT_3);
+				console.log("weapon mode change to: " +
+				fireMode);
+			}
 			break;
 		case KEY_M:
 			break;
@@ -367,7 +369,7 @@ function keyPress(evt) {
             }
 			break;
 		case KEY_TAB:
-			if (!assaultMode) {
+			if (cheats && !assaultMode) {
 				console.log("level skipping");
 				if(allStages[currentStageIndex]) {
 					currentWaveIndex = (allStages[currentStageIndex].length) - 1;
@@ -420,10 +422,10 @@ function keyPress(evt) {
 			}
 			break;
 		case DIGIT_0:
-			debug = !debug;
-			break;
 		case KEY_TILDE:
-			debug = !debug;
+			if(cheats) {
+				debug = !debug;
+			}
 			break;
 		case DIGIT_9:
 			toggleMute();
@@ -481,7 +483,9 @@ function keyRelease(evt) {
 			}
 			break;
         case KEY_BACKSPACE:
-            playerHP = 3;
+        	if(cheats) {
+	            playerHP = 3;
+	        }
             break;
       	case KEY_C:
       		if(orchestratorMode) {
