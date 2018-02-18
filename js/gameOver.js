@@ -68,7 +68,13 @@ function gameOverSequence() {
 
                 colorText("Shots Fired: " + shotsFired, canvas.width / 2, canvas.height / 4 + 80, "white", "30px Sans-serif", "center");
                 colorText("Number Of Hits: " + shotsHit, canvas.width / 2, canvas.height / 4 + 120, "white", "30px Sans-serif", "center");
-                colorText("Hit-Miss Ratio: " + (shotsHit / shotsFired * 100).toFixed(1) + "%", canvas.width / 2, canvas.height / 4 + 160, "white", "30px Sans-serif", "center");
+                var ratio;
+                if (shotsFired == 0) {
+	                ratio = 0;
+                } else {
+	                ratio = (shotsHit / shotsFired * 100).toFixed(1);
+                }
+                colorText("Hit-Miss Ratio: " + ratio + "%", canvas.width / 2, canvas.height / 4 + 160, "white", "30px Sans-serif", "center");
 
                 colorText("Ships Destroyed: " + shotsHitShips, canvas.width / 2, canvas.height / 4 + 220, "white", "30px Sans-serif", "center");
                 colorText("Aliens Killed (Parachute): " + (shotsHitAliens + shotsHitParachutes) + " (" + shotsHitParachutes + ")", canvas.width / 2, canvas.height / 4 + 260, "white", "30px Sans-serif", "center");

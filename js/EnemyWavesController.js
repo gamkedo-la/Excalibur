@@ -97,7 +97,7 @@ function waveControllerStart() {
     	return;
     }
     if (wave[currentEnemyIndex].framesUntilSpawn <= 0) {
-    	console.log('not a possible framesUntilSpawn interger')
+    	console.log('not a possible framesUntilSpawn integer')
     }
     if (spawnFrameCount === wave[currentEnemyIndex].framesUntilSpawn) {
         currentSpawnType = wave[currentEnemyIndex].spawnType;
