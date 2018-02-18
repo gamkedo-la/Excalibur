@@ -6,6 +6,7 @@ var windowState = {
 	twoPlayerHelp : false,
 	backgroundSelect : false,
 	mainMenu : true,
+	credits : false,
 	endingScreen: false 
 };
 var TitleTextX, subTitleTextX,opacity;
@@ -43,6 +44,26 @@ function mainMenuStates() {
 			opacity = opacity + 0.009;
 		}
 	}
+	else if(windowState.credits){
+		opacity = 1;
+		drawSkyGradient(); 
+		canvasContext.drawImage(currentBackgroundFar,0,0);
+		colorText('Credits will go here',canvas.width/2 ,100,"white","30px Tahoma","center",opacity);
+		var textX = 150;
+		var textY = 150;
+		var textSkip = 20;
+		var creditsFont = "16px Tahoma";
+		colorText("Name: Roles",textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
+		colorText("Name: Roles",textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
+		colorText("Name: Roles",textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
+		colorText("Name: Roles",textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
+		colorText("Name: Roles",textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
+		colorText("Name: Roles",textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
+		colorText("Name: Roles",textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
+		colorText("Name: Roles",textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
+		colorText("Name: Roles",textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
+		colorText('Press [Enter] to go Back to Menu',canvas.width/2 , 500,"white","30px Tahoma","center",opacity);
+	}
 	else if(windowState.help){
 		opacity = 1;
 		drawSkyGradient(); 
@@ -57,8 +78,8 @@ function mainMenuStates() {
 		canvasContext.drawImage(healthPowerUpPic, 642, 227);
 		canvasContext.drawImage(maxHealthPowerUpPic, 670, 227);
 		colorText("3) [P] to pause and resume game",250,270 ,"white",mainMenu.buttonFont,"left",opacity);
-		colorText("4) Tab to skip levels",250,300 ,"white",mainMenu.buttonFont,"left",opacity); // TODO: remove for release
-		colorText('Devs: [`] (backtick/tilde) for debug info', canvas.width/2, 400, "white", mainMenu.buttonFont, "center",opacity); // TODO: remove for release
+		//colorText("4) Tab to skip levels",250,300 ,"white",mainMenu.buttonFont,"left",opacity); // TODO: remove for release
+		//colorText('Devs: [`] (backtick/tilde) for debug info', canvas.width/2, 400, "white", mainMenu.buttonFont, "center",opacity); // TODO: remove for release
 		colorText('Press [Enter] to Start game',canvas.width/2 , 500,"white","30px Tahoma","center",opacity);
 	}
 	else if (windowState.twoPlayerHelp) {
@@ -113,6 +134,22 @@ function openHelp() {
 	}
 	windowState.mainMenu = false;
 	windowState.help = true;
+}
+
+function openCredits() {
+	if(isPaused) {
+		return;
+	}
+	windowState.mainMenu = false;
+	windowState.credits = true;
+}
+
+function backToMainMenuFromCredits() {
+	if(isPaused) {
+		return;
+	}
+	windowState.credits = false;
+	windowState.mainMenu = true;
 }
 
 function startCarnage() {

@@ -193,6 +193,14 @@ function keyPress(evt) {
 	// TODO: test for game controls instead, for now let's just re-enable function keys
 	var keyUsedByGame = true;
 
+	if(windowState.credits){
+		if(evt.keyCode == KEY_ENTER) {
+			backToMainMenuFromCredits();
+			evt.preventDefault();
+		}
+		return;
+	} 
+
 	switch (evt.keyCode) {
 		case KEY_P:
             if(!gameOverManager.gameOverPlaying){
@@ -208,8 +216,7 @@ function keyPress(evt) {
 				} else {
 					startGame();
 				}
-			}
-			if(windowState.help){
+			} else if(windowState.help){
 				startGame();
 			}
 			if(gameOverManager.gameOverPlaying && gameOverManager.gameOverSummaryRendered) {
@@ -360,7 +367,7 @@ function keyPress(evt) {
 			break;
 		case KEY_H:
             if(!gameOverManager.gameOverPlaying){
-			openHelp();
+				openHelp();
             }
 			break;
 		case KEY_ESCAPE:
@@ -488,7 +495,9 @@ function keyRelease(evt) {
 	        }
             break;
       	case KEY_C:
-      		if(orchestratorMode) {
+      		if(windowState.mainMenu){
+      			openCredits();
+      		} else if(orchestratorMode) {
       			var waveString = "";
       			var enemyType = "";
       			for(var i = 0; i < createNewWave.length; i++) {

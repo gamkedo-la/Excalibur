@@ -14,7 +14,7 @@ mainMenu = {
 		this.buttonProperties = {
 			padding: 4,
 			anchorX: canvas.width/2  - 5,
-			anchorY: canvas.height/2  + 70,
+			anchorY: canvas.height/2  + 30,
 			verticalSpacing: 2,
 		};
 		
@@ -23,6 +23,10 @@ mainMenu = {
 			{
 				txt: "[H] for Help",
 				onClick: openHelp,
+			},
+			{
+				txt: "[C] for Credits",
+				onClick: openCredits,
 			},
 			{
 				txt: "[Enter] to Play",
