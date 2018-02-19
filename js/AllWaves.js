@@ -3,8 +3,6 @@ const PLANE_GUNSHIP = 2;
 const MISSILE_STRIKE = 3;
 const PLANE_PROTECT = 4;
 
-// STAGE 1 \\
-
 var stage1WaveNumber2 = [
     { spawnType: PLANE_GUNSHIP, framesUntilSpawn: 5 },
     { spawnType: PLANE_GUNSHIP, framesUntilSpawn: 5 },
@@ -13,7 +11,7 @@ var stage1WaveNumber2 = [
     { spawnType: PLANE_GUNSHIP, framesUntilSpawn: 5 }
 ];
 
-var stage1WaveNumber3 = [ 
+var spawnGunAndDropshipToTheBeat = [ 
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 16 },
     { spawnType: PLANE_GUNSHIP, framesUntilSpawn: 17 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 16 },
@@ -72,8 +70,6 @@ var stage1WaveNumber3 = [
     { spawnType: PLANE_GUNSHIP, framesUntilSpawn: 15 }
 ];
 
-// STAGE 2 \\
-
 var stage2WaveNumber1 = [
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 30 },
     { spawnType: PLANE_GUNSHIP, framesUntilSpawn: 5 },
@@ -83,8 +79,6 @@ var stage2WaveNumber1 = [
     { spawnType: PLANE_GUNSHIP, framesUntilSpawn: 5 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 10 }
 ];
-
-// STAGE 3 \\
 
 var stage3WaveNumber1 = [ 
     { spawnType: MISSILE_STRIKE, framesUntilSpawn: 7 },

@@ -1,7 +1,7 @@
 var wave = [];
 var currentWaveIndex = 0;
 var currentWave = currentWaveIndex + 1;
-var currentStageIndex = 5; // for debugging ending
+var currentStageIndex = 0;
 var currentStage = currentStageIndex + 1;
 var stageNames = ["Planet Zebes", "Inside Super Computer", "Crystalline Coast", "Fantasy Zone", "Starfield", "Black Hole"];
 var timeBetweenWaves = 25; // time in frames (30 frames/second)
@@ -32,8 +32,8 @@ const ENDING = 6;
 var currentBackground = ZEBES_BACKGROUND;
 
 var stage1 = [easyLevel,stage1WaveNumber2,];
-var stage2 = [protectorIntro,stage1WaveNumber3];
-var stage3 = [stage2WaveNumber1,stage3WaveNumber1];
+var stage2 = [protectorIntro,stage2WaveNumber1];
+var stage3 = [spawnGunAndDropshipToTheBeat,stage3WaveNumber1];
 var stage4 = [easyMedMostlyGunshipsMixedLevel,mediumHardPlanesMix];
 var stage5 = [lateStageToughMixLevel,missileFlurryLevel];
 var stage6 = [longBusyAirdropProtectorsLate];

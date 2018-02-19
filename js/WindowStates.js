@@ -21,7 +21,7 @@ function mainMenuStates() {
 		colorText('Space Defence System',subTitleTextX ,canvas.height/2,"white",mainMenu.titleFont,"center");
 		if (highScore >= SCORE_TO_UNLOCK_CARNAGE && !carnageModeUnlocked) {
 			mainMenu.buttons.push({
-				txt : "[C] for Carnage Mode",
+				txt : "[M] for Carnage Mode",
 				onClick : startCarnage,
 			},)
 			carnageModeUnlocked = true;

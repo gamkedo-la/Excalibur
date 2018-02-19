@@ -364,6 +364,9 @@ function keyPress(evt) {
 			}
 			break;
 		case KEY_M:
+			if (windowState.mainMenu && highScore >= SCORE_TO_UNLOCK_CARNAGE) {
+	       		startCarnage(); 
+	       	}
 			break;
 		case KEY_H:
             if(!gameOverManager.gameOverPlaying){
@@ -525,8 +528,6 @@ function keyRelease(evt) {
 							"\n//and to add this wave into the proper stage array in" +
 							"\n//EnemyWavesController - Terrence";
 	        	copyTextToClipboard(waveString);
-	       	} else if (windowState.mainMenu && highScore >= SCORE_TO_UNLOCK_CARNAGE /*highScore == 0*/) {
-	       		startCarnage(); 
 	       	} else if (controlScheme == CONTROL_SCHEME_MOUSE_AND_KEYS_MOVING && !twoPlayerMode && !orchestratorMode) {
 				controlScheme = CONTROL_SCHEME_KEYS_STATIONARY;
 				console.log("Using control scheme: arrow/WASD keys only");
