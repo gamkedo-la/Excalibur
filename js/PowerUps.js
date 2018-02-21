@@ -30,6 +30,7 @@ const powerUps = {
         'updateFunction': increaseFirePower
     }
 	'tacoTuesday': {
+		'duration': 10,
 		'image': tacoPowerUpPic,
 		'description': 'For 10 seconds, everything is suddenly taco-themed.'
 		'updateFunction': tacoTakeover
@@ -216,6 +217,8 @@ function movePowerUps() {
 
 function tacoTakeover(powerUp) {
 	//stuff here eventually
+	
+	
 	powerUp.isActive = false;
     powerUp.canDestroy = true;
 }
