@@ -49,6 +49,12 @@ function gameOverSequence() {
             return;
         }
 
+        // ensure the screen is black: I think we may render one
+        // final game frame after startGameOverSequence() is called
+        if (artHeightTopNow == 0)
+            drawRect(0, 0, canvas.width, canvas.height, "black");
+
+
         if (artHeightTopNow >= canvas.height) {
             var gameOverHeadline = ""
             if (orchestratorWins) {
