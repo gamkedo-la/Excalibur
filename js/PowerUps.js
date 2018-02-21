@@ -216,6 +216,8 @@ function movePowerUps() {
 
 function tacoTakeover(powerUp) {
 	//stuff here eventually
+	powerUp.isActive = false;
+    powerUp.canDestroy = true;
 }
 
 function updateShield(shield) {
