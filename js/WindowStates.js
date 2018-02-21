@@ -9,15 +9,18 @@ var windowState = {
 	credits : false,
 	endingScreen: false 
 };
-var TitleTextX, subTitleTextX,opacity;
+var TitleTextY,subTitleTextX,opacity;
 var endingScreenTextY = 630;
+
+const TITLE_OFFSET = 175;
 
 function mainMenuStates() {
 	if(windowState.mainMenu){
 		drawSkyGradient(); 
 		canvasContext.drawImage(currentBackgroundFar,0,0);
 		canvasContext.drawImage(currentBackgroundMed,0,0);
-		colorText('Excalibur',TitleTextX,canvas.height/2-40 ,"white",mainMenu.titleFont,"center");
+		canvasContext.drawImage(excaliburTitleBillboard,canvas.width/3 - TITLE_OFFSET ,TitleTextY);
+		//colorText('Excalibur',TitleTextX,canvas.height/2-40 ,"white",mainMenu.titleFont,"center");
 		colorText('Space Defence System',subTitleTextX ,canvas.height/2,"white",mainMenu.titleFont,"center");
 		if (highScore >= SCORE_TO_UNLOCK_CARNAGE && !carnageModeUnlocked) {
 			mainMenu.buttons.push({
@@ -37,8 +40,8 @@ function mainMenuStates() {
 			subTitleTextX+=15;
 
 		}
-		if(TitleTextX >= canvas.width/2 + 10){
-			TitleTextX-=15;
+		if(TitleTextY <= canvas.width/5 - 1){
+			TitleTextY+=10;
 		}
 		else if(!windowState.help && opacity < 1) {
 			opacity = opacity + 0.009;

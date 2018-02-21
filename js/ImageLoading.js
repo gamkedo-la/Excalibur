@@ -13,6 +13,8 @@ var laserPicEnding = document.createElement("img");
 var shotPic = document.createElement("img");
 
 var backgroundTitlePic = document.createElement("img");
+var excaliburTitleBillboard = document.createElement("img");
+
 var backgroundFarPic = document.createElement("img");
 var backgroundMedPic = document.createElement("img");
 var backgroundNearPic = document.createElement("img");
@@ -98,9 +100,11 @@ function loadImages() {
         { varName: gunshipPic, theFile: "gunship.png" },
         { varName: missilePic, theFile: "missile.png" },
 
-        // backgrounds
+        // title images
         { varName: backgroundTitlePic, theFile: "backgroundTitle.png" },
+        { varName: excaliburTitleBillboard, theFile: "excalibur-title.png" },
 
+        // backgrounds
         { varName: backgroundFarPic, theFile: "SpaceBackground.png" },
         { varName: backgroundMedPic, theFile: "SpaceMidground.png" },
         { varName: backgroundNearPic, theFile: "SpaceForeground.png" },

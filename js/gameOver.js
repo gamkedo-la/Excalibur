@@ -29,8 +29,6 @@ function gameOverSequence() {
             currentBackgroundMusic.loopSong(gameOverCrystallineCoastMusic);
         } else if (currentBackground == FANTASY_BACKGROUND) {
             currentBackgroundMusic.loopSong(gameOverFantasyMusic);
-        } else if (assaultMode) {
-            currentBackgroundMusic.loopSong(gameOverMusic);
         }
 
         // TODO: pass gameover music into currentBackgroundMusic.loopSong()

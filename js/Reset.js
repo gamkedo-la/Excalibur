@@ -64,7 +64,7 @@ function resetGame() {
 	
 	resetPlayer();
 	
-	TitleTextX = canvas.width;
+	TitleTextY = -100;
 	subTitleTextX = 0;
 	opacity = 0;
 	

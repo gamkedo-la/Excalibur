@@ -39,7 +39,7 @@ window.onload = function() {
     drawRect(0, 0, canvas.width, canvas.height, "black");
     colorText('LOADING...', canvas.width / 2, canvas.height / 2, "white", "30px Tahoma", "center", 1);
 
-    TitleTextX = canvas.width;
+    TitleTextY = -100;
     subTitleTextX = 0;
     opacity = 0;
 
@@ -109,16 +109,16 @@ function drawAll() {
     drawAndRemovePowerUps();
     drawScoreAndBombAmmo();
     drawExplosions();
+    frameCount++;
+
+    timeElapsedInSeconds = timeElapsedInSeconds + (new Date().getTime() - timeStartedActive) / 1000;
+    timeStartedActive = new Date().getTime();
+    
     if (carnageMode || orchestratorMode) {
         return;
     } else {
         drawLives();
     }
-
-    frameCount++;
-
-    timeElapsedInSeconds = timeElapsedInSeconds + (new Date().getTime() - timeStartedActive) / 1000;
-    timeStartedActive = new Date().getTime();
 }
 
 function moveAll() {
