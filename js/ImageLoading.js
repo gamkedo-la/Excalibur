@@ -40,6 +40,15 @@ var healthPowerUpPic = document.createElement("img");
 var maxHealthPowerUpPic = document.createElement("img");
 var firemodePowerUpPic = document.createElement("img");
 
+// Images exclusive to the Taco Time power up
+var tacoPowerUpPic = document.createElement("img");
+var tacoTankCannonPic = document.createElement("img");
+var tacoTankBodyPic = document.createElement("img");
+var tacoAlienPic = document.createElement("img");
+var tacoDevilAlienPic = document.createElement("img");
+var tacoGunshipPic = document.createElement("img");
+var tacoSpaceshipPic = document.createElement("img");
+
 var tankBodyPic = document.createElement("img");
 var tankCannonPic = document.createElement("img");
 var tankCannonPicBeach = document.createElement("img");
@@ -124,6 +133,13 @@ function loadImages() {
         { varName: maxHealthPowerUpPic, theFile: "maxHealthPowerUp.png" },
         { varName: firemodePowerUpPic, theFile: "firemodePowerUp.png" },
         { varName: waveShotPic, theFile: "waveShot.png" },
+		{ varName: tacoPowerUpPic, theFile: "tacoPowerUp.png" },
+		{ varName: tacoAlienPic, theFile: "TacoAlien.png" },
+		{ varName: tacoDevilAlienPic, theFile: "TacoDevilAlien.png" },
+		{ varName: tacoGunshipPic, theFile: "TacoGunship.png" },
+		{ varName: tacoSpaceshipPic, theFile: "TacoSpaceship.png" },
+		{ varName: tacoTankBodyPic, theFile: "TacoTankBody.png" },
+		{ varName: tacoTankCannonPic, theFile: "TacoTankCannon.png" },
 
         // player related
         { varName: laserPic, theFile: "LaserVisual.png" },

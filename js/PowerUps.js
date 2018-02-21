@@ -29,6 +29,11 @@ const powerUps = {
         'description': 'Increases fire power of the player.',
         'updateFunction': increaseFirePower
     }
+	'tacoTuesday': {
+		'image': tacoPowerUpPic,
+		'description': 'For 10 seconds, everything is suddenly taco-themed.'
+		'updateFunction': tacoTakeover
+	}
 };
 const powerUpTypes = Object.keys(powerUps);
 
@@ -207,6 +212,10 @@ function movePowerUps() {
     for (var i = 0; i < powerUpBoxList.length; i++) {
         powerUpBoxList[i].move();
     }
+}
+
+function tacoTakeover(powerUp) {
+	//stuff here eventually
 }
 
 function updateShield(shield) {
