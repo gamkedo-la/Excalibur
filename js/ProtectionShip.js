@@ -39,6 +39,7 @@ function ProtectionShipClass() {
 
 		if (this.collectorEnergy >= this.collectorCharged && this.health > 0) {
 			this.frameRow = this.spriteRows.firing;
+			enemyLaserFiringSound.play();
 			if (this.laser != null)
 				this.laser.removeMe = true;
 			this.laser = new EnemyLaserShotClass(this.collectorPosition.x - this.collectorWidth/4, 
@@ -49,7 +50,7 @@ function ProtectionShipClass() {
 			this.collectorEnergy = 0;
 		}
 
-		if (this.laser != null && this.laser.tickCount == 60) {
+		if (this.laser != null && this.laser.tickCount == this.laser.duration) {
 			this.frameRow = this.spriteRows.flying;
 		}
 

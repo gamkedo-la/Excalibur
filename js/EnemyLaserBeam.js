@@ -11,7 +11,7 @@ function EnemyLaserShotClass(x, y, angle, speed, direction, fromShip) {
 	this.ticksPerFrame = 6;
 	this.frames = 2;
 	this.frameOffset = 0;
-	this.duration = 60;
+	this.duration = 90;
 	this.thickLaserRatio = 1/2;
 	
 	//this.sprite = new SpriteSheetClass(laserPic, this.width, this.height);

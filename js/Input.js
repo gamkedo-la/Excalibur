@@ -148,7 +148,7 @@ function handleInput() {
 					// NOTE: compute cannonReloadLeft prior to laserShotClass, bases lifetime on it
 					var newShot = new LaserShotClass(cannonEndX, cannonEndY, cannonAngle);
 					shotList.push(newShot);
-					waveShotSound.play();
+					LaserShotSound.play();
 					shotsFired++;
 					secondaryGunfireExplosion(cannonEndX,cannonEndY);
 				}
@@ -415,6 +415,7 @@ function keyPress(evt) {
 				orchestratorCurrentSpawnType = PLANE_GUNSHIP;
 				orchestratorSpawnEnemy();
 			}
+			break;
 		case KEY_Z:
 			if (twoPlayerMode && !isPaused && !orchestratorMode) {
 				orchestratorCurrentSpawnType = PLANE_PROTECT;
