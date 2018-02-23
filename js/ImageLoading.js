@@ -147,7 +147,6 @@ function loadImages() {
 
         // player related
         { varName: laserPic, theFile: "LaserVisual.png" },
-        //{ varName: laserPicEnding, theFile: "LaserVisualEnding.png" },
         { varName: shotPic, theFile: "ShotVisual.png" },
         { varName: tankBodyPic, theFile: "tank-body.png" },
         { varName: tankCannonPic, theFile: "tank-cannon.png" },
