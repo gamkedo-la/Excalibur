@@ -359,7 +359,7 @@ var longBusyAirdropProtectorsLate = [
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 62 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 6 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 5 },
-   /* { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 5 },
+    { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 5 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 5 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 5 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 7 },
@@ -628,7 +628,7 @@ var longBusyAirdropProtectorsLate = [
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 6 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 7 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 21 },
-    { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 21 },*/
+    { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 21 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 20 },
     { spawnType: PLANE_PARADROPPER, framesUntilSpawn: 48 }
 ];

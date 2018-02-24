@@ -14,6 +14,7 @@ var shotPic = document.createElement("img");
 
 var backgroundTitlePic = document.createElement("img");
 var excaliburTitleBillboard = document.createElement("img");
+var excaliburEndScreenBillboard = document.createElement("img");
 
 var backgroundFarPic = document.createElement("img");
 var backgroundMedPic = document.createElement("img");
@@ -103,6 +104,7 @@ function loadImages() {
         // title images
         { varName: backgroundTitlePic, theFile: "backgroundTitle.png" },
         { varName: excaliburTitleBillboard, theFile: "excalibur-title.png" },
+        { varName: excaliburEndScreenBillboard, theFile: "excalibur-end.png" },
 
         // backgrounds
         { varName: backgroundFarPic, theFile: "SpaceBackground.png" },

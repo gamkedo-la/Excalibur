@@ -21,7 +21,7 @@ function gameOverSequence() {
 
     this.startGameOverSequence = function() {
         waveStarted = false;
-        if (currentBackground == ZEBES_BACKGROUND) {
+        if (currentBackground == ZEBES_BACKGROUND || currentBackground == BLACK_HOLE_BACKGROUND) {
             currentBackgroundMusic.loopSong(gameOverMusic);
         } else if (currentBackground == COMPUTER_BACKGROUND) {
             currentBackgroundMusic.loopSong(gameOverCompMusic);

@@ -9,8 +9,9 @@ var windowState = {
 	credits : false,
 	endingScreen: false 
 };
+
 var TitleTextY,subTitleTextX,opacity;
-var endingScreenTextY = 630;
+var endScreenY = 600;
 
 const TITLE_OFFSET = 175;
 
@@ -120,13 +121,10 @@ function mainMenuStates() {
 		colorText('Press [T] to Duel!',canvas.width/2 , 500,"white","30px Tahoma","center",opacity);
 	}
 	else if (windowState.endingScreen) {
-		drawRect(0,0, canvas.width, canvas.height, "black")
-		colorText("Well... you did it",canvas.width/2 ,endingScreenTextY,"white","30px Tahoma","center",opacity);
-		colorText("Good Stuff!",canvas.width/2 ,endingScreenTextY + 30,"white","30px Tahoma","center",opacity);
-		colorText("See you next mission!",canvas.width/2,endingScreenTextY + 60 ,"white",mainMenu.buttonFont,"center",opacity);
-
-		if (endingScreenTextY + 60 > -30) {
-			endingScreenTextY -= 2;
+		drawRect(0,0, canvas.width, canvas.height, "black");
+		canvasContext.drawImage(excaliburEndScreenBillboard,0,endScreenY);
+		if (endScreenY > 10) {
+			endScreenY -= 1;
 		}
 	}
 }

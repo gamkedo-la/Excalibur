@@ -67,6 +67,7 @@ function resetGame() {
 	TitleTextY = -100;
 	subTitleTextX = 0;
 	opacity = 0;
+	endScreenY = 600;
 	
 	currentBackgroundMusic.loopSong(menuMusic);
 	
