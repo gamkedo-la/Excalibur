@@ -52,21 +52,39 @@ function mainMenuStates() {
 		opacity = 1;
 		drawSkyGradient(); 
 		canvasContext.drawImage(currentBackgroundFar,0,0);
-		colorText('Credits will go here',canvas.width/2 ,100,"white","30px Tahoma","center",opacity);
-		var textX = 150;
-		var textY = 150;
+		colorText('Made by members of Gamkedo Club, Nov 2017-Feb 2018',canvas.width/2 ,50,"white","30px Tahoma","center",opacity);
+		var textX = 15;
+		var textY = 90;
 		var textSkip = 20;
 		var creditsFont = "16px Tahoma";
-		colorText("Name: Roles",textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
-		colorText("Name: Roles",textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
-		colorText("Name: Roles",textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
-		colorText("Name: Roles",textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
-		colorText("Name: Roles",textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
-		colorText("Name: Roles",textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
-		colorText("Name: Roles",textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
-		colorText("Name: Roles",textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
-		colorText("Name: Roles",textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
-		colorText('Press [Enter] to go Back to Menu',canvas.width/2 , 500,"white","30px Tahoma","center",opacity);
+		var creditsLines = [
+			"Chris DeLeon: Lead/pitch, core gameplay code, parallax support, split fire modes, upgrades between stages",
+			"Terrence McDonnell: Wave beam, laser attack, missiles, level code, two player mode, organized refactoring,",
+			"   ice sliding, progress bar, carnage mode, laser ship code and art, logo and title menu animation, sound code,",
+			"   end sequence code and ending story writing",
+			"Vignesh Ramesh: Winged alien art, shooting trooper, planes falling, debug mode, action music, music code,",
+			"   help screen, score bug fix, spaceship art (non-gunner), splash screen, tank body art",
+			"Herleen Dualan: Bomb flash, game over tint, pause code, game over songs, scene skipping, health hearts",
+			"Nicholas Polchies: Optimizations, readability and reuse recfactoring, title menu background art, audio sliders,",
+			"   menu mouse support, recovery frames",
+			"Jeremy Jackson: Item support, shield item, health item, firemode item, space debris code, spawn bug fixes",
+			"Mary Brady: Sparkle and galaxy backgrounds, taco art, shield and firepower item icons",
+			"Ash Simmonds: Bug fixing (many!), intertia, round summary with stats, tuning refactoring, debug features",
+			"Lou Herard: Collision code, bomb attack code",
+			"DynoKhan: Game over animation sequence code, cannon-style-per-stage code",
+			"Gerard Moledo: Laser ship bug fixes, browser shortcut key support",
+			"Christer \"McFunkypants\" Kaitila: Particle code, time of day sky code, crosshairs, art outlines",
+			"H Trayford: Custom turret art, additional bug fixes",
+			"Caspar \"SpadXIII\" Dunant: Gunner plane code",
+			"Kyle Thomas: Gunner ship art",
+			"Jose Contreras: Planets background",
+			"Renaud Marshall: Layout redesign for round stats screen",
+			"Cameron Button: Particle effects art, image flip code"
+		];
+		for(var i=0;i<creditsLines.length;i++) {
+			colorText(creditsLines[i],textX,textY ,"white",creditsFont,"left",opacity); textY += textSkip;
+		}
+		colorText('Press [Enter] to go Back to Menu',canvas.width/2 , 550,"white","30px Tahoma","center",opacity);
 	}
 	else if(windowState.help){
 		opacity = 1;
