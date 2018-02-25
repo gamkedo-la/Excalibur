@@ -29,12 +29,13 @@ const powerUps = {
         'description': 'Increases fire power of the player.',
         'updateFunction': increaseFirePower
     },
-	'tacoTuesday': {
-		'duration': 10,
-		'image': tacoPowerUpPic,
-		'description': 'For 10 seconds, everything is suddenly taco-themed.',
-		'updateFunction': tacoTakeover
-	}
+    //'tacoTuesday': {
+    //    'duration': 10,
+    //    'image': tacoPowerUpPic,
+    //    'description': 'For 10 seconds, everything is suddenly taco-themed.',
+    //    'updateFunction': tacoTakeover,
+    //    'onPowerUpEnd': tacoTimeOver
+    //}
 };
 const powerUpTypes = Object.keys(powerUps);
 
@@ -42,6 +43,13 @@ var lastPowerUpDroppedAt = 0;
 var powerUpBoxList = [];
 var activePowerUps = [];
 var shieldActive = false;
+
+var tacoTimeActivated = false;
+
+//These are the starting images for tacoTime to be changed
+var startingImages = [];
+//These are the images to be changed to during tacoTime
+var tacoImages = [];
 
 function powerUp(fromShip) {
     this.type;
@@ -99,6 +107,9 @@ function powerUp(fromShip) {
             setTimeout(function() {
                 self.isActive = false;
                 self.canDestroy = true;
+                if (self.properties.hasOwnProperty('onPowerUpEnd')) {
+                    self.properties['onPowerUpEnd']();
+                }
             }, this.activeDuration)
         }
     }
@@ -216,11 +227,61 @@ function movePowerUps() {
 }
 
 function tacoTakeover(powerUp) {
-	//stuff here eventually
-	
-	
-	powerUp.isActive = false;
-    powerUp.canDestroy = true;
+    //Checking if it's active
+    if (!tacoTimeActivated) {
+        tacoTimeActivated = true;
+        if (startingImages.length < 1 && tacoImages.length < 1) {
+            setStartingAndTacoImages();
+        }
+        activateTacoTimeImages();
+    }
+}
+
+function setStartingAndTacoImages() {
+    startingImages = [{
+        currentTankCannon: currentTankCannon
+    }, {
+        tankBodyPic: tankBodyPic
+    }, {
+        alienPic: alienPic
+    }, {
+        devilAlienPic: devilAlienPic
+    }, {
+        gunshipPic: gunshipPic
+    }, {
+        dropshipPic: dropshipPic
+    }];
+
+    tacoImages = [{
+        currentTankCannon: tacoTankCannonPic
+    }, {
+        tankBodyPic: tacoTankBodyPic
+    }, {
+        alienPic: tacoAlienPic
+    }, {
+        devilAlienPic: tacoDevilAlienPic
+    }, {
+        gunshipPic: tacoGunshipPic
+    }, {
+        dropshipPic: tacoSpaceshipPic
+    }];
+}
+
+//This function replaces the images in Taco Time
+function activateTacoTimeImages() {
+    for (var i = 0; i < tacoImages.length; i++) {
+        var key = Object.keys(tacoImages[i])[0];
+        window[key] = tacoImages[i][key];
+    }
+}
+
+//This one returns things to normal
+function tacoTimeOver() {
+    for (var i = 0; i < startingImages.length; i++) {
+        var key = Object.keys(startingImages[i])[0];
+        window[key] = startingImages[i][key];
+    }
+    tacoTimeActivated = false;
 }
 
 function updateShield(shield) {
