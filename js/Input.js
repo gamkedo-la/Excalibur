@@ -549,6 +549,7 @@ function calculateMousePos(evt) {
 }
 
 function onMouseDown(evt) {
+	window.focus(); // for itch.io
 	evt.preventDefault();
 	if (evt.type == "mouseenter" && !mouseButtonHeld) {
 		return;
