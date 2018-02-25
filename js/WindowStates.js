@@ -70,7 +70,7 @@ function mainMenuStates() {
 			"Jeremy Jackson: Item support, shield item, health item, firemode item, space debris code, spawn bug fixes",
 			"Mary Brady: Sparkle and black hole art, taco art and code, images for shield/firepower/black-heart, testing",
 			"Ash Simmonds: Bug fixing (many!), inertia, round summary with stats, tuning refactoring, debug features",
-			"Lou Herard: Collision code, bomb attack code",
+			"Lou Herard: Collision code, vector math code, bomb attack code",
 			"DynoKhan: Game over animation sequence code, cannon-style-per-stage code",
 			"Gerard Moledo: Laser ship bug fixes, browser shortcut key support",
 			"Christer \"McFunkypants\" Kaitila: Particle code, time of day sky code, crosshairs, art outlines",
