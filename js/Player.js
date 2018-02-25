@@ -1,4 +1,4 @@
-var playerX,playerY;
+var playerX,playerY; // testing
 
 const startHitpoints = 3;
 var playerHP = startHitpoints;
