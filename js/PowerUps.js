@@ -29,13 +29,13 @@ const powerUps = {
         'description': 'Increases fire power of the player.',
         'updateFunction': increaseFirePower
     },
-    //'tacoTuesday': {
-    //    'duration': 10,
-    //    'image': tacoPowerUpPic,
-    //    'description': 'For 10 seconds, everything is suddenly taco-themed.',
-    //    'updateFunction': tacoTakeover,
-    //    'onPowerUpEnd': tacoTimeOver
-    //}
+    'tacoTuesday': {
+        'duration': 10,
+        'image': tacoPowerUpPic,
+        'description': 'For 10 seconds, everything is suddenly taco-themed.',
+        'updateFunction': tacoTakeover,
+        'onPowerUpEnd': tacoTimeOver
+    }
 };
 const powerUpTypes = Object.keys(powerUps);
 
