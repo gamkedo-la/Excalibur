@@ -61,7 +61,7 @@ function mainMenuStates() {
 			"Chris DeLeon: Lead/pitch, core gameplay code, parallax support, split fire modes, upgrades between stages",
 			"Terrence McDonnell: Wave beam, laser attack, missiles, level code, two player mode, organized refactoring,",
 			"   ice sliding, progress bar, carnage mode, laser ship code and art, logo and title menu animation, sound code,",
-			"   end sequence code and ending story writing",
+			"   end sequence code and ending story writing, crystalline coast and computer background art",
 			"Vignesh Ramesh: Winged alien art, shooting trooper, planes falling, debug mode, music code, help screen",
 			"   score bug fix, spaceship art (non-gunner), splash screen, tank body art, 3 songs (lv 1, lv 2, and splash)",
 			"Herleen Dualan: Bomb flash, game over tint, pause code, game over songs, scene skipping, health hearts",
