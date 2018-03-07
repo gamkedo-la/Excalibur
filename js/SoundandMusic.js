@@ -17,8 +17,8 @@ var computerBackgroundMusic = "./audio/suspain";
 var menuMusic = "./audio/beeblebrox";
 
 //game over music
-var gameOverMusic = "./audio/GameOverMusic";
-var gameOverCompMusic = "./audio/GameOverCompLvlMusic";
+var gameOverMusic = "./audio/gameOverMusic";
+var gameOverCompMusic = "./audio/gameOverCompLvlMusic";
 var gameOverCrystallineCoastMusic = "./audio/GameOverCrystallineCoastLvl";
 var gameOverFantasyMusic = "./audio/GameOverFantasyTheme";
 
