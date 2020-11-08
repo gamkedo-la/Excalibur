@@ -64,7 +64,7 @@ function mainMenuStates() {
 			"   end sequence code and ending story writing, crystalline coast & computer background art, size optimization",
 			"Vignesh Ramesh: Winged alien art, shooting trooper, planes falling, debug mode, music code, help screen",
 			"   score bug fix, spaceship art (non-gunner), splash screen, tank body art, 3 songs (lv 1, lv 2, and splash)",
-			"Herleen Dualan: Bomb flash, game over tint, pause code, game over songs, scene skipping, health hearts",
+			"Kise: Bomb flash, game over tint, pause code, game over songs, scene skipping, health hearts",
 			"Nicholas Polchies: Optimizations, readability and reuse recfactoring, title menu background art, audio sliders,",
 			"   menu mouse support, recovery frames",
 			"Jeremy Jackson: Item support, shield item, health item, firemode item, space debris code, spawn bug fixes",
